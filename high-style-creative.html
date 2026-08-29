@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>High Style Creative</title>
+<meta name="robots" content="index,follow">
+<style>html,body{margin:0;min-height:100%;background:#0a0a0a;color:#f5f5f0;font-family:Arial,sans-serif}.loading{min-height:100vh;display:grid;place-items:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8f8f8a}</style>
+</head>
+<body>
+<div class="loading" id="loading">Loading High Style Creative…</div>
+<script>
+fetch('website.html',{cache:'no-store'})
+  .then(function(r){if(!r.ok)throw new Error('Unable to load site');return r.text();})
+  .then(function(html){document.open();document.write(html);document.close();})
+  .catch(function(){document.getElementById('loading').textContent='High Style Creative website unavailable';});
+</script>
+</body>
+</html>
