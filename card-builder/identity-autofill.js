@@ -46,10 +46,17 @@
       const nameInput = document.getElementById('businessName');
       if (nameInput && nameInput.value.trim() !== name) {
         setValue('businessName', name);
-        const slug = document.getElementById('slug');
-        if (slug && !slug.dataset.manual) setValue('slug', cleanSlug(name));
         nameChanged = true;
         changed = true;
+      }
+      const slug = document.getElementById('slug');
+      if (slug) {
+        slug.dataset.manual = '';
+        const nextSlug = cleanSlug(name);
+        if (slug.value !== nextSlug) {
+          setValue('slug', nextSlug);
+          changed = true;
+        }
       }
       lastName = name;
     }
@@ -68,8 +75,8 @@
     if (changed) {
       update();
       if (!silent) {
-        if (nameChanged && logoChanged) showStatus('Business name and logo added automatically from the website.');
-        else if (nameChanged) showStatus('Business name added automatically from the website.');
+        if (nameChanged && logoChanged) showStatus('Business name, card URL and logo added automatically from the website.');
+        else if (nameChanged) showStatus('Business name and card URL added automatically from the website.');
         else if (logoChanged) showStatus('Website logo added automatically to the card.');
       }
     }
@@ -84,33 +91,27 @@
     new MutationObserver(() => applyIdentity(false)).observe(designLogo, {childList:true, subtree:true, attributes:true, attributeFilter:['src']});
   }
 
-  scanButton.addEventListener('click', () => {
+  function startIdentityWatch(){
     scanRun += 1;
     const thisRun = scanRun;
     lastName = '';
     lastLogo = '';
+    const slug = document.getElementById('slug');
+    if (slug) slug.dataset.manual = '';
     [250, 700, 1500, 3000, 5500].forEach((delay, index) => {
       setTimeout(() => {
         if (thisRun !== scanRun) return;
         applyIdentity(index < 4);
       }, delay);
     });
-  });
+  }
+
+  scanButton.addEventListener('click', startIdentityWatch);
 
   const scanUrl = document.getElementById('scanUrl');
   if (scanUrl) {
     scanUrl.addEventListener('keydown', e => {
-      if (e.key !== 'Enter') return;
-      scanRun += 1;
-      const thisRun = scanRun;
-      lastName = '';
-      lastLogo = '';
-      [250, 700, 1500, 3000, 5500].forEach((delay, index) => {
-        setTimeout(() => {
-          if (thisRun !== scanRun) return;
-          applyIdentity(index < 4);
-        }, delay);
-      });
+      if (e.key === 'Enter') startIdentityWatch();
     });
   }
 })();
