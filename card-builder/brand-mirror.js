@@ -123,12 +123,17 @@
     brandTokens = inferTokens();
     applyTokensToPreview(brandTokens);
     update();
-    if (!silent) showStatus('Website branding copied — colours, buttons, font style and layout treatment applied.');
+    if (!silent) showStatus('Website style applied — buttons, logo treatment, typography and layout now match the detected brand direction.');
+    return true;
   }
+
+  window.applyHighStyleBrandTreatment = function(silent=false){
+    return copyBrandDesign(!!silent);
+  };
 
   if (copyDesignButton) {
     copyDesignButton.textContent = 'Copy Website Branding';
-    copyDesignButton.addEventListener('click', () => copyBrandDesign(false));
+    copyDesignButton.addEventListener('click', () => copyBrandDesign(true));
   }
 
   if (moodEl) {
@@ -138,7 +143,6 @@
     }).observe(moodEl, {childList:true, characterData:true, subtree:true});
   }
 
-  // Once a visual scan finishes successfully, mirror the detected brand treatment automatically.
   const confidence = document.getElementById('designConfidence');
   if (confidence) {
     new MutationObserver(() => {
@@ -148,9 +152,7 @@
     }).observe(confidence, {childList:true, characterData:true, subtree:true});
   }
 
-  scanButton.addEventListener('click', () => {
-    // Keep previous settings until the new scan completes to avoid a visual flash.
-  });
+  scanButton.addEventListener('click', () => {});
 
   try {
     const saved = localStorage.getItem('highStyleCardBuilderDraft');
