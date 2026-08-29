@@ -5,108 +5,258 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
 <title>High Style Creative</title>
+<meta name="description" content="High Style Creative digital contact card">
 <style>
+:root{
+  --bg:#000;
+  --fg:#fff;
+  --muted:#bdbdbd;
+  --line:#2a2a2a;
+  --panel:rgba(10,10,10,.78);
+}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-body{display:flex;justify-content:center;padding:18px 12px 34px}
-.wrap{width:min(100%,520px);text-align:center;padding-top:8px}
-.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#777;font-weight:800;margin-bottom:10px}
-h1{font-size:clamp(38px,10vw,58px);line-height:.92;letter-spacing:-.06em;margin:0}
-.tag{color:#aaa;font-size:15px;line-height:1.55;margin:14px auto 28px;max-width:360px}
-.links{display:grid;gap:14px}
-.link{display:flex;align-items:center;justify-content:space-between;min-height:88px;padding:16px 18px;border:1px solid #2b2b2b;border-radius:20px;background:#080808;color:#fff;text-decoration:none;text-align:left}
-.link.primary{background:#fff;color:#000;border-color:#fff}
+html,body{
+  margin:0;
+  min-height:100%;
+  color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;
+  background:
+    linear-gradient(145deg,#000000 0%,#030303 22%,#080808 46%,#101010 68%,#070707 84%,#000000 100%);
+  background-size:240% 240%;
+  animation:smoothBackgroundDrift 20s ease-in-out infinite;
+}
+body{
+  display:flex;
+  justify-content:center;
+  padding:18px 12px 34px;
+  position:relative;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:-25%;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 24% 28%,rgba(255,255,255,.05),transparent 26%),
+    radial-gradient(circle at 76% 70%,rgba(255,255,255,.03),transparent 30%);
+  opacity:.18;
+  filter:blur(65px);
+  animation:verySoftGlow 18s ease-in-out infinite alternate;
+}
+.wrap{
+  width:min(100%,520px);
+  text-align:center;
+  padding-top:8px;
+  position:relative;
+  z-index:1;
+  animation:pageIn .7s cubic-bezier(.2,.8,.2,1) both;
+}
+.eyebrow{
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#777;
+  font-weight:800;
+  margin-bottom:10px;
+  animation:
+    itemIn .55s .02s cubic-bezier(.2,.8,.2,1) both,
+    softTextGlow 4s 1s ease-in-out infinite;
+}
+h1{
+  font-size:clamp(38px,10vw,58px);
+  line-height:.92;
+  letter-spacing:-.06em;
+  margin:0;
+  color:transparent;
+  background:linear-gradient(90deg,#fff 0%,#aaa 22%,#fff 42%,#fff 64%,#999 82%,#fff 100%);
+  background-size:220% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  animation:
+    titleReveal .8s .12s cubic-bezier(.18,.85,.25,1) both,
+    titleShimmer 5.8s 1.15s linear infinite;
+}
+.tag{
+  color:#aaa;
+  font-size:15px;
+  line-height:1.55;
+  margin:14px auto 28px;
+  max-width:360px;
+  animation:
+    itemIn .65s .2s cubic-bezier(.2,.8,.2,1) both,
+    tagFloat 5.5s 1.2s ease-in-out infinite;
+}
+.links{
+  display:grid;
+  gap:14px;
+  perspective:900px;
+}
+.link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:88px;
+  padding:16px 18px;
+  border:1px solid #2b2b2b;
+  border-radius:20px;
+  background:var(--panel);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  color:#fff;
+  text-decoration:none;
+  text-align:left;
+  overflow:hidden;
+  position:relative;
+  transform-origin:center;
+  transition:
+    transform .32s cubic-bezier(.16,.9,.24,1),
+    background-color .28s ease,
+    border-color .28s ease,
+    box-shadow .32s ease,
+    filter .28s ease;
+  opacity:0;
+  will-change:transform,opacity;
+}
+.link.primary{
+  background:#fff;
+  color:#000;
+  border-color:#fff;
+}
 .link.primary .label,.link.primary .note{color:#555}
-.left{display:flex;align-items:center;gap:14px;min-width:0}
-.icon-wrap{width:44px;height:44px;border:1px solid #313131;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;background:#050505}
+.link:not(.primary)::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.055) 48%,transparent 72%);
+  transform:translateX(-140%);
+  transition:transform .75s ease;
+}
+.link.primary::after{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-45%;
+  width:35%;
+  height:220%;
+  background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent);
+  transform:rotate(18deg);
+  animation:buttonSweep 4.2s 1.4s ease-in-out infinite;
+  pointer-events:none;
+}
+.left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+}
+.icon-wrap{
+  width:44px;
+  height:44px;
+  border:1px solid #313131;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  background:#050505;
+  position:relative;
+  animation:iconHover 3.6s ease-in-out infinite;
+  transition:transform .22s cubic-bezier(.2,.8,.2,1), border-color .22s ease;
+}
 .link.primary .icon-wrap{border-color:#d0d0d0;background:#fff}
 .icon{width:22px;height:22px;display:block}
 .label{display:block;color:#888;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:6px}
-.value{display:block;font-size:22px;font-weight:800}
+.value{display:block;font-size:22px;font-weight:800;transition:text-shadow .25s ease}
 .note{display:block;color:#777;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-top:7px}
-.arrow{font-size:28px}
-.footer{color:#555;font-size:10px;letter-spacing:.17em;text-transform:uppercase;margin-top:24px;padding-top:18px;border-top:1px solid #141414}
-@media(max-width:420px){.value{font-size:19px}.link{min-height:80px;padding:14px}.icon-wrap{width:40px;height:40px}.icon{width:20px;height:20px}}
-@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes itemIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes arrowNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
-@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-.wrap{animation:pageIn .65s cubic-bezier(.2,.8,.2,1) both}
-.eyebrow,h1,.tag{animation:itemIn .6s cubic-bezier(.2,.8,.2,1) both}
-.eyebrow{animation-delay:.05s}h1{animation-delay:.12s}.tag{animation-delay:.2s}
-.link{opacity:0;animation:itemIn .55s cubic-bezier(.2,.8,.2,1) forwards;transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .22s ease,background .22s ease,box-shadow .22s ease;-webkit-tap-highlight-color:transparent}
-.links .link:nth-child(1){animation-delay:.28s}.links .link:nth-child(2){animation-delay:.36s}.links .link:nth-child(3){animation-delay:.44s}
-.icon-wrap{transition:transform .22s cubic-bezier(.2,.8,.2,1)}
-.footer{opacity:0;animation:itemIn .55s .52s cubic-bezier(.2,.8,.2,1) forwards}
-@keyframes slideFromLeft{0%{opacity:0;transform:translateX(-70px) scale(.96)}70%{opacity:1;transform:translateX(8px) scale(1.01)}100%{opacity:1;transform:translateX(0) scale(1)}}
-@keyframes slideFromRight{0%{opacity:0;transform:translateX(70px) scale(.96)}70%{opacity:1;transform:translateX(-8px) scale(1.01)}100%{opacity:1;transform:translateX(0) scale(1)}}
-@keyframes titleReveal{0%{opacity:0;transform:translateY(26px);letter-spacing:.05em}100%{opacity:1;transform:translateY(0);letter-spacing:-.06em}}
-@keyframes iconPop{0%{opacity:0;transform:scale(.4) rotate(-12deg)}65%{opacity:1;transform:scale(1.12) rotate(3deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
-@keyframes backgroundDrift{0%{transform:translate3d(-4%,-2%,0) scale(1)}50%{transform:translate3d(4%,2%,0) scale(1.08)}100%{transform:translate3d(-4%,-2%,0) scale(1)}}
-body{position:relative;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:-25%;pointer-events:none;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.035),transparent 30%),radial-gradient(circle at 70% 70%,rgba(255,255,255,.025),transparent 28%);animation:backgroundDrift 11s ease-in-out infinite}
-h1{animation:titleReveal .8s .12s cubic-bezier(.18,.85,.25,1) both !important}
-.eyebrow{animation:itemIn .55s .02s cubic-bezier(.2,.8,.2,1) both !important}.tag{animation:itemIn .6s .22s cubic-bezier(.2,.8,.2,1) both !important}
-.link{opacity:0;will-change:transform,opacity}
-.links .link:nth-child(1){animation:slideFromLeft .78s .32s cubic-bezier(.16,.86,.24,1) forwards}.links .link:nth-child(2){animation:slideFromRight .78s .47s cubic-bezier(.16,.86,.24,1) forwards}.links .link:nth-child(3){animation:slideFromLeft .78s .62s cubic-bezier(.16,.86,.24,1) forwards}
-.links .link:nth-child(1) .icon-wrap{animation:iconPop .58s .66s cubic-bezier(.2,.9,.25,1) both}.links .link:nth-child(2) .icon-wrap{animation:iconPop .58s .81s cubic-bezier(.2,.9,.25,1) both}.links .link:nth-child(3) .icon-wrap{animation:iconPop .58s .96s cubic-bezier(.2,.9,.25,1) both}
-.arrow{transition:transform .22s cubic-bezier(.2,.8,.2,1)}
-html,body{background:linear-gradient(145deg,#000 0%,#030303 22%,#080808 46%,#101010 68%,#070707 84%,#000 100%) !important;background-size:240% 240% !important;animation:smoothBackgroundDrift 20s ease-in-out infinite !important}
-body::after{content:"";position:fixed;inset:-30%;pointer-events:none;z-index:0;opacity:.18;background:radial-gradient(circle at 25% 30%,rgba(255,255,255,.055),transparent 24%),radial-gradient(circle at 72% 62%,rgba(255,255,255,.035),transparent 28%);filter:blur(65px);animation:verySoftGlow 18s ease-in-out infinite alternate}
-.wrap{position:relative;z-index:1}
+.arrow{
+  font-size:28px;
+  flex:0 0 auto;
+  transition:transform .22s cubic-bezier(.2,.8,.2,1);
+  animation:arrowIdle 2.4s ease-in-out infinite;
+}
+.footer{
+  color:#555;
+  font-size:10px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  margin-top:24px;
+  padding-top:18px;
+  border-top:1px solid #141414;
+  animation:footerRise .7s 1s cubic-bezier(.2,.8,.2,1) both;
+}
+.links .link:nth-child(1){animation:megaSlideLeft .9s .32s cubic-bezier(.14,.88,.22,1) forwards}
+.links .link:nth-child(2){animation:megaSlideRight .9s .46s cubic-bezier(.14,.88,.22,1) forwards}
+.links .link:nth-child(3){animation:megaSlideLeft .9s .60s cubic-bezier(.14,.88,.22,1) forwards}
+.links .link:nth-child(4){animation:megaSlideRight .9s .74s cubic-bezier(.14,.88,.22,1) forwards}
+.links .link:nth-child(2) .icon-wrap{animation-delay:.5s}
+.links .link:nth-child(3) .icon-wrap{animation-delay:.9s}
+.links .link:nth-child(4) .icon-wrap{animation-delay:1.3s}
+.links .link:nth-child(2) .arrow{animation-delay:.35s}
+.links .link:nth-child(3) .arrow{animation-delay:.7s}
+.links .link:nth-child(4) .arrow{animation-delay:1.05s}
+@media (hover:hover) and (pointer:fine){
+  .link:hover{
+    transform:translateY(-7px) scale(1.065) !important;
+    background:rgba(30,30,30,.96);
+    border-color:rgba(255,255,255,.92);
+    box-shadow:0 20px 48px rgba(0,0,0,.58),0 0 0 1px rgba(255,255,255,.11) inset,0 0 30px rgba(255,255,255,.10);
+    filter:brightness(1.14);
+    z-index:5;
+  }
+  .link.primary:hover{
+    background:#fff;
+    border-color:#fff;
+    box-shadow:0 22px 52px rgba(0,0,0,.62),0 0 34px rgba(255,255,255,.22);
+    filter:brightness(1.03);
+  }
+  .link:hover .icon-wrap{transform:scale(1.16) rotate(-3deg);border-color:rgba(255,255,255,.75)}
+  .link:hover .value{text-shadow:0 0 15px rgba(255,255,255,.18)}
+  .link.primary:hover .value{text-shadow:none}
+  .link:hover .arrow{transform:translateX(9px) scale(1.12)}
+  .link:not(.primary):hover::before{transform:translateX(140%)}
+}
+.link:focus-visible{outline:none;transform:translateY(-5px) scale(1.045);border-color:#fff;box-shadow:0 18px 42px rgba(0,0,0,.55),0 0 0 2px rgba(255,255,255,.32)}
+.link:active{transform:translateY(-1px) scale(.975)}
 @keyframes smoothBackgroundDrift{0%{background-position:0% 45%}50%{background-position:100% 55%}100%{background-position:0% 45%}}
 @keyframes verySoftGlow{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(2%,1%,0) scale(1.03)}}
-h1{position:relative;color:transparent;background:linear-gradient(90deg,#fff 0%,#aaa 22%,#fff 42%,#fff 64%,#999 82%,#fff 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;animation:titleReveal .8s .12s cubic-bezier(.18,.85,.25,1) both,titleShimmer 5.8s 1.15s linear infinite !important}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes itemIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes titleReveal{0%{opacity:0;transform:translateY(26px);letter-spacing:.05em}100%{opacity:1;transform:translateY(0);letter-spacing:-.06em}}
 @keyframes titleShimmer{0%{background-position:200% center}100%{background-position:-20% center}}
-.eyebrow{animation:itemIn .55s .02s cubic-bezier(.2,.8,.2,1) both,softTextGlow 4s 1s ease-in-out infinite !important}.tag{animation:itemIn .65s .2s cubic-bezier(.2,.8,.2,1) both,tagFloat 5.5s 1.2s ease-in-out infinite !important}
 @keyframes softTextGlow{0%,100%{text-shadow:0 0 0 rgba(255,255,255,0)}50%{text-shadow:0 0 18px rgba(255,255,255,.16)}}
 @keyframes tagFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.links{perspective:900px}
 @keyframes megaSlideLeft{0%{opacity:0;transform:translateX(-95px) rotateY(8deg) scale(.94);filter:blur(7px)}65%{opacity:1;transform:translateX(10px) rotateY(-1deg) scale(1.015);filter:blur(0)}100%{opacity:1;transform:translateX(0) rotateY(0) scale(1);filter:blur(0)}}
 @keyframes megaSlideRight{0%{opacity:0;transform:translateX(95px) rotateY(-8deg) scale(.94);filter:blur(7px)}65%{opacity:1;transform:translateX(-10px) rotateY(1deg) scale(1.015);filter:blur(0)}100%{opacity:1;transform:translateX(0) rotateY(0) scale(1);filter:blur(0)}}
-.links .link:nth-child(1){animation:megaSlideLeft .9s .32s cubic-bezier(.14,.88,.22,1) forwards !important}.links .link:nth-child(2){animation:megaSlideRight .9s .48s cubic-bezier(.14,.88,.22,1) forwards !important}.links .link:nth-child(3){animation:megaSlideLeft .9s .64s cubic-bezier(.14,.88,.22,1) forwards !important}
-.link{position:relative;overflow:hidden;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:rgba(8,8,8,.72);transform-origin:center;transition:transform .32s cubic-bezier(.16,.9,.24,1),background-color .28s ease,border-color .28s ease,box-shadow .32s ease,filter .28s ease !important}
-.link:not(.primary)::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.055) 48%,transparent 72%);transform:translateX(-140%);transition:transform .75s ease}.link:not(.primary):hover::before{transform:translateX(140%)}
-.link.primary{position:relative;overflow:hidden;background:#fff;animation-name:megaSlideLeft !important;animation-duration:.9s !important;animation-delay:.32s !important;animation-timing-function:cubic-bezier(.14,.88,.22,1) !important;animation-fill-mode:forwards !important;animation-iteration-count:1 !important}
-.link.primary::after{content:"";position:absolute;top:-60%;left:-45%;width:35%;height:220%;background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent);transform:rotate(18deg);animation:buttonSweep 4.2s 1.4s ease-in-out infinite;pointer-events:none}
 @keyframes buttonSweep{0%,35%{left:-45%}62%,100%{left:125%}}
-.icon-wrap{position:relative;animation:iconHover 3.6s ease-in-out infinite}.links .link:nth-child(2) .icon-wrap{animation-delay:.6s}.links .link:nth-child(3) .icon-wrap{animation-delay:1.1s}
 @keyframes iconHover{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(2deg)}}
-.arrow{animation:arrowIdle 2.4s ease-in-out infinite}.links .link:nth-child(2) .arrow{animation-delay:.45s}.links .link:nth-child(3) .arrow{animation-delay:.9s}
 @keyframes arrowIdle{0%,70%,100%{transform:translateX(0)}82%{transform:translateX(6px)}90%{transform:translateX(2px)}}
-.footer{animation:footerRise .7s 1s cubic-bezier(.2,.8,.2,1) both !important}@keyframes footerRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@media (hover:hover) and (pointer:fine){.link:hover{transform:translateY(-7px) scale(1.065) !important;background:rgba(30,30,30,.96) !important;border-color:rgba(255,255,255,.92) !important;box-shadow:0 20px 48px rgba(0,0,0,.58),0 0 0 1px rgba(255,255,255,.11) inset,0 0 30px rgba(255,255,255,.10) !important;filter:brightness(1.14);z-index:5}.link.primary:hover{background:#fff !important;border-color:#fff !important;box-shadow:0 22px 52px rgba(0,0,0,.62),0 0 34px rgba(255,255,255,.22) !important;filter:brightness(1.03)}.link:hover .icon-wrap{transform:scale(1.16) rotate(-3deg) !important;border-color:rgba(255,255,255,.75)}.link:hover .value{text-shadow:0 0 15px rgba(255,255,255,.18)}.link.primary:hover .value{text-shadow:none}.link:hover .arrow{transform:translateX(9px) scale(1.12) !important}}
-.link:focus-visible{outline:none;transform:translateY(-5px) scale(1.045) !important;border-color:#fff !important;box-shadow:0 18px 42px rgba(0,0,0,.55),0 0 0 2px rgba(255,255,255,.32) !important}.link:active{transform:translateY(-1px) scale(.975) !important}
-@media(max-width:560px){@keyframes megaSlideLeft{0%{opacity:0;transform:translateX(-58px) scale(.95);filter:blur(5px)}70%{opacity:1;transform:translateX(7px) scale(1.01);filter:blur(0)}100%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}}@keyframes megaSlideRight{0%{opacity:0;transform:translateX(58px) scale(.95);filter:blur(5px)}70%{opacity:1;transform:translateX(-7px) scale(1.01);filter:blur(0)}100%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}html,body,body::before,body::after{animation:none !important}.link,.link.primary,.icon-wrap,h1,.eyebrow,.tag,.footer{animation:none !important;opacity:1 !important;transform:none !important;filter:none !important}}
+@keyframes footerRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:420px){.value{font-size:19px}.link{min-height:80px;padding:14px}.icon-wrap{width:40px;height:40px}.icon{width:20px;height:20px}}
+@media(max-width:560px){
+  @keyframes megaSlideLeft{0%{opacity:0;transform:translateX(-58px) scale(.95);filter:blur(5px)}70%{opacity:1;transform:translateX(7px) scale(1.01);filter:blur(0)}100%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}}
+  @keyframes megaSlideRight{0%{opacity:0;transform:translateX(58px) scale(.95);filter:blur(5px)}70%{opacity:1;transform:translateX(-7px) scale(1.01);filter:blur(0)}100%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}}
+}
+@media(prefers-reduced-motion:reduce){html,body,body::before,h1,.eyebrow,.tag,.link,.icon-wrap,.arrow,.footer{animation:none !important;transform:none !important;opacity:1 !important;filter:none !important}}
 </style>
 </head>
 <body>
 <main class="wrap">
   <div class="eyebrow">Digital contact card</div>
   <h1>High Style<br>Creative</h1>
-  <p class="tag">Capturing Culinary Creativity<br>Hospitality Photography & Content</p>
+  <p class="tag">Capturing Culinary Creativity<br>Hospitality Photography &amp; Content</p>
   <div class="links">
     <a class="link primary" href="booking.html">
-      <div class="left">
-        <div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <div><span class="label">Bookings</span><span class="value">Book a Shoot</span><span class="note">Send a booking request</span></div>
-      </div>
-      <div class="arrow">→</div>
+      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><span class="label">Bookings</span><span class="value">Book a Shoot</span><span class="note">Send a booking request</span></div></div><div class="arrow">→</div>
+    </a>
+    <a class="link" href="website.html">
+      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.8 12h16.4M12 3.5c2.1 2.3 3.2 5.1 3.2 8.5S14.1 18.2 12 20.5M12 3.5C9.9 5.8 8.8 8.6 8.8 12s1.1 6.2 3.2 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><span class="label">Website</span><span class="value">View Website</span><span class="note">Portfolio, services &amp; about</span></div></div><div class="arrow">→</div>
     </a>
     <a class="link" href="https://www.instagram.com/high_style_creative/" target="_blank" rel="noopener">
-      <div class="left">
-        <div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></div>
-        <div><span class="label">Instagram</span><span class="value">@high_style_creative</span><span class="note">Tap to view profile</span></div>
-      </div>
-      <div class="arrow">→</div>
+      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></div><div><span class="label">Instagram</span><span class="value">@high_style_creative</span><span class="note">Tap to view profile</span></div></div><div class="arrow">→</div>
     </a>
     <a class="link" href="tel:+447555481441">
-      <div class="left">
-        <div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <div><span class="label">Phone</span><span class="value">07555 481441</span><span class="note">Tap to call</span></div>
-      </div>
-      <div class="arrow">→</div>
+      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><span class="label">Phone</span><span class="value">07555 481441</span><span class="note">Tap to call</span></div></div><div class="arrow">→</div>
     </a>
   </div>
   <div class="footer">Powered by High Style Cards</div>
