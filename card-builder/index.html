@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>High Style Cards — Builder</title>
+  <link rel="stylesheet" href="builder.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="kicker">High Style Cards</p>
+      <h1>Card Builder</h1>
+      <p class="sub">Private workspace · drafts save on this browser only</p>
+    </div>
+    <div class="top-actions">
+      <button class="btn ghost" id="loadHighStyle">Load High Style</button>
+      <button class="btn" id="saveDraft">Save Draft</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="editor-panel">
+      <div class="section-head">
+        <div>
+          <span>01</span>
+          <h2>Brand</h2>
+        </div>
+        <button class="tiny" id="resetBuilder">Reset</button>
+      </div>
+
+      <div class="grid two">
+        <label>Business name<input id="businessName" placeholder="Your Brand"></label>
+        <label>Brand slug<input id="slug" placeholder="your-brand"></label>
+        <label>Person name<input id="personName" placeholder="Optional"></label>
+        <label>Role / service<input id="role" placeholder="Hospitality Photography & Content"></label>
+      </div>
+      <label>Tagline<textarea id="tagline" rows="2" placeholder="A short line about the brand"></textarea></label>
+      <label>Location<input id="location" placeholder="UK / Manchester / Areas covered"></label>
+
+      <div class="logo-row">
+        <label class="grow">Logo URL or path<input id="logo" placeholder="https://... or ../logo.svg"></label>
+        <label class="upload">Upload preview<input type="file" id="logoUpload" accept="image/*"></label>
+      </div>
+      <p class="hint">Uploaded logos are used in this builder and included in the exported config as image data. For live cards, a proper hosted logo file is better.</p>
+
+      <div class="section-head"><div><span>02</span><h2>Colours</h2></div></div>
+      <div class="colour-grid">
+        <label>Background<div class="colour"><input type="color" id="background"><input id="backgroundText"></div></label>
+        <label>Surface<div class="colour"><input type="color" id="surface"><input id="surfaceText"></div></label>
+        <label>Text<div class="colour"><input type="color" id="text"><input id="textText"></div></label>
+        <label>Muted<div class="colour"><input type="color" id="muted"><input id="mutedText"></div></label>
+        <label>Accent<div class="colour"><input type="color" id="accent"><input id="accentText"></div></label>
+        <label>Accent text<div class="colour"><input type="color" id="accentTextColour"><input id="accentTextColourText"></div></label>
+      </div>
+
+      <div class="section-head"><div><span>03</span><h2>Contact</h2></div></div>
+      <div class="grid two">
+        <label>Phone<input id="phone" placeholder="+447... or 07..."></label>
+        <label>Phone display<input id="phoneDisplay" placeholder="07555 123456"></label>
+        <label>WhatsApp<input id="whatsapp" placeholder="+447..."></label>
+        <label>Email<input id="email" type="email" placeholder="hello@brand.co.uk"></label>
+        <label>Website<input id="website" placeholder="https://..."></label>
+        <label>Booking / enquiry link<input id="bookingUrl" placeholder="https://..."></label>
+        <label>Booking button text<input id="bookingLabel" placeholder="Make an Enquiry"></label>
+      </div>
+
+      <div class="section-head"><div><span>04</span><h2>Socials</h2></div></div>
+      <div class="grid two">
+        <label>Instagram URL<input id="instagram" placeholder="https://instagram.com/..."></label>
+        <label>Instagram label<input id="instagramLabel" placeholder="@brand"></label>
+        <label>LinkedIn<input id="linkedin" placeholder="https://linkedin.com/..."></label>
+        <label>TikTok<input id="tiktok" placeholder="https://tiktok.com/@..."></label>
+      </div>
+
+      <div class="section-head"><div><span>05</span><h2>Content</h2></div></div>
+      <label>Services<textarea id="services" rows="5" placeholder="Food Photography&#10;Drink Photography&#10;Social Content"></textarea><small>One service per line.</small></label>
+      <label>Testimonial<textarea id="review" rows="3" placeholder="Optional customer review"></textarea></label>
+      <label>Gallery image URLs<textarea id="gallery" rows="5" placeholder="https://.../image-1.jpg&#10;https://.../image-2.jpg"></textarea><small>One image URL per line.</small></label>
+
+      <div class="section-head"><div><span>06</span><h2>Finish</h2></div></div>
+      <label>Footer<input id="footer" value="Powered by High Style Cards"></label>
+      <div class="finish-actions">
+        <button class="btn" id="copyConfig">Copy Brand Config</button>
+        <button class="btn secondary" id="downloadConfig">Download JSON</button>
+        <button class="btn ghost" id="copyPreviewLink">Copy Preview Link</button>
+      </div>
+      <div class="status" id="status" aria-live="polite"></div>
+      <details class="config-box">
+        <summary>Show generated config</summary>
+        <pre id="configOutput"></pre>
+      </details>
+    </section>
+
+    <aside class="preview-panel">
+      <div class="preview-top">
+        <div>
+          <p class="kicker">Live preview</p>
+          <h2>Customer view</h2>
+        </div>
+        <span class="live-dot">LIVE</span>
+      </div>
+      <div class="phone-shell">
+        <div class="phone-notch"></div>
+        <div class="card-preview" id="cardPreview">
+          <div class="preview-scroll">
+            <div class="preview-brand">
+              <div class="preview-logo" id="previewLogo">HS</div>
+              <p class="preview-eyebrow">Digital business card</p>
+              <h3 id="previewBusiness">High Style Creative</h3>
+              <p id="previewPerson" class="preview-person"></p>
+              <p id="previewRole" class="preview-role">Hospitality Photography & Content</p>
+              <p id="previewTagline" class="preview-tagline">Capturing Culinary Creativity</p>
+              <p id="previewLocation" class="preview-location">UK</p>
+            </div>
+            <div id="previewButtons" class="preview-buttons"></div>
+            <div id="previewServicesWrap" class="preview-section">
+              <p class="preview-label">Services</p>
+              <div id="previewServices" class="chips"></div>
+            </div>
+            <div id="previewReviewWrap" class="preview-section review-card">
+              <p class="preview-label">Kind words</p>
+              <blockquote id="previewReview"></blockquote>
+            </div>
+            <div id="previewGalleryWrap" class="preview-section">
+              <p class="preview-label">Gallery</p>
+              <div id="previewGallery" class="mini-gallery"></div>
+            </div>
+            <p id="previewFooter" class="preview-footer">Powered by High Style Cards</p>
+          </div>
+        </div>
+      </div>
+      <p class="preview-note">Nothing from the builder is published until you add the exported brand config to the live cards system.</p>
+    </aside>
+  </main>
+
+  <script src="builder.js"></script>
+</body>
+</html>
