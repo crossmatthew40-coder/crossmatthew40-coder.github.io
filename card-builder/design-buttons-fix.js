@@ -106,30 +106,35 @@
     return true;
   }
 
-  function applyBrand(){
+  async function applyBrand(){
     const coloursApplied = applyColours(false);
     const logoApplied = applyLogo();
-    if (!coloursApplied && !logoApplied) {
+    const styleApplied = typeof window.applyHighStyleBrandTreatment === 'function'
+      ? window.applyHighStyleBrandTreatment(true)
+      : false;
+
+    let reviewsAdded = false;
+    if (typeof window.applyHighStyleTripadvisorReviews === 'function') {
+      try { reviewsAdded = await window.applyHighStyleTripadvisorReviews(true); } catch(e) {}
+    }
+
+    if (!coloursApplied && !logoApplied && !styleApplied && !reviewsAdded) {
       showStatus('Scan a website first so I can copy its branding.', true);
       return;
     }
+
     update();
-    showStatus('Website branding applied — colours, buttons, logo, font and card style updated.');
+    showStatus(reviewsAdded
+      ? 'Website branding applied — style, colours, logo and Tripadvisor Reviews added.'
+      : 'Website branding applied — style, colours, buttons, logo and typography updated.');
   }
 
   colourButton.textContent = 'Copy Brand Colours + Buttons';
   brandButton.textContent = 'Copy Website Branding';
 
-  colourButton.addEventListener('click', () => {
-    // This direct DOM fallback makes the control independent of the scanner's temporary in-memory data.
-    applyColours(true);
-  });
-  brandButton.addEventListener('click', () => {
-    // Existing branding handlers still add font/layout treatment; this guarantees colours + logo always apply.
-    applyBrand();
-  });
+  colourButton.addEventListener('click', () => applyColours(true));
+  brandButton.addEventListener('click', () => applyBrand());
 
-  // Keep buttons usable after a successful scan and visually signal when there is data to copy.
   const palette = document.getElementById('designPalette');
   if (palette) {
     const refresh = () => {
@@ -137,7 +142,7 @@
       colourButton.dataset.ready = ready ? '1' : '0';
       brandButton.dataset.ready = ready ? '1' : '0';
       colourButton.title = ready ? 'Apply the detected website palette to the card' : 'Scan a website first';
-      brandButton.title = ready ? 'Apply the detected website branding to the card' : 'Scan a website first';
+      brandButton.title = ready ? 'Apply the detected website style, branding and reviews to the card' : 'Scan a website first';
     };
     new MutationObserver(refresh).observe(palette,{childList:true,subtree:true,characterData:true});
     refresh();
