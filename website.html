@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High Style Creative — Hospitality Photography & Content</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Jost:wght@300;400;500;600;700&display=swap');
+
+  :root{
+    --bg:#0a0a0a;
+    --bg-alt:#121110;
+    --fg:#f5f5f0;
+    --muted:#9a9a94;
+    --line:rgba(245,245,240,0.14);
+    --line-strong:rgba(245,245,240,0.32);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Jost', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+  }
+  a{color:inherit;}
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 32px; }
+  section{ padding:120px 0; }
+  section[id]{ scroll-margin-top:88px; }
+  .eyebrow{
+    font-size:0.72rem; letter-spacing:0.32em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:18px; display:block;
+  }
+  h1,h2,h3{ font-family:'Jost', sans-serif; text-transform:uppercase; font-weight:600; }
+  .italic{ font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:400; text-transform:none; }
+
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 32px; background:rgba(10,10,10,0.85); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-mark{ display:flex; align-items:center; gap:10px; font-size:0.85rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; }
+  .nav-mark img{ width:30px; height:30px; border-radius:50%; }
+  .nav-links{ display:flex; gap:32px; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; }
+  .nav-links a{ text-decoration:none; opacity:0.8; transition:opacity 0.2s; }
+  .nav-links a:hover{ opacity:1; }
+  .nav-cta{
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    border:1px solid var(--line-strong); padding:10px 20px; border-radius:2px;
+    text-decoration:none; transition:background 0.2s, border-color 0.2s;
+  }
+  .nav-cta:hover{ background:var(--fg); color:var(--bg); border-color:var(--fg); }
+  @media (max-width:820px){ .nav-links{ display:none; } }
+
+  .hero{
+    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding-top:120px; position:relative; overflow:hidden;
+  }
+  .hero-badge{ width:132px; height:132px; border-radius:50%; margin-bottom:40px; }
+  .hero h1{ font-size:clamp(2.6rem, 6vw, 4.6rem); letter-spacing:0.05em; line-height:1.1; }
+  .hero h1 span{ display:block; }
+  .hero .rule{ width:60px; height:1px; background:var(--line-strong); margin:28px 0 24px; }
+  .hero p.italic{ font-size:1.5rem; margin-bottom:44px; color:var(--fg); }
+  .hero-ctas{ display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
+  .btn{
+    display:inline-block; padding:16px 34px; font-size:0.78rem; letter-spacing:0.16em;
+    text-transform:uppercase; text-decoration:none; border-radius:2px; transition:all 0.2s;
+  }
+  .btn-primary{ background:var(--fg); color:var(--bg); }
+  .btn-primary:hover{ background:var(--fg); opacity:0.85; }
+  .btn-ghost{ border:1px solid var(--line-strong); color:var(--fg); }
+  .btn-ghost:hover{ border-color:var(--fg); }
+
+  .portfolio{ background:var(--bg-alt); }
+  .section-head{ text-align:center; max-width:640px; margin:0 auto 64px; }
+  .section-head h2{ font-size:2.2rem; letter-spacing:0.08em; margin-bottom:18px; }
+  .section-head p{ color:var(--muted); font-size:0.95rem; }
+  .grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; }
+  .tile{
+    position:relative; aspect-ratio:4/5; overflow:hidden;
+    background:linear-gradient(135deg, #1c1a17 0%, #0a0a0a 60%);
+    clip-path:polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
+    display:flex; align-items:flex-end; padding:22px;
+  }
+  .tile span{ font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
+  .tile:hover span{ color:var(--fg); }
+  @media (max-width:820px){ .grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:520px){ .grid{ grid-template-columns:1fr; } }
+
+  .services-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+  .plan{
+    border:1px solid var(--line); border-radius:8px; padding:40px 30px;
+    display:flex; flex-direction:column; transition:border-color 0.2s;
+  }
+  .plan:hover{ border-color:var(--line-strong); }
+  .plan.featured{ border-color:var(--line-strong); background:rgba(245,245,240,0.03); }
+  .plan-name{ font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+  .plan-price{ font-size:2rem; font-weight:600; margin-bottom:6px; }
+  .plan-desc{ color:var(--muted); font-size:0.88rem; margin-bottom:26px; }
+  .plan ul{ list-style:none; margin-bottom:32px; flex:1; }
+  .plan li{ font-size:0.88rem; padding:9px 0; border-top:1px solid var(--line); color:var(--fg); }
+  .plan li:first-child{ border-top:none; }
+  @media (max-width:820px){ .services-grid{ grid-template-columns:1fr; } }
+
+  .about{ background:var(--bg-alt); }
+  .about-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center; }
+  .about-portrait{
+    aspect-ratio:4/5; background:linear-gradient(160deg,#1c1a17,#0a0a0a);
+    clip-path:polygon(0 0, 100% 0, 100% 100%, 12% 100%, 0 88%);
+    display:flex; align-items:center; justify-content:center; color:var(--muted);
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+  }
+  .about-copy p{ color:var(--muted); margin-bottom:18px; font-size:0.98rem; }
+  .about-copy p:last-child{ margin-bottom:0; }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; } }
+
+  .contact-inner{ max-width:520px; margin:0 auto; text-align:center; }
+  .links{ display:flex; flex-direction:column; gap:16px; margin-top:48px; text-align:left; }
+  a.row{
+    display:flex; align-items:center; gap:18px; text-decoration:none; color:var(--fg);
+    border:1px solid var(--line); border-radius:16px; padding:20px 22px;
+    transition:background 0.2s, border-color 0.2s;
+  }
+  a.row:hover{ background:rgba(245,245,240,0.05); border-color:var(--line-strong); }
+  .icon{ width:36px; height:36px; flex:none; display:flex; align-items:center; justify-content:center; }
+  .icon svg{ width:100%; height:100%; }
+  .divider{ width:1px; align-self:stretch; background:var(--line); flex:none; }
+  .row-text{ flex:1; text-align:left; }
+  .label{ font-size:0.66rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:4px; }
+  .value{ font-size:1.1rem; font-weight:500; display:block; margin-bottom:4px; }
+  .hint{ font-size:0.64rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); display:block; }
+  .chev{ flex:none; width:16px; height:16px; opacity:0.8; }
+
+  footer{
+    padding:48px 0; text-align:center; border-top:1px solid var(--line);
+    font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted);
+  }
+
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(22px); } to{ opacity:1; transform:translateY(0); } }
+  .load-in{ opacity:0; animation:riseIn 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .load-2{ animation-delay:0.18s; }
+  .load-3{ animation-delay:0.34s; }
+  .load-4{ animation-delay:0.44s; }
+  .load-5{ animation-delay:0.56s; }
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .reveal-d1.in-view{ transition-delay:0.08s; }
+  .reveal-d2.in-view{ transition-delay:0.16s; }
+  .reveal-d3.in-view{ transition-delay:0.24s; }
+  .reveal-d4.in-view{ transition-delay:0.32s; }
+  .reveal-d5.in-view{ transition-delay:0.4s; }
+  .tile{ transition:transform 0.5s cubic-bezier(0.16,1,0.3,1), background 0.5s; }
+  .tile:hover{ transform:translateY(-6px); }
+  .plan{ transition:transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s; }
+  .plan:hover{ transform:translateY(-6px); }
+  .btn{ position:relative; overflow:hidden; }
+  .btn-ghost::after{ content:""; position:absolute; left:0; bottom:0; width:100%; height:100%; background:var(--fg); transform:scaleX(0); transform-origin:left; transition:transform 0.35s cubic-bezier(0.16,1,0.3,1); z-index:-1; }
+  .btn-ghost:hover::after{ transform:scaleX(1); }
+  .btn-ghost:hover{ color:var(--bg); }
+  .hero-badge{ animation:riseIn 0.9s cubic-bezier(0.16,1,0.3,1) forwards, spinIn 1.4s ease-out forwards; }
+  @keyframes spinIn{ from{ transform:rotate(-8deg) scale(0.92); } to{ transform:rotate(0) scale(1); } }
+  a.row{ transition:background 0.25s, border-color 0.25s, transform 0.25s; }
+  a.row:hover{ transform:translateX(4px); }
+  @media (prefers-reduced-motion: reduce){ .load-in, .reveal, .hero-badge{ animation:none !important; transition:none !important; opacity:1 !important; transform:none !important; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-mark"><img src="high-style-logo.svg" alt="High Style Creative">High Style Creative</div>
+  <div class="nav-links"><a href="#portfolio">Portfolio</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+  <a class="nav-cta" href="booking.html">Book a shoot</a>
+</nav>
+<section class="hero">
+  <img class="hero-badge" src="high-style-logo.svg" alt="High Style Creative logo">
+  <h1 class="load-in load-2"><span>High Style</span><span>Creative</span></h1>
+  <div class="rule load-in load-3"></div>
+  <p class="italic load-in load-4">Capturing Culinary Creativity</p>
+  <div class="hero-ctas load-in load-5"><a class="btn btn-primary" href="#portfolio">View portfolio</a><a class="btn btn-ghost" href="booking.html">Book a shoot</a></div>
+</section>
+<section class="portfolio" id="portfolio"><div class="wrap"><div class="section-head reveal"><span class="eyebrow">Selected work</span><h2>Portfolio</h2><p>Plated dishes, dining rooms, and the people behind the pass — shot for menus, socials, and press.</p></div><div class="grid"><div class="tile reveal"><span>Plated dishes</span></div><div class="tile reveal reveal-d1"><span>Dining room ambience</span></div><div class="tile reveal reveal-d2"><span>Chef &amp; team portraits</span></div><div class="tile reveal reveal-d3"><span>Drinks &amp; bar</span></div><div class="tile reveal reveal-d4"><span>Behind the pass</span></div><div class="tile reveal reveal-d5"><span>Social content</span></div></div></div></section>
+<section class="services" id="services"><div class="wrap"><div class="section-head reveal"><span class="eyebrow">Rates</span><h2>Services &amp; pricing</h2><p>Straightforward packages built around a single service — ask about custom scopes for multi-day or multi-venue shoots.</p></div><div class="services-grid"><div class="plan reveal"><span class="plan-name">Menu Shoot</span><div class="plan-price">£350</div><p class="plan-desc">Half-day, single location — ideal for a seasonal menu refresh.</p><ul><li>Up to 12 plated dishes</li><li>2 hour shoot window</li><li>15 edited high-res images</li><li>Web + print ready files</li></ul><a class="btn btn-ghost" href="booking.html">Enquire</a></div><div class="plan featured reveal reveal-d1"><span class="plan-name">Full Venue</span><div class="plan-price">£650</div><p class="plan-desc">Food, space, and people in one session — the most popular package.</p><ul><li>Full-day coverage</li><li>Dishes, interiors &amp; team portraits</li><li>35 edited high-res images</li><li>5 vertical social crops included</li></ul><a class="btn btn-primary" href="booking.html">Enquire</a></div><div class="plan reveal reveal-d2"><span class="plan-name">Content Retainer</span><div class="plan-price">From £900/mo</div><p class="plan-desc">Ongoing monthly content for venues that post regularly.</p><ul><li>One shoot day per month</li><li>Rolling social content library</li><li>Priority booking</li><li>Custom scope on request</li></ul><a class="btn btn-ghost" href="booking.html">Enquire</a></div></div></div></section>
+<section class="about" id="about"><div class="wrap about-grid"><div class="about-portrait reveal">Portrait placeholder</div><div class="about-copy reveal reveal-d2"><span class="eyebrow">About</span><h2 style="font-size:2rem; margin-bottom:22px;">Behind the lens</h2><p>High Style Creative is built around one idea: hospitality is a craft, and it deserves to be photographed like one. Every plate, pour, and room has a moment worth catching before the rush starts.</p><p>Based in the North West and available for shoots further afield, working with restaurants, cafés, and bars that want their food and space to look as good in a photo as it does on the pass.</p></div></div></section>
+<section class="contact" id="contact"><div class="wrap contact-inner"><span class="eyebrow reveal">Get in touch</span><h2 style="font-size:2rem;">Let's shoot</h2><p style="color:var(--muted); margin-top:16px;">Tell me about your venue and I'll get back to you with dates and availability.</p><div class="links"><a class="row reveal" href="https://instagram.com/high_style_creative" target="_blank" rel="noopener"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="1.6"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.2" cy="6.8" r="1.1" fill="var(--fg)" stroke="none"/></svg></span><span class="divider"></span><span class="row-text"><span class="label">Instagram</span><span class="value">@high_style_creative</span><span class="hint">Tap to view profile</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a><a class="row reveal reveal-d1" href="tel:+447555481441"><span class="icon"><svg viewBox="0 0 24 24" fill="var(--fg)"><path d="M6.6 10.8c1.4 2.7 3.5 4.9 6.2 6.2l2.1-2.1c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.5 21 3 13.5 3 4.6c0-.6.4-1 1-1h3.7c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg></span><span class="divider"></span><span class="row-text"><span class="label">Phone</span><span class="value">07555 481441</span><span class="hint">Tap to call</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="var(--fg)" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></div></div></section>
+<footer>High Style Creative &middot; Hospitality Photography &amp; Content</footer>
+<script>
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  var revealEls = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(function(el) { observer.observe(el); });
+} else { document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in-view'); }); }
+</script>
+</body>
+</html>
