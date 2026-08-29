@@ -117,16 +117,31 @@
 
   async function scanTripadvisor(run){
     const url = normalise(scanUrl.value);
-    if (!url) return;
+    if (!url) return '';
     tripadvisorUrl = '';
     render();
     const text = await fetchPage(url);
-    if (run !== scanRun) return;
+    if (run !== scanRun) return '';
     tripadvisorUrl = extractTripadvisor(text);
     update();
     render();
     if (tripadvisorUrl) showStatus('Tripadvisor found — Reviews section added automatically.');
+    return tripadvisorUrl;
   }
+
+  window.applyHighStyleTripadvisorReviews = async function(silent=false){
+    if (!tripadvisorUrl) {
+      scanRun += 1;
+      await scanTripadvisor(scanRun);
+    } else {
+      render();
+      update();
+    }
+    if (!silent) {
+      showStatus(tripadvisorUrl ? 'Tripadvisor Reviews added to the card.' : 'No Tripadvisor link was found on this website.', !tripadvisorUrl);
+    }
+    return !!tripadvisorUrl;
+  };
 
   scanButton.addEventListener('click', () => {
     scanRun += 1;
