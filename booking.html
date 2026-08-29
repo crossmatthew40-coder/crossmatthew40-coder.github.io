@@ -2,317 +2,59 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#000000">
 <title>High Style Creative — Book a Shoot</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink: #000000;
-    --white: #ffffff;
-    --grey: #8f8f8f;
-    --line: rgba(255,255,255,0.22);
-    --line-soft: rgba(255,255,255,0.10);
-    --err: #ff5c5c;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--ink);
-    color:var(--white);
-    font-family:'Inter', sans-serif;
-    min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{
-    max-width:720px;
-    margin:0 auto;
-    padding:64px 24px 100px;
-  }
-  header.hero{
-    text-align:center;
-    margin-bottom:52px;
-  }
-  .eyebrow{
-    font-size:12px;
-    letter-spacing:0.32em;
-    text-transform:uppercase;
-    color:var(--white);
-    font-weight:700;
-    margin-bottom:14px;
-  }
-  h1{
-    font-family:'Archivo Black', sans-serif;
-    font-weight:400;
-    text-transform:uppercase;
-    font-size:clamp(34px, 8vw, 54px);
-    line-height:1.05;
-    letter-spacing:0.01em;
-    margin:0 0 20px;
-  }
-  .tagline{
-    color:var(--grey);
-    font-size:12.5px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    font-weight:600;
-  }
-  .tagline .dot{color:var(--white); margin:0 10px;}
-  .ring-divider{
-    width:100%;
-    max-width:340px;
-    margin:36px auto 0;
-    height:4px;
-    border-top:1px solid var(--line-soft);
-    border-bottom:1px solid var(--line-soft);
-  }
-  .section-label{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin:44px 0 22px;
-  }
-  .section-label .dot-mark{
-    width:6px; height:6px;
-    background:var(--white);
-    border-radius:50%;
-    flex-shrink:0;
-  }
-  .section-label span{
-    font-size:12px;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    font-weight:700;
-    white-space:nowrap;
-  }
-  .section-label .line{
-    flex:1;
-    height:1px;
-    background:var(--line-soft);
-  }
-  .section-label:first-of-type{margin-top:0;}
-  form{
-    border:1px solid var(--line);
-    padding:44px clamp(22px, 5vw, 52px) 48px;
-  }
-  .row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:22px;
-  }
-  @media (max-width:560px){
-    .row{grid-template-columns:1fr;}
-    .wrap{padding:48px 16px 72px;}
-    form{padding:32px 20px 36px;}
-  }
-  .field{margin-bottom:24px;}
-  label{
-    display:block;
-    font-size:11.5px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--grey);
-    font-weight:600;
-    margin-bottom:9px;
-  }
-  label .req{color:var(--white); margin-left:2px;}
-  input, select, textarea{
-    width:100%;
-    background:transparent;
-    border:none;
-    border-bottom:1px solid var(--line);
-    color:var(--white);
-    font-family:'Inter', sans-serif;
-    font-size:16px;
-    padding:9px 2px;
-    outline:none;
-    transition:border-color 0.2s ease;
-  }
-  select{
-    appearance:none;
-    -webkit-appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 4px center;
-    padding-right:20px;
-  }
-  select option{background:#000; color:var(--white);}
-  textarea{resize:vertical; min-height:88px; line-height:1.5;}
-  input::placeholder, textarea::placeholder{color:rgba(143,143,143,0.6);}
-  input:focus, select:focus, textarea:focus{border-bottom-color:var(--white);}
-  input:invalid:not(:placeholder-shown){border-bottom-color:var(--err);}
-  button[type="submit"]{
-    width:100%;
-    margin-top:14px;
-    background:var(--white);
-    color:var(--ink);
-    border:none;
-    padding:17px 24px;
-    font-family:'Inter', sans-serif;
-    font-size:13px;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    font-weight:700;
-    cursor:pointer;
-    transition:opacity 0.2s ease, transform 0.15s ease;
-  }
-  button[type="submit"]:hover{opacity:0.82;}
-  button[type="submit"]:active{transform:translateY(1px);}
-  button[type="submit"]:disabled{opacity:0.4; cursor:wait;}
-  .footnote{
-    text-align:center;
-    margin-top:26px;
-    font-size:12.5px;
-    color:var(--grey);
-    line-height:1.6;
-  }
-  .footnote a{color:var(--white); text-decoration:underline; text-underline-offset:3px;}
-  .state{display:none; text-align:center; padding:64px 20px;}
-  .state.active{display:block;}
-  .state h2{
-    font-family:'Archivo Black', sans-serif;
-    font-weight:400;
-    text-transform:uppercase;
-    font-size:28px;
-    margin:20px 0 10px;
-  }
-  .state p{color:var(--grey); font-size:15px; line-height:1.6; max-width:380px; margin:0 auto;}
-  .badge-ring{
-    width:56px; height:56px; margin:0 auto;
-    border-radius:50%;
-    border:1.5px solid var(--white);
-    position:relative;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .badge-ring::before{
-    content:'';
-    position:absolute;
-    inset:4px;
-    border:1.5px solid var(--white);
-    border-radius:50%;
-  }
-  .badge-ring svg{width:20px; height:20px; position:relative; z-index:1;}
-  .again{
-    margin-top:26px;
-    background:transparent;
-    border:1px solid var(--line);
-    color:var(--white);
-    padding:12px 24px;
-    font-size:11.5px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    font-weight:600;
-    cursor:pointer;
-  }
-  .again:hover{border-color:var(--white);}
+:root{--ink:#000;--white:#fff;--grey:#929292;--line:rgba(255,255,255,.2);--soft:rgba(255,255,255,.1);--err:#ff5c5c}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{background:var(--ink);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;min-height:100vh}.wrap{max-width:720px;margin:auto;padding:56px 20px 90px}.hero{text-align:center;margin-bottom:44px}.eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;font-weight:800;margin-bottom:14px}.hero h1{margin:0 0 18px;text-transform:uppercase;font-size:clamp(36px,8vw,56px);line-height:1;letter-spacing:-.04em}.tagline{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}.dot{color:#fff;margin:0 9px}.divider{height:4px;max-width:340px;margin:34px auto 0;border-top:1px solid var(--soft);border-bottom:1px solid var(--soft)}form{border:1px solid var(--line);padding:40px clamp(20px,5vw,48px) 44px}.section{display:flex;align-items:center;gap:10px;margin:38px 0 20px}.section:first-child{margin-top:0}.section b{font-size:11px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}.section:before{content:"";width:6px;height:6px;background:#fff;border-radius:50%}.section:after{content:"";height:1px;background:var(--soft);flex:1}.row{display:grid;grid-template-columns:1fr 1fr;gap:20px}.field{margin-bottom:22px}label{display:block;color:var(--grey);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:8px}input,select,textarea{width:100%;background:transparent;color:#fff;border:0;border-bottom:1px solid var(--line);font:inherit;font-size:16px;padding:10px 2px;outline:none}input:focus,select:focus,textarea:focus{border-bottom-color:#fff}select option{background:#000;color:#fff}textarea{min-height:92px;resize:vertical}button[type=submit]{width:100%;border:0;background:#fff;color:#000;padding:17px 20px;margin-top:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}button:disabled{opacity:.45;cursor:wait}.footnote{text-align:center;color:var(--grey);font-size:12px;line-height:1.6;margin:24px 0 0}.state{display:none;text-align:center;padding:54px 18px}.state.active{display:block}.state h2{font-size:30px;text-transform:uppercase;margin:14px 0 10px}.state p{color:var(--grey);line-height:1.6}.again{margin-top:20px;background:transparent;border:1px solid var(--line);color:#fff;padding:12px 20px;cursor:pointer}.status-dot{width:54px;height:54px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;margin:auto;font-size:24px}.error .status-dot{border-color:var(--err);color:var(--err)}@media(max-width:560px){.row{grid-template-columns:1fr}.wrap{padding:42px 14px 70px}form{padding:30px 18px 34px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="hero">
-    <div class="eyebrow">High Style Creative</div>
-    <h1>Book a Shoot</h1>
-    <div class="tagline">Culinary<span class="dot">•</span>Hospitality<span class="dot">•</span>Creativity</div>
-    <div class="ring-divider"></div>
-  </header>
-  <div id="form-view">
-    <form id="booking-form" action="https://formsubmit.co/mattyc300106@icloud.com" method="POST">
-      <input type="hidden" name="_subject" value="New booking request — High Style Creative">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="text" name="_honey" style="display:none">
-      <div class="section-label"><span class="dot-mark"></span><span>Step 01 — Your Details</span><span class="line"></span></div>
-      <div class="row">
-        <div class="field"><label for="name">Name<span class="req">*</span></label><input id="name" name="Name" type="text" placeholder="Full name" required></div>
-        <div class="field"><label for="business">Business / venue</label><input id="business" name="Business" type="text" placeholder="e.g. The Mallard Inn"></div>
-      </div>
-      <div class="row">
-        <div class="field"><label for="email">Email<span class="req">*</span></label><input id="email" name="Email" type="email" placeholder="you@venue.com" required></div>
-        <div class="field"><label for="phone">Phone</label><input id="phone" name="Phone" type="tel" placeholder="07000 000000"></div>
-      </div>
-      <div class="section-label"><span class="dot-mark"></span><span>Step 02 — The Shoot</span><span class="line"></span></div>
-      <div class="row">
-        <div class="field">
-          <label for="service">Type of shoot<span class="req">*</span></label>
-          <select id="service" name="Type of shoot" required>
-            <option value="" disabled selected>Choose one</option>
-            <option>Menu & dish photography</option>
-            <option>Interior & ambience</option>
-            <option>Event coverage</option>
-            <option>Social content package</option>
-            <option>Not sure yet</option>
-          </select>
-        </div>
-        <div class="field"><label for="date">Preferred date<span class="req">*</span></label><input id="date" name="Preferred date" type="date" required></div>
-      </div>
-      <div class="field"><label for="location">Location</label><input id="location" name="Location" type="text" placeholder="Where's the shoot?"></div>
-      <div class="section-label"><span class="dot-mark"></span><span>Step 03 — Finishing Touches</span><span class="line"></span></div>
-      <div class="field"><label for="message">Anything we should know</label><textarea id="message" name="Notes" placeholder="Dishes to feature, lighting concerns, timing constraints..."></textarea></div>
-      <button type="submit" id="submit-btn">Request Booking</button>
-      <p class="footnote">Submitting sends your request straight to <strong>High Style Creative</strong> — you'll hear back by email or on <a href="https://instagram.com/high_style_creative" target="_blank" rel="noopener">@high_style_creative</a>.</p>
-    </form>
-  </div>
-  <div class="state" id="success-view">
-    <div class="badge-ring"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <h2>Request Sent</h2>
-    <p>Thanks — your booking request has landed in our inbox. We'll confirm availability within one business day.</p>
-    <button class="again" onclick="resetForm()">Submit another request</button>
-  </div>
-  <div class="state" id="error-view">
-    <div class="badge-ring" style="border-color:var(--err)"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16h.01" stroke="#ff5c5c" stroke-width="2" stroke-linecap="round"/></svg></div>
-    <h2>Something Went Wrong</h2>
-    <p>Your request didn't send. Please try again, or reach out directly on Instagram <a href="https://instagram.com/high_style_creative" target="_blank" rel="noopener" style="color:#fff">@high_style_creative</a>.</p>
-    <button class="again" onclick="resetForm()">Try again</button>
-  </div>
+<header class="hero"><div class="eyebrow">High Style Creative</div><h1>Book a Shoot</h1><div class="tagline">Culinary<span class="dot">•</span>Hospitality<span class="dot">•</span>Creativity</div><div class="divider"></div></header>
+<div id="form-view">
+<form id="booking-form">
+<input type="text" name="_honey" style="display:none">
+<input type="hidden" name="_subject" value="New booking request — High Style Creative">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_url" value="https://crossmatthew40-coder.github.io/booking.html">
+<div class="section"><b>Step 01 — Your Details</b></div>
+<div class="row"><div class="field"><label for="name">Name *</label><input id="name" name="Name" type="text" placeholder="Full name" required></div><div class="field"><label for="business">Business / venue</label><input id="business" name="Business" type="text" placeholder="e.g. The Mallard Inn"></div></div>
+<div class="row"><div class="field"><label for="email">Email *</label><input id="email" name="Email" type="email" placeholder="you@venue.com" required></div><div class="field"><label for="phone">Phone</label><input id="phone" name="Phone" type="tel" placeholder="07000 000000"></div></div>
+<div class="section"><b>Step 02 — The Shoot</b></div>
+<div class="row"><div class="field"><label for="service">Type of shoot *</label><select id="service" name="Type of shoot" required><option value="" disabled selected>Choose one</option><option>Menu & dish photography</option><option>Interior & ambience</option><option>Event coverage</option><option>Social content package</option><option>Not sure yet</option></select></div><div class="field"><label for="date">Preferred date *</label><input id="date" name="Preferred date" type="date" required></div></div>
+<div class="field"><label for="location">Location</label><input id="location" name="Location" type="text" placeholder="Where's the shoot?"></div>
+<div class="section"><b>Step 03 — Finishing Touches</b></div>
+<div class="field"><label for="message">Anything we should know</label><textarea id="message" name="Notes" placeholder="Dishes to feature, timing, lighting, special requests..."></textarea></div>
+<button type="submit" id="submit-btn">Request Booking</button>
+<p class="footnote">When this sends successfully, High Style Creative receives the booking details by email.</p>
+</form>
+</div>
+<div class="state" id="success-view"><div class="status-dot">✓</div><h2>Request Sent</h2><p>Your booking request has been sent. High Style Creative will get the details by email and can reply to you.</p><button class="again" onclick="resetForm()">Submit another request</button></div>
+<div class="state error" id="error-view"><div class="status-dot">!</div><h2>Didn't Send</h2><p>Please try again. If this is the first booking submission, check the High Style Creative inbox for a FormSubmit activation email and confirm it.</p><button class="again" onclick="resetForm()">Try again</button></div>
 </div>
 <script>
-  const form = document.getElementById('booking-form');
-  const formView = document.getElementById('form-view');
-  const successView = document.getElementById('success-view');
-  const errorView = document.getElementById('error-view');
-  const submitBtn = document.getElementById('submit-btn');
-  const NTFY_TOPIC = 'hsc-bookings-9247';
-  function notifyPhone(data){
-    const lines = [
-      `${data.get('Name') || 'Someone'} — ${data.get('Type of shoot') || 'shoot'}`,
-      `Date: ${data.get('Preferred date') || 'n/a'}`,
-      `Contact: ${data.get('Email') || ''} ${data.get('Phone') || ''}`.trim()
-    ].join('\n');
-    return fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
-      method: 'POST',
-      headers: { 'Title': 'New booking — High Style Creative', 'Priority': 'high' },
-      body: lines
-    }).catch(() => {});
-  }
-  form.addEventListener('submit', async function(e){
-    e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
-    const data = new FormData(form);
-    try{
-      const res = await fetch(form.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data });
-      if(res.ok){
-        notifyPhone(data);
-        formView.style.display = 'none';
-        successView.classList.add('active');
-      } else {
-        throw new Error('Request failed');
-      }
-    } catch(err){
-      formView.style.display = 'none';
-      errorView.classList.add('active');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Request Booking';
-    }
-  });
-  function resetForm(){
-    successView.classList.remove('active');
-    errorView.classList.remove('active');
-    formView.style.display = 'block';
-    form.reset();
-  }
+const ENDPOINT='https://formsubmit.co/ajax/mattyc300106@icloud.com';
+const form=document.getElementById('booking-form');
+const formView=document.getElementById('form-view');
+const successView=document.getElementById('success-view');
+const errorView=document.getElementById('error-view');
+const submitBtn=document.getElementById('submit-btn');
+form.addEventListener('submit',async(e)=>{
+ e.preventDefault();
+ submitBtn.disabled=true;submitBtn.textContent='Sending…';
+ const fd=new FormData(form);const payload={};for(const [k,v] of fd.entries())payload[k]=v;
+ try{
+  const res=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok || data.success===false)throw new Error('send failed');
+  formView.style.display='none';successView.classList.add('active');form.reset();
+ }catch(err){formView.style.display='none';errorView.classList.add('active')}
+ finally{submitBtn.disabled=false;submitBtn.textContent='Request Booking'}
+});
+function resetForm(){successView.classList.remove('active');errorView.classList.remove('active');formView.style.display='block'}
 </script>
 </body>
 </html>
