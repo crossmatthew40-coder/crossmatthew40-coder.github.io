@@ -38,19 +38,15 @@
   function suitableTagline(raw,businessName){
     let value = String(raw || '').replace(/\s+/g,' ').trim();
     if (!value) return '';
-
     const forbidden = /(cookie|privacy policy|terms and conditions|all rights reserved|copyright|accept cookies|skip to content|navigation|sign up|subscribe|newsletter)/i;
     if (forbidden.test(value)) return '';
     if (/^welcome(?:\s+to)?\b/i.test(value) && value.split(/\s+/).length < 7) return '';
-
     const name = String(businessName || '').trim().toLowerCase();
     if (name && value.toLowerCase() === name) return '';
-
     if (value.length > 145) {
       const first = value.match(/^(.{20,140}?[.!?])(?:\s|$)/);
       value = first ? first[1].trim() : '';
     }
-
     const words = value.split(/\s+/).filter(Boolean);
     if (value.length < 20 || value.length > 145 || words.length < 4) return '';
     if ((value.match(/https?:\/\//gi) || []).length) return '';
@@ -63,27 +59,30 @@
     if (!/^https?:\/\//i.test(value)) value = 'https://' + value;
     try {
       const u = new URL(value);
-      let host = u.hostname.toLowerCase().replace(/^www\./,'');
+      const host = u.hostname.toLowerCase().replace(/^www\./,'');
       const parts = host.split('.').filter(Boolean);
       if (!parts.length) return '';
       const twoPartSuffixes = new Set(['co.uk','org.uk','me.uk','ltd.uk','plc.uk','net.uk','com.au','co.nz']);
       const suffix2 = parts.slice(-2).join('.');
-      let label = parts.length >= 3 && twoPartSuffixes.has(suffix2) ? parts[parts.length-3] : (parts.length >= 2 ? parts[parts.length-2] : parts[0]);
+      const label = parts.length >= 3 && twoPartSuffixes.has(suffix2) ? parts[parts.length-3] : (parts.length >= 2 ? parts[parts.length-2] : parts[0]);
       return typeof cleanSlug === 'function' ? cleanSlug(label) : label.replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
     } catch(e) { return ''; }
   }
 
-  function applyDomainSlug(){
-    const website = rowValue(/^website$/i) || scanUrl.value.trim();
-    const slug = domainSlug(website);
+  function applySlugFrom(raw, force=false){
+    const slug = domainSlug(raw);
     const slugInput = document.getElementById('slug');
-    if (!slug || !slugInput || slugInput.dataset.manual) return false;
+    if (!slug || !slugInput || (!force && slugInput.dataset.manual)) return false;
     if (slugInput.value !== slug) {
       setValue('slug', slug);
       update();
       return true;
     }
     return false;
+  }
+
+  function applyDomainSlug(){
+    return applySlugFrom(rowValue(/^website$/i) || scanUrl.value.trim());
   }
 
   function signature(){
@@ -104,18 +103,9 @@
     const instagramInput = document.getElementById('instagram');
     const instagramLabelInput = document.getElementById('instagramLabel');
 
-    if (taglineInput && taglineInput.value.trim() !== tag) {
-      setValue('tagline', tag);
-      changed = true;
-    }
-    if (instagramInput && instagramInput.value.trim() !== insta.url) {
-      setValue('instagram', insta.url);
-      changed = true;
-    }
-    if (instagramLabelInput && instagramLabelInput.value.trim() !== insta.label) {
-      setValue('instagramLabel', insta.label);
-      changed = true;
-    }
+    if (taglineInput && taglineInput.value.trim() !== tag) { setValue('tagline', tag); changed = true; }
+    if (instagramInput && instagramInput.value.trim() !== insta.url) { setValue('instagram', insta.url); changed = true; }
+    if (instagramLabelInput && instagramLabelInput.value.trim() !== insta.label) { setValue('instagramLabel', insta.label); changed = true; }
 
     const domainApplied = applyDomainSlug();
     if (changed && !domainApplied) update();
@@ -126,9 +116,7 @@
       if (insta.url) bits.push('Instagram');
       if (tag) bits.push('tagline');
       if (domainApplied || domainSlug(rowValue(/^website$/i) || scanUrl.value.trim())) bits.push('domain name');
-      const message = bits.length
-        ? `${bits.join(', ')} added from the website.`
-        : 'Website details checked — no suitable Instagram or tagline was found.';
+      const message = bits.length ? `${bits.join(', ')} added from the website.` : 'Website details checked — no suitable Instagram or tagline was found.';
       showStatus(message);
     }
   }
@@ -147,9 +135,7 @@
   resultsObserver.observe(scanResults,{attributes:true,childList:true,subtree:true,attributeFilter:['class']});
 
   const palette = document.getElementById('designPalette');
-  if (palette) {
-    new MutationObserver(() => setTimeout(enforceBrandColours,30)).observe(palette,{childList:true,subtree:true,characterData:true});
-  }
+  if (palette) new MutationObserver(() => setTimeout(enforceBrandColours,30)).observe(palette,{childList:true,subtree:true,characterData:true});
 
   function startRun(){
     runId += 1;
@@ -170,4 +156,10 @@
 
   scanButton.addEventListener('click',startRun);
   scanUrl.addEventListener('keydown',e=>{ if(e.key==='Enter') startRun(); });
+
+  const websiteInput = document.getElementById('website');
+  if (websiteInput) {
+    websiteInput.addEventListener('change', () => applySlugFrom(websiteInput.value, false));
+    websiteInput.addEventListener('blur', () => applySlugFrom(websiteInput.value, false));
+  }
 })();
