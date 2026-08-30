@@ -14,14 +14,18 @@
     instagram:'<rect class="icon-soft" x="2.8" y="2.8" width="18.4" height="18.4" rx="6.2"/><rect class="icon-stroke" x="4.1" y="4.1" width="15.8" height="15.8" rx="5.2"/><circle class="icon-stroke" cx="12" cy="12" r="3.75"/><circle class="icon-fill" cx="17.2" cy="6.8" r="1.05"/>',
     linkedin:'<rect class="icon-soft" x="2.7" y="2.7" width="18.6" height="18.6" rx="5.2"/><rect class="icon-stroke" x="4" y="4" width="16" height="16" rx="4.3"/><circle class="icon-fill" cx="7.5" cy="8" r="1.1"/><path class="icon-stroke" d="M7.5 11v5.5M11.2 16.5v-5.3M11.2 13.1c.25-1.35 1.16-2.25 2.55-2.25 1.55 0 2.75 1.07 2.75 3.15v2.5"/>',
     tiktok:'<circle class="icon-soft" cx="12" cy="12" r="10"/><path class="icon-stroke" d="M14.2 5.2v8.15a4 4 0 1 1-3.4-3.95"/><path class="icon-stroke" d="M14.2 5.2c.82 2.02 2.15 3.28 4.05 3.65"/><circle class="icon-fill" cx="10.1" cy="15.4" r="1.15"/>',
-    save:'<rect class="icon-soft" x="3" y="3" width="18" height="18" rx="5.4"/><path class="icon-stroke" d="M12 5.8v8.4M8.8 11l3.2 3.2 3.2-3.2M6.3 17.2h11.4"/>'
+    save:'<rect class="icon-soft" x="3" y="3" width="18" height="18" rx="5.4"/><path class="icon-stroke" d="M12 5.8v8.4M8.8 11l3.2 3.2 3.2-3.2M6.3 17.2h11.4"/>',
+    menu:'<rect class="icon-soft" x="3" y="2.8" width="18" height="18.4" rx="5.2"/><path class="icon-stroke" d="M8.2 7.3h7.6M8.2 11.2h7.6M8.2 15.1h4.8"/><circle class="icon-fill" cx="16.8" cy="15.1" r="1.15"/>',
+    reviews:'<circle class="icon-soft" cx="12" cy="12" r="10"/><path class="icon-stroke" d="m12 4.8 2.05 4.16 4.59.67-3.32 3.23.78 4.57L12 15.28l-4.1 2.15.78-4.57-3.32-3.23 4.59-.67L12 4.8Z"/><circle class="icon-fill" cx="12" cy="12" r="1.15"/>'
   };
-  const labels={booking:'Bookings',phone:'Phone',whatsapp:'WhatsApp',email:'Email',website:'Website',instagram:'Instagram',linkedin:'LinkedIn',tiktok:'TikTok',save:'Contact'};
-  const notes={booking:'Open booking or enquiry',phone:'Tap to call',whatsapp:'Start a WhatsApp chat',email:'Compose a new email',website:'Open official website',instagram:'View Instagram profile',linkedin:'View LinkedIn profile',tiktok:'View TikTok profile',save:'Save details to your phone'};
+  const labels={booking:'Bookings',phone:'Phone',whatsapp:'WhatsApp',email:'Email',website:'Website',instagram:'Instagram',linkedin:'LinkedIn',tiktok:'TikTok',save:'Contact',menu:'Menu',reviews:'Reviews'};
+  const notes={booking:'Open booking or enquiry',phone:'Tap to call',whatsapp:'Start a WhatsApp chat',email:'Compose a new email',website:'Open official website',instagram:'View Instagram profile',linkedin:'View LinkedIn profile',tiktok:'View TikTok profile',save:'Save details to your phone',menu:'View food & drink menu',reviews:'Read reviews on Tripadvisor'};
 
   function typeFor(a){
     const href=String(a.getAttribute('href')||'');
     if(a.id==='saveContact') return 'save';
+    if(a.classList.contains('menu-link')) return 'menu';
+    if(a.classList.contains('review-link')) return 'reviews';
     if(brand.bookingUrl&&href===brand.bookingUrl) return 'booking';
     if(href.startsWith('tel:')) return 'phone';
     if(/wa\.me\//i.test(href)) return 'whatsapp';
@@ -38,11 +42,25 @@
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
   }
 
+  function specialValue(type){
+    if(type==='menu') return brand.menuLabel||'View Menu';
+    if(type==='reviews') return 'Read our reviews';
+    return '';
+  }
+
   function decorate(a){
     if(a.dataset.qualityV4) return;
     a.dataset.qualityV4='1';
     const type=typeFor(a);
     a.dataset.actionType=type;
+
+    if(type==='menu'||type==='reviews'){
+      a.classList.add('action','premium-section-action');
+      a.innerHTML='<span class="action-copy"><span class="action-label"></span><span class="action-value"></span><span class="action-note"></span></span><span class="arrow"></span>';
+      a.querySelector('.action-label').textContent=labels[type];
+      a.querySelector('.action-value').textContent=specialValue(type);
+      a.querySelector('.action-note').textContent=notes[type];
+    }
 
     let copy=a.querySelector('.action-copy');
     if(!copy){
@@ -76,7 +94,11 @@
     arrow.innerHTML=premiumChevron(type);
   }
 
-  function decorateAll(){document.querySelectorAll('#actions .action,#saveContact.action').forEach(decorate)}
+  const runtime=document.createElement('style');
+  runtime.textContent='.menu-section .menu-link.action,.tripadvisor-reviews .review-link.action{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;padding:15px 15px 15px 16px!important;border-radius:24px!important;background:radial-gradient(circle at 14% 0%,color-mix(in srgb,var(--text) 5%,transparent),transparent 35%),linear-gradient(145deg,var(--hsq-surface-1),var(--hsq-surface-2))!important;color:var(--text)!important;border:1px solid var(--hsq-line)!important;box-shadow:0 16px 38px rgba(0,0,0,.16),0 3px 9px rgba(0,0,0,.10),inset 0 1px 0 color-mix(in srgb,var(--text) 10%,transparent)!important}.menu-section,.tripadvisor-reviews{overflow:visible}.menu-section .action-value,.tripadvisor-reviews .action-value{font-size:clamp(16px,4.5vw,20px)!important}.menu-section .action-note,.tripadvisor-reviews .action-note{font-size:9px!important;letter-spacing:.07em!important}.menu-section .arrow,.tripadvisor-reviews .arrow{font-size:0!important}';
+  document.head.appendChild(runtime);
+
+  function decorateAll(){document.querySelectorAll('#actions .action,#saveContact.action,.menu-section .menu-link,.tripadvisor-reviews .review-link').forEach(decorate)}
   decorateAll();
   const target=document.getElementById('app')||document.body;
   new MutationObserver(decorateAll).observe(target,{childList:true,subtree:true});
