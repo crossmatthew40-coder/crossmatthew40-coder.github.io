@@ -1,0 +1,117 @@
+/* High Style Cards — app skin based on the High Style Creative card language */
+:root{
+  --hs-app-bg:#020202;
+  --hs-app-panel:#070707;
+  --hs-app-panel-2:#0b0b0b;
+  --hs-app-line:rgba(255,255,255,.19);
+  --hs-app-line-strong:rgba(255,255,255,.62);
+  --hs-app-muted:#8f8f8f;
+  --hs-app-soft:#bdbdbd;
+  --hs-app-white:#fff;
+  --hs-app-radius:22px;
+}
+html{background:#000!important;color:#fff!important}
+body{
+  background:
+    radial-gradient(circle at 13% 5%,rgba(255,255,255,.035),transparent 23%),
+    radial-gradient(circle at 88% 20%,rgba(255,255,255,.025),transparent 24%),
+    linear-gradient(180deg,#000 0%,#030303 55%,#000 100%)!important;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.12;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+
+.topbar{
+  min-height:118px;padding:24px clamp(20px,4vw,58px)!important;
+  background:rgba(0,0,0,.88)!important;border-bottom:1px solid rgba(255,255,255,.14)!important;
+  backdrop-filter:blur(24px) saturate(120%)!important;
+  box-shadow:0 14px 50px rgba(0,0,0,.28)!important;
+}
+.topbar>div:first-child{position:relative;padding-left:52px}
+.topbar>div:first-child:before{
+  content:"";position:absolute;left:0;top:3px;width:34px;height:31px;
+  background:
+    linear-gradient(135deg,transparent 0 28%,#fff 29% 66%,transparent 67%) 0 0/12px 31px no-repeat,
+    linear-gradient(135deg,transparent 0 28%,#fff 29% 66%,transparent 67%) 11px 0/12px 31px no-repeat,
+    linear-gradient(135deg,transparent 0 28%,#fff 29% 66%,transparent 67%) 22px 0/12px 31px no-repeat;
+  opacity:.96;
+}
+.topbar .kicker{color:#fff!important;font-size:9px!important;letter-spacing:.28em!important;font-weight:750!important}
+.topbar h1{margin:5px 0 5px!important;font-size:clamp(27px,3.4vw,40px)!important;line-height:.95!important;letter-spacing:.17em!important;font-weight:450!important;text-transform:uppercase!important}
+.topbar .sub{font-family:"Cormorant Garamond",Georgia,serif!important;font-style:italic!important;font-size:17px!important;color:#c7c7c7!important;letter-spacing:.01em!important}
+.top-actions{gap:9px!important}
+.btn,.tiny{
+  min-height:44px!important;border-radius:999px!important;padding:11px 17px!important;
+  font-size:9px!important;letter-spacing:.14em!important;text-transform:uppercase!important;font-weight:850!important;
+  transition:transform .18s ease,background .18s ease,border-color .18s ease,color .18s ease!important;
+}
+.btn{background:#fff!important;color:#050505!important;border:1px solid #fff!important}
+.btn.secondary,.btn.ghost,.tiny{background:transparent!important;color:#fff!important;border:1px solid rgba(255,255,255,.28)!important}
+.btn:hover,.tiny:hover{transform:translateY(-1px)!important;border-color:#fff!important}.btn.ghost:hover,.tiny:hover{background:#fff!important;color:#000!important}
+
+.layout{grid-template-columns:minmax(0,1.16fr) minmax(390px,.84fr)!important}
+.editor-panel{padding:36px clamp(22px,4vw,58px) 90px!important;border-right:1px solid rgba(255,255,255,.12)!important}
+.preview-panel{padding:35px clamp(20px,3vw,44px) 56px!important;background:linear-gradient(180deg,rgba(255,255,255,.012),transparent 34%)!important}
+
+.section-head{position:relative;margin:46px 0 18px!important;padding-top:17px!important;border-top:1px solid rgba(255,255,255,.13)!important}
+.section-head:first-child{margin-top:0!important;border-top:0!important;padding-top:0!important}
+.section-head>div{gap:12px!important}.section-head span{
+  width:34px!important;height:34px!important;border-radius:50%!important;background:transparent!important;
+  border:1px solid rgba(255,255,255,.42)!important;color:#fff!important;font-size:8px!important;letter-spacing:.08em!important;font-weight:800!important
+}
+.section-head h2{font-size:13px!important;letter-spacing:.18em!important;text-transform:uppercase!important;font-weight:750!important}
+
+label{gap:8px!important;color:#a9a9a9!important;font-size:9px!important;letter-spacing:.1em!important;text-transform:uppercase!important;font-weight:780!important}
+input,textarea,select{
+  min-height:49px;border:1px solid rgba(255,255,255,.20)!important;background:rgba(5,5,5,.88)!important;color:#fff!important;
+  border-radius:16px!important;padding:13px 14px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
+  font-size:13px!important;letter-spacing:0!important;text-transform:none!important;font-weight:520!important;
+}
+textarea{min-height:96px!important;line-height:1.55!important}
+input::placeholder,textarea::placeholder{color:#555!important}
+input:focus,textarea:focus,select:focus{border-color:rgba(255,255,255,.76)!important;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 14px 34px rgba(0,0,0,.2)!important}
+small,.hint{color:#626262!important;font-size:9px!important;letter-spacing:.025em!important;text-transform:none!important;line-height:1.55!important}
+.upload{min-height:49px!important;align-items:center!important;border:1px solid rgba(255,255,255,.25)!important;border-radius:16px!important;background:#050505!important;color:#aaa!important;font-size:9px!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+.colour input[type=color]{height:49px!important;border-radius:14px!important}
+
+/* Injected builder modules */
+.font-controls-card,.motion-buttons-card,.menu-builder-card,.icon-custom-card,.working-qr,
+#websiteScanner,.website-scanner,.saved-designs-card,.tripadvisor-builder-card{
+  border:1px solid rgba(255,255,255,.16)!important;border-radius:24px!important;
+  background:linear-gradient(145deg,rgba(11,11,11,.98),rgba(3,3,3,.98))!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.17),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+.font-controls-card h3,.motion-buttons-card h3,.menu-builder-card h3,.icon-custom-card h3,.working-qr h2{
+  letter-spacing:.13em!important;text-transform:uppercase!important;font-weight:650!important
+}
+.font-controls-card>p,.motion-buttons-card>.desc,.menu-builder-card>p,.icon-custom-card>.desc,.working-qr-head p{color:#777!important}
+.font-choice,.manage-button-row,.icon-action-row,.config-box{
+  background:#050505!important;border-color:rgba(255,255,255,.15)!important;border-radius:16px!important
+}
+.font-choice.active{border-color:rgba(255,255,255,.72)!important;background:#0a0a0a!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)!important}
+.font-choice-name{letter-spacing:.01em!important}.font-choice-desc{color:#666!important}
+.switch-track{background:#111!important;border-color:#333!important}.switch input:checked+.switch-track{background:#fff!important;border-color:#fff!important}
+.working-qr-badge,.live-dot{border-radius:999px!important;background:transparent!important;border:1px solid rgba(255,255,255,.28)!important;color:#fff!important;letter-spacing:.16em!important}
+.working-qr-state{color:#bdbdbd!important}
+
+.preview-top{margin-bottom:18px!important;padding-bottom:16px!important;border-bottom:1px solid rgba(255,255,255,.12)!important}
+.preview-top .kicker{font-size:8px!important;letter-spacing:.24em!important;color:#7d7d7d!important}.preview-top h2{font-size:15px!important;letter-spacing:.16em!important;text-transform:uppercase!important;font-weight:600!important}
+.phone-shell{border-color:rgba(255,255,255,.32)!important;background:#000!important;box-shadow:0 38px 100px rgba(0,0,0,.64),0 0 0 1px rgba(255,255,255,.035)!important}
+.preview-note{font-family:"Cormorant Garamond",Georgia,serif!important;font-style:italic!important;font-size:14px!important;color:#747474!important}
+.status{color:#d0d0d0!important}.config-box summary{color:#aaa!important;letter-spacing:.08em!important;text-transform:uppercase!important;font-size:9px!important}
+
+/* Give the page the same vertical breathing room as the card */
+.editor-panel>.grid,.editor-panel>label,.editor-panel>.logo-row,.editor-panel>.colour-grid{margin-bottom:15px}
+.editor-panel .finish-actions{gap:9px!important}.finish-actions .btn{min-height:42px!important}
+
+@media(max-width:980px){
+  .layout{grid-template-columns:1fr!important}.editor-panel{border-right:0!important}.preview-panel{border-top:1px solid rgba(255,255,255,.14)!important}
+}
+@media(max-width:640px){
+  .topbar{padding:20px 16px!important}.topbar>div:first-child{padding-left:45px}.topbar h1{font-size:25px!important;letter-spacing:.13em!important}.topbar .sub{font-size:15px!important}
+  .editor-panel{padding:28px 15px 70px!important}.preview-panel{padding:28px 12px 48px!important}.section-head{margin-top:38px!important}
+  .btn,.tiny{min-height:42px!important;padding:10px 13px!important}.top-actions .btn{flex:1!important}
+}
