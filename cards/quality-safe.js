@@ -31,18 +31,30 @@
     if(brand.website&&href===brand.website) return 'website';
     return 'website';
   }
+  function classify(a){
+    const value=a.querySelector('.action-value');
+    if(!value) return;
+    const len=(value.textContent||'').trim().length;
+    a.classList.remove('text-medium','text-long','text-xlong');
+    if(len>34) a.classList.add('text-xlong');
+    else if(len>24) a.classList.add('text-long');
+    else if(len>17) a.classList.add('text-medium');
+  }
   function decorate(a){
-    if(!a||a.dataset.qualitySafe==='1') return;
-    const type=typeFor(a);
-    let copy=a.querySelector('.action-copy');
-    if(!copy) return;
-    const main=document.createElement('span');main.className='action-main';
-    const icon=document.createElement('span');icon.className='action-icon-wrap';
-    icon.innerHTML=`<svg class="action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icons[type]||icons.website}</svg>`;
-    const note=document.createElement('span');note.className='action-note';note.textContent=notes[type]||'Open link';
-    if(!copy.querySelector('.action-note')) copy.appendChild(note);
-    a.insertBefore(main,copy);main.append(icon,copy);
-    a.dataset.qualitySafe='1';
+    if(!a) return;
+    if(a.dataset.qualitySafe!=='1'){
+      const type=typeFor(a);
+      let copy=a.querySelector('.action-copy');
+      if(!copy) return;
+      const main=document.createElement('span');main.className='action-main';
+      const icon=document.createElement('span');icon.className='action-icon-wrap';
+      icon.innerHTML=`<svg class="action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icons[type]||icons.website}</svg>`;
+      const note=document.createElement('span');note.className='action-note';note.textContent=notes[type]||'Open link';
+      if(!copy.querySelector('.action-note')) copy.appendChild(note);
+      a.insertBefore(main,copy);main.append(icon,copy);
+      a.dataset.qualitySafe='1';
+    }
+    classify(a);
   }
   function enhance(){
     document.querySelectorAll('#actions .action,#saveContact.action').forEach(decorate);
@@ -52,7 +64,7 @@
   if(actions){
     let queued=false;
     const queue=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;enhance();});};
-    new MutationObserver(queue).observe(actions,{childList:true,subtree:true});
+    new MutationObserver(queue).observe(actions,{childList:true,subtree:true,characterData:true});
   }
   setTimeout(enhance,60);setTimeout(enhance,300);
 })();
