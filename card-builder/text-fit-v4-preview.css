@@ -1,0 +1,19 @@
+/* Adaptive preview typography — mirrors final customer card */
+.preview-btn.text-medium .preview-action-value{font-size:13.5px;line-height:1.15}
+.preview-btn.text-long .preview-action-value{font-size:12px;line-height:1.16;letter-spacing:-.005em}
+.preview-btn.text-long .preview-action-note{font-size:6.8px;letter-spacing:.04em}
+.preview-btn.text-xlong{min-height:74px}
+.preview-btn.text-xlong .preview-action-value{font-size:10.8px;line-height:1.18;letter-spacing:0;word-break:break-word;overflow-wrap:anywhere}
+.preview-btn.text-xlong .preview-action-note{display:none}
+.preview-btn.text-xlong .preview-action-label{margin-bottom:3px}
+.preview-btn.text-xlong .preview-action-main{gap:7px}
+.preview-btn.text-xlong .preview-action-icon{width:33px;height:33px;border-radius:10px}
+.preview-btn.text-xlong .preview-action-icon svg{width:17px;height:17px}
+@media(max-width:390px){
+  .preview-btn.text-medium .preview-action-value{font-size:12px}
+  .preview-btn.text-long .preview-action-value{font-size:10.8px}
+  .preview-btn.text-long .preview-action-note{display:none}
+  .preview-btn.text-xlong .preview-action-value{font-size:9.8px;line-height:1.2}
+  .preview-btn.text-xlong .preview-action-icon{width:31px;height:31px}
+  .preview-btn.text-xlong>span:last-child{width:24px;height:24px;flex-basis:24px;font-size:15px}
+}
