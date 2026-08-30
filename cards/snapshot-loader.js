@@ -62,6 +62,19 @@
     return obj;
   }
 
+  function availableTypes(card){
+    const list=[];
+    if(card.bookingUrl) list.push('booking');
+    if(card.phone) list.push('phone');
+    if(card.whatsapp) list.push('whatsapp');
+    if(card.email) list.push('email');
+    if(card.website) list.push('website');
+    if(card.instagram) list.push('instagram');
+    if(card.linkedin) list.push('linkedin');
+    if(card.tiktok) list.push('tiktok');
+    return list;
+  }
+
   try {
     const p = JSON.parse(decodeBase64Url(match[1]));
     const card = clean({
@@ -92,8 +105,22 @@
       footer:p.ft || 'Powered by High Style Cards',
       actions:Array.isArray(p.ac) ? p.ac.map(a => clean({type:a.t,label:a.l,primary:!!a.p})) : [],
       designStyle:p.ds,
-      tripadvisorUrl:p.ta
+      tripadvisorUrl:p.ta,
+      animations:p.an ? {
+        entrance:p.an.e || 'fade-up',
+        buttons:p.an.b || 'stagger',
+        accent:p.an.a || 'soft-pulse'
+      } : undefined,
+      saveContactEnabled:p.sc === 0 ? false : undefined
     });
+
+    if(p.bm){
+      const enabled=new Set((card.actions||[]).map(a=>a.type));
+      const hidden=availableTypes(card).filter(type=>!enabled.has(type));
+      card.buttonSettings={managed:true,hidden,saveContact:p.sc!==0};
+      if(p.sc!==0) card.saveContactEnabled=true;
+    }
+
     brands[slug] = card;
     window.HIGH_STYLE_SNAPSHOT_ACTIVE = true;
   } catch(e) {
