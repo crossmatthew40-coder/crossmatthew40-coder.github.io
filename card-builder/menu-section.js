@@ -39,8 +39,15 @@
       if(services?.parentNode)services.parentNode.insertBefore(section,services);else document.querySelector('.preview-scroll')?.appendChild(section);
     }
     const link=section.querySelector('a');
-    if(c.menuUrl){section.style.display='block';link.href=c.menuUrl;link.querySelector('span').textContent=c.menuLabel||'View Menu';}
-    else section.style.display='none';
+    if(c.menuUrl){
+      section.style.display='block';link.href=c.menuUrl;
+      const premiumValue=link.querySelector('.preview-action-value');
+      if(premiumValue) premiumValue.textContent=c.menuLabel||'View Menu';
+      else {
+        const legacy=link.querySelector('span');
+        if(legacy) legacy.textContent=c.menuLabel||'View Menu';
+      }
+    } else section.style.display='none';
   }
 
   updatePreview=function(c){baseUpdatePreview(c);renderPreview(c)};
