@@ -22,6 +22,15 @@
     return false;
   }
 
+  // When a managed social link is already a main action, don't repeat it below.
+  if(settings.managed){
+    const mainTypes=new Set((Array.isArray(brand.actions)?brand.actions:[]).map(a=>a.type));
+    ['instagram','linkedin','tiktok'].forEach(type=>{
+      if(!mainTypes.has(type)) return;
+      document.querySelectorAll('#socials .social').forEach(a=>{if(isMatch(a,type))a.remove()});
+    });
+  }
+
   hidden.forEach(type=>{
     document.querySelectorAll('#actions .action,#socials .social').forEach(a=>{if(isMatch(a,type))a.remove()});
   });
