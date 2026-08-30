@@ -24,112 +24,40 @@
   };
 
   const DEFAULT_BY_TYPE = {booking:'calendar',phone:'phone',whatsapp:'chat',email:'mail',website:'globe',instagram:'instagram',linkedin:'linkedin',tiktok:'tiktok',save:'plus'};
-  const ACTIONS = [
-    ['booking','Booking / Enquiry'],['phone','Call'],['whatsapp','WhatsApp'],['email','Email'],['website','Website'],['instagram','Instagram'],['linkedin','LinkedIn'],['tiktok','TikTok'],['save','Save Contact']
-  ];
-
+  const ACTIONS = [['booking','Booking / Enquiry'],['phone','Call'],['whatsapp','WhatsApp'],['email','Email'],['website','Website'],['instagram','Instagram'],['linkedin','LinkedIn'],['tiktok','TikTok'],['save','Save Contact']];
   let settings = {enabled:true,shape:'rounded',size:'medium',stroke:'regular',background:'panel',border:true,color:'text',icons:{}};
   const baseGetConfig = getConfig;
   const baseLoadConfig = loadConfig;
 
-  function normalise(s){
-    s=s||{};
-    return {
-      enabled:s.enabled!==false,
-      shape:['square','rounded','soft','circle'].includes(s.shape)?s.shape:'rounded',
-      size:['small','medium','large'].includes(s.size)?s.size:'medium',
-      stroke:['thin','regular','bold'].includes(s.stroke)?s.stroke:'regular',
-      background:['none','panel','accent'].includes(s.background)?s.background:'panel',
-      border:s.border!==false,
-      color:['text','accent','muted'].includes(s.color)?s.color:'text',
-      icons:{...(s.icons||{})}
-    };
-  }
+  function normalise(s){s=s||{};return {enabled:s.enabled!==false,shape:['square','rounded','soft','circle'].includes(s.shape)?s.shape:'rounded',size:['small','medium','large'].includes(s.size)?s.size:'medium',stroke:['thin','regular','bold'].includes(s.stroke)?s.stroke:'regular',background:['none','panel','accent'].includes(s.background)?s.background:'panel',border:s.border!==false,color:['text','accent','muted'].includes(s.color)?s.color:'text',icons:{...(s.icons||{})}}}
+  getConfig=function(){const c=baseGetConfig();c.iconSettings=normalise(settings);return c};
+  loadConfig=function(data){const d=data?.config||data||{};settings=normalise(d.iconSettings);baseLoadConfig(data);syncControls();setTimeout(applyPreview,30)};
 
-  getConfig = function(){
-    const c=baseGetConfig();
-    c.iconSettings=normalise(settings);
-    return c;
-  };
-  loadConfig = function(data){
-    const d=data?.config||data||{};
-    settings=normalise(d.iconSettings);
-    baseLoadConfig(data);
-    syncControls();
-    setTimeout(applyPreview,30);
-  };
-
-  const style=document.createElement('style');
-  style.textContent=`
-    .icon-custom-card{margin:16px 0 2px;padding:18px;border:1px solid #292929;border-radius:20px;background:linear-gradient(145deg,#111,#090909);box-shadow:0 14px 36px rgba(0,0,0,.14)}
-    .icon-custom-card h3{margin:0;font-size:16px}.icon-custom-card>.desc{margin:5px 0 14px;color:#747474;font-size:11px;line-height:1.5}
-    .icon-global-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.icon-global-grid label{margin:0}.icon-global-grid select{width:100%;border:1px solid #2d2d2d;background:#111;color:#fff;border-radius:12px;padding:11px;outline:none}
-    .icon-checks{display:flex;gap:15px;flex-wrap:wrap;margin-top:12px}.icon-check{display:flex;align-items:center;gap:7px;color:#aaa;font-size:10px}.icon-check input{width:auto}
-    .icon-per-title{margin:17px 0 8px;padding-top:15px;border-top:1px solid #242424;font-size:12px;font-weight:850}.icon-action-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.icon-action-row{display:grid;grid-template-columns:1fr minmax(120px,.7fr);align-items:center;gap:10px;padding:9px 10px;border:1px solid #272727;border-radius:12px;background:#0d0d0d}.icon-action-row span{font-size:10px;font-weight:800;color:#ddd}.icon-action-row select{min-width:0;border:1px solid #2b2b2b;background:#121212;color:#fff;border-radius:10px;padding:9px;font-size:10px}
-    .icon-preview-note{margin:10px 0 0;color:#666;font-size:9px;line-height:1.45}
-    @media(max-width:720px){.icon-global-grid,.icon-action-list{grid-template-columns:1fr}}
-  `;
+  const style=document.createElement('style');style.textContent=`
+    .icon-custom-card{margin:16px 0 2px;padding:18px;border:1px solid #292929;border-radius:20px;background:linear-gradient(145deg,#111,#090909);box-shadow:0 14px 36px rgba(0,0,0,.14)}.icon-custom-card h3{margin:0;font-size:16px}.icon-custom-card>.desc{margin:5px 0 14px;color:#747474;font-size:11px;line-height:1.5}
+    .icon-global-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.icon-global-grid label{margin:0}.icon-global-grid select{width:100%;border:1px solid #2d2d2d;background:#111;color:#fff;border-radius:12px;padding:11px;outline:none}.icon-checks{display:flex;gap:15px;flex-wrap:wrap;margin-top:12px}.icon-check{display:flex;align-items:center;gap:7px;color:#aaa;font-size:10px}.icon-check input{width:auto}
+    .icon-per-title{margin:17px 0 8px;padding-top:15px;border-top:1px solid #242424;font-size:12px;font-weight:850}.icon-action-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.icon-action-row{display:grid;grid-template-columns:1fr minmax(120px,.7fr);align-items:center;gap:10px;padding:9px 10px;border:1px solid #272727;border-radius:12px;background:#0d0d0d}.icon-action-row span{font-size:10px;font-weight:800;color:#ddd}.icon-action-row select{min-width:0;border:1px solid #2b2b2b;background:#121212;color:#fff;border-radius:10px;padding:9px;font-size:10px}.icon-preview-note{margin:10px 0 0;color:#666;font-size:9px;line-height:1.45}@media(max-width:720px){.icon-global-grid,.icon-action-list{grid-template-columns:1fr}}`;
   document.head.appendChild(style);
 
-  const panel=document.createElement('section');
-  panel.id='iconCustomizerPanel';panel.className='icon-custom-card';
-  panel.innerHTML=`
-    <h3>Icon Style</h3><p class="desc">Control the icon system for this card, then override individual buttons when a brand needs something different.</p>
-    <div class="icon-global-grid">
-      <label>Shape<select id="iconShape"><option value="square">Square</option><option value="rounded">Rounded</option><option value="soft">Soft rounded</option><option value="circle">Circle</option></select></label>
-      <label>Size<select id="iconSize"><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option></select></label>
-      <label>Stroke<select id="iconStroke"><option value="thin">Thin</option><option value="regular">Regular</option><option value="bold">Bold</option></select></label>
-      <label>Background<select id="iconBackground"><option value="none">None</option><option value="panel">Panel</option><option value="accent">Accent tint</option></select></label>
-      <label>Icon colour<select id="iconColor"><option value="text">Main text</option><option value="accent">Brand accent</option><option value="muted">Muted</option></select></label>
-    </div>
-    <div class="icon-checks"><label class="icon-check"><input id="iconsEnabled" type="checkbox"> Show icons</label><label class="icon-check"><input id="iconBorder" type="checkbox"> Icon border</label></div>
-    <div class="icon-per-title">Individual button icons</div><div id="iconActionList" class="icon-action-list"></div>
-    <p class="icon-preview-note">Choose Auto to use the recommended icon for that action, or None to remove only that button's icon.</p>`;
-
-  const motion=document.getElementById('animationsButtonsPanel');
-  if(motion?.parentNode) motion.parentNode.insertBefore(panel,motion.nextSibling);
-  else document.querySelector('.editor-panel')?.appendChild(panel);
+  const panel=document.createElement('section');panel.id='iconCustomizerPanel';panel.className='icon-custom-card';panel.innerHTML=`<h3>Icon Style</h3><p class="desc">Control the icon system for this card, then override individual buttons when a brand needs something different.</p><div class="icon-global-grid"><label>Shape<select id="iconShape"><option value="square">Square</option><option value="rounded">Rounded</option><option value="soft">Soft rounded</option><option value="circle">Circle</option></select></label><label>Size<select id="iconSize"><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option></select></label><label>Stroke<select id="iconStroke"><option value="thin">Thin</option><option value="regular">Regular</option><option value="bold">Bold</option></select></label><label>Background<select id="iconBackground"><option value="none">None</option><option value="panel">Panel</option><option value="accent">Accent tint</option></select></label><label>Icon colour<select id="iconColor"><option value="text">Main text</option><option value="accent">Brand accent</option><option value="muted">Muted</option></select></label></div><div class="icon-checks"><label class="icon-check"><input id="iconsEnabled" type="checkbox"> Show icons</label><label class="icon-check"><input id="iconBorder" type="checkbox"> Icon border</label></div><div class="icon-per-title">Individual button icons</div><div id="iconActionList" class="icon-action-list"></div><p class="icon-preview-note">Choose Auto to use the recommended icon for that action, or None to remove only that button's icon.</p>`;
+  const motion=document.getElementById('animationsButtonsPanel');if(motion?.parentNode)motion.parentNode.insertBefore(panel,motion.nextSibling);else document.querySelector('.editor-panel')?.appendChild(panel);
 
   const iconOptions=[['auto','Auto'],['calendar','Calendar'],['phone','Phone'],['chat','Chat'],['mail','Mail'],['globe','Globe'],['camera','Camera'],['star','Star'],['pin','Location'],['heart','Heart'],['menu','Menu'],['plus','Plus'],['arrow','Arrow'],['instagram','Instagram'],['linkedin','LinkedIn'],['tiktok','TikTok'],['none','None']];
-  const list=document.getElementById('iconActionList');
-  ACTIONS.forEach(([type,label])=>{
-    const row=document.createElement('label');row.className='icon-action-row';row.innerHTML=`<span>${label}</span><select data-icon-type="${type}"></select>`;
-    const select=row.querySelector('select');iconOptions.forEach(([v,n])=>{const o=document.createElement('option');o.value=v;o.textContent=n;select.appendChild(o)});
-    select.addEventListener('change',()=>{settings.icons[type]=select.value;applyPreview();notify();});list.appendChild(row);
-  });
+  const list=document.getElementById('iconActionList');ACTIONS.forEach(([type,label])=>{const row=document.createElement('label');row.className='icon-action-row';row.innerHTML=`<span>${label}</span><select data-icon-type="${type}"></select>`;const select=row.querySelector('select');iconOptions.forEach(([v,n])=>{const o=document.createElement('option');o.value=v;o.textContent=n;select.appendChild(o)});select.addEventListener('change',()=>{settings.icons[type]=select.value;notify()});list.appendChild(row)});
 
   function strokeValue(){return settings.stroke==='thin'?'1.25':settings.stroke==='bold'?'2.25':'1.7'}
-  function typeFor(a,c){
-    const href=String(a.getAttribute('href')||'');
-    if(/save contact/i.test(a.textContent||''))return'save';
-    if(c.bookingUrl&&href===c.bookingUrl)return'booking';if(href.startsWith('tel:'))return'phone';if(/wa\.me\//i.test(href))return'whatsapp';if(href.startsWith('mailto:'))return'email';if(c.instagram&&href===c.instagram)return'instagram';if(c.linkedin&&href===c.linkedin)return'linkedin';if(c.tiktok&&href===c.tiktok)return'tiktok';if(c.website&&href===c.website)return'website';return'website';
-  }
+  function typeFor(a,c){const href=String(a.getAttribute('href')||'');if(/save contact/i.test(a.textContent||''))return'save';if(c.bookingUrl&&href===c.bookingUrl)return'booking';if(href.startsWith('tel:'))return'phone';if(/wa\.me\//i.test(href))return'whatsapp';if(href.startsWith('mailto:'))return'email';if(c.instagram&&href===c.instagram)return'instagram';if(c.linkedin&&href===c.linkedin)return'linkedin';if(c.tiktok&&href===c.tiktok)return'tiktok';if(c.website&&href===c.website)return'website';return'website'}
   function applyOne(a,c){
-    const wrap=a.querySelector('.preview-action-icon'); if(!wrap)return;
-    const type=typeFor(a,c),choice=settings.icons[type]||'auto',iconKey=choice==='auto'?(DEFAULT_BY_TYPE[type]||'globe'):choice;
-    const hidden=!settings.enabled||iconKey==='none';wrap.style.display=hidden?'none':'grid';
-    const main=a.querySelector('.preview-action-main');if(main)main.style.gap=hidden?'0':'var(--hs-icon-gap,9px)';
-    if(hidden)return;
-    const svg=wrap.querySelector('svg');if(svg){svg.innerHTML=ICONS[iconKey]||ICONS[DEFAULT_BY_TYPE[type]]||ICONS.globe;svg.setAttribute('stroke-width',strokeValue())}
-    const px=settings.size==='small'?32:settings.size==='large'?44:38;wrap.style.width=px+'px';wrap.style.height=px+'px';
-    wrap.style.borderRadius=settings.shape==='square'?'5px':settings.shape==='soft'?'16px':settings.shape==='circle'?'50%':'12px';
-    wrap.style.border=settings.border?'1px solid color-mix(in srgb,var(--text,#fff) 11%,var(--border,#333))':'0';
-    wrap.style.background=settings.background==='none'?'transparent':settings.background==='accent'?'color-mix(in srgb,var(--accent,#fff) 18%,var(--surface,#111))':'color-mix(in srgb,#050505 54%,var(--surface,#111) 46%)';
-    wrap.style.color=settings.color==='accent'?'var(--accent,#fff)':settings.color==='muted'?'var(--muted,#999)':'var(--text,#fff)';
+    const wrap=a.querySelector('.preview-action-icon');if(!wrap)return;
+    const type=typeFor(a,c),choice=settings.icons[type]||'auto',iconKey=choice==='auto'?(DEFAULT_BY_TYPE[type]||'globe'):choice,hidden=!settings.enabled||iconKey==='none';
+    wrap.style.display=hidden?'none':'grid';const main=a.querySelector('.preview-action-main');if(main)main.style.gap=hidden?'0':'var(--hs-icon-gap,9px)';if(hidden)return;
+    const svg=wrap.querySelector('svg'),signature=iconKey+'|'+strokeValue();
+    if(svg&&wrap.dataset.iconRender!==signature){svg.innerHTML=ICONS[iconKey]||ICONS[DEFAULT_BY_TYPE[type]]||ICONS.globe;svg.setAttribute('stroke-width',strokeValue());wrap.dataset.iconRender=signature}
+    const px=settings.size==='small'?32:settings.size==='large'?44:38;wrap.style.width=px+'px';wrap.style.height=px+'px';wrap.style.borderRadius=settings.shape==='square'?'5px':settings.shape==='soft'?'16px':settings.shape==='circle'?'50%':'12px';wrap.style.border=settings.border?'1px solid color-mix(in srgb,var(--text,#fff) 11%,var(--border,#333))':'0';wrap.style.background=settings.background==='none'?'transparent':settings.background==='accent'?'color-mix(in srgb,var(--accent,#fff) 18%,var(--surface,#111))':'color-mix(in srgb,#050505 54%,var(--surface,#111) 46%)';wrap.style.color=settings.color==='accent'?'var(--accent,#fff)':settings.color==='muted'?'var(--muted,#999)':'var(--text,#fff)';
   }
-  function cfg(){try{return getConfig()}catch(e){return{}}}
-  function applyPreview(){const root=document.getElementById('previewButtons');if(!root)return;const c=cfg();root.querySelectorAll('.preview-btn').forEach(a=>applyOne(a,c));}
-  function notify(){if(typeof update==='function')try{update()}catch(e){}setTimeout(applyPreview,40);if(typeof showStatus==='function')showStatus('Icon style updated.');}
-  function syncControls(){
-    const map={iconShape:'shape',iconSize:'size',iconStroke:'stroke',iconBackground:'background',iconColor:'color'};Object.entries(map).forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.value=settings[k]});
-    document.getElementById('iconsEnabled').checked=settings.enabled;document.getElementById('iconBorder').checked=settings.border;
-    document.querySelectorAll('[data-icon-type]').forEach(el=>el.value=settings.icons[el.dataset.iconType]||'auto');
-  }
-  [['iconShape','shape'],['iconSize','size'],['iconStroke','stroke'],['iconBackground','background'],['iconColor','color']].forEach(([id,key])=>document.getElementById(id).addEventListener('change',e=>{settings[key]=e.target.value;notify()}));
-  document.getElementById('iconsEnabled').addEventListener('change',e=>{settings.enabled=e.target.checked;notify()});
-  document.getElementById('iconBorder').addEventListener('change',e=>{settings.border=e.target.checked;notify()});
-
-  const preview=document.getElementById('previewButtons');if(preview)new MutationObserver(()=>requestAnimationFrame(applyPreview)).observe(preview,{childList:true,subtree:true});
-  window.highStyleIconCustomizer={get:()=>normalise(settings),set:s=>{settings=normalise(s);syncControls();notify()},icons:Object.keys(ICONS)};
-  syncControls();setTimeout(applyPreview,180);
+  function cfg(){try{return getConfig()}catch(e){return{}}}function applyPreview(){const root=document.getElementById('previewButtons');if(!root)return;const c=cfg();root.querySelectorAll('.preview-btn').forEach(a=>applyOne(a,c))}function notify(){if(typeof update==='function')try{update()}catch(e){}setTimeout(applyPreview,40);if(typeof showStatus==='function')showStatus('Icon style updated.')}
+  function syncControls(){const map={iconShape:'shape',iconSize:'size',iconStroke:'stroke',iconBackground:'background',iconColor:'color'};Object.entries(map).forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.value=settings[k]});document.getElementById('iconsEnabled').checked=settings.enabled;document.getElementById('iconBorder').checked=settings.border;document.querySelectorAll('[data-icon-type]').forEach(el=>el.value=settings.icons[el.dataset.iconType]||'auto')}
+  [['iconShape','shape'],['iconSize','size'],['iconStroke','stroke'],['iconBackground','background'],['iconColor','color']].forEach(([id,key])=>document.getElementById(id).addEventListener('change',e=>{settings[key]=e.target.value;notify()}));document.getElementById('iconsEnabled').addEventListener('change',e=>{settings.enabled=e.target.checked;notify()});document.getElementById('iconBorder').addEventListener('change',e=>{settings.border=e.target.checked;notify()});
+  const preview=document.getElementById('previewButtons');if(preview){let queued=false;new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;applyPreview()})}).observe(preview,{childList:true,subtree:true})}
+  window.highStyleIconCustomizer={get:()=>normalise(settings),set:s=>{settings=normalise(s);syncControls();notify()},icons:Object.keys(ICONS)};syncControls();setTimeout(applyPreview,180);
 })();
