@@ -41,10 +41,22 @@
     const [buttonRadius,cardRadius,logoRadius,borderWidth,headingWeight,headingTransform,letterSpacing,sectionGap,density] = value;
     return clean({buttonRadius,cardRadius,logoRadius,borderWidth,headingWeight,headingTransform,letterSpacing,sectionGap,density});
   }
-
   function expandTheme(h){
     h=h||{};const fp=fontPlan(h.q);
     return clean({background:h.b,surface:h.s,text:h.x,muted:h.m,accent:h.a,accentText:h.c,border:h.o,headingFont:fp?.heading||h.h,bodyFont:fp?.body||h.f,fontLabel:fp?.label||h.l,fontChoice:h.q,brandTokens:expandTokens(h.k)});
+  }
+  function expandIcons(ic){
+    if(!ic)return undefined;
+    return {
+      enabled:ic.e===0?false:true,
+      shape:ic.s||'rounded',
+      size:ic.z||'medium',
+      stroke:ic.w||'regular',
+      background:ic.b||'panel',
+      border:ic.r===0?false:true,
+      color:ic.c||'text',
+      icons:ic.m||{}
+    };
   }
   function clean(obj){Object.keys(obj).forEach(k=>{const v=obj[k];if(v===''||v===null||v===undefined||(Array.isArray(v)&&!v.length))delete obj[k]});return obj}
   function availableTypes(card){const list=[];if(card.bookingUrl)list.push('booking');if(card.phone)list.push('phone');if(card.whatsapp)list.push('whatsapp');if(card.email)list.push('email');if(card.website)list.push('website');if(card.instagram)list.push('instagram');if(card.linkedin)list.push('linkedin');if(card.tiktok)list.push('tiktok');return list}
@@ -56,7 +68,8 @@
       phone:p.ph,phoneDisplay:p.pd,whatsapp:p.wa,email:p.em,website:p.wb,instagram:p.ig,instagramLabel:p.il,linkedin:p.li,tiktok:p.tk,bookingUrl:p.bu,bookingLabel:p.bl,
       menuUrl:p.mu,menuLabel:p.ml||'View Menu',services:p.sv||[],review:p.rv,location:p.lo,gallery:p.ga||[],footer:p.ft||'Powered by High Style Cards',
       actions:Array.isArray(p.ac)?p.ac.map(a=>clean({type:a.t,label:a.l,primary:false})):[],designStyle:p.ds,tripadvisorUrl:p.ta,
-      animations:p.an?{entrance:p.an.e||'fade-up',buttons:p.an.b||'stagger',accent:p.an.a||'soft-pulse'}:undefined,saveContactEnabled:p.sc===0?false:undefined
+      animations:p.an?{entrance:p.an.e||'fade-up',buttons:p.an.b||'stagger',accent:p.an.a||'soft-pulse'}:undefined,
+      iconSettings:expandIcons(p.ic),saveContactEnabled:p.sc===0?false:undefined
     });
     if(p.bm){const enabled=new Set((card.actions||[]).map(a=>a.type));const hidden=availableTypes(card).filter(type=>!enabled.has(type));card.buttonSettings={managed:true,hidden,saveContact:p.sc!==0};if(p.sc!==0)card.saveContactEnabled=true;}
     brands[slug]=card;window.HIGH_STYLE_SNAPSHOT_ACTIVE=true;
