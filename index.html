@@ -7,500 +7,84 @@
 <title>High Style Creative</title>
 <meta name="description" content="High Style Creative digital contact card">
 <style>
-:root{
-  --bg:#000;
-  --fg:#fff;
-  --muted:#bdbdbd;
-  --line:#2a2a2a;
-  --panel:rgba(10,10,10,.78);
-}
+:root{--bg:#000;--fg:#fff;--muted:#9b9b9b;--panel:rgba(12,12,12,.84);--line:#2b2b2b}
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  min-height:100%;
-  color:var(--fg);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;
-  background:
-    linear-gradient(145deg,#000000 0%,#030303 22%,#080808 46%,#101010 68%,#070707 84%,#000000 100%);
-  background-size:240% 240%;
-  animation:smoothBackgroundDrift 20s ease-in-out infinite;
-}
-body{
-  display:flex;
-  justify-content:center;
-  padding:18px 12px 34px;
-  position:relative;
-  overflow-x:hidden;
-}
-body::before{
-  content:"";
-  position:fixed;
-  inset:-25%;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 24% 28%,rgba(255,255,255,.05),transparent 26%),
-    radial-gradient(circle at 76% 70%,rgba(255,255,255,.03),transparent 30%);
-  opacity:.18;
-  filter:blur(65px);
-  animation:verySoftGlow 18s ease-in-out infinite alternate;
-}
-.wrap{
-  width:min(100%,520px);
-  text-align:center;
-  padding-top:8px;
-  position:relative;
-  z-index:1;
-  animation:pageIn .7s cubic-bezier(.2,.8,.2,1) both;
-}
-.eyebrow{
-  font-size:11px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:#777;
-  font-weight:800;
-  margin-bottom:10px;
-  animation:
-    itemIn .55s .02s cubic-bezier(.2,.8,.2,1) both,
-    softTextGlow 4s 1s ease-in-out infinite;
-}
-h1{
-  font-size:clamp(38px,10vw,58px);
-  line-height:.92;
-  letter-spacing:-.06em;
-  margin:0;
-  color:transparent;
-  background:linear-gradient(90deg,#fff 0%,#aaa 22%,#fff 42%,#fff 64%,#999 82%,#fff 100%);
-  background-size:220% auto;
-  -webkit-background-clip:text;
-  background-clip:text;
-  animation:
-    titleReveal .8s .12s cubic-bezier(.18,.85,.25,1) both,
-    titleShimmer 5.8s 1.15s linear infinite;
-}
-.tag{
-  color:#aaa;
-  font-size:15px;
-  line-height:1.55;
-  margin:14px auto 28px;
-  max-width:360px;
-  animation:
-    itemIn .65s .2s cubic-bezier(.2,.8,.2,1) both,
-    tagFloat 5.5s 1.2s ease-in-out infinite;
-}
-.links{
-  display:grid;
-  gap:14px;
-  perspective:900px;
-}
-.link{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  min-height:88px;
-  padding:16px 18px;
-  border:1px solid #2b2b2b;
-  border-radius:20px;
-  background:var(--panel);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  color:#fff;
-  text-decoration:none;
-  text-align:left;
-  overflow:hidden;
-  position:relative;
-  transform-origin:center;
-  transition:
-    transform .32s cubic-bezier(.16,.9,.24,1),
-    background-color .28s ease,
-    border-color .28s ease,
-    box-shadow .32s ease,
-    filter .28s ease;
-  opacity:0;
-  will-change:transform,opacity;
-}
-.link.primary{
-  background:#fff;
-  color:#000;
-  border-color:#fff;
-}
-.link.primary .label,.link.primary .note{color:#555}
-.link:not(.primary)::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.055) 48%,transparent 72%);
-  transform:translateX(-140%);
-  transition:transform .75s ease;
-}
-.link.primary::after{
-  content:"";
-  position:absolute;
-  top:-60%;
-  left:-45%;
-  width:35%;
-  height:220%;
-  background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent);
-  transform:rotate(18deg);
-  animation:buttonSweep 4.2s 1.4s ease-in-out infinite;
-  pointer-events:none;
-}
-.left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width:0;
-}
-.icon-wrap{
-  width:44px;
-  height:44px;
-  border:1px solid #313131;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  flex:0 0 auto;
-  background:#050505;
-  position:relative;
-  animation:iconHover 3.6s ease-in-out infinite;
-  transition:transform .22s cubic-bezier(.2,.8,.2,1), border-color .22s ease;
-}
+html,body{margin:0;min-height:100%;background:#000;color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif}
+body{display:flex;justify-content:center;padding:20px 12px 34px;overflow-x:hidden;background:linear-gradient(145deg,#000 0%,#060606 45%,#111 70%,#000 100%);background-size:220% 220%;animation:bgDrift 18s ease-in-out infinite}
+.wrap{width:min(100%,520px);text-align:center;position:relative;z-index:1;opacity:0;filter:blur(12px);transform:scale(.965)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#777;font-weight:800;margin:0 0 10px}
+h1{font-size:clamp(38px,10vw,58px);line-height:.92;letter-spacing:-.06em;margin:0;color:#fff}
+.tag{color:#aaa;font-size:15px;line-height:1.55;margin:14px auto 28px;max-width:360px}
+.links{display:grid;gap:14px}
+.link{display:flex;align-items:center;justify-content:space-between;min-height:88px;padding:16px 18px;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:#fff;text-decoration:none;text-align:left;overflow:hidden;opacity:0;transform:translateY(12px) scale(.99);transition:transform .24s ease,border-color .24s ease,background .24s ease}
+.link.primary{background:#fff;color:#000;border-color:#fff}
+.left{display:flex;align-items:center;gap:14px;min-width:0}
+.icon-wrap{width:44px;height:44px;border:1px solid #313131;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;background:#050505}
 .link.primary .icon-wrap{border-color:#d0d0d0;background:#fff}
 .icon{width:22px;height:22px;display:block}
 .label{display:block;color:#888;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:6px}
-.value{display:block;font-size:22px;font-weight:800;transition:text-shadow .25s ease}
+.link.primary .label,.link.primary .note{color:#555}
+.value{display:block;font-size:22px;font-weight:800}
 .note{display:block;color:#777;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-top:7px}
-.arrow{
-  font-size:28px;
-  flex:0 0 auto;
-  transition:transform .22s cubic-bezier(.2,.8,.2,1);
-  animation:arrowIdle 2.4s ease-in-out infinite;
-}
-.footer{
-  color:#555;
-  font-size:10px;
-  letter-spacing:.17em;
-  text-transform:uppercase;
-  margin-top:24px;
-  padding-top:18px;
-  border-top:1px solid #141414;
-  animation:footerRise .7s 1s cubic-bezier(.2,.8,.2,1) both;
-}
+.arrow{font-size:28px;flex:0 0 auto}
+.footer{color:#555;font-size:10px;letter-spacing:.17em;text-transform:uppercase;margin-top:24px;padding-top:18px;border-top:1px solid #141414;opacity:0}
 
-/* Entrances */
-.links .link:nth-child(1){animation:megaSlideLeft .9s .32s cubic-bezier(.14,.88,.22,1) forwards}
-.links .link:nth-child(2){animation:megaSlideRight .9s .46s cubic-bezier(.14,.88,.22,1) forwards}
-.links .link:nth-child(3){animation:megaSlideLeft .9s .60s cubic-bezier(.14,.88,.22,1) forwards}
-.links .link:nth-child(2) .icon-wrap{animation-delay:.5s}
-.links .link:nth-child(3) .icon-wrap{animation-delay:.9s}
-.links .link:nth-child(2) .arrow{animation-delay:.35s}
-.links .link:nth-child(3) .arrow{animation-delay:.7s}
+/* CAMERA INTRO — built to work reliably on iPhone Safari */
+.camera-intro{position:fixed;inset:0;z-index:9999;pointer-events:none;overflow:hidden;background:#000}
+.shutter{position:absolute;left:0;width:100%;height:51%;background:#000;z-index:4}
+.shutter.top{top:0}
+.shutter.bottom{bottom:0}
+.focus-ui{position:absolute;left:50%;top:50%;width:116px;height:116px;transform:translate(-50%,-50%) scale(.78);opacity:0;z-index:7}
+.corner{position:absolute;width:27px;height:27px;border-color:#fff;opacity:.9}
+.corner.tl{left:0;top:0;border-left:2px solid;border-top:2px solid}
+.corner.tr{right:0;top:0;border-right:2px solid;border-top:2px solid}
+.corner.bl{left:0;bottom:0;border-left:2px solid;border-bottom:2px solid}
+.corner.br{right:0;bottom:0;border-right:2px solid;border-bottom:2px solid}
+.focus-dot{position:absolute;left:50%;top:50%;width:8px;height:8px;border:1px solid #fff;border-radius:50%;transform:translate(-50%,-50%)}
+.lens-ring{position:absolute;left:50%;top:50%;width:158px;height:158px;border:2px solid rgba(255,255,255,.28);border-radius:50%;transform:translate(-50%,-50%) scale(.62);opacity:0;z-index:6;box-shadow:0 0 0 10px rgba(255,255,255,.025),0 0 38px rgba(255,255,255,.08)}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:9}
 
-/* Hover */
-@media (hover:hover) and (pointer:fine){
-  .link:hover{
-    transform:translateY(-7px) scale(1.065) !important;
-    background:rgba(30,30,30,.96);
-    border-color:rgba(255,255,255,.92);
-    box-shadow:
-      0 20px 48px rgba(0,0,0,.58),
-      0 0 0 1px rgba(255,255,255,.11) inset,
-      0 0 30px rgba(255,255,255,.10);
-    filter:brightness(1.14);
-    z-index:5;
-  }
-  .link.primary:hover{
-    background:#fff;
-    border-color:#fff;
-    box-shadow:
-      0 22px 52px rgba(0,0,0,.62),
-      0 0 34px rgba(255,255,255,.22);
-    filter:brightness(1.03);
-  }
-  .link:hover .icon-wrap{
-    transform:scale(1.16) rotate(-3deg);
-    border-color:rgba(255,255,255,.75);
-  }
-  .link:hover .value{
-    text-shadow:0 0 15px rgba(255,255,255,.18);
-  }
-  .link.primary:hover .value{text-shadow:none}
-  .link:hover .arrow{transform:translateX(9px) scale(1.12)}
-  .link:not(.primary):hover::before{transform:translateX(140%)}
-}
-.link:focus-visible{
-  outline:none;
-  transform:translateY(-5px) scale(1.045);
-  border-color:#fff;
-  box-shadow:0 18px 42px rgba(0,0,0,.55),0 0 0 2px rgba(255,255,255,.32);
-}
-.link:active{transform:translateY(-1px) scale(.975)}
+body.play-intro .focus-ui{animation:focusAppear .42s .12s ease forwards,focusLock .22s .48s ease forwards}
+body.play-intro .lens-ring{animation:lensIn .52s .12s ease forwards,lensOut .52s .58s ease forwards}
+body.play-intro .flash{animation:flash .34s .62s ease-out forwards}
+body.play-intro .shutter.top{animation:shutterTop .62s .78s cubic-bezier(.2,.85,.2,1) forwards}
+body.play-intro .shutter.bottom{animation:shutterBottom .62s .78s cubic-bezier(.2,.85,.2,1) forwards}
+body.play-intro .camera-intro{animation:introOff .01s 1.45s forwards}
+body.play-intro .wrap{animation:focusPage .58s .88s cubic-bezier(.16,.9,.25,1) forwards}
+body.play-intro .links .link:nth-child(1){animation:cardIn .38s 1.12s ease forwards}
+body.play-intro .links .link:nth-child(2){animation:cardIn .38s 1.23s ease forwards}
+body.play-intro .links .link:nth-child(3){animation:cardIn .38s 1.34s ease forwards}
+body.play-intro .footer{animation:fadeUp .35s 1.47s ease forwards}
 
-@keyframes smoothBackgroundDrift{
-  0%{background-position:0% 45%}
-  50%{background-position:100% 55%}
-  100%{background-position:0% 45%}
-}
-@keyframes verySoftGlow{
-  from{transform:translate3d(-1%,0,0) scale(1)}
-  to{transform:translate3d(2%,1%,0) scale(1.03)}
-}
-@keyframes pageIn{
-  from{opacity:0;transform:translateY(14px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes itemIn{
-  from{opacity:0;transform:translateY(18px) scale(.985)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-@keyframes titleReveal{
-  0%{opacity:0;transform:translateY(26px);letter-spacing:.05em}
-  100%{opacity:1;transform:translateY(0);letter-spacing:-.06em}
-}
-@keyframes titleShimmer{
-  0%{background-position:200% center}
-  100%{background-position:-20% center}
-}
-@keyframes softTextGlow{
-  0%,100%{text-shadow:0 0 0 rgba(255,255,255,0)}
-  50%{text-shadow:0 0 18px rgba(255,255,255,.16)}
-}
-@keyframes tagFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-3px)}
-}
-@keyframes megaSlideLeft{
-  0%{opacity:0;transform:translateX(-95px) rotateY(8deg) scale(.94);filter:blur(7px)}
-  65%{opacity:1;transform:translateX(10px) rotateY(-1deg) scale(1.015);filter:blur(0)}
-  100%{opacity:1;transform:translateX(0) rotateY(0) scale(1);filter:blur(0)}
-}
-@keyframes megaSlideRight{
-  0%{opacity:0;transform:translateX(95px) rotateY(-8deg) scale(.94);filter:blur(7px)}
-  65%{opacity:1;transform:translateX(-10px) rotateY(1deg) scale(1.015);filter:blur(0)}
-  100%{opacity:1;transform:translateX(0) rotateY(0) scale(1);filter:blur(0)}
-}
-@keyframes buttonSweep{
-  0%,35%{left:-45%}
-  62%,100%{left:125%}
-}
-@keyframes iconHover{
-  0%,100%{transform:translateY(0) rotate(0)}
-  50%{transform:translateY(-4px) rotate(2deg)}
-}
-@keyframes arrowIdle{
-  0%,70%,100%{transform:translateX(0)}
-  82%{transform:translateX(6px)}
-  90%{transform:translateX(2px)}
-}
-@keyframes footerRise{
-  from{opacity:0;transform:translateY(18px)}
-  to{opacity:1;transform:translateY(0)}
-}
+@keyframes focusAppear{from{opacity:0;transform:translate(-50%,-50%) scale(.72)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes focusLock{0%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(.92)}100%{transform:translate(-50%,-50%) scale(1)}}
+@keyframes lensIn{from{opacity:0;transform:translate(-50%,-50%) scale(.62)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes lensOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(1.34)}}
+@keyframes flash{0%,28%{opacity:0}40%{opacity:.92}60%{opacity:.22}100%{opacity:0}}
+@keyframes shutterTop{from{transform:translateY(0)}to{transform:translateY(-102%)}}
+@keyframes shutterBottom{from{transform:translateY(0)}to{transform:translateY(102%)}}
+@keyframes introOff{to{visibility:hidden}}
+@keyframes focusPage{0%{opacity:0;filter:blur(12px);transform:scale(.965)}70%{opacity:1;filter:blur(1px);transform:scale(1.006)}100%{opacity:1;filter:blur(0);transform:scale(1)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bgDrift{0%{background-position:0% 45%}50%{background-position:100% 55%}100%{background-position:0% 45%}}
 
-@media(max-width:420px){
-  .value{font-size:19px}
-  .link{min-height:80px;padding:14px}
-  .icon-wrap{width:40px;height:40px}
-  .icon{width:20px;height:20px}
-}
-@media(max-width:560px){
-  /* Phone entrance: each card slides in, lands, then bounces once */
-  .links .link:nth-child(1){
-    animation:phoneSlideBounceLeft 1.05s .34s cubic-bezier(.18,.9,.24,1) forwards;
-  }
-  .links .link:nth-child(2){
-    animation:phoneSlideBounceRight 1.05s .72s cubic-bezier(.18,.9,.24,1) forwards;
-  }
-  .links .link:nth-child(3){
-    animation:phoneSlideBounceLeft 1.05s 1.10s cubic-bezier(.18,.9,.24,1) forwards;
-  }
-
-  @keyframes phoneSlideBounceLeft{
-    0%{opacity:0;transform:translateX(-92px) scale(.90);filter:blur(7px)}
-    55%{opacity:1;transform:translateX(10px) scale(1.035);filter:blur(0)}
-    70%{transform:translateX(-4px) translateY(-10px) scale(1.02)}
-    82%{transform:translateX(2px) translateY(3px) scale(.995)}
-    92%{transform:translateX(0) translateY(-3px) scale(1.008)}
-    100%{opacity:1;transform:translateX(0) translateY(0) scale(1);filter:blur(0)}
-  }
-
-  @keyframes phoneSlideBounceRight{
-    0%{opacity:0;transform:translateX(92px) scale(.90);filter:blur(7px)}
-    55%{opacity:1;transform:translateX(-10px) scale(1.035);filter:blur(0)}
-    70%{transform:translateX(4px) translateY(-10px) scale(1.02)}
-    82%{transform:translateX(-2px) translateY(3px) scale(.995)}
-    92%{transform:translateX(0) translateY(-3px) scale(1.008)}
-    100%{opacity:1;transform:translateX(0) translateY(0) scale(1);filter:blur(0)}
-  }
-}
-@media(prefers-reduced-motion:reduce){
-  html,body,body::before,h1,.eyebrow,.tag,.link,.icon-wrap,.arrow,.footer{
-    animation:none !important;
-    transform:none !important;
-    opacity:1 !important;
-    filter:none !important;
-  }
-}
-
-/* CAMERA SHUTTER INTRO */
-.camera-iris{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  pointer-events:none;
-  overflow:hidden;
-  background:#000;
-  animation:introGone .01s 1.48s forwards;
-}
-.camera-lens{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:150px;
-  height:150px;
-  transform:translate(-50%,-50%) scale(.72);
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.22);
-  box-shadow:
-    0 0 0 10px rgba(255,255,255,.025),
-    0 0 0 18px rgba(255,255,255,.02),
-    0 0 38px rgba(255,255,255,.08);
-  opacity:0;
-  animation:lensAppear .34s .08s ease forwards,
-            lensExpand .9s .28s cubic-bezier(.17,.84,.22,1) forwards;
-}
-.camera-lens::before{
-  content:"";
-  position:absolute;
-  inset:12px;
-  border-radius:50%;
-  background:conic-gradient(
-    from 15deg,
-    #060606 0deg 48deg,
-    #1b1b1b 48deg 60deg,
-    #070707 60deg 108deg,
-    #1b1b1b 108deg 120deg,
-    #060606 120deg 168deg,
-    #1b1b1b 168deg 180deg,
-    #070707 180deg 228deg,
-    #1b1b1b 228deg 240deg,
-    #060606 240deg 288deg,
-    #1b1b1b 288deg 300deg,
-    #070707 300deg 348deg,
-    #1b1b1b 348deg 360deg
-  );
-  box-shadow:inset 0 0 24px #000;
-  animation:bladeSpin .95s .18s cubic-bezier(.2,.8,.2,1) forwards;
-}
-.camera-lens::after{
-  content:"";
-  position:absolute;
-  left:50%;top:50%;
-  width:8px;height:8px;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:#000;
-  box-shadow:0 0 0 2px rgba(255,255,255,.12);
-  animation:pupilOpen .82s .34s cubic-bezier(.15,.85,.2,1) forwards;
-}
-.iris-hole{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:0;
-  height:0;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  box-shadow:0 0 0 220vmax #000;
-  animation:cameraApertureOpen 1.06s .22s cubic-bezier(.18,.86,.22,1) forwards;
-}
-.camera-flash{
-  position:fixed;
-  inset:0;
-  z-index:10000;
-  pointer-events:none;
-  background:#fff;
-  opacity:0;
-  animation:cameraFlash .38s .98s ease-out forwards;
-}
-
-/* Page comes into focus after the shutter opens */
-.wrap{
-  opacity:0;
-  filter:blur(12px) brightness(.7);
-  transform:scale(.95);
-  animation:cameraFocusIn .66s 1.03s cubic-bezier(.16,.9,.25,1) forwards;
-}
-.eyebrow{opacity:0;animation:cleanReveal .38s 1.18s ease forwards}
-h1{
-  opacity:0;
-  animation:cleanReveal .46s 1.23s ease forwards,
-            titleShimmer 5.8s 1.85s linear infinite;
-}
-.tag{opacity:0;animation:cleanReveal .4s 1.31s ease forwards}
-.links .link{opacity:0;transform:translateY(9px) scale(.99)}
-.links .link:nth-child(1){animation:cleanCardReveal .42s 1.39s cubic-bezier(.16,.9,.25,1) forwards !important}
-.links .link:nth-child(2){animation:cleanCardReveal .42s 1.48s cubic-bezier(.16,.9,.25,1) forwards !important}
-.links .link:nth-child(3){animation:cleanCardReveal .42s 1.57s cubic-bezier(.16,.9,.25,1) forwards !important}
-.footer{opacity:0;animation:cleanReveal .38s 1.68s ease forwards}
-
-@keyframes lensAppear{
-  from{opacity:0;transform:translate(-50%,-50%) scale(.62)}
-  to{opacity:1;transform:translate(-50%,-50%) scale(.78)}
-}
-@keyframes lensExpand{
-  0%{transform:translate(-50%,-50%) scale(.78);opacity:1}
-  70%{transform:translate(-50%,-50%) scale(1.18);opacity:.75}
-  100%{transform:translate(-50%,-50%) scale(1.35);opacity:0}
-}
-@keyframes bladeSpin{
-  from{transform:rotate(0deg) scale(1)}
-  to{transform:rotate(82deg) scale(.42)}
-}
-@keyframes pupilOpen{
-  0%{width:8px;height:8px}
-  100%{width:112px;height:112px}
-}
-@keyframes cameraApertureOpen{
-  0%,18%{width:0;height:0}
-  40%{width:9vmax;height:9vmax}
-  68%{width:68vmax;height:68vmax}
-  100%{width:210vmax;height:210vmax}
-}
-@keyframes cameraFlash{
-  0%,20%{opacity:0}
-  34%{opacity:.38}
-  55%{opacity:.10}
-  100%{opacity:0}
-}
-@keyframes introGone{to{visibility:hidden}}
-@keyframes cameraFocusIn{
-  0%{opacity:0;filter:blur(12px) brightness(.7);transform:scale(.95)}
-  65%{opacity:1;filter:blur(2px) brightness(1.08);transform:scale(1.008)}
-  100%{opacity:1;filter:blur(0) brightness(1);transform:scale(1)}
-}
-@keyframes cleanReveal{
-  from{opacity:0;transform:translateY(7px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes cleanCardReveal{
-  0%{opacity:0;transform:translateY(10px) scale(.99)}
-  100%{opacity:1;transform:translateY(0) scale(1)}
-}
-@media(prefers-reduced-motion:reduce){
-  .camera-iris,.camera-flash{display:none !important}
-  .wrap,.eyebrow,h1,.tag,.links .link,.footer{
-    animation:none !important;
-    opacity:1 !important;
-    transform:none !important;
-    filter:none !important;
-  }
-}
-
+@media (hover:hover) and (pointer:fine){.link:hover{transform:translateY(-5px) scale(1.025);border-color:#fff;background:rgba(28,28,28,.96)}.link.primary:hover{background:#fff}}
+@media(max-width:420px){.value{font-size:19px}.link{min-height:80px;padding:14px}.icon-wrap{width:40px;height:40px}.icon{width:20px;height:20px}}
+@media(prefers-reduced-motion:reduce){.camera-intro{display:none}.wrap,.link,.footer{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}}
 </style>
 </head>
-<body>
-<div class="camera-iris" aria-hidden="true"><div class="camera-lens"></div><div class="iris-hole"></div></div>
-<div class="camera-flash" aria-hidden="true"></div>
+<body class="play-intro">
+<div class="camera-intro" aria-hidden="true">
+  <div class="shutter top"></div>
+  <div class="shutter bottom"></div>
+  <div class="lens-ring"></div>
+  <div class="focus-ui">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span><span class="focus-dot"></span>
+  </div>
+  <div class="flash"></div>
+</div>
+
 <main class="wrap">
   <div class="eyebrow">Digital contact card</div>
   <h1>High Style<br>Creative</h1>
@@ -508,58 +92,30 @@ h1{
 
   <div class="links">
     <a class="link primary" href="booking.html">
-      <div class="left">
-        <div class="icon-wrap">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div>
-          <span class="label">Bookings</span>
-          <span class="value">Book a Shoot</span>
-          <span class="note">Send a booking request</span>
-        </div>
-      </div>
-      <div class="arrow">→</div>
+      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><span class="label">Bookings</span><span class="value">Book a Shoot</span><span class="note">Send a booking request</span></div></div><div class="arrow">→</div>
     </a>
 
     <a class="link" href="https://www.instagram.com/high_style_creative/" target="_blank" rel="noopener">
-      <div class="left">
-        <div class="icon-wrap">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/>
-            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
-            <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
-          </svg>
-        </div>
-        <div>
-          <span class="label">Instagram</span>
-          <span class="value">@high_style_creative</span>
-          <span class="note">Tap to view profile</span>
-        </div>
-      </div>
-      <div class="arrow">→</div>
+      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></div><div><span class="label">Instagram</span><span class="value">@high_style_creative</span><span class="note">Tap to view profile</span></div></div><div class="arrow">→</div>
     </a>
 
     <a class="link" href="tel:+447555481441">
-      <div class="left">
-        <div class="icon-wrap">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <span class="label">Phone</span>
-          <span class="value">07555 481441</span>
-          <span class="note">Tap to call</span>
-        </div>
-      </div>
-      <div class="arrow">→</div>
+      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><span class="label">Phone</span><span class="value">07555 481441</span><span class="note">Tap to call</span></div></div><div class="arrow">→</div>
     </a>
   </div>
-
   <div class="footer">Powered by High Style Cards</div>
 </main>
+
+<script>
+(function(){
+  function replayIntro(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.body.classList.remove('play-intro');
+    void document.body.offsetWidth;
+    document.body.classList.add('play-intro');
+  }
+  window.addEventListener('pageshow', replayIntro);
+})();
+</script>
 </body>
 </html>
