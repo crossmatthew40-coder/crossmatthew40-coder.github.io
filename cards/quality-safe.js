@@ -1,26 +1,32 @@
 (() => {
-  if(window.__highStyleQualitySafeLoaded) return;
-  window.__highStyleQualitySafeLoaded=true;
+  if(window.__highStyleQualitySafeV2Loaded) return;
+  window.__highStyleQualitySafeV2Loaded=true;
   const brands=window.HIGH_STYLE_BRANDS||{};
   const slug=(new URLSearchParams(location.search).get('brand')||'high-style').toLowerCase();
   const brand=brands[slug];
   if(!brand) return;
 
   const icons={
-    booking:'<path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"/><path d="M12 8v8M8 12h8"/>',
-    phone:'<path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z"/>',
-    whatsapp:'<path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4.1A8 8 0 1 1 20 11.6Z"/>',
-    email:'<path d="M4 6h16v12H4z"/><path d="m5 7 7 6 7-6"/>',
-    website:'<circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8c-2-2.2-3-4.9-3-8s1-5.8 3-8Z"/>',
-    instagram:'<rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/>',
-    linkedin:'<path d="M6.5 9.5V18M6.5 6.5v.01M10.5 18v-5.1c0-2 1.1-3.4 3-3.4 1.8 0 3 1.2 3 3.4V18"/>',
-    tiktok:'<path d="M14 5v8.2a3.8 3.8 0 1 1-3.2-3.8M14 5c.8 2 2.1 3.2 4 3.6"/>',
-    save:'<path d="M12 4v10M8 10l4 4 4-4"/><path d="M5 17v2h14v-2"/>'
+    booking:'<rect class="icon-soft" x="3.4" y="4.4" width="17.2" height="16.2" rx="5"/><path class="icon-stroke" d="M7.2 3.8v3.1M16.8 3.8v3.1M5.3 9.3h13.4"/><path class="icon-stroke" d="M8 13h3M8 16.2h5.7"/><circle class="icon-fill" cx="16.4" cy="15.8" r="1.55"/>',
+    phone:'<circle class="icon-soft" cx="12" cy="12" r="10"/><path class="icon-stroke" d="M7.2 5.8h2.5c.45 0 .82.3.92.73l.63 2.75c.1.42-.03.84-.34 1.13L9.5 11.8a13.3 13.3 0 0 0 4.7 4.7l1.39-1.4c.3-.3.72-.43 1.13-.33l2.75.63c.43.1.73.48.73.92v2.48c0 .56-.4 1.04-.96 1.12-.73.1-1.48.15-2.23.15-7.35 0-13.32-5.97-13.32-13.32 0-.75.05-1.5.15-2.23.08-.55.56-.96 1.12-.96H7.2"/>',
+    whatsapp:'<circle class="icon-soft" cx="12" cy="12" r="10"/><path class="icon-stroke" d="M19.1 11.7a7.1 7.1 0 0 1-10.45 6.25L5 18.9l.96-3.55A7.1 7.1 0 1 1 19.1 11.7Z"/><path class="icon-stroke" d="M9.25 8.55c.15-.3.31-.31.55-.31h.39c.16 0 .32.01.42.28l.65 1.54c.1.24.08.4-.08.59l-.58.66c-.14.16-.08.33.02.49.45.78 1.12 1.43 1.9 1.87.16.09.33.15.48 0l.73-.8c.17-.18.34-.19.58-.09l1.52.72c.24.11.34.26.34.43 0 .33-.16.87-.55 1.25-.42.4-1.06.67-1.82.51-.95-.2-2.1-.68-3.44-1.86-1.08-.96-1.92-2.2-2.17-3.04-.23-.73 0-1.42.31-1.8Z"/>',
+    email:'<rect class="icon-soft" x="2.5" y="4.7" width="19" height="14.6" rx="4.2"/><rect class="icon-stroke" x="3.8" y="5.9" width="16.4" height="12.2" rx="3"/><path class="icon-stroke" d="m5.3 8 6.7 5 6.7-5"/><path class="icon-stroke" d="m5.2 16 4.4-3.5M18.8 16l-4.4-3.5"/>',
+    website:'<circle class="icon-soft" cx="12" cy="12" r="10"/><circle class="icon-stroke" cx="12" cy="12" r="8.2"/><path class="icon-stroke" d="M3.8 12h16.4M12 3.8c2.15 2.32 3.25 5.04 3.25 8.2S14.15 17.88 12 20.2C9.85 17.88 8.75 15.16 8.75 12S9.85 6.12 12 3.8Z"/>',
+    instagram:'<rect class="icon-soft" x="2.8" y="2.8" width="18.4" height="18.4" rx="6.2"/><rect class="icon-stroke" x="4.1" y="4.1" width="15.8" height="15.8" rx="5.2"/><circle class="icon-stroke" cx="12" cy="12" r="3.75"/><circle class="icon-fill" cx="17.2" cy="6.8" r="1.05"/>',
+    linkedin:'<rect class="icon-soft" x="2.7" y="2.7" width="18.6" height="18.6" rx="5.2"/><rect class="icon-stroke" x="4" y="4" width="16" height="16" rx="4.3"/><circle class="icon-fill" cx="7.5" cy="8" r="1.1"/><path class="icon-stroke" d="M7.5 11v5.5M11.2 16.5v-5.3M11.2 13.1c.25-1.35 1.16-2.25 2.55-2.25 1.55 0 2.75 1.07 2.75 3.15v2.5"/>',
+    tiktok:'<circle class="icon-soft" cx="12" cy="12" r="10"/><path class="icon-stroke" d="M14.2 5.2v8.15a4 4 0 1 1-3.4-3.95"/><path class="icon-stroke" d="M14.2 5.2c.82 2.02 2.15 3.28 4.05 3.65"/><circle class="icon-fill" cx="10.1" cy="15.4" r="1.15"/>',
+    save:'<rect class="icon-soft" x="3" y="3" width="18" height="18" rx="5.4"/><path class="icon-stroke" d="M12 5.8v8.4M8.8 11l3.2 3.2 3.2-3.2M6.3 17.2h11.4"/>',
+    menu:'<rect class="icon-soft" x="3" y="2.8" width="18" height="18.4" rx="5.2"/><path class="icon-stroke" d="M8.2 7.3h7.6M8.2 11.2h7.6M8.2 15.1h4.8"/><circle class="icon-fill" cx="16.8" cy="15.1" r="1.15"/>',
+    reviews:'<circle class="icon-soft" cx="12" cy="12" r="10"/><path class="icon-stroke" d="m12 4.8 2.05 4.16 4.59.67-3.32 3.23.78 4.57L12 15.28l-4.1 2.15.78-4.57-3.32-3.23 4.59-.67L12 4.8Z"/><circle class="icon-fill" cx="12" cy="12" r="1.15"/>'
   };
-  const notes={booking:'Open booking or enquiry',phone:'Tap to call',whatsapp:'Start a WhatsApp chat',email:'Send an email',website:'Open website',instagram:'View Instagram',linkedin:'View LinkedIn',tiktok:'View TikTok',save:'Save details to phone'};
+  const labels={booking:'Bookings',phone:'Phone',whatsapp:'WhatsApp',email:'Email',website:'Website',instagram:'Instagram',linkedin:'LinkedIn',tiktok:'TikTok',save:'Contact',menu:'Menu',reviews:'Reviews'};
+  const notes={booking:'Open booking or enquiry',phone:'Tap to call',whatsapp:'Start a WhatsApp chat',email:'Compose a new email',website:'Open official website',instagram:'View Instagram profile',linkedin:'View LinkedIn profile',tiktok:'View TikTok profile',save:'Save details to your phone',menu:'View food & drink menu',reviews:'Read reviews on Tripadvisor'};
+
   function typeFor(a){
     const href=String(a.getAttribute('href')||'');
     if(a.id==='saveContact') return 'save';
+    if(a.classList.contains('menu-link')) return 'menu';
+    if(a.classList.contains('review-link')) return 'reviews';
     if(brand.bookingUrl&&href===brand.bookingUrl) return 'booking';
     if(href.startsWith('tel:')) return 'phone';
     if(/wa\.me\//i.test(href)) return 'whatsapp';
@@ -31,40 +37,69 @@
     if(brand.website&&href===brand.website) return 'website';
     return 'website';
   }
+
   function classify(a){
     const value=a.querySelector('.action-value');
     if(!value) return;
     const len=(value.textContent||'').trim().length;
-    a.classList.remove('text-medium','text-long','text-xlong');
-    if(len>34) a.classList.add('text-xlong');
-    else if(len>24) a.classList.add('text-long');
-    else if(len>17) a.classList.add('text-medium');
+    a.classList.remove('fit-medium','fit-long','fit-xlong','text-medium','text-long','text-xlong');
+    if(len>34) a.classList.add('fit-xlong');
+    else if(len>24) a.classList.add('fit-long');
+    else if(len>17) a.classList.add('fit-medium');
   }
+
+  function chevron(type){
+    if(type==='save') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v10M8.5 11.5 12 15l3.5-3.5M6.5 19h11"/></svg>';
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+  }
+
+  function specialValue(type){
+    if(type==='menu') return brand.menuLabel||'View Menu';
+    if(type==='reviews') return 'Read our reviews';
+    return '';
+  }
+
   function decorate(a){
     if(!a) return;
-    if(a.dataset.qualitySafe!=='1'){
-      const type=typeFor(a);
-      let copy=a.querySelector('.action-copy');
-      if(!copy) return;
-      const main=document.createElement('span');main.className='action-main';
-      const icon=document.createElement('span');icon.className='action-icon-wrap';
-      icon.innerHTML=`<svg class="action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icons[type]||icons.website}</svg>`;
-      const note=document.createElement('span');note.className='action-note';note.textContent=notes[type]||'Open link';
-      if(!copy.querySelector('.action-note')) copy.appendChild(note);
-      a.insertBefore(main,copy);main.append(icon,copy);
-      a.dataset.qualitySafe='1';
+    const type=typeFor(a);
+    a.dataset.actionType=type;
+
+    if((type==='menu'||type==='reviews')&&!a.classList.contains('action')){
+      a.classList.add('action','premium-section-action');
+      a.innerHTML='<span class="action-copy"><span class="action-label"></span><span class="action-value"></span><span class="action-note"></span></span><span class="arrow"></span>';
+      a.querySelector('.action-label').textContent=labels[type];
+      a.querySelector('.action-value').textContent=specialValue(type);
+      a.querySelector('.action-note').textContent=notes[type];
     }
+
+    let copy=a.querySelector('.action-copy');
+    if(!copy) return;
+
+    let main=a.querySelector('.action-main');
+    if(!main){
+      main=document.createElement('span');main.className='action-main';
+      const icon=document.createElement('span');icon.className='action-icon-wrap';
+      icon.innerHTML=`<svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">${icons[type]||icons.website}</svg>`;
+      a.insertBefore(main,copy);main.append(icon,copy);
+    } else {
+      let icon=main.querySelector('.action-icon-wrap');
+      if(!icon){icon=document.createElement('span');icon.className='action-icon-wrap';main.insertBefore(icon,main.firstChild)}
+      icon.innerHTML=`<svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">${icons[type]||icons.website}</svg>`;
+    }
+
+    const label=copy.querySelector('.action-label');if(label)label.textContent=labels[type]||label.textContent||'Link';
+    let note=copy.querySelector('.action-note');if(!note){note=document.createElement('span');note.className='action-note';copy.appendChild(note)}note.textContent=notes[type]||'Open link';
+    let arrow=a.querySelector('.arrow');if(!arrow){arrow=document.createElement('span');arrow.className='arrow';a.appendChild(arrow)}arrow.innerHTML=chevron(type);
+    a.dataset.qualitySafe='2';
     classify(a);
   }
+
   function enhance(){
-    document.querySelectorAll('#actions .action,#saveContact.action').forEach(decorate);
+    document.querySelectorAll('#actions .action,#saveContact.action,.menu-section .menu-link,.tripadvisor-reviews .review-link').forEach(decorate);
     const app=document.getElementById('app');if(app){app.style.opacity='1';app.style.visibility='visible';}
   }
-  const actions=document.getElementById('actions');
-  if(actions){
-    let queued=false;
-    const queue=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;enhance();});};
-    new MutationObserver(queue).observe(actions,{childList:true,subtree:true,characterData:true});
-  }
-  setTimeout(enhance,60);setTimeout(enhance,300);
+
+  const app=document.getElementById('app');
+  if(app){let queued=false;new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;enhance()})}).observe(app,{childList:true,subtree:true,characterData:true})}
+  setTimeout(enhance,40);setTimeout(enhance,180);setTimeout(enhance,500);
 })();
