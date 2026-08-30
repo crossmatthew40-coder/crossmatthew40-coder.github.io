@@ -6,7 +6,8 @@
   style.textContent = `
     .qr-builder-card{margin-top:30px;border:1px solid #272727;border-radius:24px;background:linear-gradient(145deg,#111,#090909);padding:22px;box-shadow:0 18px 55px rgba(0,0,0,.2)}
     .qr-builder-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:16px}.qr-builder-head h2{font-size:22px;margin:3px 0 6px}.qr-builder-head p{margin:0;color:#888;line-height:1.5;font-size:13px;max-width:600px}.qr-ready-badge{border:1px solid #343434;border-radius:999px;padding:7px 10px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#bbb;white-space:nowrap}
-    .qr-url-box{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:15px}.qr-url-box input{min-width:0}.qr-url-box button{border:1px solid #333;border-radius:12px;background:#171717;color:#fff;padding:0 14px;font-weight:750;cursor:pointer}
+    .qr-url-box{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:15px}.qr-url-box input{min-width:0}.qr-url-box input[readonly]{opacity:.86;cursor:default}.qr-url-box button{border:1px solid #333;border-radius:12px;background:#171717;color:#fff;padding:0 14px;font-weight:750;cursor:pointer}
+    .qr-link-state{display:flex;align-items:center;gap:7px;margin-top:8px;color:#8fcf9a;font-size:10px;font-weight:750}.qr-link-state:before{content:'✓';display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:#112016;border:1px solid #285034;color:#9ce1aa}
     .qr-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.qr-options label{margin:0}.qr-options select,.qr-options input{width:100%}
     .qr-output{display:none;grid-template-columns:230px 1fr;gap:20px;align-items:center;margin-top:18px;padding:18px;border:1px solid #272727;border-radius:18px;background:#070707}.qr-output.show{display:grid}.qr-image-wrap{background:#fff;border-radius:16px;padding:14px;display:grid;place-items:center;aspect-ratio:1}.qr-image-wrap svg{width:100%;height:100%;display:block}.qr-details h3{margin:0 0 6px;font-size:19px}.qr-details p{margin:0 0 12px;color:#888;font-size:12px;line-height:1.5}.qr-destination{font-size:11px;line-height:1.45;color:#bbb;background:#101010;border:1px solid #252525;border-radius:10px;padding:10px;overflow-wrap:anywhere;margin-bottom:12px}.qr-actions{display:flex;gap:8px;flex-wrap:wrap}.qr-actions button{border:1px solid #333;border-radius:11px;background:#171717;color:#fff;padding:10px 12px;font-weight:750;cursor:pointer}.qr-actions button.primary{background:#fff;color:#050505;border-color:#fff}.qr-note{font-size:11px;color:#666;margin:13px 0 0;line-height:1.5}.qr-warning{color:#d3aa68}
     @media(max-width:720px){.qr-builder-head{display:block}.qr-ready-badge{display:inline-block;margin-top:10px}.qr-output.show{grid-template-columns:1fr}.qr-image-wrap{max-width:260px;width:100%;margin:auto}.qr-options{grid-template-columns:1fr}.qr-url-box{grid-template-columns:1fr}.qr-url-box button{min-height:44px}}
@@ -20,17 +21,18 @@
     <div class="qr-builder-head">
       <div>
         <p class="kicker">Final step</p>
-        <h2>Create the card QR code</h2>
-        <p>Generate a permanent QR code for this customer's digital card. The QR points to the brand's card URL, so the card content can be updated later without reprinting the QR.</p>
+        <h2>QR code linked to this card</h2>
+        <p>The QR is automatically connected to this customer's permanent digital card URL. If you edit the card later but keep the same slug, the printed QR still opens the updated card.</p>
       </div>
-      <span class="qr-ready-badge">Print ready</span>
+      <span class="qr-ready-badge">Linked to card</span>
     </div>
 
-    <label>QR destination</label>
+    <label>Card URL</label>
     <div class="qr-url-box">
-      <input id="qrDestination" inputmode="url" aria-label="QR code destination URL">
-      <button id="refreshQrUrl">Use card URL</button>
+      <input id="qrDestination" inputmode="url" aria-label="QR code destination URL" readonly>
+      <button id="openCardUrl">Open card</button>
     </div>
+    <div class="qr-link-state">QR destination follows the card automatically</div>
 
     <div class="qr-options">
       <label>Export size
@@ -46,14 +48,14 @@
     </div>
 
     <div class="finish-actions" style="margin-top:14px">
-      <button class="btn" id="generateQr">Generate QR Code</button>
+      <button class="btn" id="generateQr">Refresh QR Code</button>
     </div>
 
     <div class="qr-output" id="qrOutput">
       <div class="qr-image-wrap" id="qrImage"></div>
       <div class="qr-details">
         <h3 id="qrTitle">Customer QR Code</h3>
-        <p>Scan this code to open the customer's digital business card.</p>
+        <p>Scan this code to open this exact customer's digital business card.</p>
         <div class="qr-destination" id="qrDestinationText"></div>
         <div class="qr-actions">
           <button class="primary" id="downloadQr">Download PNG</button>
@@ -62,7 +64,7 @@
         </div>
       </div>
     </div>
-    <p class="qr-note"><span class="qr-warning">Important:</span> publish the customer's brand config to the live cards system before printing the QR. Once published, this permanent URL can stay the same while you update the card behind it.</p>
+    <p class="qr-note"><span class="qr-warning">Important:</span> the customer card still needs to be published to the live cards system before a new customer QR can open it publicly. Once published, keep the same slug and you can update the card without reprinting the QR.</p>
   `;
 
   const finishHead = [...editor.querySelectorAll('.section-head')].find(el => /finish/i.test(el.textContent));
@@ -74,6 +76,7 @@
   const q = id => document.getElementById(id);
   let currentSvg = '';
   let currentUrl = '';
+  let generateTimer = null;
 
   function brandSlug(){
     const raw = q('slug') ? q('slug').value : 'new-brand';
@@ -85,9 +88,10 @@
     return `${location.origin}/cards/?brand=${encodeURIComponent(brandSlug())}`;
   }
 
-  function syncUrl(force=false){
-    const input=q('qrDestination');
-    if(force || !input.dataset.manual) input.value=permanentCardUrl();
+  function syncUrl(){
+    const url = permanentCardUrl();
+    q('qrDestination').value = url;
+    return url;
   }
 
   async function ensureQrLibrary(){
@@ -117,15 +121,10 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${total} ${total}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#ffffff"/><path d="${paths}" fill="${colour}"/></svg>`;
   }
 
-  async function generate(){
-    let url=q('qrDestination').value.trim();
-    try{
-      if(!/^https?:\/\//i.test(url)) url='https://'+url;
-      url=new URL(url).href;
-    }catch(e){ if(typeof showStatus==='function') showStatus('Enter a valid QR destination.',true); return; }
-
+  async function generate(silent=false){
+    const url = syncUrl();
     const btn=q('generateQr');
-    btn.disabled=true; btn.textContent='Generating…';
+    if (!silent) { btn.disabled=true; btn.textContent='Generating…'; }
     try{
       await ensureQrLibrary();
       currentUrl=url;
@@ -135,11 +134,19 @@
       const business=q('businessName')?.value?.trim() || 'Customer';
       q('qrTitle').textContent=business+' QR Code';
       q('qrOutput').classList.add('show');
-      if(typeof showStatus==='function') showStatus('QR code created.');
+      if(!silent && typeof showStatus==='function') showStatus('QR code linked to this card.');
     }catch(e){
       console.error(e);
       if(typeof showStatus==='function') showStatus('Could not create the QR code.',true);
-    }finally{btn.disabled=false;btn.textContent='Generate QR Code';}
+    }finally{
+      if (!silent) { btn.disabled=false;btn.textContent='Refresh QR Code'; }
+    }
+  }
+
+  function scheduleGenerate(){
+    clearTimeout(generateTimer);
+    syncUrl();
+    generateTimer=setTimeout(()=>generate(true),220);
   }
 
   function svgBlob(){ return new Blob([currentSvg],{type:'image/svg+xml;charset=utf-8'}); }
@@ -171,19 +178,25 @@
   }
 
   async function copyLink(){
-    if(!currentUrl) return;
-    try{await navigator.clipboard.writeText(currentUrl); if(typeof showStatus==='function') showStatus('Card link copied.');}
-    catch(e){if(typeof copyText==='function'){const ok=await copyText(currentUrl); if(typeof showStatus==='function') showStatus(ok?'Card link copied.':'Could not copy link.',!ok);}}
+    const url = currentUrl || syncUrl();
+    try{await navigator.clipboard.writeText(url); if(typeof showStatus==='function') showStatus('Card link copied.');}
+    catch(e){if(typeof copyText==='function'){const ok=await copyText(url); if(typeof showStatus==='function') showStatus(ok?'Card link copied.':'Could not copy link.',!ok);}}
   }
 
-  q('refreshQrUrl').addEventListener('click',()=>{q('qrDestination').dataset.manual='';syncUrl(true);if(typeof showStatus==='function')showStatus('Permanent card URL loaded.');});
-  q('qrDestination').addEventListener('input',()=>{q('qrDestination').dataset.manual='1';});
-  q('generateQr').addEventListener('click',generate);
+  q('openCardUrl').addEventListener('click',()=>window.open(syncUrl(),'_blank','noopener'));
+  q('generateQr').addEventListener('click',()=>generate(false));
   q('downloadQr').addEventListener('click',downloadPng);
   q('downloadQrSvg').addEventListener('click',downloadSvg);
   q('copyQrLink').addEventListener('click',copyLink);
-  q('qrColour').addEventListener('input',()=>{if(currentUrl) generate();});
-  q('slug')?.addEventListener('input',()=>syncUrl(false));
+  q('qrColour').addEventListener('input',scheduleGenerate);
+  q('slug')?.addEventListener('input',scheduleGenerate);
+  q('businessName')?.addEventListener('input',scheduleGenerate);
 
-  syncUrl(true);
+  const scanResults = document.getElementById('scanResults');
+  if (scanResults) {
+    new MutationObserver(scheduleGenerate).observe(scanResults,{attributes:true,childList:true,subtree:true,attributeFilter:['class']});
+  }
+
+  syncUrl();
+  setTimeout(()=>generate(true),300);
 })();
