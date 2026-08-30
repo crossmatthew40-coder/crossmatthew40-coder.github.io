@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Add High Style to Apple Wallet</title>
+<meta name="description" content="Add the High Style digital business card to Apple Wallet">
+<style>
+:root{--bg:#000;--panel:#101010;--line:#2b2b2b;--text:#fff;--muted:#a8a8a8}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}body{display:flex;justify-content:center;padding:28px 14px 40px;background:linear-gradient(145deg,#000 0%,#060606 52%,#111 100%)}.wrap{width:min(100%,520px);text-align:center}.logo{width:min(72vw,230px);height:auto;margin:4px auto 22px;display:block}.kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#777;font-weight:800;margin-bottom:10px}h1{font-size:clamp(34px,9vw,52px);letter-spacing:-.055em;line-height:.95;margin:0}.sub{font-size:15px;line-height:1.55;color:var(--muted);max-width:360px;margin:15px auto 26px}.pass-preview{background:linear-gradient(150deg,#181818,#070707);border:1px solid #2a2a2a;border-radius:28px;padding:22px;text-align:left;margin:0 auto 20px;box-shadow:0 18px 50px rgba(0,0,0,.32)}.pass-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.mark{font-size:19px;font-weight:900;letter-spacing:-.04em}.type{font-size:10px;color:#8f8f8f;letter-spacing:.16em;text-transform:uppercase}.divider{height:1px;background:#2a2a2a;margin:18px 0}.pass-label{font-size:10px;color:#858585;letter-spacing:.16em;text-transform:uppercase;font-weight:800}.pass-title{font-size:27px;font-weight:900;letter-spacing:-.04em;margin-top:5px}.pass-note{font-size:13px;color:#aaa;margin-top:8px;line-height:1.45}.wallet-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;border-radius:18px;background:#fff;color:#000;text-decoration:none;font-size:18px;font-weight:800;border:1px solid #fff;margin-top:18px}.wallet-btn:active{transform:scale(.99)}.apple{font-size:26px;line-height:1}.secondary{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:18px;border:1px solid var(--line);background:var(--panel);color:#fff;text-decoration:none;font-size:15px;font-weight:700;margin-top:12px}.status{margin-top:14px;padding:14px 16px;border:1px solid #2c2c2c;border-radius:16px;background:#0d0d0d;color:#aaa;font-size:13px;line-height:1.5}.help{font-size:12px;color:#777;line-height:1.55;margin:18px auto 0;max-width:390px}.footer{margin-top:28px;padding-top:18px;border-top:1px solid #151515;color:#555;font-size:10px;letter-spacing:.17em;text-transform:uppercase}@media(max-width:390px){.pass-title{font-size:24px}.wallet-btn{min-height:58px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <img class="logo" src="../high-style-logo.svg?v=4" alt="High Style Creative">
+  <div class="kicker">Digital business card</div>
+  <h1>Add to<br>Apple Wallet</h1>
+  <p class="sub">Keep your High Style card in Wallet so your QR code is always ready when you need it.</p>
+
+  <section class="pass-preview" aria-label="High Style Wallet pass preview">
+    <div class="pass-top"><div class="mark">HIGH STYLE</div><div class="type">Wallet Pass</div></div>
+    <div class="divider"></div>
+    <div class="pass-label">Digital business card</div>
+    <div class="pass-title">High Style Creative</div>
+    <div class="pass-note">Open this pass whenever you want someone to scan your contact QR code.</div>
+  </section>
+
+  <a class="wallet-btn" href="./HighStyle.pkpass"><span class="apple" aria-hidden="true"></span><span>Add to Apple Wallet</span></a>
+  <div class="status">The Wallet page is now live. The final Apple Wallet pass file still needs to be signed with your Apple Pass Type ID certificate before this button can install it.</div>
+  <a class="secondary" href="../">Open digital card instead</a>
+  <p class="help">Once the signed pass is uploaded, this same QR and this same page will work — you will not need to print a new QR code.</p>
+  <div class="footer">Powered by High Style Cards</div>
+</main>
+</body>
+</html>
