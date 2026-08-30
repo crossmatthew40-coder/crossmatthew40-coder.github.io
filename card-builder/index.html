@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#0b0b0b">
   <title>High Style Cards — Builder</title>
   <link rel="stylesheet" href="builder.css">
+  <link rel="stylesheet" href="premium-fonts.css">
   <link rel="stylesheet" href="premium-preview.css">
 </head>
 <body>
@@ -25,13 +26,9 @@
   <main class="layout">
     <section class="editor-panel">
       <div class="section-head">
-        <div>
-          <span>01</span>
-          <h2>Brand</h2>
-        </div>
+        <div><span>01</span><h2>Brand</h2></div>
         <button class="tiny" id="resetBuilder">Reset</button>
       </div>
-
       <div class="grid two">
         <label>Business name<input id="businessName" placeholder="Your Brand"></label>
         <label>Brand slug<input id="slug" placeholder="your-brand"></label>
@@ -40,7 +37,6 @@
       </div>
       <label>Tagline<textarea id="tagline" rows="2" placeholder="A short line about the brand"></textarea></label>
       <label>Location<input id="location" placeholder="UK / Manchester / Areas covered"></label>
-
       <div class="logo-row">
         <label class="grow">Logo URL or path<input id="logo" placeholder="https://... or ../logo.svg"></label>
         <label class="upload">Upload preview<input type="file" id="logoUpload" accept="image/*"></label>
@@ -89,20 +85,11 @@
         <button class="btn ghost" id="copyPreviewLink">Copy Preview Link</button>
       </div>
       <div class="status" id="status" aria-live="polite"></div>
-      <details class="config-box">
-        <summary>Show generated config</summary>
-        <pre id="configOutput"></pre>
-      </details>
+      <details class="config-box"><summary>Show generated config</summary><pre id="configOutput"></pre></details>
     </section>
 
     <aside class="preview-panel">
-      <div class="preview-top">
-        <div>
-          <p class="kicker">Live preview</p>
-          <h2>Customer view</h2>
-        </div>
-        <span class="live-dot">LIVE</span>
-      </div>
+      <div class="preview-top"><div><p class="kicker">Live preview</p><h2>Customer view</h2></div><span class="live-dot">LIVE</span></div>
       <div class="phone-shell">
         <div class="phone-notch"></div>
         <div class="card-preview" id="cardPreview">
@@ -117,18 +104,9 @@
               <p id="previewLocation" class="preview-location">UK</p>
             </div>
             <div id="previewButtons" class="preview-buttons"></div>
-            <div id="previewServicesWrap" class="preview-section">
-              <p class="preview-label">Services</p>
-              <div id="previewServices" class="chips"></div>
-            </div>
-            <div id="previewReviewWrap" class="preview-section review-card">
-              <p class="preview-label">Kind words</p>
-              <blockquote id="previewReview"></blockquote>
-            </div>
-            <div id="previewGalleryWrap" class="preview-section">
-              <p class="preview-label">Gallery</p>
-              <div id="previewGallery" class="mini-gallery"></div>
-            </div>
+            <div id="previewServicesWrap" class="preview-section"><p class="preview-label">Services</p><div id="previewServices" class="chips"></div></div>
+            <div id="previewReviewWrap" class="preview-section review-card"><p class="preview-label">Kind words</p><blockquote id="previewReview"></blockquote></div>
+            <div id="previewGalleryWrap" class="preview-section"><p class="preview-label">Gallery</p><div id="previewGallery" class="mini-gallery"></div></div>
             <p id="previewFooter" class="preview-footer">Powered by High Style Cards</p>
           </div>
         </div>
@@ -148,11 +126,14 @@
   <script src="design-buttons-fix.js"></script>
   <script src="font-controls.js"></script>
   <script src="tripadvisor-reviews.js"></script>
+  <script src="menu-section.js"></script>
   <script src="saved-designs.js"></script>
   <script src="qr-section.js"></script>
   <script src="interactive-preview.js"></script>
   <script src="animations-buttons.js"></script>
+  <script src="animation-pack-v2.js"></script>
   <script src="button-settings-normalizer.js"></script>
+  <script src="equal-buttons.js"></script>
   <script src="working-qr.js"></script>
 </body>
 </html>
