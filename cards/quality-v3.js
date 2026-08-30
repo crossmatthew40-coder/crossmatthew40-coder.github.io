@@ -1,0 +1,50 @@
+(() => {
+  if(window.__highStyleQualityV3Loaded) return;
+  window.__highStyleQualityV3Loaded=true;
+  const brands=window.HIGH_STYLE_BRANDS||{};
+  const slug=(new URLSearchParams(location.search).get('brand')||'high-style').toLowerCase();
+  const brand=brands[slug]; if(!brand) return;
+
+  const icons={
+    booking:'<path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"/><path d="M12 8v8M8 12h8"/>',
+    phone:'<path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z"/>',
+    whatsapp:'<path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4.1A8 8 0 1 1 20 11.6Z"/><path d="M9.2 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.8 1.8c.1.3.1.5-.1.7l-.7.8c-.2.2-.1.4 0 .6.5.9 1.3 1.7 2.2 2.2.2.1.4.2.6 0l.9-1c.2-.2.4-.2.7-.1l1.8.9c.3.1.4.3.4.5 0 .4-.2 1.1-.7 1.5-.5.5-1.3.8-2.2.6-1.1-.2-2.5-.8-4.1-2.2-1.3-1.2-2.3-2.7-2.6-3.7-.3-.9 0-1.7.4-2.2Z"/>',
+    email:'<path d="M4 6h16v12H4z"/><path d="m5 7 7 6 7-6"/>',
+    website:'<circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8c-2-2.2-3-4.9-3-8s1-5.8 3-8Z"/>',
+    instagram:'<rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/>',
+    linkedin:'<path d="M6.5 9.5V18M6.5 6.5v.01M10.5 18v-5.1c0-2 1.1-3.4 3-3.4 1.8 0 3 1.2 3 3.4V18M10.5 13c0-2.2 1.2-3.5 3-3.5"/>',
+    tiktok:'<path d="M14 5v8.2a3.8 3.8 0 1 1-3.2-3.8M14 5c.8 2 2.1 3.2 4 3.6"/>',
+    save:'<path d="M12 4v10M8 10l4 4 4-4"/><path d="M5 17v2h14v-2"/>'
+  };
+  const notes={booking:'Open booking or enquiry',phone:'Tap to call',whatsapp:'Start a WhatsApp chat',email:'Send an email',website:'Open website',instagram:'View Instagram',linkedin:'View LinkedIn',tiktok:'View TikTok'};
+
+  function typeFor(a){
+    const href=String(a.getAttribute('href')||'');
+    if(a.id==='saveContact') return 'save';
+    if(brand.bookingUrl&&href===brand.bookingUrl) return 'booking';
+    if(href.startsWith('tel:')) return 'phone';
+    if(/wa\.me\//i.test(href)) return 'whatsapp';
+    if(href.startsWith('mailto:')) return 'email';
+    if(brand.instagram&&href===brand.instagram) return 'instagram';
+    if(brand.linkedin&&href===brand.linkedin) return 'linkedin';
+    if(brand.tiktok&&href===brand.tiktok) return 'tiktok';
+    if(brand.website&&href===brand.website) return 'website';
+    return 'website';
+  }
+  function decorate(a){
+    if(a.dataset.qualityV3) return;
+    a.dataset.qualityV3='1';
+    const type=typeFor(a);
+    let copy=a.querySelector('.action-copy');
+    if(!copy){copy=document.createElement('span');copy.className='action-copy';while(a.firstChild&&a.firstChild!==a.querySelector('.arrow'))copy.appendChild(a.firstChild);a.insertBefore(copy,a.querySelector('.arrow'));}
+    const wrapper=document.createElement('span');wrapper.className='action-main';
+    const icon=document.createElement('span');icon.className='action-icon-wrap';
+    icon.innerHTML=`<svg class="action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icons[type]||icons.website}</svg>`;
+    copy.parentNode.insertBefore(wrapper,copy);wrapper.append(icon,copy);
+    let note=copy.querySelector('.action-note'); if(!note){note=document.createElement('span');note.className='action-note';copy.appendChild(note);}
+    note.textContent=type==='save'?'Save details to phone':(notes[type]||'Open link');
+  }
+  document.querySelectorAll('#actions .action,#saveContact.action').forEach(decorate);
+  const observer=new MutationObserver(()=>document.querySelectorAll('#actions .action,#saveContact.action').forEach(decorate));
+  const actions=document.getElementById('actions'); if(actions)observer.observe(actions,{childList:true,subtree:true});
+})();
