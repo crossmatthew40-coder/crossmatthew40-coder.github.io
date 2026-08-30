@@ -303,15 +303,33 @@ h1{
   .icon{width:20px;height:20px}
 }
 @media(max-width:560px){
-  @keyframes megaSlideLeft{
-    0%{opacity:0;transform:translateX(-58px) scale(.95);filter:blur(5px)}
-    70%{opacity:1;transform:translateX(7px) scale(1.01);filter:blur(0)}
-    100%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}
+  /* Phone entrance: each card slides in, lands, then bounces once */
+  .links .link:nth-child(1){
+    animation:phoneSlideBounceLeft 1.05s .34s cubic-bezier(.18,.9,.24,1) forwards;
   }
-  @keyframes megaSlideRight{
-    0%{opacity:0;transform:translateX(58px) scale(.95);filter:blur(5px)}
-    70%{opacity:1;transform:translateX(-7px) scale(1.01);filter:blur(0)}
-    100%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}
+  .links .link:nth-child(2){
+    animation:phoneSlideBounceRight 1.05s .72s cubic-bezier(.18,.9,.24,1) forwards;
+  }
+  .links .link:nth-child(3){
+    animation:phoneSlideBounceLeft 1.05s 1.10s cubic-bezier(.18,.9,.24,1) forwards;
+  }
+
+  @keyframes phoneSlideBounceLeft{
+    0%{opacity:0;transform:translateX(-92px) scale(.90);filter:blur(7px)}
+    55%{opacity:1;transform:translateX(10px) scale(1.035);filter:blur(0)}
+    70%{transform:translateX(-4px) translateY(-10px) scale(1.02)}
+    82%{transform:translateX(2px) translateY(3px) scale(.995)}
+    92%{transform:translateX(0) translateY(-3px) scale(1.008)}
+    100%{opacity:1;transform:translateX(0) translateY(0) scale(1);filter:blur(0)}
+  }
+
+  @keyframes phoneSlideBounceRight{
+    0%{opacity:0;transform:translateX(92px) scale(.90);filter:blur(7px)}
+    55%{opacity:1;transform:translateX(-10px) scale(1.035);filter:blur(0)}
+    70%{transform:translateX(4px) translateY(-10px) scale(1.02)}
+    82%{transform:translateX(-2px) translateY(3px) scale(.995)}
+    92%{transform:translateX(0) translateY(-3px) scale(1.008)}
+    100%{opacity:1;transform:translateX(0) translateY(0) scale(1);filter:blur(0)}
   }
 }
 @media(prefers-reduced-motion:reduce){
