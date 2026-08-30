@@ -46,7 +46,6 @@
     const name = String(businessName || '').trim().toLowerCase();
     if (name && value.toLowerCase() === name) return '';
 
-    // Prefer a short first sentence if the website description is longer.
     if (value.length > 145) {
       const first = value.match(/^(.{20,140}?[.!?])(?:\s|$)/);
       value = first ? first[1].trim() : '';
@@ -56,6 +55,35 @@
     if (value.length < 20 || value.length > 145 || words.length < 4) return '';
     if ((value.match(/https?:\/\//gi) || []).length) return '';
     return value;
+  }
+
+  function domainSlug(raw){
+    let value = String(raw || '').trim();
+    if (!value) return '';
+    if (!/^https?:\/\//i.test(value)) value = 'https://' + value;
+    try {
+      const u = new URL(value);
+      let host = u.hostname.toLowerCase().replace(/^www\./,'');
+      const parts = host.split('.').filter(Boolean);
+      if (!parts.length) return '';
+      const twoPartSuffixes = new Set(['co.uk','org.uk','me.uk','ltd.uk','plc.uk','net.uk','com.au','co.nz']);
+      const suffix2 = parts.slice(-2).join('.');
+      let label = parts.length >= 3 && twoPartSuffixes.has(suffix2) ? parts[parts.length-3] : (parts.length >= 2 ? parts[parts.length-2] : parts[0]);
+      return typeof cleanSlug === 'function' ? cleanSlug(label) : label.replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    } catch(e) { return ''; }
+  }
+
+  function applyDomainSlug(){
+    const website = rowValue(/^website$/i) || scanUrl.value.trim();
+    const slug = domainSlug(website);
+    const slugInput = document.getElementById('slug');
+    if (!slug || !slugInput || slugInput.dataset.manual) return false;
+    if (slugInput.value !== slug) {
+      setValue('slug', slug);
+      update();
+      return true;
+    }
+    return false;
   }
 
   function signature(){
@@ -89,15 +117,17 @@
       changed = true;
     }
 
-    if (changed) update();
+    const domainApplied = applyDomainSlug();
+    if (changed && !domainApplied) update();
     lastAppliedSignature = sig;
 
     if (finalNotice) {
       const bits = [];
       if (insta.url) bits.push('Instagram');
       if (tag) bits.push('tagline');
+      if (domainApplied || domainSlug(rowValue(/^website$/i) || scanUrl.value.trim())) bits.push('domain name');
       const message = bits.length
-        ? `${bits.join(' and ')} added from the website.`
+        ? `${bits.join(', ')} added from the website.`
         : 'Website details checked — no suitable Instagram or tagline was found.';
       showStatus(message);
     }
@@ -126,10 +156,13 @@
     const id = runId;
     lastAppliedSignature = '';
     lastColourSignature = '';
+    const slugInput = document.getElementById('slug');
+    if (slugInput) slugInput.dataset.manual = '';
     [350,900,1800,3200,5600].forEach((delay,index) => {
       setTimeout(() => {
         if (id !== runId) return;
         applyBusinessDetails(index === 4);
+        applyDomainSlug();
         enforceBrandColours();
       },delay);
     });
