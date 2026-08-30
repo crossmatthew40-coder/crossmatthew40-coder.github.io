@@ -1,0 +1,70 @@
+/* Keep the public QR card visually aligned with the builder Customer View. */
+.shell{
+  width:min(100%,430px);
+}
+.hero{
+  padding:23px 17px 24px;
+  margin-bottom:15px;
+  border-radius:28px;
+}
+.brand-mark{
+  width:84px;
+  height:84px;
+  margin:0 auto 17px;
+}
+.eyebrow{
+  min-height:24px;
+  padding:0 9px;
+  font-size:9px;
+  margin-bottom:14px;
+}
+.hero h1{
+  font-size:clamp(29px,9vw,44px);
+  line-height:1;
+}
+.person{margin-top:10px;font-size:15px}
+.role{margin-top:5px;font-size:11px}
+.tagline{margin-top:10px;max-width:300px;font-size:13px;line-height:1.45}
+.location{margin-top:7px;font-size:10px}
+.stack{gap:9px}
+.action{
+  min-height:58px;
+  padding:13px 14px;
+  border-radius:15px;
+}
+.action-label{font-size:9px;margin-bottom:3px}
+.action-value{font-size:14px}
+.arrow{width:30px;height:30px;font-size:17px}
+.section{
+  margin-top:12px;
+  padding:14px;
+  border-radius:20px;
+}
+.section-title{font-size:9px;margin-bottom:9px}
+.chip{padding:8px 10px;font-size:10px}
+.social{min-height:44px;padding:11px;font-size:11px}
+.quote{padding:14px;font-size:12px;line-height:1.5}
+.gallery{gap:7px}
+.gallery img{border-radius:14px}
+.tripadvisor-reviews .review-link{
+  padding:13px 14px!important;
+  border-radius:15px!important;
+  font-size:12px;
+}
+.footer{margin-top:24px;font-size:9px}
+
+body.smart-style-luxury .hero{border-radius:25px}
+body.smart-style-luxury .section{border-radius:17px}
+body.smart-style-luxury .action{border-radius:10px}
+body.smart-style-bold .hero{border-radius:22px}
+body.smart-style-bold .section{border-radius:15px}
+body.smart-style-bold .action{border-radius:10px}
+body.smart-style-soft .hero{border-radius:32px}
+body.smart-style-soft .section{border-radius:26px}
+body.smart-style-soft .action{border-radius:25px}
+body.smart-style-clean .hero{border-radius:26px}
+body.smart-style-clean .action{border-radius:15px}
+
+@media(min-width:700px){
+  body{padding-top:28px}
+}
