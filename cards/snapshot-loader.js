@@ -3,10 +3,20 @@
   const params = new URLSearchParams(location.search);
   const slug = (params.get('brand') || 'high-style').toLowerCase();
 
-  // Published cards always win. The snapshot is only a fallback for a newly-designed card.
+  // Published cards always win. The QR snapshot is only the immediate fallback.
   if (brands[slug]) return;
   const match = location.hash.match(/(?:^#|&)c=([^&]+)/);
   if (!match) return;
+
+  const SYSTEM = '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif';
+  const fonts = {
+    modern:['"Helvetica Neue", Arial, sans-serif','"Helvetica Neue", Arial, sans-serif','Modern'],
+    luxury:['Didot, "Bodoni 72", Georgia, "Times New Roman", serif',SYSTEM,'Luxury'],
+    editorial:['Baskerville, Georgia, "Times New Roman", serif','"Helvetica Neue", Arial, sans-serif','Editorial'],
+    bold:['"Arial Black", "Helvetica Neue", Arial, sans-serif','"Helvetica Neue", Arial, sans-serif','Bold'],
+    rounded:['"Avenir Next Rounded", "Trebuchet MS", "Segoe UI", Arial, sans-serif','"Avenir Next", "Segoe UI", Arial, sans-serif','Rounded'],
+    classic:['Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif','Georgia, "Times New Roman", serif','Classic']
+  };
 
   function decodeBase64Url(value){
     let b64 = String(value || '').replace(/-/g,'+').replace(/_/g,'/');
@@ -16,21 +26,35 @@
     return new TextDecoder().decode(bytes);
   }
 
-  function expandTheme(h){
-    h = h || {};
-    return clean({
-      background:h.b, surface:h.s, text:h.x, muted:h.m, accent:h.a,
-      accentText:h.c, border:h.o, headingFont:h.h, bodyFont:h.f,
-      fontLabel:h.l, brandTokens:h.k
-    });
-  }
-
   function clean(obj){
     Object.keys(obj).forEach(k => {
       const v = obj[k];
       if (v === '' || v === null || v === undefined || (Array.isArray(v) && !v.length)) delete obj[k];
     });
     return obj;
+  }
+
+  function expandTokens(v){
+    if (!Array.isArray(v)) return undefined;
+    return clean({
+      buttonRadius:v[0], cardRadius:v[1], logoRadius:v[2], borderWidth:v[3],
+      headingWeight:v[4], headingTransform:v[5], letterSpacing:v[6],
+      sectionGap:v[7], density:v[8]
+    });
+  }
+
+  function expandTheme(h){
+    h = h || {};
+    const font = fonts[h.q] || null;
+    return clean({
+      background:h.b, surface:h.s, text:h.x, muted:h.m, accent:h.a,
+      accentText:h.c, border:h.o,
+      headingFont:font ? font[0] : h.h,
+      bodyFont:font ? font[1] : h.f,
+      fontLabel:font ? font[2] : h.l,
+      fontChoice:h.q,
+      brandTokens:expandTokens(h.k)
+    });
   }
 
   try {
