@@ -15,6 +15,7 @@
   ];
 
   let hidden = new Set();
+  let forcedOn = new Set();
   let saveContactEnabled = true;
   let animations = {entrance:'fade-up', buttons:'stagger', accent:'soft-pulse'};
 
@@ -56,7 +57,7 @@
       if(!hasValue(def.type,c)) return;
       const current = byType.get(def.type);
       const defaultEnabled = hasPlan ? !!current : true;
-      const enabled = hidden.has(def.type) ? false : defaultEnabled;
+      const enabled = !hidden.has(def.type) && (forcedOn.has(def.type) || defaultEnabled);
       if(!enabled) return;
       out.push({
         type:def.type,
@@ -90,6 +91,7 @@
     const d = data?.config || data || {};
     const settings = d.buttonSettings || {};
     hidden = new Set(Array.isArray(settings.hidden) ? settings.hidden : []);
+    forcedOn = new Set();
     saveContactEnabled = d.saveContactEnabled !== false && settings.saveContact !== false;
     animations = {
       entrance:d.animations?.entrance || 'fade-up',
@@ -180,7 +182,7 @@
     ACTIONS.forEach(def=>{
       const available = hasValue(def.type,raw);
       const defaultOn = hasPlan ? planned.has(def.type) : available;
-      const checked = available && !hidden.has(def.type) && defaultOn;
+      const checked = available && !hidden.has(def.type) && (forcedOn.has(def.type) || defaultOn);
       const row=document.createElement('div');
       row.className='manage-button-row'+(available?'':' unavailable')+(checked?'':' off');
       row.innerHTML=`<div class="manage-button-copy"><div class="manage-button-name"></div><div class="manage-button-value"></div></div><label class="switch"><input type="checkbox"><span class="switch-track"></span></label>`;
@@ -188,7 +190,8 @@
       row.querySelector('.manage-button-value').textContent=actionValue(def.type,raw);
       const input=row.querySelector('input'); input.checked=checked;
       input.addEventListener('change',()=>{
-        if(input.checked) hidden.delete(def.type); else hidden.add(def.type);
+        if(input.checked){hidden.delete(def.type);if(!defaultOn)forcedOn.add(def.type)}
+        else{forcedOn.delete(def.type);hidden.add(def.type)}
         row.classList.toggle('off',!input.checked);
         update();
         if(typeof showStatus==='function') showStatus(`${def.name} ${input.checked?'shown':'removed'} from the card.`);
@@ -242,18 +245,18 @@
   });
 
   document.getElementById('restoreSuggestedButtons')?.addEventListener('click',()=>{
-    hidden.clear(); saveContactEnabled=true; update();
+    hidden.clear(); forcedOn.clear(); saveContactEnabled=true; update();
     if(typeof showStatus==='function') showStatus('Suggested card buttons restored.');
   });
 
   document.getElementById('scanWebsite')?.addEventListener('click',()=>{
-    hidden.clear(); saveContactEnabled=true;
+    hidden.clear(); forcedOn.clear(); saveContactEnabled=true;
   });
 
   window.highStyleAnimationButtonControls={
     animations:()=>({...animations}),
     hidden:()=>[...hidden],
-    reset(){hidden.clear();saveContactEnabled=true;update();}
+    reset(){hidden.clear();forcedOn.clear();saveContactEnabled=true;update();}
   };
 
   syncControls();
