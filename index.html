@@ -7,113 +7,45 @@
 <title>High Style Creative</title>
 <meta name="description" content="High Style Creative digital contact card">
 <style>
-:root{--fg:#fff;--muted:#9b9b9b;--panel:rgba(12,12,12,.86);--line:#2b2b2b}
+:root{--fg:#fff;--muted:#aaa;--panel:rgba(12,12,12,.86);--line:#2b2b2b}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#000;color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif}
-body{display:flex;justify-content:center;padding:20px 12px 34px;overflow-x:hidden;background:linear-gradient(145deg,#000 0%,#050505 40%,#111 68%,#000 100%);background-size:220% 220%;animation:bgDrift 18s ease-in-out infinite}
+body{display:flex;justify-content:center;padding:20px 12px 34px;overflow-x:hidden;background:linear-gradient(145deg,#000 0%,#050505 42%,#111 68%,#000 100%);background-size:220% 220%;animation:bgDrift 18s ease-in-out infinite}
 .wrap{width:min(100%,520px);text-align:center;position:relative;z-index:1;opacity:0;filter:blur(9px);transform:scale(.975)}
+.brand-logo{display:block;width:min(72vw,250px);height:auto;margin:2px auto 14px;opacity:0;transform:translateY(10px) scale(.96);filter:drop-shadow(0 8px 24px rgba(255,255,255,.05))}
 .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#777;font-weight:800;margin:0 0 10px}
 h1{font-size:clamp(38px,10vw,58px);line-height:.92;letter-spacing:-.06em;margin:0;color:#fff}
-.tag{color:#aaa;font-size:15px;line-height:1.55;margin:14px auto 28px;max-width:360px}
+.tag{color:var(--muted);font-size:15px;line-height:1.55;margin:14px auto 28px;max-width:360px}
 .links{display:grid;gap:14px}
-.link{display:flex;align-items:center;justify-content:space-between;min-height:88px;padding:16px 18px;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:#fff;text-decoration:none;text-align:left;overflow:hidden;opacity:0;transform:translateY(10px) scale(.99);transition:transform .24s ease,border-color .24s ease,background .24s ease}
+.link{display:flex;align-items:center;justify-content:space-between;min-height:88px;padding:16px 18px;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:#fff;text-decoration:none;text-align:left;overflow:hidden;opacity:0;transform:translateY(10px) scale(.99);transition:transform .24s ease,border-color .24s ease,background .24s ease,box-shadow .24s ease}
 .link.primary{background:#fff;color:#000;border-color:#fff}
-.left{display:flex;align-items:center;gap:14px;min-width:0}
-.icon-wrap{width:44px;height:44px;border:1px solid #313131;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;background:#050505}
-.link.primary .icon-wrap{border-color:#d0d0d0;background:#fff}
-.icon{width:22px;height:22px;display:block}
-.label{display:block;color:#888;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:6px}
-.link.primary .label,.link.primary .note{color:#555}
-.value{display:block;font-size:22px;font-weight:800}
-.note{display:block;color:#777;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-top:7px}
-.arrow{font-size:28px;flex:0 0 auto}
-.footer{color:#555;font-size:10px;letter-spacing:.17em;text-transform:uppercase;margin-top:24px;padding-top:18px;border-top:1px solid #141414;opacity:0}
+.left{display:flex;align-items:center;gap:14px;min-width:0}.icon-wrap{width:44px;height:44px;border:1px solid #313131;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;background:#050505}.link.primary .icon-wrap{border-color:#d0d0d0;background:#fff}.icon{width:22px;height:22px;display:block}.label{display:block;color:#888;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:6px}.link.primary .label,.link.primary .note{color:#555}.value{display:block;font-size:22px;font-weight:800}.note{display:block;color:#777;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-top:7px}.arrow{font-size:28px;flex:0 0 auto}.footer{color:#555;font-size:10px;letter-spacing:.17em;text-transform:uppercase;margin-top:24px;padding-top:18px;border-top:1px solid #141414;opacity:0}
 
-/* REAL IRIS SHUTTER INTRO */
 .camera-intro{position:fixed;inset:0;z-index:9999;pointer-events:none;overflow:hidden}
 .reveal-hole{position:absolute;left:50%;top:50%;width:0;height:0;transform:translate(-50%,-50%);border-radius:50%;box-shadow:0 0 0 220vmax #000;z-index:1}
-.aperture{position:absolute;left:50%;top:50%;width:230px;height:230px;transform:translate(-50%,-50%) scale(.9);border-radius:50%;overflow:hidden;z-index:3;opacity:0;border:2px solid rgba(255,255,255,.25);box-shadow:0 0 0 9px rgba(255,255,255,.025),0 0 0 15px rgba(255,255,255,.018),0 0 42px rgba(255,255,255,.09)}
-.blade-ring{position:absolute;inset:0;animation:none}
-.blade{--r:0deg;position:absolute;left:50%;top:50%;width:180px;height:132px;margin-left:-8px;margin-top:-66px;transform-origin:8px 66px;transform:rotate(var(--r)) translateX(-24px);clip-path:polygon(0 50%,100% 0,100% 100%);background:linear-gradient(145deg,#090909 0%,#202020 56%,#080808 100%);border-left:1px solid rgba(255,255,255,.16);will-change:transform}
+.aperture{position:absolute;left:50%;top:50%;width:225px;height:225px;transform:translate(-50%,-50%) scale(.9);border-radius:50%;overflow:hidden;z-index:3;opacity:0;border:2px solid rgba(255,255,255,.25);box-shadow:0 0 0 9px rgba(255,255,255,.025),0 0 42px rgba(255,255,255,.09)}
+.blade-ring{position:absolute;inset:0}.blade{--r:0deg;position:absolute;left:50%;top:50%;width:176px;height:128px;margin-left:-8px;margin-top:-64px;transform-origin:8px 64px;transform:rotate(var(--r)) translateX(-24px);clip-path:polygon(0 50%,100% 0,100% 100%);background:linear-gradient(145deg,#090909 0%,#202020 56%,#080808 100%);border-left:1px solid rgba(255,255,255,.16)}
 .blade:nth-child(1){--r:0deg}.blade:nth-child(2){--r:45deg}.blade:nth-child(3){--r:90deg}.blade:nth-child(4){--r:135deg}.blade:nth-child(5){--r:180deg}.blade:nth-child(6){--r:225deg}.blade:nth-child(7){--r:270deg}.blade:nth-child(8){--r:315deg}
-.aperture-center{position:absolute;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);border-radius:50%;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.1);z-index:4}
-.flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:8}
-
-body.play-intro .aperture{animation:apertureIn .28s .08s ease forwards,apertureOut .32s 1.12s ease forwards}
-body.play-intro .blade-ring{animation:ringTwist .88s .34s cubic-bezier(.18,.82,.2,1) forwards}
-body.play-intro .blade{animation:bladeOpen .88s .34s cubic-bezier(.18,.82,.2,1) forwards}
-body.play-intro .aperture-center{animation:centerOpen .76s .38s cubic-bezier(.18,.82,.2,1) forwards}
-body.play-intro .reveal-hole{animation:holeOpen .78s .55s cubic-bezier(.16,.86,.2,1) forwards}
-body.play-intro .flash{animation:flash .28s .98s ease-out forwards}
-body.play-intro .camera-intro{animation:introOff .01s 1.46s forwards}
-body.play-intro .wrap{animation:focusPage .58s .88s cubic-bezier(.16,.9,.25,1) forwards}
-body.play-intro .links .link:nth-child(1){animation:cardIn .36s 1.17s ease forwards}
-body.play-intro .links .link:nth-child(2){animation:cardIn .36s 1.27s ease forwards}
-body.play-intro .links .link:nth-child(3){animation:cardIn .36s 1.37s ease forwards}
-body.play-intro .footer{animation:fadeUp .34s 1.49s ease forwards}
-
-@keyframes apertureIn{from{opacity:0;transform:translate(-50%,-50%) scale(.72)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-@keyframes apertureOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(1.16)}}
-@keyframes ringTwist{from{transform:rotate(0deg)}to{transform:rotate(28deg)}}
-@keyframes bladeOpen{0%{transform:rotate(var(--r)) translateX(-24px)}42%{transform:rotate(var(--r)) translateX(-14px)}100%{transform:rotate(var(--r)) translateX(118px)}}
-@keyframes centerOpen{0%{width:18px;height:18px}45%{width:24px;height:24px}100%{width:146px;height:146px}}
-@keyframes holeOpen{0%{width:0;height:0}28%{width:14vmax;height:14vmax}68%{width:82vmax;height:82vmax}100%{width:220vmax;height:220vmax}}
-@keyframes flash{0%,28%{opacity:0}42%{opacity:.9}62%{opacity:.2}100%{opacity:0}}
-@keyframes introOff{to{visibility:hidden}}
-@keyframes focusPage{0%{opacity:0;filter:blur(9px);transform:scale(.975)}72%{opacity:1;filter:blur(1px);transform:scale(1.004)}100%{opacity:1;filter:blur(0);transform:scale(1)}}
-@keyframes cardIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-@keyframes bgDrift{0%{background-position:0% 45%}50%{background-position:100% 55%}100%{background-position:0% 45%}}
-
-@media (hover:hover) and (pointer:fine){.link:hover{transform:translateY(-5px) scale(1.025);border-color:#fff;background:rgba(28,28,28,.96)}.link.primary:hover{background:#fff}}
-@media(max-width:420px){.value{font-size:19px}.link{min-height:80px;padding:14px}.icon-wrap{width:40px;height:40px}.icon{width:20px;height:20px}.aperture{width:210px;height:210px}.blade{width:166px;height:122px;margin-top:-61px;transform-origin:8px 61px}}
-@media(prefers-reduced-motion:reduce){.camera-intro{display:none}.wrap,.link,.footer{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}}
+.aperture-center{position:absolute;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);border-radius:50%;background:#000;z-index:4}.flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:8}
+body.play-intro .aperture{animation:apertureIn .28s .08s ease forwards,apertureOut .32s 1.12s ease forwards}body.play-intro .blade-ring{animation:ringTwist .88s .34s cubic-bezier(.18,.82,.2,1) forwards}body.play-intro .blade{animation:bladeOpen .88s .34s cubic-bezier(.18,.82,.2,1) forwards}body.play-intro .aperture-center{animation:centerOpen .76s .38s cubic-bezier(.18,.82,.2,1) forwards}body.play-intro .reveal-hole{animation:holeOpen .78s .55s cubic-bezier(.16,.86,.2,1) forwards}body.play-intro .flash{animation:flash .28s .98s ease-out forwards}body.play-intro .camera-intro{animation:introOff .01s 1.46s forwards}body.play-intro .wrap{animation:focusPage .58s .88s cubic-bezier(.16,.9,.25,1) forwards}body.play-intro .brand-logo{animation:logoIn .42s 1.08s ease forwards}body.play-intro .links .link:nth-child(1){animation:cardIn .36s 1.24s ease forwards}body.play-intro .links .link:nth-child(2){animation:cardIn .36s 1.34s ease forwards}body.play-intro .links .link:nth-child(3){animation:cardIn .36s 1.44s ease forwards}body.play-intro .footer{animation:fadeUp .34s 1.56s ease forwards}
+@keyframes apertureIn{from{opacity:0;transform:translate(-50%,-50%) scale(.72)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}@keyframes apertureOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(1.16)}}@keyframes ringTwist{from{transform:rotate(0)}to{transform:rotate(28deg)}}@keyframes bladeOpen{0%{transform:rotate(var(--r)) translateX(-24px)}42%{transform:rotate(var(--r)) translateX(-14px)}100%{transform:rotate(var(--r)) translateX(118px)}}@keyframes centerOpen{0%{width:18px;height:18px}45%{width:24px;height:24px}100%{width:146px;height:146px}}@keyframes holeOpen{0%{width:0;height:0}28%{width:14vmax;height:14vmax}68%{width:82vmax;height:82vmax}100%{width:220vmax;height:220vmax}}@keyframes flash{0%,28%{opacity:0}42%{opacity:.9}62%{opacity:.2}100%{opacity:0}}@keyframes introOff{to{visibility:hidden}}@keyframes focusPage{0%{opacity:0;filter:blur(9px);transform:scale(.975)}72%{opacity:1;filter:blur(1px);transform:scale(1.004)}100%{opacity:1;filter:blur(0);transform:scale(1)}}@keyframes logoIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes cardIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes bgDrift{0%{background-position:0% 45%}50%{background-position:100% 55%}100%{background-position:0% 45%}}
+@media (hover:hover) and (pointer:fine){.link:hover{transform:translateY(-5px) scale(1.025);border-color:#fff;background:rgba(28,28,28,.96);box-shadow:0 18px 40px rgba(0,0,0,.55)}.link.primary:hover{background:#fff}}@media(max-width:420px){.value{font-size:19px}.link{min-height:80px;padding:14px}.icon-wrap{width:40px;height:40px}.icon{width:20px;height:20px}.brand-logo{width:min(70vw,225px)}}@media(prefers-reduced-motion:reduce){.camera-intro{display:none}.wrap,.brand-logo,.link,.footer{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}}
 </style>
 </head>
 <body class="play-intro">
-<div class="camera-intro" aria-hidden="true">
-  <div class="reveal-hole"></div>
-  <div class="aperture">
-    <div class="blade-ring">
-      <span class="blade"></span><span class="blade"></span><span class="blade"></span><span class="blade"></span>
-      <span class="blade"></span><span class="blade"></span><span class="blade"></span><span class="blade"></span>
-    </div>
-    <div class="aperture-center"></div>
-  </div>
-  <div class="flash"></div>
-</div>
-
+<div class="camera-intro" aria-hidden="true"><div class="reveal-hole"></div><div class="aperture"><div class="blade-ring"><span class="blade"></span><span class="blade"></span><span class="blade"></span><span class="blade"></span><span class="blade"></span><span class="blade"></span><span class="blade"></span><span class="blade"></span></div><div class="aperture-center"></div></div><div class="flash"></div></div>
 <main class="wrap">
+  <img class="brand-logo" src="high-style-logo.svg?v=2" alt="High Style Creative logo">
   <div class="eyebrow">Digital contact card</div>
   <h1>High Style<br>Creative</h1>
   <p class="tag">Capturing Culinary Creativity<br>Hospitality Photography &amp; Content</p>
-
   <div class="links">
-    <a class="link primary" href="booking.html">
-      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><span class="label">Bookings</span><span class="value">Book a Shoot</span><span class="note">Send a booking request</span></div></div><div class="arrow">→</div>
-    </a>
-
-    <a class="link" href="https://www.instagram.com/high_style_creative/" target="_blank" rel="noopener">
-      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></div><div><span class="label">Instagram</span><span class="value">@high_style_creative</span><span class="note">Tap to view profile</span></div></div><div class="arrow">→</div>
-    </a>
-
-    <a class="link" href="tel:+447555481441">
-      <div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><span class="label">Phone</span><span class="value">07555 481441</span><span class="note">Tap to call</span></div></div><div class="arrow">→</div>
-    </a>
+    <a class="link primary" href="booking.html"><div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><span class="label">Bookings</span><span class="value">Book a Shoot</span><span class="note">Send a booking request</span></div></div><div class="arrow">→</div></a>
+    <a class="link" href="https://www.instagram.com/high_style_creative/" target="_blank" rel="noopener"><div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></div><div><span class="label">Instagram</span><span class="value">@high_style_creative</span><span class="note">Tap to view profile</span></div></div><div class="arrow">→</div></a>
+    <a class="link" href="tel:+447555481441"><div class="left"><div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.7 4.5h2.5c.5 0 .9.3 1 .8l.6 3c.1.4 0 .8-.3 1.1l-1.6 1.6a14 14 0 0 0 4.6 4.6l1.6-1.6c.3-.3.7-.4 1.1-.3l3 .6c.5.1.8.5.8 1v2.5c0 .6-.4 1-.9 1.1-.8.1-1.7.2-2.5.2C10.2 20.6 3.4 13.8 3.4 5.9c0-.8.1-1.7.2-2.5.1-.5.5-.9 1.1-.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><span class="label">Phone</span><span class="value">07555 481441</span><span class="note">Tap to call</span></div></div><div class="arrow">→</div></a>
   </div>
   <div class="footer">Powered by High Style Cards</div>
 </main>
-
-<script>
-(function(){
-  function replayIntro(){
-    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    document.body.classList.remove('play-intro');
-    void document.body.offsetWidth;
-    document.body.classList.add('play-intro');
-  }
-  window.addEventListener('pageshow', replayIntro);
-})();
-</script>
+<script>(function(){function replay(){if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;document.body.classList.remove('play-intro');void document.body.offsetWidth;document.body.classList.add('play-intro')}window.addEventListener('pageshow',replay)})();</script>
 </body>
 </html>
