@@ -27,7 +27,7 @@
       <div>
         <p class="kicker">Final step</p>
         <h2>Working QR for this finished card</h2>
-        <p>This QR contains a compact fallback of the card you have designed, so a new customer card can open immediately on another phone. If the same slug is later published live, the published card automatically takes priority.</p>
+        <p>This QR contains a compact fallback of the card you have designed, so a new customer card can open immediately on another phone. It includes the current button choices, animations and premium styling.</p>
       </div>
       <span class="working-qr-badge">Works immediately</span>
     </div>
@@ -43,7 +43,7 @@
       <div class="working-qr-image" id="workingQrImage"></div>
       <div class="working-qr-info"><h3 id="workingQrTitle">Customer QR Code</h3><p>Scan this code to open the finished digital business card.</p><div class="working-qr-destination" id="workingQrDestination"></div><div class="working-qr-actions"><button class="primary" id="workingQrPng" type="button">Download PNG</button><button id="workingQrSvg" type="button">Download SVG</button><button id="workingQrCopy" type="button">Copy card link</button></div></div>
     </div>
-    <p class="working-qr-note">For the smallest, cleanest permanent link, the card can still be published under its business slug later. Until then, this QR fallback makes the design usable immediately.</p>`;
+    <p class="working-qr-note">If you change an animation or switch a button on/off, this QR automatically refreshes from the latest card design.</p>`;
 
   if (insertBefore) editor.insertBefore(section, insertBefore); else editor.appendChild(section);
   const q = id => document.getElementById(id);
@@ -67,11 +67,12 @@
     const h=clean({b:t.background,s:t.surface,x:t.text,m:t.muted,a:t.accent,c:t.accentText,o:t.border,q:fontChoice,k:compactTokens(t.brandTokens)});
     if(!fontChoice){h.h=t.headingFont;h.f=t.bodyFont;h.l=t.fontLabel;}
     const actions=Array.isArray(c.actions)?c.actions.map(a=>clean({t:a.type,l:a.label,p:a.primary?1:undefined})):[];
+    const animation = c.animations ? clean({e:c.animations.entrance,b:c.animations.buttons,a:c.animations.accent}) : undefined;
     return clean({
       n:c.businessName,d:c.displayName!==c.businessName?c.displayName:undefined,e:c.eyebrow!=='Digital business card'?c.eyebrow:undefined,p:c.personName,r:c.role,t:c.tagline,
       g:hosted(c.logo),i:c.initials,h,ph:c.phone,pd:c.phoneDisplay,wa:c.whatsapp,em:c.email,wb:c.website,ig:c.instagram,il:c.instagramLabel,li:c.linkedin,tk:c.tiktok,
       bu:c.bookingUrl,bl:c.bookingLabel,sv:c.services||[],rv:c.review,lo:c.location,ga:reduced?[]:(c.gallery||[]).filter(hosted).slice(0,2),ft:c.footer!=='Powered by High Style Cards'?c.footer:undefined,
-      ac:actions,ds:c.designStyle,ta:c.tripadvisorUrl
+      ac:actions,ds:c.designStyle,ta:c.tripadvisorUrl,bm:c.buttonSettings?.managed?1:undefined,sc:c.saveContactEnabled===false?0:undefined,an:animation
     });
   }
   function base64Url(text){
