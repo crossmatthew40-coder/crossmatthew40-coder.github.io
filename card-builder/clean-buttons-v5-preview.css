@@ -1,0 +1,54 @@
+/* High Style Cards builder — clean buttons v5 */
+.preview-btn,.preview-btn.primary{
+  height:auto!important;
+  min-height:72px!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:11px 11px!important;
+}
+.preview-action-main{min-width:0!important;flex:1 1 auto!important;overflow:visible!important;}
+.preview-action-copy{min-width:0!important;flex:1 1 auto!important;overflow:visible!important;}
+.preview-action-label{white-space:normal!important;overflow-wrap:anywhere!important;line-height:1.2!important;}
+.preview-action-value{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  font-size:14px!important;
+  line-height:1.14!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  hyphens:auto!important;
+}
+.preview-action-note{font-size:7px!important;line-height:1.22!important;white-space:normal!important;overflow-wrap:anywhere!important;}
+/* Remove the extra circular/oval arrow treatment. */
+.preview-btn>span:last-child{
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  flex:0 0 auto!important;
+  padding:0 1px!important;
+  margin-left:1px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  font-size:18px!important;
+  line-height:1!important;
+}
+.preview-btn.fit-medium .preview-action-value{font-size:13px!important;}
+.preview-btn.fit-long .preview-action-value{font-size:12px!important;line-height:1.16!important;}
+.preview-btn.fit-xlong .preview-action-value{font-size:11px!important;line-height:1.18!important;}
+.preview-btn.fit-xlong .preview-action-note{display:none!important;}
+@media(max-width:390px){
+  .preview-btn,.preview-btn.primary{min-height:68px!important;padding:10px 9px!important;gap:7px!important;}
+  .preview-action-main{gap:7px!important;}
+  .preview-action-value{font-size:12.5px!important;}
+  .preview-btn.fit-medium .preview-action-value{font-size:12px!important;}
+  .preview-btn.fit-long .preview-action-value{font-size:11px!important;}
+  .preview-btn.fit-xlong .preview-action-value{font-size:10px!important;}
+  .preview-action-note{display:none!important;}
+  .preview-btn>span:last-child{font-size:16px!important;padding:0!important;}
+}
