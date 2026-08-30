@@ -34,6 +34,11 @@ window.HIGH_STYLE_BRANDS = {
     review: "",
     location: "UK",
     gallery: [],
+    animations: {
+      entrance: "reveal",
+      buttons: "wave",
+      accent: "halo"
+    },
     footer: "Powered by High Style Cards"
   },
 
