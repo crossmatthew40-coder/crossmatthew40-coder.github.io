@@ -37,7 +37,7 @@
     if(type==='booking') return c.bookingLabel||'Make an Enquiry';
     if(type==='phone') return c.phoneDisplay||c.phone||'Call';
     if(type==='whatsapp') return 'WhatsApp';
-    if(type==='email') return c.email||'Email';
+    if(type==='email') return c.email||'Send an Email';
     if(type==='website') return 'Visit Website';
     if(type==='instagram') return c.instagramLabel||'Instagram';
     if(type==='linkedin') return 'LinkedIn';
@@ -45,20 +45,32 @@
     if(type==='save') return 'Save to Phone';
     return (a.textContent||'Open').trim();
   }
+  function classify(a){
+    const value=a.querySelector('.preview-action-value');
+    if(!value) return;
+    const len=(value.textContent||'').trim().length;
+    a.classList.remove('text-medium','text-long','text-xlong');
+    if(len>34) a.classList.add('text-xlong');
+    else if(len>24) a.classList.add('text-long');
+    else if(len>17) a.classList.add('text-medium');
+  }
   function decorateButton(a,c){
-    if(!a || a.dataset.qualitySafe==='1') return;
-    const type=typeFor(a,c);
-    const main=document.createElement('span'); main.className='preview-action-main';
-    const icon=document.createElement('span'); icon.className='preview-action-icon';
-    icon.innerHTML=`<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icons[type]||icons.website}</svg>`;
-    const copy=document.createElement('span'); copy.className='preview-action-copy';
-    const label=document.createElement('span'); label.className='preview-action-label'; label.textContent=labels[type]||'Link';
-    const value=document.createElement('span'); value.className='preview-action-value'; value.textContent=valueFor(type,a,c);
-    const note=document.createElement('span'); note.className='preview-action-note'; note.textContent=notes[type]||'Open link';
-    copy.append(label,value,note); main.append(icon,copy);
-    const arrow=document.createElement('span'); arrow.textContent=type==='save'?'＋':'→';
-    a.replaceChildren(main,arrow);
-    a.dataset.qualitySafe='1';
+    if(!a) return;
+    if(a.dataset.qualitySafe!=='1'){
+      const type=typeFor(a,c);
+      const main=document.createElement('span'); main.className='preview-action-main';
+      const icon=document.createElement('span'); icon.className='preview-action-icon';
+      icon.innerHTML=`<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icons[type]||icons.website}</svg>`;
+      const copy=document.createElement('span'); copy.className='preview-action-copy';
+      const label=document.createElement('span'); label.className='preview-action-label'; label.textContent=labels[type]||'Link';
+      const value=document.createElement('span'); value.className='preview-action-value'; value.textContent=valueFor(type,a,c);
+      const note=document.createElement('span'); note.className='preview-action-note'; note.textContent=notes[type]||'Open link';
+      copy.append(label,value,note); main.append(icon,copy);
+      const arrow=document.createElement('span'); arrow.textContent=type==='save'?'＋':'→';
+      a.replaceChildren(main,arrow);
+      a.dataset.qualitySafe='1';
+    }
+    classify(a);
   }
   function enhance(){
     const root=document.getElementById('previewButtons');
@@ -73,7 +85,7 @@
   if(root){
     let queued=false;
     const queue=()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;enhance();});};
-    new MutationObserver(queue).observe(root,{childList:true,subtree:true});
+    new MutationObserver(queue).observe(root,{childList:true,subtree:true,characterData:true});
   }
   window.addEventListener('load',()=>setTimeout(enhance,80),{once:true});
   setTimeout(enhance,120);
