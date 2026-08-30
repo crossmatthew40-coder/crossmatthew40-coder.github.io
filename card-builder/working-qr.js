@@ -27,7 +27,7 @@
       <div>
         <p class="kicker">Final step</p>
         <h2>Working QR for this finished card</h2>
-        <p>This QR contains a compact fallback of the card you have designed, so a new customer card can open immediately on another phone. It includes fonts, animations, button choices, menu and premium styling.</p>
+        <p>This QR contains a compact fallback of the card you have designed, so a new customer card can open immediately on another phone. It includes fonts, animations, button choices, icon styling, menu and premium styling.</p>
       </div>
       <span class="working-qr-badge">Works immediately</span>
     </div>
@@ -43,7 +43,7 @@
       <div class="working-qr-image" id="workingQrImage"></div>
       <div class="working-qr-info"><h3 id="workingQrTitle">Customer QR Code</h3><p>Scan this code to open the finished digital business card.</p><div class="working-qr-destination" id="workingQrDestination"></div><div class="working-qr-actions"><button class="primary" id="workingQrPng" type="button">Download PNG</button><button id="workingQrSvg" type="button">Download SVG</button><button id="workingQrCopy" type="button">Copy card link</button></div></div>
     </div>
-    <p class="working-qr-note">If you change a font, animation, menu or card button, this QR automatically refreshes from the latest design.</p>`;
+    <p class="working-qr-note">If you change a font, animation, icon, menu or card button, this QR automatically refreshes from the latest design.</p>`;
 
   if (insertBefore) editor.insertBefore(section, insertBefore); else editor.appendChild(section);
   const q = id => document.getElementById(id);
@@ -52,6 +52,11 @@
   function clean(obj){Object.keys(obj).forEach(k=>{const v=obj[k];if(v===''||v===null||v===undefined||(Array.isArray(v)&&!v.length))delete obj[k]});return obj}
   function compactTokens(t){if(!t)return undefined;return[t.buttonRadius,t.cardRadius,t.logoRadius,t.borderWidth,t.headingWeight,t.headingTransform,t.letterSpacing,t.sectionGap,t.density]}
   function hosted(value){return /^https?:\/\//i.test(String(value||''))?String(value):''}
+  function compactIcons(s){
+    if(!s)return undefined;
+    const icons=s.icons&&Object.keys(s.icons).length?s.icons:undefined;
+    return clean({e:s.enabled===false?0:undefined,s:s.shape,z:s.size,w:s.stroke,b:s.background,r:s.border===false?0:undefined,c:s.color,m:icons});
+  }
   function compact(c,reduced=false){
     const t=c.theme||{};const fontChoice=t.fontChoice&&t.fontChoice!=='auto'?t.fontChoice:'';
     const h=clean({b:t.background,s:t.surface,x:t.text,m:t.muted,a:t.accent,c:t.accentText,o:t.border,q:fontChoice,k:compactTokens(t.brandTokens)});if(!fontChoice){h.h=t.headingFont;h.f=t.bodyFont;h.l=t.fontLabel;}
@@ -61,7 +66,7 @@
       n:c.businessName,d:c.displayName!==c.businessName?c.displayName:undefined,e:c.eyebrow!=='Digital business card'?c.eyebrow:undefined,p:c.personName,r:c.role,t:c.tagline,
       g:hosted(c.logo),i:c.initials,h,ph:c.phone,pd:c.phoneDisplay,wa:c.whatsapp,em:c.email,wb:c.website,ig:c.instagram,il:c.instagramLabel,li:c.linkedin,tk:c.tiktok,
       bu:c.bookingUrl,bl:c.bookingLabel,mu:hosted(c.menuUrl),ml:c.menuLabel,sv:c.services||[],rv:c.review,lo:c.location,ga:reduced?[]:(c.gallery||[]).filter(hosted).slice(0,2),ft:c.footer!=='Powered by High Style Cards'?c.footer:undefined,
-      ac:actions,ds:c.designStyle,ta:c.tripadvisorUrl,bm:c.buttonSettings?.managed?1:undefined,sc:c.saveContactEnabled===false?0:undefined,an:animation
+      ac:actions,ds:c.designStyle,ta:c.tripadvisorUrl,bm:c.buttonSettings?.managed?1:undefined,sc:c.saveContactEnabled===false?0:undefined,an:animation,ic:compactIcons(c.iconSettings)
     });
   }
   function base64Url(text){const bytes=new TextEncoder().encode(text);let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
