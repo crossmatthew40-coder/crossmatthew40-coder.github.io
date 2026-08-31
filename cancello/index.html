@@ -26,47 +26,43 @@ h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(3
 .address{margin:18px auto 4px;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#727272;line-height:1.55;opacity:0;transform:translateY(14px)}.address strong{color:var(--navy)}
 .footer{font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:#8c8c8c;margin-top:18px;opacity:0;transform:translateY(14px)}
 
-/* White Cancello entrance animation */
+/* Final clean Cancello entrance animation */
 .entrance{position:fixed;inset:0;z-index:9999;overflow:hidden;pointer-events:none;background:#fff;perspective:1600px;visibility:visible}
-.entrance-drawing{position:absolute;inset:-1.5%;width:103%;height:103%;object-fit:cover;object-position:center 56%;z-index:1;transform:scale(1.035);filter:grayscale(1) brightness(1.02) contrast(.98)}
-.vignette{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 50% 58%,transparent 0 46%,rgba(0,0,0,.025) 72%,rgba(0,0,0,.07) 100%)}
-.door-glow{position:absolute;left:50%;top:64%;width:28%;height:19%;transform:translate(-50%,-50%) scale(.92);z-index:3;background:radial-gradient(ellipse,rgba(255,255,255,.98),rgba(238,238,234,.32) 48%,transparent 75%);filter:blur(10px);opacity:.3}
-.entry-caption{position:absolute;left:50%;top:6%;transform:translateX(-50%) translateY(8px);z-index:7;color:#111;text-align:center;opacity:0}.entry-caption b{display:block;font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:500;letter-spacing:.02em}.entry-caption small{display:block;margin-top:4px;font-size:8px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:#555}
+.entrance-drawing{position:absolute;inset:-1%;width:102%;height:102%;object-fit:cover;object-position:center 56%;z-index:1;transform:scale(1.025);filter:brightness(1.02) contrast(1.02) saturate(.88)}
+.vignette{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 50% 58%,rgba(255,255,255,0) 0 42%,rgba(0,0,0,.03) 72%,rgba(0,0,0,.06) 100%)}
+.door-glow{position:absolute;left:50%;top:64%;width:30%;height:21%;transform:translate(-50%,-50%) scale(.92);z-index:3;background:radial-gradient(ellipse,rgba(255,236,196,.72),rgba(241,202,135,.24) 46%,transparent 74%);filter:blur(10px);opacity:.34}
 .gate-stage{position:absolute;left:0;right:0;top:30%;bottom:0;display:flex;z-index:5;perspective:1600px}
 .gate-half{position:relative;width:50%;height:100%;will-change:transform}.gate-half.left{transform-origin:left center}.gate-half.right{transform-origin:right center}
-.real-gate{position:absolute;bottom:0;width:108%;height:92%;overflow:visible;filter:drop-shadow(0 10px 7px rgba(0,0,0,.18))}.gate-half.left .real-gate{right:-5%}.gate-half.right .real-gate{left:-5%;transform:scaleX(-1)}
+.real-gate{position:absolute;bottom:0;width:108%;height:92%;overflow:visible;filter:drop-shadow(0 10px 8px rgba(0,0,0,.22))}.gate-half.left .real-gate{right:-5%}.gate-half.right .real-gate{left:-5%;transform:scaleX(-1)}
+.entry-caption{position:absolute;left:50%;top:6%;transform:translateX(-50%) translateY(8px);z-index:7;color:#222;text-align:center;opacity:0}.entry-caption b{display:block;font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:500;letter-spacing:.02em}.entry-caption small{display:block;margin-top:4px;font-size:8px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:#666}
 body.play-intro .entry-caption{animation:captionIn .45s .08s ease forwards}
-body.play-intro .entrance-drawing{animation:drawingIn 1.9s .08s ease forwards}
-body.play-intro .door-glow{animation:lightWake 1.8s .22s ease forwards}
-body.play-intro .gate-half.left{animation:openLeft 1.32s .78s cubic-bezier(.16,.84,.20,1) forwards}
-body.play-intro .gate-half.right{animation:openRight 1.32s .78s cubic-bezier(.16,.84,.20,1) forwards}
-body.play-intro .entrance{animation:hideEntrance .01s 2.34s forwards}
-body.play-intro .wrap{animation:cardIn .58s 1.55s ease forwards}
-body.play-intro .link:nth-child(1){animation:itemIn .32s 1.72s ease forwards}body.play-intro .link:nth-child(2){animation:itemIn .32s 1.81s ease forwards}body.play-intro .link:nth-child(3){animation:itemIn .32s 1.90s ease forwards}body.play-intro .link:nth-child(4){animation:itemIn .32s 1.99s ease forwards}body.play-intro .link:nth-child(5){animation:itemIn .32s 2.08s ease forwards}body.play-intro .address{animation:itemIn .32s 2.15s ease forwards}body.play-intro .footer{animation:itemIn .32s 2.22s ease forwards}
+body.play-intro .entrance-drawing{animation:drawingIn 1.8s .08s ease forwards}
+body.play-intro .door-glow{animation:lightWake 1.7s .18s ease forwards}
+body.play-intro .gate-half.left{animation:openLeft 1.28s .74s cubic-bezier(.16,.84,.20,1) forwards}
+body.play-intro .gate-half.right{animation:openRight 1.28s .74s cubic-bezier(.16,.84,.20,1) forwards}
+body.play-intro .entrance{animation:hideEntrance .01s 2.26s forwards}
+body.play-intro .wrap{animation:cardIn .58s 1.48s ease forwards}
+body.play-intro .link:nth-child(1){animation:itemIn .32s 1.66s ease forwards}body.play-intro .link:nth-child(2){animation:itemIn .32s 1.75s ease forwards}body.play-intro .link:nth-child(3){animation:itemIn .32s 1.84s ease forwards}body.play-intro .link:nth-child(4){animation:itemIn .32s 1.93s ease forwards}body.play-intro .link:nth-child(5){animation:itemIn .32s 2.02s ease forwards}body.play-intro .address{animation:itemIn .32s 2.10s ease forwards}body.play-intro .footer{animation:itemIn .32s 2.18s ease forwards}
 @keyframes captionIn{to{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes drawingIn{from{transform:scale(1.055);filter:grayscale(1) brightness(.94) contrast(1.02)}to{transform:scale(1.01);filter:grayscale(1) brightness(1.03) contrast(.98)}}
-@keyframes lightWake{0%{opacity:.18;transform:translate(-50%,-50%) scale(.88)}58%{opacity:.82}100%{opacity:.42;transform:translate(-50%,-50%) scale(1.09)}}
+@keyframes drawingIn{from{transform:scale(1.045);filter:brightness(.96) contrast(1.02) saturate(.80)}to{transform:scale(1.01);filter:brightness(1.02) contrast(1.02) saturate(.88)}}
+@keyframes lightWake{0%{opacity:.20;transform:translate(-50%,-50%) scale(.88)}58%{opacity:.85}100%{opacity:.44;transform:translate(-50%,-50%) scale(1.06)}}
 @keyframes openLeft{to{transform:rotateY(-74deg) translateX(-9px)}}@keyframes openRight{to{transform:rotateY(74deg) translateX(9px)}}@keyframes hideEntrance{to{visibility:hidden}}@keyframes cardIn{to{opacity:1;transform:none}}@keyframes itemIn{to{opacity:1;transform:none}}
-@media(max-width:390px){.entry-caption{top:4.5%}.entry-caption b{font-size:21px}.gate-stage{top:32%}.real-gate{height:90%}.entrance-drawing{object-position:center 59%}}
+@media(max-width:390px){.entry-caption{top:4.5%}.entry-caption b{font-size:21px}.gate-stage{top:32%}.real-gate{height:90%}.entrance-drawing{object-position:center 58%}}
 </style>
 <noscript><style>.entrance{display:none}.wrap,.link,.address,.footer{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 <div class="entrance" aria-hidden="true">
-  <img class="entrance-drawing" src="./entrance-drawing.svg?v=4" alt="">
+  <img class="entrance-drawing" src="./entrance-drawing.svg?v=6" alt="">
   <div class="vignette"></div>
   <div class="entry-caption"><b>Cancello</b><small>Bar &amp; Restaurant</small></div>
   <div class="door-glow"></div>
   <div class="gate-stage">
     <div class="gate-half left">
-      <svg class="real-gate" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg">
-        <defs><filter id="roughL"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale=".7"/></filter></defs>
-        <g filter="url(#roughL)" fill="none" stroke="#0b0b0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 705V155M16 705H306M24 610H300M27 430H298"/><path d="M16 164 C78 177 130 205 182 247 C226 282 265 307 306 323"/><path d="M48 705V177M88 705V191M128 705V216M168 705V247M208 705V279M248 705V304M288 705V321"/><path d="M37 326C58 292 83 292 104 326C83 357 58 357 37 326Z"/><path d="M103 344C126 307 155 307 177 344C155 378 126 378 103 344Z"/><path d="M177 370C200 333 230 333 252 370C230 404 200 404 177 370Z"/><path d="M52 530C76 494 106 494 129 530C106 565 76 565 52 530Z"/><path d="M129 530C153 494 184 494 207 530C184 565 153 565 129 530Z"/><path d="M207 530C231 494 260 494 283 530C260 565 231 565 207 530Z"/><path d="M31 397Q95 362 152 390Q209 419 292 382"/><path d="M35 594Q98 559 156 586Q216 614 293 580"/></g><g fill="#0b0b0b"><path d="M39 178l9-27 9 27zM79 192l9-27 9 27zM119 217l9-27 9 27zM159 248l9-27 9 27zM199 280l9-27 9 27zM239 305l9-27 9 27zM279 322l9-27 9 27z"/></g><g fill="none" stroke="#8c8c88" stroke-width="1.8" opacity=".22"><path d="M20 170C82 185 132 212 184 253C228 288 266 313 302 327"/><path d="M52 701V183M172 701V254M252 701V311"/></g><circle cx="301" cy="475" r="9" fill="#0b0b0b"/><circle cx="298" cy="472" r="3" fill="#777773"/></svg>
+      <svg class="real-gate" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg"><defs><filter id="roughL"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale=".7"/></filter></defs><g filter="url(#roughL)" fill="none" stroke="#0b0b0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 705V155M16 705H306M24 610H300M27 430H298"/><path d="M16 164 C78 177 130 205 182 247 C226 282 265 307 306 323"/><path d="M48 705V177M88 705V191M128 705V216M168 705V247M208 705V279M248 705V304M288 705V321"/><path d="M37 326C58 292 83 292 104 326C83 357 58 357 37 326Z"/><path d="M103 344C126 307 155 307 177 344C155 378 126 378 103 344Z"/><path d="M177 370C200 333 230 333 252 370C230 404 200 404 177 370Z"/><path d="M52 530C76 494 106 494 129 530C106 565 76 565 52 530Z"/><path d="M129 530C153 494 184 494 207 530C184 565 153 565 129 530Z"/><path d="M207 530C231 494 260 494 283 530C260 565 231 565 207 530Z"/><path d="M31 397Q95 362 152 390Q209 419 292 382"/><path d="M35 594Q98 559 156 586Q216 614 293 580"/></g><g fill="#0b0b0b"><path d="M39 178l9-27 9 27zM79 192l9-27 9 27zM119 217l9-27 9 27zM159 248l9-27 9 27zM199 280l9-27 9 27zM239 305l9-27 9 27zM279 322l9-27 9 27z"/></g><circle cx="301" cy="475" r="9" fill="#0b0b0b"/></svg>
     </div>
     <div class="gate-half right">
-      <svg class="real-gate" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg">
-        <defs><filter id="roughR"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale=".7"/></filter></defs>
-        <g filter="url(#roughR)" fill="none" stroke="#0b0b0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 705V155M16 705H306M24 610H300M27 430H298"/><path d="M16 164 C78 177 130 205 182 247 C226 282 265 307 306 323"/><path d="M48 705V177M88 705V191M128 705V216M168 705V247M208 705V279M248 705V304M288 705V321"/><path d="M37 326C58 292 83 292 104 326C83 357 58 357 37 326Z"/><path d="M103 344C126 307 155 307 177 344C155 378 126 378 103 344Z"/><path d="M177 370C200 333 230 333 252 370C230 404 200 404 177 370Z"/><path d="M52 530C76 494 106 494 129 530C106 565 76 565 52 530Z"/><path d="M129 530C153 494 184 494 207 530C184 565 153 565 129 530Z"/><path d="M207 530C231 494 260 494 283 530C260 565 231 565 207 530Z"/><path d="M31 397Q95 362 152 390Q209 419 292 382"/><path d="M35 594Q98 559 156 586Q216 614 293 580"/></g><g fill="#0b0b0b"><path d="M39 178l9-27 9 27zM79 192l9-27 9 27zM119 217l9-27 9 27zM159 248l9-27 9 27zM199 280l9-27 9 27zM239 305l9-27 9 27zM279 322l9-27 9 27z"/></g><g fill="none" stroke="#8c8c88" stroke-width="1.8" opacity=".22"><path d="M20 170C82 185 132 212 184 253C228 288 266 313 302 327"/><path d="M52 701V183M172 701V254M252 701V311"/></g><circle cx="301" cy="475" r="9" fill="#0b0b0b"/><circle cx="298" cy="472" r="3" fill="#777773"/></svg>
+      <svg class="real-gate" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg"><defs><filter id="roughR"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale=".7"/></filter></defs><g filter="url(#roughR)" fill="none" stroke="#0b0b0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 705V155M16 705H306M24 610H300M27 430H298"/><path d="M16 164 C78 177 130 205 182 247 C226 282 265 307 306 323"/><path d="M48 705V177M88 705V191M128 705V216M168 705V247M208 705V279M248 705V304M288 705V321"/><path d="M37 326C58 292 83 292 104 326C83 357 58 357 37 326Z"/><path d="M103 344C126 307 155 307 177 344C155 378 126 378 103 344Z"/><path d="M177 370C200 333 230 333 252 370C230 404 200 404 177 370Z"/><path d="M52 530C76 494 106 494 129 530C106 565 76 565 52 530Z"/><path d="M129 530C153 494 184 494 207 530C184 565 153 565 129 530Z"/><path d="M207 530C231 494 260 494 283 530C260 565 231 565 207 530Z"/><path d="M31 397Q95 362 152 390Q209 419 292 382"/><path d="M35 594Q98 559 156 586Q216 614 293 580"/></g><g fill="#0b0b0b"><path d="M39 178l9-27 9 27zM79 192l9-27 9 27zM119 217l9-27 9 27zM159 248l9-27 9 27zM199 280l9-27 9 27zM239 305l9-27 9 27zM279 322l9-27 9 27z"/></g><circle cx="301" cy="475" r="9" fill="#0b0b0b"/></svg>
     </div>
   </div>
 </div>
