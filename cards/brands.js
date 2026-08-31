@@ -42,6 +42,63 @@ window.HIGH_STYLE_BRANDS = {
     footer: "Powered by High Style Cards"
   },
 
+  "cancello": {
+    businessName: "Cancello Bar & Restaurant",
+    displayName: "Cancello",
+    eyebrow: "Italian Bar & Restaurant",
+    personName: "",
+    role: "Northern Italian Cuisine",
+    tagline: "Authentic Italian food, great wine and warm hospitality.",
+    logo: "https://static.wixstatic.com/media/8e77a0_14d664a9ae2245329222d55691ced44d~mv2.jpg/v1/fill/w_397,h_186,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/cancello-final-logo.jpg",
+    initials: "C",
+    theme: {
+      background: "#eee8dc",
+      surface: "#11100e",
+      text: "#f8f3e8",
+      muted: "#b8ae9d",
+      accent: "#c6a56a",
+      accentText: "#17130d",
+      border: "#39342b",
+      headingFont: "\"Cormorant Garamond\", Georgia, serif",
+      bodyFont: "Manrope, Arial, sans-serif",
+      fontLabel: "Italian Luxury",
+      fontChoice: "cormorant"
+    },
+    phone: "+441925291555",
+    phoneDisplay: "01925 291555",
+    whatsapp: "",
+    email: "info@cancellorestaurant.com",
+    website: "https://www.cancellorestaurant.com/",
+    instagram: "https://www.instagram.com/arieterestaurant/",
+    instagramLabel: "@arieterestaurant",
+    linkedin: "",
+    tiktok: "",
+    bookingUrl: "https://www.cancellorestaurant.com/reservations",
+    bookingLabel: "Book a Table",
+    menuUrl: "https://www.cancellorestaurant.com/menu",
+    menuLabel: "View Our Menus",
+    tripadvisorUrl: "https://www.tripadvisor.co.uk/Restaurant_Review-g528810-d841168-Reviews-Cancello_Bar_And_Restaurant-Newton_Le_Willows_Merseyside_England.html",
+    services: ["Italian Dining", "Wine & Cocktails", "Private Hire", "Celebrations"],
+    review: "",
+    location: "136 High Street · Newton-le-Willows · WA12 9SG",
+    gallery: [],
+    actions: [
+      {type:"booking",label:"Book a Table",primary:false},
+      {type:"instagram",label:"Instagram",primary:false},
+      {type:"phone",label:"Call Cancello",primary:false},
+      {type:"email",label:"Email",primary:false},
+      {type:"website",label:"Website",primary:false}
+    ],
+    buttonSettings: {managed:true,hidden:[],saveContact:false},
+    saveContactEnabled: false,
+    animations: {
+      entrance: "reveal",
+      buttons: "wave",
+      accent: "halo"
+    },
+    footer: "Powered by High Style Cards"
+  },
+
   "starter": {
     businessName: "Your Brand",
     displayName: "Your Brand",
