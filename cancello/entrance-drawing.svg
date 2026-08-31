@@ -1,54 +1,54 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
 <defs>
-  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#061b40"/><stop offset=".58" stop-color="#07152d"/><stop offset="1" stop-color="#090b10"/></linearGradient>
-  <linearGradient id="sand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a27c67"/><stop offset=".42" stop-color="#76584b"/><stop offset="1" stop-color="#413632"/></linearGradient>
-  <linearGradient id="sandLit" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c19a7d"/><stop offset="1" stop-color="#715649"/></linearGradient>
-  <radialGradient id="windowWarm"><stop offset="0" stop-color="#fff1bf"/><stop offset=".48" stop-color="#f1bc69"/><stop offset="1" stop-color="#73503a"/></radialGradient>
-  <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".018" numOctaves="2" seed="8" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.25"/></filter>
-  <filter id="lampGlow"><feGaussianBlur stdDeviation="14"/></filter>
+  <linearGradient id="whiteStone" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".48" stop-color="#f3f3f0"/><stop offset="1" stop-color="#e7e7e3"/></linearGradient>
+  <linearGradient id="whiteStoneLit" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f6f6f2"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffffff"/><stop offset=".52" stop-color="#eeeeea"/><stop offset="1" stop-color="#d9d9d5"/></linearGradient>
+  <radialGradient id="windowWhite"><stop offset="0" stop-color="#ffffff"/><stop offset=".52" stop-color="#f9f9f5"/><stop offset="1" stop-color="#deded9"/></radialGradient>
+  <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".018" numOctaves="2" seed="8" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.1"/></filter>
+  <filter id="softGlow"><feGaussianBlur stdDeviation="13"/></filter>
 </defs>
-<rect width="600" height="900" fill="url(#sky)"/>
+<rect width="600" height="900" fill="#ffffff"/>
 <g filter="url(#rough)">
   <!-- side walls -->
-  <path d="M0 470H132V900H0Z" fill="#3c3330" stroke="#17181a" stroke-width="3"/>
-  <path d="M468 470H600V900H468Z" fill="#3c3330" stroke="#17181a" stroke-width="3"/>
+  <path d="M0 470H132V900H0Z" fill="#f7f7f4" stroke="#777773" stroke-width="2.4"/>
+  <path d="M468 470H600V900H468Z" fill="#f7f7f4" stroke="#777773" stroke-width="2.4"/>
 
   <!-- central stone entrance -->
-  <rect x="132" y="330" width="336" height="570" fill="url(#sand)" stroke="#241f1d" stroke-width="4"/>
-  <path d="M164 290L300 185L436 290L411 329L300 249L189 329Z" fill="url(#sandLit)" stroke="#2e2622" stroke-width="5"/>
-  <path d="M174 282L300 206L426 282" fill="none" stroke="#d1aa8a" stroke-width="5" opacity=".55"/>
-  <path d="M180 329H420" stroke="#bd977a" stroke-width="10"/>
-  <path d="M164 356H436" stroke="#342b27" stroke-width="8"/>
-  <path d="M201 375H399" stroke="#a47e66" stroke-width="4" opacity=".65"/>
+  <rect x="132" y="330" width="336" height="570" fill="url(#whiteStone)" stroke="#62625f" stroke-width="3.2"/>
+  <path d="M164 290L300 185L436 290L411 329L300 249L189 329Z" fill="url(#whiteStoneLit)" stroke="#5e5e5b" stroke-width="4"/>
+  <path d="M174 282L300 206L426 282" fill="none" stroke="#bdbdb7" stroke-width="4" opacity=".78"/>
+  <path d="M180 329H420" stroke="#b1b1ac" stroke-width="8"/>
+  <path d="M164 356H436" stroke="#696965" stroke-width="6"/>
+  <path d="M201 375H399" stroke="#c2c2bd" stroke-width="3" opacity=".82"/>
 
   <!-- crest -->
-  <ellipse cx="300" cy="245" rx="17" ry="21" fill="#39302d" stroke="#a6846e" stroke-width="4"/>
-  <path d="M294 236l6-7 6 7-3 12h-6z" fill="#161719" opacity=".8"/>
-  <path d="M284 186L300 166L316 186" fill="none" stroke="#171719" stroke-width="7"/>
+  <ellipse cx="300" cy="245" rx="17" ry="21" fill="#f3f3ef" stroke="#777773" stroke-width="3"/>
+  <path d="M294 236l6-7 6 7-3 12h-6z" fill="#8d8d88" opacity=".75"/>
+  <path d="M284 186L300 166L316 186" fill="none" stroke="#70706c" stroke-width="5"/>
 
   <!-- large arch -->
-  <path d="M216 570A84 84 0 0 1 384 570V805H216Z" fill="#17191b" stroke="#896c59" stroke-width="24"/>
-  <path d="M236 570A64 64 0 0 1 364 570V635H236Z" fill="url(#windowWarm)" stroke="#5d6a70" stroke-width="5"/>
+  <path d="M216 570A84 84 0 0 1 384 570V805H216Z" fill="#fbfbf8" stroke="#8a8a85" stroke-width="20"/>
+  <path d="M236 570A64 64 0 0 1 364 570V635H236Z" fill="url(#windowWhite)" stroke="#92928d" stroke-width="4"/>
   <!-- fanlight mullions -->
-  <path d="M300 506V635M236 570H364M250 539L350 605M350 539L250 605M270 519L330 620M330 519L270 620" fill="none" stroke="#44545c" stroke-width="4" opacity=".95"/>
+  <path d="M300 506V635M236 570H364M250 539L350 605M350 539L250 605M270 519L330 620M330 519L270 620" fill="none" stroke="#777773" stroke-width="3" opacity=".9"/>
   <!-- doors -->
-  <rect x="256" y="635" width="88" height="145" rx="2" fill="#586064" stroke="#2e3437" stroke-width="6"/>
-  <rect x="266" y="648" width="31" height="117" fill="#d99346" opacity=".88"/>
-  <rect x="303" y="648" width="31" height="117" fill="#f0aa55" opacity=".83"/>
-  <path d="M300 635V780" stroke="#33383b" stroke-width="5"/>
+  <rect x="256" y="635" width="88" height="145" rx="2" fill="url(#glass)" stroke="#777773" stroke-width="5"/>
+  <rect x="266" y="648" width="31" height="117" fill="#ffffff" opacity=".94"/>
+  <rect x="303" y="648" width="31" height="117" fill="#f0f0ec" opacity=".94"/>
+  <path d="M300 635V780" stroke="#777773" stroke-width="4"/>
 
   <!-- side pillars with cap stones -->
   <g>
-    <path d="M58 336H166V900H58Z" fill="url(#sand)" stroke="#211e1d" stroke-width="4"/>
-    <path d="M434 336H542V900H434Z" fill="url(#sand)" stroke="#211e1d" stroke-width="4"/>
-    <path d="M43 316H181L169 351H55Z" fill="url(#sandLit)" stroke="#2a2422" stroke-width="4"/>
-    <path d="M419 316H557L545 351H431Z" fill="url(#sandLit)" stroke="#2a2422" stroke-width="4"/>
-    <path d="M49 294H175V319H49Z" fill="#4f413a" stroke="#252120" stroke-width="4"/>
-    <path d="M425 294H551V319H425Z" fill="#4f413a" stroke="#252120" stroke-width="4"/>
+    <path d="M58 336H166V900H58Z" fill="url(#whiteStone)" stroke="#686864" stroke-width="3"/>
+    <path d="M434 336H542V900H434Z" fill="url(#whiteStone)" stroke="#686864" stroke-width="3"/>
+    <path d="M43 316H181L169 351H55Z" fill="url(#whiteStoneLit)" stroke="#6f6f6a" stroke-width="3"/>
+    <path d="M419 316H557L545 351H431Z" fill="url(#whiteStoneLit)" stroke="#6f6f6a" stroke-width="3"/>
+    <path d="M49 294H175V319H49Z" fill="#f2f2ee" stroke="#71716d" stroke-width="3"/>
+    <path d="M425 294H551V319H425Z" fill="#f2f2ee" stroke="#71716d" stroke-width="3"/>
   </g>
 
   <!-- stone block joints -->
-  <g fill="none" stroke="#c2a08a" stroke-width="1.4" opacity=".5">
+  <g fill="none" stroke="#c6c6c0" stroke-width="1.2" opacity=".82">
     <path d="M70 395H154M70 457H154M70 519H154M70 581H154M70 643H154M70 705H154M70 767H154M70 829H154"/>
     <path d="M446 395H530M446 457H530M446 519H530M446 581H530M446 643H530M446 705H530M446 767H530M446 829H530"/>
     <path d="M92 340V895M132 340V895M468 340V895M508 340V895"/>
@@ -57,21 +57,17 @@
 
   <!-- wall lights -->
   <g>
-    <circle cx="112" cy="480" r="46" fill="#ffd99a" opacity=".13" filter="url(#lampGlow)"/>
-    <circle cx="488" cy="480" r="46" fill="#ffd99a" opacity=".13" filter="url(#lampGlow)"/>
-    <rect x="98" y="452" width="28" height="55" rx="5" fill="#121315" stroke="#806b59" stroke-width="4"/>
-    <rect x="474" y="452" width="28" height="55" rx="5" fill="#121315" stroke="#806b59" stroke-width="4"/>
-    <path d="M104 452l8-13 8 13M480 452l8-13 8 13" fill="none" stroke="#171719" stroke-width="4"/>
-    <circle cx="112" cy="479" r="8" fill="#ffe2a7"/>
-    <circle cx="488" cy="479" r="8" fill="#ffe2a7"/>
+    <circle cx="112" cy="480" r="42" fill="#ffffff" opacity=".58" filter="url(#softGlow)"/>
+    <circle cx="488" cy="480" r="42" fill="#ffffff" opacity=".58" filter="url(#softGlow)"/>
+    <rect x="98" y="452" width="28" height="55" rx="5" fill="#f8f8f5" stroke="#70706c" stroke-width="3"/>
+    <rect x="474" y="452" width="28" height="55" rx="5" fill="#f8f8f5" stroke="#70706c" stroke-width="3"/>
+    <path d="M104 452l8-13 8 13M480 452l8-13 8 13" fill="none" stroke="#70706c" stroke-width="3"/>
+    <circle cx="112" cy="479" r="7" fill="#ffffff" stroke="#c8c8c2" stroke-width="1"/>
+    <circle cx="488" cy="479" r="7" fill="#ffffff" stroke="#c8c8c2" stroke-width="1"/>
   </g>
 
-  <!-- address plaque -->
-  <rect x="484" y="594" width="38" height="48" rx="3" fill="#262729" stroke="#69625e" stroke-width="2"/>
-  <text x="503" y="626" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#ddd8d2">136</text>
-
-  <!-- central plant silhouette -->
-  <g fill="#25362c" opacity=".8">
+  <!-- central plant silhouette, neutralised -->
+  <g fill="#a6a6a0" opacity=".58">
     <path d="M345 602c18-47 22-66 13-91 30 31 25 61 14 92z"/>
     <path d="M332 598c-12-48-6-72 14-91-2 37 6 57 7 91z"/>
     <path d="M360 603c22-34 38-48 59-51-19 18-28 37-38 58z"/>
@@ -79,18 +75,18 @@
   </g>
 
   <!-- steps -->
-  <path d="M205 810H395" stroke="#927666" stroke-width="7"/>
-  <path d="M180 840H420" stroke="#66534a" stroke-width="8"/>
-  <path d="M150 874H450" stroke="#3c3431" stroke-width="10"/>
+  <path d="M205 810H395" stroke="#b4b4ae" stroke-width="6"/>
+  <path d="M180 840H420" stroke="#9b9b96" stroke-width="7"/>
+  <path d="M150 874H450" stroke="#7b7b76" stroke-width="8"/>
 
   <!-- side railings like the photo -->
-  <g fill="none" stroke="#08090a" stroke-width="5" opacity=".92">
+  <g fill="none" stroke="#111111" stroke-width="4.5" opacity=".96">
     <path d="M0 648H58M0 720H58M542 648H600M542 720H600"/>
     <path d="M8 630V900M28 630V900M48 630V900M552 630V900M572 630V900M592 630V900"/>
   </g>
 </g>
-<!-- sketch highlights -->
-<g fill="none" stroke="#e7cfbd" stroke-width="1" opacity=".28">
+<!-- clean architectural sketch highlights -->
+<g fill="none" stroke="#bdbdb8" stroke-width="1" opacity=".55">
   <path d="M164 365L436 365M132 390L468 390M170 292L300 206L430 292"/>
   <path d="M81 355v530M519 355v530"/>
 </g>
