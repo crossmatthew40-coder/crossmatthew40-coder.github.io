@@ -18,10 +18,12 @@ body{display:flex;justify-content:center;padding:22px 12px 38px;background:#fff;
 h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(31px,8vw,44px);line-height:1.02;margin:0;color:var(--navy);letter-spacing:-.035em}
 .tag{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:#6e604e;font-size:15px;line-height:1.5;margin:11px auto 22px;max-width:360px}
 .links{display:grid;gap:11px}
-.link{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:74px;padding:13px 15px;border:0;border-radius:18px;background:var(--navy);color:#fff;text-decoration:none;text-align:left;box-shadow:0 5px 18px rgba(34,38,111,.13);opacity:0;transform:translateY(14px);font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.link{position:relative;overflow:hidden;width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:74px;padding:13px 15px;border:0;border-radius:18px;background:var(--navy);color:#fff;text-decoration:none;text-align:left;box-shadow:0 5px 18px rgba(34,38,111,.13);opacity:0;transform:translateY(14px);font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+.link::after{content:"";position:absolute;top:0;bottom:0;left:-45%;width:34%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-20deg);pointer-events:none;opacity:0}
 .link:active{transform:scale(.985)!important}
-.left{display:flex;align-items:center;gap:12px;min-width:0}.iconbox{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.08);font-size:21px;flex:0 0 auto}
-.label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.64);font-weight:800;margin-bottom:4px}.value{display:block;font-size:17px;font-weight:800}.note{display:block;font-size:11px;color:rgba(255,255,255,.62);margin-top:4px}.arrow{font-size:23px;opacity:.7;transition:.2s}.offer-toggle[aria-expanded="true"] .arrow{transform:rotate(90deg)}
+.left{display:flex;align-items:center;gap:12px;min-width:0}.iconbox{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.08);font-size:21px;flex:0 0 auto;transition:transform .22s ease,background .22s ease}
+.label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.64);font-weight:800;margin-bottom:4px}.value{display:block;font-size:17px;font-weight:800}.note{display:block;font-size:11px;color:rgba(255,255,255,.62);margin-top:4px}.arrow{font-size:23px;opacity:.7;transition:transform .22s ease,opacity .22s ease}.offer-toggle[aria-expanded="true"] .arrow{transform:rotate(90deg)}
+@media(hover:hover){.link:hover{transform:translateY(-3px);box-shadow:0 11px 26px rgba(34,38,111,.22);background:#292e82}.link:hover::after{opacity:1;animation:sheen .72s ease}.link:hover .iconbox{transform:scale(1.08) rotate(-2deg);background:rgba(255,255,255,.13)}.link:hover .arrow{transform:translateX(5px);opacity:1}.offer-toggle[aria-expanded="true"]:hover .arrow{transform:rotate(90deg) translateY(-4px)}}
 .offers{padding:14px;border:1px solid #e5e5e5;border-radius:18px;text-align:left;background:#fff}.offers[hidden]{display:none}.offer{padding:13px 14px;border-radius:14px;background:#f7f6f3}.offer+.offer{margin-top:9px}.offer strong{display:block;color:var(--navy);font-size:19px}.offer span{display:block;margin-top:4px;color:#555;font-size:13px}.fine{font-size:10px;color:#888;margin:9px 2px 0;line-height:1.4}
 .address{margin:18px auto 4px;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#727272;line-height:1.55;opacity:0;transform:translateY(14px)}.address strong{color:var(--navy)}
 .footer{font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:#8c8c8c;margin-top:18px;opacity:0;transform:translateY(14px)}
@@ -40,20 +42,21 @@ body.play-intro .entrance-drawing{animation:drawingIn 1.8s .08s ease forwards}
 body.play-intro .door-glow{animation:lightWake 1.7s .18s ease forwards}
 body.play-intro .gate-half.left{animation:openLeft 1.28s .74s cubic-bezier(.16,.84,.20,1) forwards}
 body.play-intro .gate-half.right{animation:openRight 1.28s .74s cubic-bezier(.16,.84,.20,1) forwards}
-body.play-intro .entrance{animation:hideEntrance .01s 2.45s forwards}
+body.play-intro .entrance{animation:hideEntrance .01s 2.58s forwards}
 body.play-intro .wrap{animation:cardIn .58s 1.48s ease forwards}
-body.play-intro .link:nth-child(1){animation:itemIn .32s 1.62s ease forwards}
-body.play-intro .link:nth-child(2){animation:itemIn .32s 1.71s ease forwards}
-body.play-intro .link:nth-child(3){animation:itemIn .32s 1.80s ease forwards}
-body.play-intro .link:nth-child(4){animation:itemIn .32s 1.89s ease forwards}
-body.play-intro .link:nth-child(5){animation:itemIn .32s 1.98s ease forwards}
-body.play-intro .link:nth-child(6){animation:itemIn .32s 2.07s ease forwards}
-body.play-intro .address{animation:itemIn .32s 2.16s ease forwards}
-body.play-intro .footer{animation:itemIn .32s 2.25s ease forwards}
+body.play-intro .link:nth-child(1){animation:itemIn .34s 1.60s ease forwards}
+body.play-intro .link:nth-child(2){animation:itemIn .34s 1.69s ease forwards}
+body.play-intro .link:nth-child(3){animation:itemIn .34s 1.78s ease forwards}
+body.play-intro .link:nth-child(4){animation:itemIn .34s 1.87s ease forwards}
+body.play-intro .link:nth-child(5){animation:itemIn .34s 1.96s ease forwards}
+body.play-intro .link:nth-child(6){animation:itemIn .34s 2.05s ease forwards}
+body.play-intro .link:nth-child(7){animation:itemIn .34s 2.14s ease forwards}
+body.play-intro .address{animation:itemIn .32s 2.26s ease forwards}
+body.play-intro .footer{animation:itemIn .32s 2.36s ease forwards}
 @keyframes captionIn{to{opacity:1;transform:translateX(-50%) translateY(0)}}
 @keyframes drawingIn{from{transform:scale(1.045);filter:brightness(.96) contrast(1.02) saturate(.80)}to{transform:scale(1.01);filter:brightness(1.02) contrast(1.02) saturate(.88)}}
 @keyframes lightWake{0%{opacity:.20;transform:translate(-50%,-50%) scale(.88)}58%{opacity:.85}100%{opacity:.44;transform:translate(-50%,-50%) scale(1.06)}}
-@keyframes openLeft{to{transform:rotateY(-74deg) translateX(-9px)}}@keyframes openRight{to{transform:rotateY(74deg) translateX(9px)}}@keyframes hideEntrance{to{visibility:hidden}}@keyframes cardIn{to{opacity:1;transform:none}}@keyframes itemIn{to{opacity:1;transform:none}}
+@keyframes openLeft{to{transform:rotateY(-74deg) translateX(-9px)}}@keyframes openRight{to{transform:rotateY(74deg) translateX(9px)}}@keyframes hideEntrance{to{visibility:hidden}}@keyframes cardIn{to{opacity:1;transform:none}}@keyframes itemIn{0%{opacity:0;transform:translateY(18px) scale(.97)}70%{opacity:1;transform:translateY(-2px) scale(1.01)}100%{opacity:1;transform:none}}@keyframes sheen{0%{left:-45%}100%{left:120%}}
 @media(max-width:390px){.entry-caption{top:4.5%}.entry-caption b{font-size:21px}.gate-stage{top:32%}.real-gate{height:90%}.entrance-drawing{object-position:center 58%}}
 </style>
 <noscript><style>.entrance{display:none}.wrap,.link,.address,.footer{opacity:1!important;transform:none!important}</style></noscript>
@@ -85,6 +88,7 @@ body.play-intro .footer{animation:itemIn .32s 2.25s ease forwards}
 <a class="link" href="https://www.instagram.com/wearecancello/" target="_blank" rel="noopener"><div class="left"><div class="iconbox">◉</div><div><span class="label">Social</span><span class="value">Instagram</span><span class="note">@wearecancello</span></div></div><div class="arrow">→</div></a>
 <a class="link" href="https://www.tripadvisor.co.uk/Restaurant_Review-g528810-d841168-Reviews-Cancello_Bar_And_Restaurant-Newton_Le_Willows_Merseyside_England.html" target="_blank" rel="noopener"><div class="left"><div class="iconbox">◌</div><div><span class="label">Reviews</span><span class="value">Tripadvisor</span><span class="note">Read guest reviews</span></div></div><div class="arrow">→</div></a>
 <a class="link" href="https://www.google.com/maps/dir/?api=1&amp;destination=136%20High%20Street%2C%20Newton-le-Willows%2C%20WA12%209SG" target="_blank" rel="noopener"><div class="left"><div class="iconbox">⌖</div><div><span class="label">Find us</span><span class="value">Directions</span><span class="note">Open route to Cancello</span></div></div><div class="arrow">→</div></a>
+<a class="link" href="mailto:info@cancellorestaurant.com"><div class="left"><div class="iconbox">✉</div><div><span class="label">Contact</span><span class="value">Email</span><span class="note">Send Cancello a message</span></div></div><div class="arrow">→</div></a>
 <button class="link offer-toggle" type="button" aria-expanded="false" aria-controls="latest-offers"><div class="left"><div class="iconbox">%</div><div><span class="label">What's on</span><span class="value">Latest Offers</span><span class="note">See current Cancello offers</span></div></div><div class="arrow">→</div></button>
 <div class="offers" id="latest-offers" hidden><div class="offer"><strong>25% off Tuesdays</strong><span>Enjoy 25% off on Tuesdays.</span></div><div class="offer"><strong>50% off Prosecco</strong><span>Enjoy 50% off Prosecco.</span></div><p class="fine">Offers may be subject to restaurant terms, availability and exclusions. Check with Cancello when booking.</p></div>
 </div>
