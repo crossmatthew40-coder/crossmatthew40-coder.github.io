@@ -7,7 +7,7 @@
 <title>Cancello Bar & Restaurant</title>
 <meta name="description" content="Cancello Bar & Restaurant digital card">
 <style>
-:root{--navy:#22266f;--ink:#171717;--cream:#f7f4ee;--stone:#5f5149;--stone2:#8c7464;--iron:#08090a}
+:root{--navy:#22266f;--ink:#171717;--cream:#f7f4ee;--iron:#070809}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink)}
 body{display:flex;justify-content:center;padding:22px 12px 38px;background:#fff;overflow-x:hidden}
 .wrap{width:min(100%,520px);text-align:center;opacity:0;transform:translateY(14px) scale(.985)}
@@ -16,84 +16,92 @@ body{display:flex;justify-content:center;padding:22px 12px 38px;background:#fff;
 .links{display:grid;gap:11px}.link{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:74px;padding:13px 15px;border:0;border-radius:18px;background:var(--navy);color:#fff;text-decoration:none;text-align:left;box-shadow:0 5px 18px rgba(34,38,111,.13);opacity:0;transform:translateY(14px);font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}.link:active{transform:scale(.985)!important}.left{display:flex;align-items:center;gap:12px;min-width:0}.iconbox{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.08);font-size:21px;flex:0 0 auto}.label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.64);font-weight:800;margin-bottom:4px}.value{display:block;font-size:17px;font-weight:800}.note{display:block;font-size:11px;color:rgba(255,255,255,.62);margin-top:4px}.arrow{font-size:23px;opacity:.7;transition:.2s}.offer-toggle[aria-expanded="true"] .arrow{transform:rotate(90deg)}
 .offers{padding:14px;border:1px solid #e5e5e5;border-radius:18px;text-align:left;background:#fff}.offers[hidden]{display:none}.offer{padding:13px 14px;border-radius:14px;background:#f7f6f3}.offer+.offer{margin-top:9px}.offer strong{display:block;color:var(--navy);font-size:19px}.offer span{display:block;margin-top:4px;color:#555;font-size:13px}.fine{font-size:10px;color:#888;margin:9px 2px 0;line-height:1.4}.address{margin:18px auto 4px;padding-top:16px;border-top:1px solid #eee;font-size:12px;color:#727272;line-height:1.55;opacity:0;transform:translateY(14px)}.address strong{color:var(--navy)}.footer{font-size:9px;letter-spacing:.17em;text-transform:uppercase;color:#8c8c8c;margin-top:18px;opacity:0;transform:translateY(14px)}
 
-/* Cancello entrance animation */
-.entrance{position:fixed;inset:0;z-index:9999;overflow:hidden;background:#08162d;pointer-events:none;perspective:1500px;visibility:visible}
-.night{position:absolute;inset:0;background:linear-gradient(#061839 0%,#09152d 38%,#0b0c10 100%)}
-.facade{position:absolute;left:50%;bottom:0;width:min(104vw,760px);height:92%;transform:translateX(-50%);z-index:1}
-.facade svg{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 16px rgba(0,0,0,.32))}
-.entrance-name{position:absolute;left:50%;top:5.5%;transform:translateX(-50%) translateY(8px);z-index:7;color:#f7efe5;text-align:center;font-family:Georgia,"Times New Roman",serif;text-shadow:0 2px 14px rgba(0,0,0,.75);opacity:0}.entrance-name b{display:block;font-size:25px;font-weight:500}.entrance-name small{display:block;margin-top:4px;font-family:Arial,sans-serif;font-size:8px;letter-spacing:.24em;text-transform:uppercase}
-.door-glow{position:absolute;left:50%;top:58%;width:36%;height:30%;transform:translate(-50%,-50%) scale(.9);z-index:2;background:radial-gradient(ellipse,rgba(255,231,178,.65),rgba(255,176,74,.17) 47%,transparent 72%);filter:blur(9px);opacity:.45}
-.gate-stage{position:absolute;inset:0;display:flex;z-index:5;perspective:1500px}.gate-half{position:relative;width:50%;height:100%;will-change:transform}.gate-half.left{transform-origin:left center}.gate-half.right{transform-origin:right center}.old-gate{position:absolute;bottom:-1%;width:106%;height:78%;overflow:visible;filter:drop-shadow(0 10px 9px rgba(0,0,0,.55))}.gate-half.left .old-gate{right:-4%}.gate-half.right .old-gate{left:-4%;transform:scaleX(-1)}
+/* Entrance animation based on the real Cancello frontage */
+.entrance{position:fixed;inset:0;z-index:9999;overflow:hidden;pointer-events:none;background:#06152f;perspective:1600px;visibility:visible}
+.entrance-drawing{position:absolute;inset:-1.5%;width:103%;height:103%;object-fit:cover;object-position:center 56%;z-index:1;transform:scale(1.035);filter:brightness(.80) contrast(1.04) saturate(.88)}
+.vignette{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 50% 58%,transparent 0 38%,rgba(0,0,0,.14) 67%,rgba(0,0,0,.48) 100%),linear-gradient(180deg,rgba(2,12,33,.18),transparent 40%,rgba(0,0,0,.14));}
+.door-glow{position:absolute;left:50%;top:64%;width:30%;height:21%;transform:translate(-50%,-50%) scale(.92);z-index:3;background:radial-gradient(ellipse,rgba(255,231,178,.78),rgba(255,171,65,.20) 46%,transparent 74%);filter:blur(9px);opacity:.25}
+.gate-stage{position:absolute;left:0;right:0;top:30%;bottom:0;display:flex;z-index:5;perspective:1600px}
+.gate-half{position:relative;width:50%;height:100%;will-change:transform}.gate-half.left{transform-origin:left center}.gate-half.right{transform-origin:right center}
+.real-gate{position:absolute;bottom:0;width:108%;height:92%;overflow:visible;filter:drop-shadow(0 11px 8px rgba(0,0,0,.58))}.gate-half.left .real-gate{right:-5%}.gate-half.right .real-gate{left:-5%;transform:scaleX(-1)}
+.entry-caption{position:absolute;left:50%;top:6%;transform:translateX(-50%) translateY(8px);z-index:7;color:#f7efe5;text-align:center;text-shadow:0 2px 16px rgba(0,0,0,.72);opacity:0}.entry-caption b{display:block;font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:500;letter-spacing:.02em}.entry-caption small{display:block;margin-top:4px;font-size:8px;letter-spacing:.24em;text-transform:uppercase;font-weight:700}
 
-body.play-intro .entrance-name{animation:nameIn .46s .10s ease forwards}
-body.play-intro .door-glow{animation:glowIn 1.55s .20s ease forwards}
-body.play-intro .facade{animation:facadeIn 1.6s .14s ease forwards}
-body.play-intro .gate-half.left{animation:gateOpenLeft 1.28s .78s cubic-bezier(.17,.84,.20,1) forwards}
-body.play-intro .gate-half.right{animation:gateOpenRight 1.28s .78s cubic-bezier(.17,.84,.20,1) forwards}
-body.play-intro .entrance{animation:hideIntro .01s 2.20s forwards}
-body.play-intro .wrap{animation:cardIn .56s 1.40s ease forwards}
-body.play-intro .link:nth-child(1){animation:itemIn .32s 1.58s ease forwards}
-body.play-intro .link:nth-child(2){animation:itemIn .32s 1.67s ease forwards}
-body.play-intro .link:nth-child(3){animation:itemIn .32s 1.76s ease forwards}
-body.play-intro .link:nth-child(4){animation:itemIn .32s 1.85s ease forwards}
-body.play-intro .link:nth-child(5){animation:itemIn .32s 1.94s ease forwards}
-body.play-intro .address{animation:itemIn .32s 2.02s ease forwards}
-body.play-intro .footer{animation:itemIn .32s 2.10s ease forwards}
-@keyframes nameIn{to{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes glowIn{0%{opacity:.35;transform:translate(-50%,-50%) scale(.88)}55%{opacity:.9}100%{opacity:.62;transform:translate(-50%,-50%) scale(1.08)}}
-@keyframes facadeIn{from{transform:translateX(-50%) scale(1.035);filter:brightness(.68)}to{transform:translateX(-50%) scale(1);filter:brightness(1)}}
-@keyframes gateOpenLeft{to{transform:rotateY(-78deg) translateX(-9px)}}
-@keyframes gateOpenRight{to{transform:rotateY(78deg) translateX(9px)}}
-@keyframes hideIntro{to{visibility:hidden}}
+body.play-intro .entry-caption{animation:captionIn .45s .08s ease forwards}
+body.play-intro .entrance-drawing{animation:drawingIn 1.9s .08s ease forwards}
+body.play-intro .door-glow{animation:lightWake 1.8s .22s ease forwards}
+body.play-intro .gate-half.left{animation:openLeft 1.32s .78s cubic-bezier(.16,.84,.20,1) forwards}
+body.play-intro .gate-half.right{animation:openRight 1.32s .78s cubic-bezier(.16,.84,.20,1) forwards}
+body.play-intro .entrance{animation:hideEntrance .01s 2.34s forwards}
+body.play-intro .wrap{animation:cardIn .58s 1.55s ease forwards}
+body.play-intro .link:nth-child(1){animation:itemIn .32s 1.72s ease forwards}
+body.play-intro .link:nth-child(2){animation:itemIn .32s 1.81s ease forwards}
+body.play-intro .link:nth-child(3){animation:itemIn .32s 1.90s ease forwards}
+body.play-intro .link:nth-child(4){animation:itemIn .32s 1.99s ease forwards}
+body.play-intro .link:nth-child(5){animation:itemIn .32s 2.08s ease forwards}
+body.play-intro .address{animation:itemIn .32s 2.15s ease forwards}
+body.play-intro .footer{animation:itemIn .32s 2.22s ease forwards}
+@keyframes captionIn{to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes drawingIn{from{transform:scale(1.055);filter:brightness(.64) contrast(1.08) saturate(.72)}to{transform:scale(1.01);filter:brightness(1) contrast(1.04) saturate(.90)}}
+@keyframes lightWake{0%{opacity:.2;transform:translate(-50%,-50%) scale(.88)}58%{opacity:.92}100%{opacity:.58;transform:translate(-50%,-50%) scale(1.09)}}
+@keyframes openLeft{to{transform:rotateY(-74deg) translateX(-9px)}}
+@keyframes openRight{to{transform:rotateY(74deg) translateX(9px)}}
+@keyframes hideEntrance{to{visibility:hidden}}
 @keyframes cardIn{to{opacity:1;transform:none}}
 @keyframes itemIn{to{opacity:1;transform:none}}
-@media(max-width:390px){.entrance-name{top:4.5%}.entrance-name b{font-size:21px}.old-gate{height:76%}.facade{height:90%}}
+@media(max-width:390px){.entry-caption{top:4.5%}.entry-caption b{font-size:21px}.gate-stage{top:32%}.real-gate{height:90%}.entrance-drawing{object-position:center 59%}}
 </style>
 <noscript><style>.entrance{display:none}.wrap,.link,.address,.footer{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 <div class="entrance" aria-hidden="true">
-<div class="night"></div>
-<div class="entrance-name"><b>Cancello</b><small>Bar &amp; Restaurant</small></div>
-<div class="door-glow"></div>
-<div class="facade">
-<svg viewBox="0 0 700 880" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="s1" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#8c7464"/><stop offset=".55" stop-color="#5d5049"/><stop offset="1" stop-color="#352f2e"/></linearGradient>
-<linearGradient id="s2" x1="0" x2="1"><stop stop-color="#a68a73"/><stop offset="1" stop-color="#66554a"/></linearGradient>
-<linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c6d4d7"/><stop offset=".45" stop-color="#728991"/><stop offset="1" stop-color="#29373b"/></linearGradient>
-<radialGradient id="warm"><stop stop-color="#ffe6a8"/><stop offset=".55" stop-color="#d58b39"/><stop offset="1" stop-color="#493019"/></radialGradient>
-<filter id="lampblur"><feGaussianBlur stdDeviation="12"/></filter>
-</defs>
-<!-- side walls -->
-<rect x="18" y="350" width="160" height="500" rx="8" fill="url(#s1)"/><rect x="522" y="350" width="160" height="500" rx="8" fill="url(#s1)"/>
-<g stroke="#8e7564" stroke-width="2" opacity=".62"><path d="M40 410h116M40 478h116M40 546h116M40 614h116M40 682h116M544 410h116M544 478h116M544 546h116M544 614h116M544 682h116"/><path d="M65 352v493M126 352v493M574 352v493M635 352v493"/></g>
-<!-- central entrance -->
-<path d="M190 315 L350 205 L510 315 V850 H190 Z" fill="url(#s1)" stroke="#211c1a" stroke-width="4"/>
-<path d="M212 278 L350 185 L488 278 L462 311 L350 237 L238 311 Z" fill="url(#s2)" stroke="#332824" stroke-width="4"/>
-<path d="M235 313H465" stroke="#ad8d74" stroke-width="8"/><path d="M218 338H482" stroke="#302723" stroke-width="7"/>
-<!-- arch -->
-<path d="M267 550 A83 83 0 0 1 433 550 V736 H267 Z" fill="#151719" stroke="#806b5d" stroke-width="22"/>
-<path d="M285 551 A65 65 0 0 1 415 551 V615 H285 Z" fill="url(#glass)" stroke="#3c4a50" stroke-width="5"/>
-<path d="M350 485V615M285 551H415M301 516L399 586M399 516L301 586" stroke="#35444b" stroke-width="4" opacity=".9"/>
-<rect x="303" y="615" width="94" height="122" fill="url(#warm)" stroke="#51575a" stroke-width="6"/><path d="M350 615v122" stroke="#4a4f51" stroke-width="5"/><rect x="313" y="630" width="29" height="88" fill="#ffd583" opacity=".42"/><rect x="358" y="630" width="29" height="88" fill="#ffc36b" opacity=".34"/>
-<!-- pediment crest -->
-<circle cx="350" cy="254" r="16" fill="#3c3430" stroke="#a08570" stroke-width="5"/><path d="M330 207L350 186L370 207" fill="none" stroke="#2b2522" stroke-width="6"/>
-<!-- steps -->
-<path d="M245 770H455" stroke="#8d7565" stroke-width="7"/><path d="M225 798H475" stroke="#66564d" stroke-width="8"/><path d="M198 830H502" stroke="#3f3734" stroke-width="10"/>
-<!-- lamps -->
-<g><circle cx="104" cy="466" r="34" fill="#ffe0a0" opacity=".15" filter="url(#lampblur)"/><circle cx="596" cy="466" r="34" fill="#ffe0a0" opacity=".15" filter="url(#lampblur)"/><rect x="91" y="441" width="26" height="48" rx="5" fill="#101112" stroke="#766454" stroke-width="3"/><rect x="583" y="441" width="26" height="48" rx="5" fill="#101112" stroke="#766454" stroke-width="3"/><circle cx="104" cy="466" r="8" fill="#ffe4a7"/><circle cx="596" cy="466" r="8" fill="#ffe4a7"/></g>
-<text x="602" y="600" text-anchor="middle" fill="#ded8d1" font-family="Georgia,serif" font-size="21">136</text>
-</svg>
-</div>
-<div class="gate-stage">
-<div class="gate-half left">
-<svg class="old-gate" viewBox="0 0 330 760" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#08090a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 742V211 Q62 105 145 134 Q221 160 314 38"/><path d="M16 742H314M23 626H306M27 435H302M30 263H296"/><path d="M48 727V220M91 727V166M134 727V136M177 727V141M220 727V116M263 727V77"/><path d="M52 310C79 258 120 258 148 310C120 358 79 358 52 310Z"/><path d="M148 310C177 258 221 258 249 310C221 361 177 361 148 310Z"/><path d="M63 536C92 484 133 484 161 536C133 585 92 585 63 536Z"/><path d="M161 536C190 484 234 484 261 536C234 585 190 585 161 536Z"/><path d="M33 414Q111 335 187 382Q242 417 298 322"/><path d="M35 606Q112 557 181 592Q237 620 301 560"/></g><g fill="#08090a"><path d="M39 220l9-29 9 29zM82 166l9-29 9 29zM125 137l9-29 9 29zM168 142l9-29 9 29zM211 117l9-29 9 29zM254 78l9-29 9 29z"/></g><circle cx="297" cy="478" r="9" fill="#08090a"/></svg>
-</div>
-<div class="gate-half right">
-<svg class="old-gate" viewBox="0 0 330 760" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#08090a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 742V211 Q62 105 145 134 Q221 160 314 38"/><path d="M16 742H314M23 626H306M27 435H302M30 263H296"/><path d="M48 727V220M91 727V166M134 727V136M177 727V141M220 727V116M263 727V77"/><path d="M52 310C79 258 120 258 148 310C120 358 79 358 52 310Z"/><path d="M148 310C177 258 221 258 249 310C221 361 177 361 148 310Z"/><path d="M63 536C92 484 133 484 161 536C133 585 92 585 63 536Z"/><path d="M161 536C190 484 234 484 261 536C234 585 190 585 161 536Z"/><path d="M33 414Q111 335 187 382Q242 417 298 322"/><path d="M35 606Q112 557 181 592Q237 620 301 560"/></g><g fill="#08090a"><path d="M39 220l9-29 9 29zM82 166l9-29 9 29zM125 137l9-29 9 29zM168 142l9-29 9 29zM211 117l9-29 9 29zM254 78l9-29 9 29z"/></g><circle cx="297" cy="478" r="9" fill="#08090a"/></svg>
-</div>
-</div>
+  <img class="entrance-drawing" src="./entrance-drawing.svg?v=3" alt="">
+  <div class="vignette"></div>
+  <div class="entry-caption"><b>Cancello</b><small>Bar &amp; Restaurant</small></div>
+  <div class="door-glow"></div>
+  <div class="gate-stage">
+    <div class="gate-half left">
+      <svg class="real-gate" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg">
+        <defs><filter id="roughL"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale=".7"/></filter></defs>
+        <g filter="url(#roughL)" fill="none" stroke="#070809" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 705V155M16 705H306M24 610H300M27 430H298"/>
+          <path d="M16 164 C78 177 130 205 182 247 C226 282 265 307 306 323"/>
+          <path d="M48 705V177M88 705V191M128 705V216M168 705V247M208 705V279M248 705V304M288 705V321"/>
+          <path d="M37 326C58 292 83 292 104 326C83 357 58 357 37 326Z"/>
+          <path d="M103 344C126 307 155 307 177 344C155 378 126 378 103 344Z"/>
+          <path d="M177 370C200 333 230 333 252 370C230 404 200 404 177 370Z"/>
+          <path d="M52 530C76 494 106 494 129 530C106 565 76 565 52 530Z"/>
+          <path d="M129 530C153 494 184 494 207 530C184 565 153 565 129 530Z"/>
+          <path d="M207 530C231 494 260 494 283 530C260 565 231 565 207 530Z"/>
+          <path d="M31 397Q95 362 152 390Q209 419 292 382"/>
+          <path d="M35 594Q98 559 156 586Q216 614 293 580"/>
+        </g>
+        <g fill="#070809"><path d="M39 178l9-27 9 27zM79 192l9-27 9 27zM119 217l9-27 9 27zM159 248l9-27 9 27zM199 280l9-27 9 27zM239 305l9-27 9 27zM279 322l9-27 9 27z"/></g>
+        <g fill="none" stroke="#654638" stroke-width="2" opacity=".30"><path d="M20 170C82 185 132 212 184 253C228 288 266 313 302 327"/><path d="M52 701V183M172 701V254M252 701V311"/></g>
+        <circle cx="301" cy="475" r="9" fill="#070809"/><circle cx="298" cy="472" r="3" fill="#5f493d"/>
+      </svg>
+    </div>
+    <div class="gate-half right">
+      <svg class="real-gate" viewBox="0 0 320 720" xmlns="http://www.w3.org/2000/svg">
+        <defs><filter id="roughR"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale=".7"/></filter></defs>
+        <g filter="url(#roughR)" fill="none" stroke="#070809" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 705V155M16 705H306M24 610H300M27 430H298"/>
+          <path d="M16 164 C78 177 130 205 182 247 C226 282 265 307 306 323"/>
+          <path d="M48 705V177M88 705V191M128 705V216M168 705V247M208 705V279M248 705V304M288 705V321"/>
+          <path d="M37 326C58 292 83 292 104 326C83 357 58 357 37 326Z"/>
+          <path d="M103 344C126 307 155 307 177 344C155 378 126 378 103 344Z"/>
+          <path d="M177 370C200 333 230 333 252 370C230 404 200 404 177 370Z"/>
+          <path d="M52 530C76 494 106 494 129 530C106 565 76 565 52 530Z"/>
+          <path d="M129 530C153 494 184 494 207 530C184 565 153 565 129 530Z"/>
+          <path d="M207 530C231 494 260 494 283 530C260 565 231 565 207 530Z"/>
+          <path d="M31 397Q95 362 152 390Q209 419 292 382"/>
+          <path d="M35 594Q98 559 156 586Q216 614 293 580"/>
+        </g>
+        <g fill="#070809"><path d="M39 178l9-27 9 27zM79 192l9-27 9 27zM119 217l9-27 9 27zM159 248l9-27 9 27zM199 280l9-27 9 27zM239 305l9-27 9 27zM279 322l9-27 9 27z"/></g>
+        <g fill="none" stroke="#654638" stroke-width="2" opacity=".30"><path d="M20 170C82 185 132 212 184 253C228 288 266 313 302 327"/><path d="M52 701V183M172 701V254M252 701V311"/></g>
+        <circle cx="301" cy="475" r="9" fill="#070809"/><circle cx="298" cy="472" r="3" fill="#5f493d"/>
+      </svg>
+    </div>
+  </div>
 </div>
 
 <main class="wrap"><section class="shell">
@@ -114,23 +122,17 @@ body.play-intro .footer{animation:itemIn .32s 2.10s ease forwards}
   var toggle=document.querySelector('.offer-toggle');
   var offers=document.getElementById('latest-offers');
   if(toggle&&offers){toggle.addEventListener('click',function(){var open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));offers.hidden=open;});}
-
   function playEntrance(){
-    var body=document.body;
-    var intro=document.querySelector('.entrance');
+    var body=document.body,intro=document.querySelector('.entrance');
     if(!intro)return;
     body.classList.remove('play-intro');
-    intro.style.visibility='visible';
-    intro.style.display='block';
+    intro.style.visibility='visible';intro.style.display='block';
+    var wrap=document.querySelector('.wrap');if(wrap){wrap.style.opacity='0';wrap.style.transform='translateY(14px) scale(.985)';}
+    document.querySelectorAll('.link,.address,.footer').forEach(function(el){el.style.opacity='0';el.style.transform='translateY(14px)';});
     void body.offsetWidth;
     requestAnimationFrame(function(){requestAnimationFrame(function(){body.classList.add('play-intro');});});
   }
-
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',function(){setTimeout(playEntrance,90);});
-  }else{
-    setTimeout(playEntrance,90);
-  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(playEntrance,90);});}else{setTimeout(playEntrance,90);}
   window.addEventListener('pageshow',function(e){if(e.persisted)setTimeout(playEntrance,60);});
 })();
 </script>
