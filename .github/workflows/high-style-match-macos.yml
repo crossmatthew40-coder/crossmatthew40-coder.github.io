@@ -1,0 +1,78 @@
+name: Build High Style Match macOS
+
+on:
+  push:
+    branches:
+      - high-style-match-macos-build
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-macos:
+    name: High Style Match — macOS Apple Silicon
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout build branch
+        uses: actions/checkout@v4
+
+      - name: Unpack High Style Match source
+        run: |
+          unzip -q build/high-style-match-source.zip
+          test -f high-style-match/package.json
+          test -f high-style-match/src-tauri/Cargo.toml
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: high-style-match/package.json
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
+      - name: Cache Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: high-style-match/src-tauri -> target
+
+      - name: Install frontend dependencies
+        working-directory: high-style-match
+        run: npm install --no-audit --no-fund
+
+      - name: Generate native app icons
+        working-directory: high-style-match
+        run: npm run tauri -- icon src/assets/high-style-mark.png
+
+      - name: Run TypeScript core tests
+        working-directory: high-style-match
+        run: npm run test:core
+
+      - name: Run Rust tests
+        working-directory: high-style-match
+        run: cargo test --manifest-path src-tauri/Cargo.toml
+
+      - name: Build High Style Match DMG
+        working-directory: high-style-match
+        env:
+          APPLE_SIGNING_IDENTITY: "-"
+        run: npm run tauri -- build --target aarch64-apple-darwin
+
+      - name: Show built bundles
+        if: always()
+        run: find high-style-match/src-tauri/target -path '*release/bundle*' -maxdepth 9 -type f -print || true
+
+      - name: Upload macOS installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: High-Style-Match-macOS-Apple-Silicon
+          path: |
+            high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
+            high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.app/**
+          if-no-files-found: error
+          retention-days: 14
