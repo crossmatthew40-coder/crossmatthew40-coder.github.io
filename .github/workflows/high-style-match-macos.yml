@@ -18,9 +18,10 @@ jobs:
       - name: Checkout build branch
         uses: actions/checkout@v4
 
-      - name: Unpack High Style Match source
+      - name: Reconstruct High Style Match source
         run: |
-          unzip -q build/high-style-match-source.zip
+          cat build/source-parts/*.b64 | python3 -c 'import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.buffer.read()))' > /tmp/high-style-match-source.tar.xz
+          tar -xJf /tmp/high-style-match-source.tar.xz
           test -f high-style-match/package.json
           test -f high-style-match/src-tauri/Cargo.toml
 
@@ -28,8 +29,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: high-style-match/package.json
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -47,7 +46,7 @@ jobs:
 
       - name: Generate native app icons
         working-directory: high-style-match
-        run: npm run tauri -- icon src/assets/high-style-mark.png
+        run: npm run tauri -- icon src/assets/high-style-mark.svg
 
       - name: Run TypeScript core tests
         working-directory: high-style-match
@@ -59,9 +58,7 @@ jobs:
 
       - name: Build High Style Match DMG
         working-directory: high-style-match
-        env:
-          APPLE_SIGNING_IDENTITY: "-"
-        run: npm run tauri -- build --target aarch64-apple-darwin
+        run: npm run tauri -- build --target aarch64-apple-darwin --bundles dmg
 
       - name: Show built bundles
         if: always()
@@ -71,8 +68,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: High-Style-Match-macOS-Apple-Silicon
-          path: |
-            high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
-            high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.app/**
+          path: high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
           if-no-files-found: error
           retention-days: 14
