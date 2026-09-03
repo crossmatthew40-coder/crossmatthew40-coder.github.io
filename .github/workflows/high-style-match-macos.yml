@@ -83,18 +83,27 @@ jobs:
         working-directory: high-style-match
         run: npm run tauri -- build --target aarch64-apple-darwin --bundles app
 
+      - name: Ad-hoc sign and verify app
+        run: |
+          APP_DIR="$(find high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/macos -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$APP_DIR"
+          xattr -cr "$APP_DIR"
+          codesign --force --deep --sign - --timestamp=none "$APP_DIR"
+          codesign --verify --deep --strict --verbose=2 "$APP_DIR"
+          codesign -dv --verbose=4 "$APP_DIR" 2>&1 | head -40
+
       - name: Package app for direct download
         run: |
           APP_DIR="$(find high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/macos -maxdepth 1 -type d -name '*.app' -print -quit)"
           test -n "$APP_DIR"
           echo "Packaging $APP_DIR"
-          ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "High-Style-Match.app.zip"
-          unzip -l "High-Style-Match.app.zip" | head -40
+          ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "High-Style-Match-Signed.app.zip"
+          unzip -l "High-Style-Match-Signed.app.zip" | head -40
 
       - name: Upload High Style Match app
         uses: actions/upload-artifact@v4
         with:
-          name: High-Style-Match-App-Apple-Silicon
-          path: High-Style-Match.app.zip
+          name: High-Style-Match-Signed-App-Apple-Silicon
+          path: High-Style-Match-Signed.app.zip
           if-no-files-found: error
           retention-days: 14
