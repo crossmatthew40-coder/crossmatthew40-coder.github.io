@@ -1,4 +1,4 @@
-name: Build High Style Match macOS
+name: Build High Style Match macOS App
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-macos:
-    name: High Style Match — macOS Apple Silicon
+    name: High Style Match — macOS Apple Silicon App
     runs-on: macos-14
 
     steps:
@@ -79,18 +79,22 @@ jobs:
         working-directory: high-style-match
         run: cargo test --manifest-path src-tauri/Cargo.toml
 
-      - name: Build High Style Match DMG
+      - name: Build High Style Match app bundle
         working-directory: high-style-match
-        run: npm run tauri -- build --target aarch64-apple-darwin --bundles dmg
+        run: npm run tauri -- build --target aarch64-apple-darwin --bundles app
 
-      - name: Show built bundles
-        if: always()
-        run: find high-style-match/src-tauri/target -path '*release/bundle*' -maxdepth 9 -type f -print || true
+      - name: Package app for direct download
+        run: |
+          APP_DIR="$(find high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/macos -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$APP_DIR"
+          echo "Packaging $APP_DIR"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "High-Style-Match.app.zip"
+          unzip -l "High-Style-Match.app.zip" | head -40
 
-      - name: Upload macOS installer
+      - name: Upload High Style Match app
         uses: actions/upload-artifact@v4
         with:
-          name: High-Style-Match-macOS-Apple-Silicon
-          path: high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
+          name: High-Style-Match-App-Apple-Silicon
+          path: High-Style-Match.app.zip
           if-no-files-found: error
           retention-days: 14
