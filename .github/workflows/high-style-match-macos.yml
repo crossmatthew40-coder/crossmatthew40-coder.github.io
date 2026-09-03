@@ -25,6 +25,25 @@ jobs:
           test -f high-style-match/package.json
           test -f high-style-match/src-tauri/Cargo.toml
 
+      - name: Correct RAW preview regression fixture
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('high-style-match/src-tauri/src/thumbnails.rs')
+          text = p.read_text()
+          old = '        let image = DynamicImage::new_rgb8(320, 180);'
+          new = '''        let image = DynamicImage::ImageRgb8(image::RgbImage::from_fn(320, 180, |x, y| {
+            image::Rgb([
+                ((x * 13 + y * 7) % 256) as u8,
+                ((x * 5 + y * 17) % 256) as u8,
+                ((x * 19 + y * 3) % 256) as u8,
+            ])
+        }));'''
+          if old not in text:
+              raise SystemExit('RAW preview test fixture pattern was not found')
+          p.write_text(text.replace(old, new, 1))
+          PY
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
