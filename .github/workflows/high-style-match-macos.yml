@@ -46,7 +46,18 @@ jobs:
 
       - name: Generate native app icons
         working-directory: high-style-match
-        run: npm run tauri -- icon src/assets/high-style-mark.svg
+        run: |
+          cat > src/assets/high-style-app-icon.svg <<'SVG'
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+            <rect width="300" height="300" rx="62" fill="#0b0b0d"/>
+            <g fill="#ffffff" transform="translate(0 90)">
+              <path d="M34 84 72 36h54L88 84H34Z"/>
+              <path d="M105 84 143 36h54l-38 48h-54Z"/>
+              <path d="M176 84 214 36h54l-38 48h-54Z"/>
+            </g>
+          </svg>
+          SVG
+          npm run tauri -- icon src/assets/high-style-app-icon.svg
 
       - name: Run TypeScript core tests
         working-directory: high-style-match
