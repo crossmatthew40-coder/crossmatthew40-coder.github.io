@@ -1,0 +1,52 @@
+name: Publish High Style Match Premium
+
+on:
+  push:
+    branches:
+      - high-style-match-premium-publish
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout premium build branch
+        uses: actions/checkout@v4
+
+      - name: Reconstruct and verify premium app
+        run: |
+          base64 --decode publish/high-style-match-premium.html.gz.b64 | gunzip > /tmp/high-style-match-premium.html
+          echo "1a35d5eeb3309fbcec3782c5843e15c610c8ebcb360289eafcd6b74e03ca4a6d  /tmp/high-style-match-premium.html" | sha256sum -c -
+          test "$(wc -c < /tmp/high-style-match-premium.html | tr -d ' ')" = "62569"
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('/tmp/high-style-match-premium.html').read_text()
+          assert '<title>High Style Match</title>' in html
+          assert 'Download Renamed Photos' in html
+          assert 'Drop your shot list here' in html
+          assert 'Auto Match From Shot List' not in html or 'autoMatch' in html
+          m = re.search(r'<script>(.*)</script>', html, re.S)
+          assert m, 'script block missing'
+          Path('/tmp/high-style-match-premium.js').write_text(m.group(1))
+          PY
+          node --check /tmp/high-style-match-premium.js
+
+      - name: Publish only High Style Match to main
+        run: |
+          git fetch origin main
+          git switch -C main origin/main
+          mkdir -p high-style-match
+          cp /tmp/high-style-match-premium.html high-style-match/index.html
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add high-style-match/index.html
+          if git diff --cached --quiet; then
+            echo "High Style Match is already current."
+          else
+            git commit -m "Launch premium High Style Match web app"
+            git push origin main
+          fi
