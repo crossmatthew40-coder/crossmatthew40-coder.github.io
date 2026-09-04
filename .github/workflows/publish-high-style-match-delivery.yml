@@ -1,0 +1,61 @@
+name: Publish High Style Match WeTransfer Delivery
+
+on:
+  push:
+    branches:
+      - high-style-match-all-features
+    paths:
+      - 'publish/delivery/patch.py.gz.b64'
+      - '.github/workflows/publish-high-style-match-delivery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout delivery branch
+        uses: actions/checkout@v4
+        with:
+          ref: high-style-match-all-features
+          fetch-depth: 0
+
+      - name: Prepare delivery patch
+        run: |
+          cp publish/delivery/patch.py.gz.b64 /tmp/hsm-delivery-patch.b64
+          base64 -d /tmp/hsm-delivery-patch.b64 | gzip -d > /tmp/hsm-delivery-patch.py
+          python -m py_compile /tmp/hsm-delivery-patch.py
+
+      - name: Patch and verify current High Style Match
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          python /tmp/hsm-delivery-patch.py
+          test "$(sha256sum high-style-match/index.html | cut -d' ' -f1)" = "f9f7954303e9d2946879aa66cb75ec6d41da214a2583d297f037f11a4cbde5f9"
+          grep -q "function renderDeliverTab" high-style-match/index.html
+          grep -q "Open WeTransfer" high-style-match/index.html
+          grep -q "Mark as Delivered" high-style-match/index.html
+          grep -q "WeTransfer deliveries" high-style-match/index.html
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text=Path('high-style-match/index.html').read_text()
+          m=re.search(r'<script>([\s\S]*?)</script>', text)
+          assert m, 'script not found'
+          Path('/tmp/hsm.js').write_text(m.group(1))
+          PY
+          node --check /tmp/hsm.js
+
+      - name: Publish High Style Match only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add high-style-match/index.html
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+          else
+            git commit -m "Add WeTransfer delivery workflow to High Style Match"
+            git push origin main
+          fi
