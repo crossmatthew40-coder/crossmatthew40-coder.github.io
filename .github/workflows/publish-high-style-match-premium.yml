@@ -1,9 +1,6 @@
 name: Publish High Style Match Premium
 
 on:
-  push:
-    branches:
-      - high-style-match-premium-publish
   workflow_dispatch:
 
 permissions:
