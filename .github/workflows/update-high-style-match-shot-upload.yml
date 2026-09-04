@@ -1,4 +1,4 @@
-name: Update High Style Match Shot List Upload
+name: Publish Current High Style Match Web
 
 on:
   push:
@@ -12,108 +12,45 @@ permissions:
   contents: write
 
 jobs:
-  patch:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout live site
+      - name: Checkout publisher branch
         uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
 
-      - name: Add pre-existing shot list upload
+      - name: Reconstruct and verify High Style Match
         shell: bash
         run: |
+          cat publish/hsm-v4/*.b64 | base64 --decode > /tmp/high-style-match-index.html
+          echo "ce1f68e7e8d54352a3c217b1783b2dc91d2d1a252f06b7d078f65c1aa9f9c6a6  /tmp/high-style-match-index.html" | sha256sum -c -
+          test "$(wc -c < /tmp/high-style-match-index.html | tr -d ' ')" = "26135"
+          grep -q 'id="uploadShotBtn"' /tmp/high-style-match-index.html
+          grep -q 'Upload Existing Shot List' /tmp/high-style-match-index.html
+          grep -q '.tsv' /tmp/high-style-match-index.html
           python3 - <<'PY'
           from pathlib import Path
           import re
-
-          p = Path('high-style-match/index.html')
-          text = p.read_text()
-
-          text = text.replace(
-            '<input id="shotInput" type="file" accept=".txt,.csv,text/plain,text/csv" hidden>',
-            '<input id="shotInput" type="file" accept=".txt,.csv,.tsv,text/plain,text/csv,text/tab-separated-values" hidden>'
-          )
-
-          new_handler = r'''SI.onchange=async()=>{const f=SI.files[0];if(!f)return;try{const raw=await f.text(),parsed=parseShotList(raw),s=getShoot();if(s){s.shots=parsed;s.photos.forEach(p=>p.shot=null);save();tab='shots';work();toast(`${parsed.length} shot-list requirements loaded from ${f.name}`)}else{const area=document.getElementById('shotText');if(!area){toast('Open New Shoot or an existing shoot first');SI.value='';return}area.value=raw;updateNewShotPreview(f.name,parsed.length);toast(`${parsed.length} shot-list requirements found`)}}catch{toast('Could not read that shot-list file')}SI.value=''};'''
-          text, n = re.subn(r"SI\.onchange=async\(\)=>\{.*?\};\n\nfunction stats", new_handler + "\n\nfunction stats", text, count=1, flags=re.S)
-          if n != 1:
-            raise SystemExit('Could not patch shot input handler')
-
-          start = text.index('function parseShotList(text){')
-          end = text.index('\n\nfunction newShoot()', start)
-          new_parse = r'''function parseShotList(text){
- const out=[];let subject='';
- const variants='Landscape|Portrait|Overhead|Detail|Square|Wide|Interior|Exterior';
- const variantRe=new RegExp(`^(${variants})$`,'i');
- const add=(sub,variant,count=1)=>{for(let i=0;i<count;i++)out.push({id:Date.now()+shotSeq++,subject:sub.trim(),variant:(variant||'Shot').trim(),skip:false})};
- const splitDelimited=line=>{const delim=line.includes('\t')?'\t':',';const cells=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(ch===delim&&!quoted){cells.push(cur.trim());cur=''}else cur+=ch}cells.push(cur.trim());return cells};
- const lines=text.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
- for(let idx=0;idx<lines.length;idx++){
-   let line=lines[idx].replace(/^[-•▪◦]\s*/,'').replace(/^\d+[.)]\s*/,'').trim();
-   if(!line)continue;
-   let count=1,m=line.match(/(?:\s+x\s*|\s*\()(\d+)\)?$/i);if(m){count=Math.max(1,+m[1]);line=line.slice(0,m.index).trim()}
-   const exp=line.match(new RegExp(`^(.+?)\\s*[—–-]\\s*(${variants})$`,'i'));
-   if(exp){subject=exp[1].trim();add(subject,exp[2],count);continue}
-   if(line.includes(',')||line.includes('\t')){
-     const z=splitDelimited(line),a=(z[0]||'').trim(),b=(z[1]||'').trim(),q=parseInt(z[2],10);
-     if(/^(subject|shot|shot item|item|dish|name|photo)$/i.test(a)&&/^(orientation|variant|format|type|view)$/i.test(b))continue;
-     if(a&&b){subject=a;add(a,b,Number.isFinite(q)&&q>0?q:count);continue}
-     if(a){add(a,'Shot',count);subject=a;continue}
-   }
-   if(variantRe.test(line)&&subject){add(subject,line,count);continue}
-   const grouped=line.match(/^(.+):$/);if(grouped){subject=grouped[1].trim();continue}
-   const next=(lines[idx+1]||'').replace(/^[-•▪◦]\s*/,'').replace(/^\d+[.)]\s*/,'').trim().replace(/(?:\s+x\s*|\s*\()(\d+)\)?$/i,'').trim();
-   if(next&&variantRe.test(next)){subject=line;continue}
-   subject=line;add(line,'Shot',count);
- }
- return out;
-}
-
-function updateNewShotPreview(name,count){const n=document.getElementById('shotFileName'),c=document.getElementById('shotParseCount');if(n)n.textContent=name;if(c){c.textContent=`${count} requirement${count===1?'':'s'} detected`;c.className=count?'good':'note'}}'''
-          text = text[:start] + new_parse + text[end:]
-
-          start = text.index('function newShoot(){')
-          end = text.index('\n\nfunction templates()', start)
-          new_newshoot = r'''function newShoot(){M.innerHTML=head('Create project','New Shoot','Start with the client details and upload or paste their existing shot list.')+`<div class="panel section"><div class="form"><div class="field"><label>Client</label><input id="client" placeholder="Cancello Restaurant"></div><div class="field"><label>Shoot name</label><input id="shootName" placeholder="Autumn Menu Shoot"></div><div class="field"><label>Date</label><input id="date" type="date" value="${new Date().toISOString().slice(0,10)}"></div><div class="field"><label>Location</label><input id="location" placeholder="Manchester"></div><div class="field full"><label>Existing shot list</label><div class="panel" style="padding:14px;background:#fafafe"><div class="row" style="justify-content:space-between"><div><b>Upload your client's shot list</b><div class="mini" id="shotFileName">TXT, CSV or TSV</div></div><button class="btn pri" id="uploadShotBtn">Upload Shot List</button></div><div id="shotParseCount" class="mini section">Or paste the list below.</div></div></div><div class="field full"><label>Shot list contents</label><textarea id="shotText" rows="11" placeholder="Burger — Landscape\nBurger — Portrait\nCarbonara — Overhead\nAperol Spritz — Portrait"></textarea><span class="mini">Supports simple lists, Subject — Orientation, CSV/TSV columns, grouped lists, and counts such as Landscape x2.</span></div></div><div class="row section"><button class="btn pri" id="createBtn">Create Shoot</button><button class="btn sec" id="sampleBtn">Load Sample</button></div></div>`;
- document.getElementById('uploadShotBtn').onclick=()=>SI.click();
- document.getElementById('shotText').oninput=e=>updateNewShotPreview('Pasted / edited shot list',parseShotList(e.target.value).length);
- document.getElementById('sampleBtn').onclick=()=>{document.getElementById('client').value='Cancello Restaurant';document.getElementById('shootName').value='Autumn Menu Shoot';document.getElementById('location').value='Manchester';const a=document.getElementById('shotText');a.value='Burger — Landscape\nBurger — Portrait\nBurger — Detail\nCarbonara — Landscape\nCarbonara — Overhead x2\nAperol Spritz — Portrait';updateNewShotPreview('Sample shot list',parseShotList(a.value).length)};
- document.getElementById('createBtn').onclick=()=>{const client=document.getElementById('client').value.trim(),name=document.getElementById('shootName').value.trim(),shots=parseShotList(document.getElementById('shotText').value);if(!client||!name)return toast('Add a client and shoot name');if(!shots.length)return toast('Upload or paste a shot list first');const s={id:Date.now(),client,name,date:document.getElementById('date').value,location:document.getElementById('location').value.trim(),shots,photos:[],templateId:1};D.shoots.unshift(s);save();shootId=s.id;screen='work';tab='summary';render()}
-}'''
-          text = text[:start] + new_newshoot + text[end:]
-          text = text.replace('Import TXT / CSV', 'Upload Existing Shot List')
-
-          p.write_text(text)
-          PY
-
-      - name: Validate browser app
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-          text = Path('high-style-match/index.html').read_text()
-          assert 'id="uploadShotBtn"' in text
-          assert '.tsv' in text
-          assert 'Upload Existing Shot List' in text
-          m = re.search(r'<script>([\s\S]*?)</script>', text)
+          html = Path('/tmp/high-style-match-index.html').read_text()
+          m = re.search(r'<script>([\s\S]*?)</script>', html)
           if not m:
-            raise SystemExit('No script found')
-          Path('/tmp/high-style-match.js').write_text(m.group(1))
+              raise SystemExit('script block missing')
+          Path('/tmp/high-style-match-app.js').write_text(m.group(1))
           PY
-          node --check /tmp/high-style-match.js
+          node --check /tmp/high-style-match-app.js
 
-      - name: Publish update to main
+      - name: Publish only High Style Match to main
         shell: bash
         run: |
+          git fetch origin main
+          git switch -C main origin/main
+          mkdir -p high-style-match
+          cp /tmp/high-style-match-index.html high-style-match/index.html
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add high-style-match/index.html
           if git diff --cached --quiet; then
-            echo "No changes to publish"
+            echo "High Style Match is already current."
           else
             git commit -m "Add existing shot list upload to High Style Match"
-            git push origin HEAD:main
+            git push origin main
           fi
