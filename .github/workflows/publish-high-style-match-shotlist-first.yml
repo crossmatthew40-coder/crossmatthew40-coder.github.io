@@ -1,0 +1,40 @@
+name: Publish High Style Match Shot List First
+
+on:
+  push:
+    branches:
+      - high-style-match-premium-publish
+    paths:
+      - .github/workflows/publish-high-style-match-shotlist-first.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout patch branch
+        uses: actions/checkout@v4
+
+      - name: Prepare patch
+        run: cp publish/shotlist-first-patch.py /tmp/shotlist-first-patch.py
+
+      - name: Patch and verify live app
+        run: |
+          git fetch origin main
+          git switch -C main origin/main
+          python3 /tmp/shotlist-first-patch.py
+          echo "f441f19f4260d9eff52f48cf67d8a520e839cb1c8371e8d3795f43f468cca9fd  high-style-match/index.html" | sha256sum -c -
+          node --check /tmp/high-style-match-shotlist-first.js
+          grep -q "Start with the shot list" high-style-match/index.html
+          grep -q "Create Shoot & Add Photos" high-style-match/index.html
+
+      - name: Publish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add high-style-match/index.html
+          git commit -m "Make Shot List the core High Style Match workspace"
+          git push origin main
