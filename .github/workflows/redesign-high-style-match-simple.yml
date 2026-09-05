@@ -17,113 +17,8 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-
-      - name: Apply simpler editorial design system
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-
-          files = {
-            'main': Path('high-style-match/index.html'),
-            'tether': Path('high-style-match/tether/index.html'),
-            'signin': Path('high-style-match/sign-in/index.html'),
-            'customer': Path('high-style-match/customer/index.html'),
-          }
-
-          palette_main = '''
-:root{
-  --accent:#C25B43;--accent-2:#9F4635;--ink:#1B211D;--muted:#74766F;--muted-2:#9A9A92;
-  --bg:#F5F1E9;--surface:#FFFDFA;--surface-2:#FAF7F1;--line:#E5DED2;--dark:#18211C;--dark-2:#223028;
-  --success:#3F7658;--success-bg:#EAF4ED;--warn:#9B672B;--warn-bg:#FBF0DD;--danger:#AF4C49;--danger-bg:#FBECEB;
-  --shadow:0 8px 24px rgba(41,48,42,.055);--radius:14px;--radius-sm:10px;
-}'''
-
-          main = files['main'].read_text()
-          main, n = re.subn(r':root\{.*?\}', palette_main.strip(), main, count=1, flags=re.S)
-          if n != 1: raise SystemExit('main palette not found')
-          main = main.replace("APP_VERSION='0.7.0'", "APP_VERSION='0.8.0'")
-          main = main.replace("['photos','Photographs']", "['photos','Photos']")
-          main = main.replace("['cull','Smart Cull']", "['cull','Cull']")
-          main = main.replace("['review','Review Brief']", "['review','Review']")
-          main = main.replace("['history','History']", "['history','History']")
-          main = main.replace('High Style Match 0.6 — smoother movement and standard Tether Mode', 'High Style Match — navigation foundation')
-          if 'HSM 0.8 — quiet editorial interface' not in main:
-            override = r'''
-/* HSM 0.8 — quiet editorial interface */
-body{background:var(--bg);color:var(--ink)}
-.app{grid-template-columns:220px minmax(0,1fr)}
-.sidebar{padding:18px 13px 16px;background:var(--dark);box-shadow:none}
-.brand{padding:4px 6px 20px}.brandmark{width:39px;height:39px;border-radius:11px;background:var(--accent);box-shadow:none}.brandmark i{width:18px;height:4px;box-shadow:0 -7px 0 #fff,0 7px 0 #fff}
-.brand strong{font-size:14px}.brand small{color:#8F9B92}.nav-label{color:#718077;padding-left:9px}.nav{gap:3px}.nav button{border-radius:9px;padding:9px 10px;color:#B8C0BA;font-weight:620}.nav button:hover{background:#223029}.nav button.on{background:#2A3930;box-shadow:none}.sidebar-bottom{border-color:#2C3932}.storage-card{background:#202C25;border:1px solid #2C3932;border-radius:10px}
-.topbar{height:62px;padding:0 28px;background:rgba(245,241,233,.92);border-bottom:1px solid var(--line);box-shadow:none}.content{max-width:1180px;padding:28px}.crumb{font-size:11px}.top-actions{gap:7px}
-.hero-title{font-size:30px}.hero-copy{font-size:14px}.page-head{margin-bottom:22px}.eyebrow{color:var(--accent-2);letter-spacing:.11em}
-.btn{border-radius:9px;min-height:38px;padding:9px 13px;box-shadow:none!important}.btn.primary{background:var(--accent);box-shadow:none}.btn.primary:hover{background:var(--accent-2);transform:none}.btn.secondary{background:var(--surface);border-color:var(--line)}.btn.secondary:hover{background:#F8F3EB}.btn.small{min-height:32px;border-radius:8px}
-.panel,.stat,.workspace-head,.mini-stat,.setting-card,.template-row,.photo-card{box-shadow:none!important;border-color:var(--line);background:var(--surface)}
-.panel,.stat,.workspace-head{border-radius:14px}.panel-pad{padding:18px}.stat{padding:16px}.stat b{font-size:24px}.stat .stat-icon{background:#F4E6E0;color:var(--accent-2)}
-.workspace-head{padding:18px;background:var(--surface)}.workspace-head h1{font-size:23px}.workspace-progress{margin-top:15px;gap:6px}.wp{padding:8px 10px;border-radius:9px;background:#F1EDE5;font-size:10px}.wp.active{background:#F3E2DC;color:var(--accent-2)}.wp.active i{background:var(--accent);border-color:var(--accent)}
-.tabs{position:sticky;top:62px;z-index:14;margin:12px 0 16px;padding:6px;background:rgba(255,253,250,.94);border:1px solid var(--line);border-radius:12px;gap:4px;backdrop-filter:blur(14px)}.tabs button{padding:8px 10px;border:0!important;border-radius:8px;color:#77766F;font-size:11px}.tabs button:hover{background:#F4EFE7;color:var(--ink);border-radius:8px}.tabs button.on{background:var(--dark);color:#fff}
-.overview-grid{grid-template-columns:minmax(0,1.45fr) minmax(240px,.55fr)}.callout{min-height:166px;padding:20px;border-radius:14px;background:var(--dark)}.callout:after{display:none}.callout .eyebrow{color:#D9A28F}.callout h2{font-size:21px}.callout p{color:#BFC7C1}.workflow{gap:8px}.workflow-step{min-height:116px;padding:14px;border-radius:12px;background:var(--surface)}.workflow-step span{margin-bottom:14px;background:#F4E6E0;color:var(--accent-2)}
-.shoot-list{gap:7px}.shoot-row{padding:12px;border-radius:11px}.shoot-row:hover{box-shadow:none;border-color:#D6CCBD}.progress{background:#ECE5D9}.progress i{background:var(--accent)}
-.pill.purple{background:#F3E2DC;color:var(--accent-2)}.pill.success{background:var(--success-bg)}.notice.info{background:#F6EAE4;color:#764736;border-color:#E8CEC3}.notice.warn{background:var(--warn-bg)}
-.empty{background:#FAF7F1;border-color:#D9D0C3;border-radius:13px;padding:38px 20px}.empty .empty-icon{background:#F3E2DC;color:var(--accent-2)}
-.field input,.field textarea,.field select,.select{border-radius:9px;background:var(--surface);border-color:var(--line)}.field input:focus,.field textarea:focus,.field select:focus,.select:focus{border-color:#D2927F;box-shadow:0 0 0 3px rgba(194,91,67,.10)}
-.upload-zone{border-radius:13px;background:#FCF9F4;border-color:#D8CFC2}.upload-zone .upload-icon{background:#F3E2DC;color:var(--accent-2)}
-.photo-grid{gap:10px}.photo-card{border-radius:12px}.filters{background:#EFEAE1;border-radius:9px}.filters button.on{background:var(--dark);color:#fff}
-.modal{border-radius:16px}.toast{border-radius:10px}
-@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{height:auto;position:relative;display:block;padding:12px}.brand{padding-bottom:10px}.nav-label,.sidebar-bottom{display:none}.nav{display:flex;overflow-x:auto;gap:4px}.nav button{white-space:nowrap}.topbar{top:0}.content{padding:20px 16px}.tabs{top:62px}.overview-grid{grid-template-columns:1fr}}
-@media(max-width:600px){.content{padding:16px 12px}.workspace-head{padding:15px}.workspace-head .title-row{display:block}.workspace-progress{display:flex}.wp{min-width:max-content}.tabs{margin-left:0;margin-right:0}.tabs button{padding:8px 9px}.page-head{display:block}.hero-title{font-size:26px}.stats{grid-template-columns:1fr 1fr}}
-'''
-            main = main.replace('</style>', override + '\n</style>', 1)
-          files['main'].write_text(main)
-
-          tether = files['tether'].read_text()
-          tether, n = re.subn(r':root\{.*?\}', ':root{--p:#C25B43;--p2:#9F4635;--ink:#1B211D;--muted:#74766F;--bg:#F5F1E9;--card:#FFFDFA;--line:#E5DED2;--dark:#18211C;--good:#3F7658;--warn:#9B672B;--bad:#AF4C49;--shadow:0 8px 24px rgba(41,48,42,.055)}', tether, count=1, flags=re.S)
-          if n != 1: raise SystemExit('tether palette not found')
-          tether = tether.replace('Live Shoot Board', 'Tethered Shoot')
-          tether = tether.replace('Tether Mode · Standard Feature', 'Tether Mode')
-          if 'HSM simple tether UI' not in tether:
-            tether_override = r'''
-/* HSM simple tether UI */
-body{background:var(--bg)}.top{height:62px;background:rgba(24,33,28,.97);padding:0 20px}.mark{width:36px;height:36px;border-radius:10px;background:var(--p)}.wrap{max-width:1260px;padding:20px}.hero{margin-bottom:12px}.hero h1{font-size:27px}.project-select{border-radius:9px;background:var(--card);border-color:var(--line)}
-.statusbar{border-radius:13px;background:var(--dark);box-shadow:none;padding:12px 14px;margin-bottom:12px}.alertbar{border-radius:11px}.grid{gap:12px}.card{border-radius:14px;box-shadow:none}.viewer-head{padding:13px 15px}.viewer-stage{height:440px}.viewer-foot{background:var(--line)}.vstat{background:var(--card)}.thumbs{background:var(--card);padding:9px}.thumb{border-radius:8px}.current,.board{padding:15px}.current h2{font-size:24px}.brief{background:#F4E6E0;color:#704638;border-radius:9px}.counts div{border-radius:9px;padding:10px}.current-actions{gap:6px}.q{border-radius:9px;padding:9px}.q.on{border-color:#D2927F;background:#FCF2EE;box-shadow:none}.badge{background:#F3E2DC;color:var(--p2)}.badge.good{background:#EAF4ED;color:var(--good)}.btn{border-radius:9px}.btn.primary{background:var(--p)}.btn.soft{background:#F2EEE6}.bottomline{gap:12px}.mini{padding:13px}.modal{border-radius:16px}
-@media(max-width:680px){.wrap{padding:12px}.top{padding:0 12px}.hero h1{font-size:24px}.viewer-stage{height:290px}}
-'''
-            tether = tether.replace('</style>', tether_override + '\n</style>', 1)
-          files['tether'].write_text(tether)
-
-          signin = files['signin'].read_text()
-          signin, n = re.subn(r':root\{.*?\}', ':root{--accent:#C25B43;--accent2:#9F4635;--ink:#1B211D;--muted:#74766F;--bg:#F5F1E9;--line:#E5DED2;--surface:#FFFDFA;--dark:#18211C;--danger:#AF4C49;--success:#3F7658;--shadow:0 12px 34px rgba(41,48,42,.07)}', signin, count=1, flags=re.S)
-          if n != 1: raise SystemExit('signin palette not found')
-          signin = signin.replace('Your photography, approvals and delivery in one place.', 'Your shoots. One simple place.')
-          signin = signin.replace('Welcome back.', 'Sign in.')
-          signin = signin.replace('Use the email address your photographer invited you with.', 'Use the email address linked to your customer access.')
-          if 'HSM simple sign-in UI' not in signin:
-            signin_override = r'''
-/* HSM simple sign-in UI */
-.page{grid-template-columns:minmax(320px,.72fr) minmax(480px,1.28fr)}.brand-panel{background:var(--dark);padding:34px}.brand-panel:before,.brand-panel:after{display:none}.mark{width:40px;height:40px;border-radius:11px;background:var(--accent);box-shadow:none}.brand-copy{margin:56px 0}.brand-copy h1{font-size:42px;max-width:470px}.brand-copy p{color:#BFC7C1}.benefits{gap:9px}.check{background:#2A3930;color:#E4C2B7}.login-panel{padding:36px 28px}.login-wrap{width:min(430px,100%)}.portal-label{background:#F3E2DC;border-color:#E8CEC3;color:var(--accent2)}.login-wrap h2{font-size:29px}.field input{border-radius:9px;border-color:var(--line);background:var(--surface);padding:12px 13px}.field input:focus{border-color:#D2927F;box-shadow:0 0 0 3px rgba(194,91,67,.10)}.primary{border-radius:9px;min-height:44px;background:var(--accent);box-shadow:none}.primary:hover{background:var(--accent2);transform:none;box-shadow:none}.secondary{border-radius:9px;background:var(--surface)}.status{border-radius:9px}.status.info{background:#F6EAE4;border-color:#E8CEC3;color:#764736}.invite{margin-top:20px}.secure-note{margin-top:14px}
-@media(max-width:900px){.page{grid-template-columns:1fr}.brand-panel{min-height:220px;padding:24px}.brand-copy{margin:32px 0 10px}.brand-copy h1{font-size:32px}.benefits,.brand-foot{display:none}.login-panel{padding:28px 20px 42px}}
-'''
-            signin = signin.replace('</style>', signin_override + '\n</style>', 1)
-          files['signin'].write_text(signin)
-
-          customer = files['customer'].read_text()
-          customer, n = re.subn(r':root\{.*?\}', ':root{--p:#C25B43;--p2:#9F4635;--ink:#1B211D;--muted:#74766F;--bg:#F5F1E9;--line:#E5DED2;--card:#FFFDFA;--good:#3F7658;--shadow:0 8px 24px rgba(41,48,42,.055)}', customer, count=1, flags=re.S)
-          if n != 1: raise SystemExit('customer palette not found')
-          customer = customer.replace('Your photography projects.', 'Your projects.')
-          customer = customer.replace('Review shared shoots, check approvals and keep delivery information together.', 'Everything shared with you, in one place.')
-          customer = customer.replace('PRIVATE PROJECT ACCESS', 'PRIVATE ACCESS')
-          if 'HSM simple customer portal UI' not in customer:
-            customer_override = r'''
-/* HSM simple customer portal UI */
-.top{height:62px;background:rgba(24,33,28,.97);padding:0 22px}.mark{width:36px;height:36px;border-radius:10px;background:var(--p)}.avatar{background:#2A3930;border-radius:9px}.signout{background:transparent;border-color:#425149;border-radius:8px}.wrap{max-width:1080px;padding:28px}.head{margin-bottom:18px}.head h1{font-size:30px}.badge{background:#F3E2DC;color:var(--p2);padding:6px 9px}.grid{gap:10px}.card{border-radius:13px;padding:17px;box-shadow:none}.card b.big{font-size:24px;margin:12px 0 2px}.projects{margin-top:12px}.project-row{padding:13px 0}.open{border-radius:8px}.empty{border-radius:11px;background:#FAF7F1;border-color:#D9D0C3;padding:34px 18px}.setup{border-radius:10px;background:#F6EAE4;border-color:#E8CEC3;color:#764736}
-@media(max-width:820px){.wrap{padding:21px 15px}.grid{grid-template-columns:1fr 1fr}.grid .card:last-child{grid-column:1/-1}}
-@media(max-width:520px){.top{padding:0 12px}.wrap{padding:16px 11px}.grid{grid-template-columns:1fr}.grid .card:last-child{grid-column:auto}.head h1{font-size:27px}}
-'''
-            customer = customer.replace('</style>', customer_override + '\n</style>', 1)
-          files['customer'].write_text(customer)
-          PY
-
+      - name: Apply redesign
+        run: python3 publish/redesign_hsm_simple.py
       - name: Validate JavaScript
         run: |
           python3 - <<'PY'
@@ -132,8 +27,7 @@ body{background:var(--bg)}.top{height:62px;background:rgba(24,33,28,.97);padding
           for src,name in [
             ('high-style-match/index.html','main'),
             ('high-style-match/tether/index.html','tether'),
-            ('high-style-match/sign-in/index.html','signin'),
-            ('high-style-match/customer/index.html','customer')
+            ('high-style-match/sign-in/index.html','signin')
           ]:
             html=Path(src).read_text()
             scripts=[]
@@ -151,11 +45,14 @@ body{background:var(--bg)}.top{height:62px;background:rgba(24,33,28,.97);padding
           grep -q 'HSM simple tether UI' high-style-match/tether/index.html
           grep -q 'HSM simple sign-in UI' high-style-match/sign-in/index.html
           grep -q 'HSM simple customer portal UI' high-style-match/customer/index.html
-
       - name: Publish redesign
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add high-style-match/index.html high-style-match/tether/index.html high-style-match/sign-in/index.html high-style-match/customer/index.html
+          if git diff --cached --quiet; then
+            echo "No redesign changes"
+            exit 0
+          fi
           git commit -m "Simplify High Style Match and introduce editorial colour system"
           git push origin HEAD:main
