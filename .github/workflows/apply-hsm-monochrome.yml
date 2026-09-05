@@ -1,0 +1,49 @@
+name: Apply High Style Match Monochrome
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'publish/apply-hsm-monochrome.py'
+      - '.github/workflows/apply-hsm-monochrome.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply monochrome theme
+        run: python3 publish/apply-hsm-monochrome.py
+
+      - name: Validate JavaScript
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          files=['high-style-match/index.html','high-style-match/tether/index.html','high-style-match/sign-in/index.html','high-style-match/customer/index.html']
+          for i,name in enumerate(files):
+              html=Path(name).read_text()
+              scripts=[]
+              for m in re.finditer(r'<script(?:\s[^>]*)?>(.*?)</script>',html,re.S|re.I):
+                  head=m.group(0).split('>')[0].lower()
+                  if 'src=' not in head:
+                      scripts.append(m.group(1))
+              Path(f'/tmp/hsm-mono-{i}.js').write_text('\n'.join(scripts))
+          PY
+          for f in /tmp/hsm-mono-*.js; do node --check "$f"; done
+
+      - name: Publish monochrome theme
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add high-style-match/index.html high-style-match/tether/index.html high-style-match/sign-in/index.html high-style-match/customer/index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Make High Style Match black and white'
+          git push origin HEAD:main
