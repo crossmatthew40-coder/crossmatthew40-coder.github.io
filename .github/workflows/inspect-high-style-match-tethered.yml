@@ -1,0 +1,41 @@
+name: Inspect High Style Match Tethered Source
+
+on:
+  push:
+    branches:
+      - high-style-match-tethered-build
+    paths:
+      - '.github/workflows/inspect-high-style-match-tethered.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct source
+        run: |
+          cat build/source-parts/*.b64 | python3 -c 'import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.buffer.read()))' > /tmp/high-style-match-source.tar.xz
+          tar -xJf /tmp/high-style-match-source.tar.xz
+      - name: Print relevant source
+        run: |
+          echo '=== FILE TREE ==='
+          find high-style-match -maxdepth 4 -type f | sort | sed -n '1,220p'
+          for f in \
+            high-style-match/package.json \
+            high-style-match/src/App.tsx \
+            high-style-match/src/main.tsx \
+            high-style-match/src/types.ts \
+            high-style-match/src/lib/api.ts \
+            high-style-match/src-tauri/Cargo.toml \
+            high-style-match/src-tauri/src/main.rs \
+            high-style-match/src-tauri/src/lib.rs \
+            high-style-match/src-tauri/tauri.conf.json; do
+            if [ -f "$f" ]; then
+              echo "=== $f ==="
+              sed -n '1,260p' "$f"
+            fi
+          done
