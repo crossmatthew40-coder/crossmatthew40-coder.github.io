@@ -20,9 +20,5 @@ jobs:
         run: |
           cat build/source-parts/*.b64 | python3 -c 'import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.buffer.read()))' > /tmp/high-style-match-source.tar.xz
           tar -xJf /tmp/high-style-match-source.tar.xz
-      - name: Print tether helper source
-        run: |
-          for f in high-style-match/src-tauri/src/thumbnails.rs high-style-match/src-tauri/src/lib.rs high-style-match/src/services/desktop.ts; do
-            echo "=== $f ==="
-            sed -n '1,260p' "$f"
-          done
+      - name: Print Cargo
+        run: cat high-style-match/src-tauri/Cargo.toml
