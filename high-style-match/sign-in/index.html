@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0c0c10">
+<meta name="theme-color" content="#000000">
 <title>Customer Sign In — High Style Match</title>
 <style>
 :root{--accent:#C25B43;--accent2:#9F4635;--ink:#1B211D;--muted:#74766F;--bg:#F5F1E9;--line:#E5DED2;--surface:#FFFDFA;--dark:#18211C;--danger:#AF4C49;--success:#3F7658;--shadow:0 12px 34px rgba(41,48,42,.07)}
@@ -19,6 +19,55 @@
 /* HSM black system 0.9 */
 :root{--p:#fff;--p2:#d9dce2;--accent:#fff;--accent2:#d9dce2;--ink:#f5f7fa;--muted:#9a9fa8;--bg:#08090b;--card:#111317;--surface:#111317;--line:#25282e;--dark:#060708;--good:#54b97a;--success:#54b97a;--warn:#d39a37;--bad:#e06060;--danger:#e06060;--shadow:0 14px 40px rgba(0,0,0,.28)}
 html,body{background:#08090b!important;color:#f5f7fa!important;color-scheme:dark}.top,.brand-panel{background:#060708!important}.card,.current,.queuecard,.modal,.login-panel,.login-wrap,.project-row,.empty,.setup{background:#111317!important;color:#f5f7fa!important;border-color:#25282e!important;box-shadow:none!important}.btn.primary,.primary{background:#fff!important;color:#090a0c!important;box-shadow:none!important}.btn.light,.btn.soft,.btn.dark,.secondary,.open,.signout{background:#15181c!important;color:#f5f7fa!important;border-color:#2a2d33!important}.field input,.project-select,.mini select{background:#0d0f12!important;color:#f5f7fa!important;border-color:#292c33!important}.eyebrow,.portal-label{color:#d9dce2!important}.badge{background:#1b1e23!important;color:#dfe2e7!important}.badge.good,.badge.public{background:#102219!important;color:#69c98b!important}.brief,.status.info{background:#15181c!important;color:#b8bdc5!important;border-color:#2a2d33!important}.viewer-foot,.thumbs{background:#111317!important}.vstat{background:#111317!important}.q,.thumb{background:#111317!important;color:#f5f7fa!important;border-color:#282b31!important}.q.on{background:#181b20!important;border-color:#4a4f58!important;box-shadow:none!important}.mark{background:#fff!important;box-shadow:none!important}.mark i{background:#08090b!important;box-shadow:0 -7px #08090b,0 7px #08090b!important}
+
+
+/* HSM MONOCHROME 1.0 */
+:root{
+  --accent:#fff!important;--accent-2:#fff!important;--accent2:#fff!important;
+  --p:#fff!important;--p2:#fff!important;
+  --ink:#fff!important;--muted:#a3a3a3!important;--muted-2:#737373!important;
+  --bg:#000!important;--surface:#0b0b0b!important;--surface-2:#111!important;--card:#0b0b0b!important;
+  --line:#292929!important;--dark:#000!important;--dark-2:#050505!important;
+  --good:#fff!important;--success:#fff!important;--success-bg:#111!important;
+  --warn:#fff!important;--warn-bg:#111!important;--bad:#fff!important;--danger:#fff!important;--danger-bg:#111!important;
+  --shadow:none!important;
+}
+html,body{background:#000!important;color:#fff!important;color-scheme:dark}
+body{background-image:none!important}
+.top,.topbar,.sidebar,.brand-panel{background:#000!important;background-image:none!important;border-color:#242424!important;box-shadow:none!important}
+.brand-panel:before,.brand-panel:after,.delivery-hero:after,.smart-cull-hero:after,.callout:after{display:none!important}
+.mark,.brandmark{background:#000!important;background-image:none!important;border:1px solid #fff!important;box-shadow:none!important}
+.mark i,.brandmark i{background:#fff!important;box-shadow:0 -7px #fff,0 7px #fff!important}
+.panel,.card,.stat,.mini-stat,.setting-card,.workflow-step,.shoot-row,.review-block,.workspace-head,.provider-card,.delivery-summary div,.delivery-step,.activity-item,.delivery-event,.q,.thumb,.vstat,.modal,.empty,.setup,.login-panel,.login-wrap,.project-row,.side-card,.shot-progress-card,.recent-card,.dash-stat,.shot-create-card,.shot-hub-hero,.current,.board,.mini{background:#0b0b0b!important;background-image:none!important;color:#fff!important;border-color:#292929!important;box-shadow:none!important}
+.workspace-head,.delivery-hero,.smart-cull-hero,.review-hero,.callout,.statusbar,.desktop-cap{background:#080808!important;background-image:none!important;color:#fff!important;border-color:#292929!important;box-shadow:none!important}
+.btn.primary,.primary{background:#fff!important;background-image:none!important;color:#000!important;border:1px solid #fff!important;box-shadow:none!important}
+.btn.primary:hover,.primary:hover{background:#e8e8e8!important;color:#000!important;box-shadow:none!important;transform:none!important}
+.btn.secondary,.btn.light,.btn.soft,.btn.dark,.secondary,.open,.signout,.icon-btn,.qmeta button{background:#111!important;color:#fff!important;border-color:#333!important;box-shadow:none!important}
+.btn.secondary:hover,.btn.light:hover,.btn.soft:hover,.btn.dark:hover,.secondary:hover,.open:hover,.signout:hover{background:#1a1a1a!important;color:#fff!important}
+input,textarea,select,.select,.project-select,.field input,.field textarea,.field select,.mini select,.review-select,.delivery-link input{background:#050505!important;color:#fff!important;border-color:#333!important;box-shadow:none!important}
+input:focus,textarea:focus,select:focus,.field input:focus,.field textarea:focus,.field select:focus{border-color:#fff!important;box-shadow:0 0 0 2px rgba(255,255,255,.16)!important;outline:none!important}
+.nav button,.tabs button,.text-link,.back,.dash-link{color:#aaa!important}
+.nav button:hover,.tabs button:hover,.text-link:hover,.back:hover,.dash-link:hover{color:#fff!important}
+.nav button.on{background:#171717!important;background-image:none!important;color:#fff!important;box-shadow:inset 0 0 0 1px #333!important}
+.nav button.on svg,.tabs button.on,.eyebrow,.portal-label,.delivery-event a{color:#fff!important}
+.tabs{border-color:#292929!important}.tabs button.on{border-bottom-color:#fff!important}
+.pill,.badge,.state,.review-status,.cull-badge,.cull-mini span,.format-badges span,.desktop-only-badge,.portal-label,.check,.lock{background:#151515!important;color:#fff!important;border-color:#3a3a3a!important}
+.pill.success,.pill.warn,.pill.purple,.badge.good,.badge.warn,.badge.public,.state.good,.state.warn,.state.bad,.review-status.good,.review-status.check,.review-status.missing,.cull-badge.pick,.cull-badge.duplicate,.cull-badge.review,.cull-badge.purple,.cull-mini span.pick,.cull-mini span.duplicate,.cull-mini span.excluded{background:#151515!important;color:#fff!important;border:1px solid #444!important}
+.notice,.notice.info,.notice.success,.notice.warn,.status,.status.info,.status.success,.status.error,.alertbar,.brief,.big-shoot-note,.delivered-banner{background:#101010!important;background-image:none!important;color:#e5e5e5!important;border-color:#383838!important}
+.progress,.dash-meter,.cull-progress,.storage-meter,.confidence{background:#222!important}
+.progress i,.dash-meter i,.cull-progress i,.storage-meter i,.confidence i,.delivery-process-line.done{background:#fff!important;background-image:none!important}
+.delivery-process,.delivery-process-step,.delivery-process-icon{background:#0b0b0b!important;color:#fff!important;border-color:#292929!important}
+.delivery-process-step.active .delivery-process-icon,.delivery-process-step.done .delivery-process-icon{background:#fff!important;color:#000!important;border-color:#fff!important}
+.delivery-process-step.active strong,.delivery-process-step.done strong{color:#fff!important}
+.provider-logo{background:#fff!important;color:#000!important;border:1px solid #fff!important}
+.viewer-stage,.rawtile,.rawmini,.thumb img,.recent-thumb,.review-thumb,.next-shot-thumb{background:#090909!important;background-image:none!important}
+.q.on,.thumb.on{background:#141414!important;border-color:#fff!important;box-shadow:none!important}
+.dot,.dot.on{background:#fff!important;box-shadow:0 0 0 4px rgba(255,255,255,.12)!important}
+.stat-icon,.empty-icon,.upload-icon{background:#151515!important;color:#fff!important;border:1px solid #333!important}
+.field label,.remember,.intro,.brand-copy p,.benefit,.secure-note,.brand span,.brand-foot,.hero-copy,.shot-note,.meta,.muted{color:#a3a3a3!important}
+a{color:#fff}
+::selection{background:#fff;color:#000}
+/* END HSM MONOCHROME 1.0 */
 
 </style>
 </head>
