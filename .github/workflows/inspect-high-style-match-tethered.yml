@@ -20,20 +20,9 @@ jobs:
         run: |
           cat build/source-parts/*.b64 | python3 -c 'import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.buffer.read()))' > /tmp/high-style-match-source.tar.xz
           tar -xJf /tmp/high-style-match-source.tar.xz
-      - name: Print relevant source
+      - name: Print tether helper source
         run: |
-          for f in \
-            high-style-match/src/components/Sidebar.tsx \
-            high-style-match/src/screens/ShootWorkspaceScreen.tsx \
-            high-style-match/src/services/desktop.ts \
-            high-style-match/src/styles.css \
-            high-style-match/src-tauri/src/commands.rs \
-            high-style-match/src-tauri/src/db.rs \
-            high-style-match/src-tauri/src/file_manager.rs \
-            high-style-match/src-tauri/src/models.rs \
-            high-style-match/src-tauri/capabilities/default.json; do
-            if [ -f "$f" ]; then
-              echo "=== $f ==="
-              sed -n '1,520p' "$f"
-            fi
+          for f in high-style-match/src-tauri/src/thumbnails.rs high-style-match/src-tauri/src/lib.rs high-style-match/src/services/desktop.ts; do
+            echo "=== $f ==="
+            sed -n '1,260p' "$f"
           done
