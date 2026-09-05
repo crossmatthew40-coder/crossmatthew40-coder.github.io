@@ -1,0 +1,67 @@
+name: Publish High Style Match Live Shoot Pro
+
+on:
+  push:
+    branches:
+      - high-style-match-all-features
+    paths:
+      - 'publish/live-shoot-pro-patch.py'
+      - '.github/workflows/publish-high-style-match-live-shoot-pro.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Live Shoot Pro patch
+        uses: actions/checkout@v4
+        with:
+          ref: high-style-match-all-features
+          fetch-depth: 0
+
+      - name: Validate patch script
+        run: |
+          python -m py_compile publish/live-shoot-pro-patch.py
+          cp publish/live-shoot-pro-patch.py /tmp/live-shoot-pro-patch.py
+
+      - name: Patch current High Style Match
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          python /tmp/live-shoot-pro-patch.py high-style-match/index.html
+          grep -q "APP_VERSION='0.5.0'" high-style-match/index.html
+          grep -q "function renderLiveShootTab" high-style-match/index.html
+          grep -q "function liveSummary" high-style-match/index.html
+          grep -q "Check Before Leaving" high-style-match/index.html
+          grep -q "Paid add-on" high-style-match/index.html
+          grep -q "live-shoot-preview" high-style-match/index.html
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text=Path('high-style-match/index.html').read_text()
+          assert text.count("['live','Live Shoot Pro']") == 1
+          assert text.count('function renderLiveShootTab') == 1
+          assert text.count('function appendLiveShootOverview') == 1
+          assert text.count('function appendLiveShootSettings') == 1
+          assert 'liveShootProActive:false' in text
+          m=re.search(r'<script>([\s\S]*?)</script>', text)
+          assert m, 'script block missing'
+          Path('/tmp/hsm-live-shoot.js').write_text(m.group(1))
+          print('bytes', len(text.encode()))
+          PY
+          node --check /tmp/hsm-live-shoot.js
+
+      - name: Publish High Style Match only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add high-style-match/index.html
+          if git diff --cached --quiet; then
+            echo "Live Shoot Pro is already current."
+          else
+            git commit -m "Add Live Shoot Pro paid add-on to High Style Match"
+            git push origin main
+          fi
