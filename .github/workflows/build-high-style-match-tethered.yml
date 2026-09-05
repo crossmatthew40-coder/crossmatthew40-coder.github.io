@@ -1,0 +1,128 @@
+name: Build High Style Match Tethered Shoot Pro
+
+on:
+  push:
+    branches:
+      - high-style-match-tethered-build
+    paths:
+      - 'build/tethered-pro-patch.py'
+      - '.github/workflows/build-high-style-match-tethered.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-macos:
+    name: Tethered Shoot Pro — macOS Apple Silicon
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout tethered build branch
+        uses: actions/checkout@v4
+
+      - name: Reconstruct High Style Match source
+        run: |
+          cat build/source-parts/*.b64 | python3 -c 'import sys,base64; sys.stdout.buffer.write(base64.b64decode(sys.stdin.buffer.read()))' > /tmp/high-style-match-source.tar.xz
+          tar -xJf /tmp/high-style-match-source.tar.xz
+          test -f high-style-match/package.json
+          test -f high-style-match/src-tauri/Cargo.toml
+
+      - name: Apply established desktop build corrections
+        run: |
+          perl -0pi -e 's/DynamicImage::new_rgb8\(320, 180\)/DynamicImage::new_rgb8(1920, 1080)/; s/Some\(\(320, 180\)\)/Some((1920, 1080))/' high-style-match/src-tauri/src/thumbnails.rs
+          perl -0pi -e 's/async function commit\(\) \{ const result = await saveSettings\(settings\);/async function commit() { if (!settings) return; const result = await saveSettings(settings);/' high-style-match/src/screens/SettingsScreen.tsx
+          mkdir -p high-style-match/src/assets
+          cat > high-style-match/src/assets/high-style-mark.svg <<'SVG'
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" width="300" height="120"><rect width="300" height="120" rx="24" fill="#0b0b0d"/><g fill="#fff"><path d="M34 84 72 36h54L88 84H34Z"/><path d="M105 84 143 36h54l-38 48h-54Z"/><path d="M176 84 214 36h54l-38 48h-54Z"/></g></svg>
+          SVG
+          printf '%s\n' '/// <reference types="vite/client" />' > high-style-match/src/vite-env.d.ts
+
+      - name: Apply native Capture One tethering
+        run: |
+          python3 -m py_compile build/tethered-pro-patch.py
+          python3 build/tethered-pro-patch.py
+          grep -q 'notify = "8"' high-style-match/src-tauri/Cargo.toml
+          grep -q 'start_tether_watch' high-style-match/src-tauri/src/tether.rs
+          grep -q 'tether-capture' high-style-match/src-tauri/src/tether.rs
+          grep -q 'Tethered Shoot Pro' high-style-match/src/components/TetheredShootPanel.tsx
+          grep -q "'tether'" high-style-match/src/screens/ShootWorkspaceScreen.tsx
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
+      - name: Cache Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: high-style-match/src-tauri -> target
+
+      - name: Install frontend dependencies
+        working-directory: high-style-match
+        run: |
+          npm install --no-audit --no-fund
+          npm install --save-dev --no-audit --no-fund @types/node
+
+      - name: Generate native app icons
+        working-directory: high-style-match
+        run: |
+          cat > src/assets/high-style-app-icon.svg <<'SVG'
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+            <rect width="300" height="300" rx="62" fill="#0b0b0d"/>
+            <g fill="#ffffff" transform="translate(0 90)">
+              <path d="M34 84 72 36h54L88 84H34Z"/>
+              <path d="M105 84 143 36h54l-38 48h-54Z"/>
+              <path d="M176 84 214 36h54l-38 48h-54Z"/>
+            </g>
+          </svg>
+          SVG
+          npm run tauri -- icon src/assets/high-style-app-icon.svg
+
+      - name: Run TypeScript build
+        working-directory: high-style-match
+        run: npm run build
+
+      - name: Run TypeScript core tests
+        working-directory: high-style-match
+        run: npm run test:core
+
+      - name: Run Rust tests
+        working-directory: high-style-match
+        run: cargo test --manifest-path src-tauri/Cargo.toml
+
+      - name: Build Tethered Shoot Pro app bundle
+        working-directory: high-style-match
+        run: npm run tauri -- build --target aarch64-apple-darwin --bundles app
+
+      - name: Ad-hoc sign and verify app
+        run: |
+          APP_DIR="$(find high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/macos -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$APP_DIR"
+          xattr -cr "$APP_DIR"
+          codesign --force --deep --sign - --timestamp=none "$APP_DIR"
+          codesign --verify --deep --strict --verbose=2 "$APP_DIR"
+          EXECUTABLE="$(find "$APP_DIR/Contents/MacOS" -maxdepth 1 -type f -print -quit)"
+          test -n "$EXECUTABLE"
+          file "$EXECUTABLE" | tee /tmp/hsm-file.txt
+          grep -q 'arm64' /tmp/hsm-file.txt
+
+      - name: Package runnable app
+        run: |
+          APP_DIR="$(find high-style-match/src-tauri/target/aarch64-apple-darwin/release/bundle/macos -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$APP_DIR"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "High-Style-Match-Tethered-Pro-Signed.app.zip"
+          unzip -t "High-Style-Match-Tethered-Pro-Signed.app.zip"
+
+      - name: Upload runnable Tethered Shoot Pro app
+        uses: actions/upload-artifact@v4
+        with:
+          name: High-Style-Match-Tethered-Pro-Apple-Silicon
+          path: High-Style-Match-Tethered-Pro-Signed.app.zip
+          if-no-files-found: error
+          retention-days: 14
