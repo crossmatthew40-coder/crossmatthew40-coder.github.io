@@ -22,20 +22,18 @@ jobs:
           tar -xJf /tmp/high-style-match-source.tar.xz
       - name: Print relevant source
         run: |
-          echo '=== FILE TREE ==='
-          find high-style-match -maxdepth 4 -type f | sort | sed -n '1,220p'
           for f in \
-            high-style-match/package.json \
-            high-style-match/src/App.tsx \
-            high-style-match/src/main.tsx \
-            high-style-match/src/types.ts \
-            high-style-match/src/lib/api.ts \
-            high-style-match/src-tauri/Cargo.toml \
-            high-style-match/src-tauri/src/main.rs \
-            high-style-match/src-tauri/src/lib.rs \
-            high-style-match/src-tauri/tauri.conf.json; do
+            high-style-match/src/components/Sidebar.tsx \
+            high-style-match/src/screens/ShootWorkspaceScreen.tsx \
+            high-style-match/src/services/desktop.ts \
+            high-style-match/src/styles.css \
+            high-style-match/src-tauri/src/commands.rs \
+            high-style-match/src-tauri/src/db.rs \
+            high-style-match/src-tauri/src/file_manager.rs \
+            high-style-match/src-tauri/src/models.rs \
+            high-style-match/src-tauri/capabilities/default.json; do
             if [ -f "$f" ]; then
               echo "=== $f ==="
-              sed -n '1,260p' "$f"
+              sed -n '1,520p' "$f"
             fi
           done
