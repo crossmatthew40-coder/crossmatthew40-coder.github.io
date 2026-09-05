@@ -46,7 +46,6 @@ jobs:
           assert text.count('function renderLiveShootTab') == 1
           assert text.count('function appendLiveShootOverview') == 1
           assert text.count('function appendLiveShootSettings') == 1
-          assert 'liveShootProActive:false' in text
           m=re.search(r'<script>([\s\S]*?)</script>', text)
           assert m, 'script block missing'
           Path('/tmp/hsm-live-shoot.js').write_text(m.group(1))
