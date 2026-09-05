@@ -1,0 +1,61 @@
+name: Publish High Style Match Live Board
+
+on:
+  push:
+    branches:
+      - high-style-match-standard-tether-final2
+    paths:
+      - '.github/workflows/publish-high-style-match-live-board.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Pass the real project into Tether Mode
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('high-style-match/index.html')
+          t=p.read_text()
+          t=t.replace("APP_VERSION='0.6.0'", "APP_VERSION='0.7.0'", 1)
+          old="document.getElementById('openTetherMode').onclick=()=>{location.href='./tether/'};"
+          new="document.getElementById('openTetherMode').onclick=()=>{location.href='./tether/?shoot='+encodeURIComponent(s.id)};"
+          if old not in t and new not in t:
+              raise SystemExit('Tether Mode project link marker not found')
+          t=t.replace(old,new,1)
+          p.write_text(t)
+          PY
+
+      - name: Validate main app JavaScript
+        run: |
+          grep -q "APP_VERSION='0.7.0'" high-style-match/index.html
+          grep -q "tether/?shoot=" high-style-match/index.html
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          h=Path('high-style-match/index.html').read_text()
+          scripts=[]
+          for m in re.finditer(r'<script(?:\s[^>]*)?>(.*?)</script>',h,re.S|re.I):
+              if 'src=' not in m.group(0).split('>')[0].lower(): scripts.append(m.group(1))
+          Path('/tmp/hsm.js').write_text('\n'.join(scripts))
+          PY
+          node --check /tmp/hsm.js
+
+      - name: Publish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add high-style-match/index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Connect Tether Mode to the active shoot"
+          git push origin HEAD:main
