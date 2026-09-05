@@ -42,7 +42,18 @@ jobs:
         run: |
           python3 -m py_compile build/tethered-pro-patch.py
           python3 build/tethered-pro-patch.py
-          grep -q 'notify = "8"' high-style-match/src-tauri/Cargo.toml
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('high-style-match/src-tauri/Cargo.toml')
+          text = p.read_text()
+          text = text.replace('\nnotify = "8"\n', '\n')
+          marker = '[dependencies]\n'
+          if marker not in text:
+              raise SystemExit('Cargo [dependencies] section not found')
+          text = text.replace(marker, marker + 'notify = "8"\n', 1)
+          p.write_text(text)
+          PY
+          grep -A2 '^\[dependencies\]' high-style-match/src-tauri/Cargo.toml | grep -q 'notify = "8"'
           grep -q 'start_tether_watch' high-style-match/src-tauri/src/tether.rs
           grep -q 'tether-capture' high-style-match/src-tauri/src/tether.rs
           grep -q 'Tethered Shoot Pro' high-style-match/src/components/TetheredShootPanel.tsx
