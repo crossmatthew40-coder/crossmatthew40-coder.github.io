@@ -167,6 +167,14 @@ a{color:#fff}
 /* END HSM MONOCHROME 1.0 */
 
 </style>
+
+<!-- High Style Match production runtime -->
+<link rel="manifest" href="./manifest.webmanifest" data-hsm-production-runtime>
+<script src="./auth-config.js"></script>
+<script src="./app-config.js"></script>
+<script src="./cloud.js"></script>
+<script src="./production.js" defer></script>
+
 </head>
 <body>
 <div class="app">
@@ -453,5 +461,14 @@ window.__HSM_TEST__={version:APP_VERSION,parseShotList,cleanName,coverage,makePr
 render();
 })();
 </script>
+
+<script id="HSM_PRODUCTION_LINKS_V1">
+(()=>{
+  window.HSMLinks={
+    account:'./account/',onboarding:'./onboarding/',invite:'./invite/',admin:'./admin/',status:'./status/',privacy:'./privacy/',terms:'./terms/'
+  };
+})();
+</script>
+
 </body>
 </html>

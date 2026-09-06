@@ -69,6 +69,13 @@ a{color:#fff}
 /* END HSM MONOCHROME 1.0 */
 
 </style>
+
+<!-- High Style Match production runtime -->
+<link rel="manifest" href="../manifest.webmanifest" data-hsm-production-runtime>
+<script src="../app-config.js"></script>
+<script src="../cloud.js"></script>
+<script src="../production.js" defer></script>
+
 </head>
 <body>
 <header class="top"><div class="brand"><div class="mark"><i></i></div><div><b>High Style Match</b><small>Customer Portal</small></div></div><div class="user"><div class="avatar" id="avatar">C</div><div class="user-meta"><b id="userEmail">Customer</b><span>Signed in</span></div><button class="signout" id="signOut">Sign out</button></div></header>
@@ -94,5 +101,42 @@ async function start(){
 }
 start().catch(()=>{setup.classList.add('on');setup.textContent='Customer authentication could not be started. Please try again later.'});
 </script>
+
+<script id="HSM_CUSTOMER_PROJECT_LIST_V1">
+(async()=>{
+  if(!window.HSMCloud?.configured?.()) return;
+  try{
+    const session=await HSMCloud.getSession();
+    if(!session){
+      location.href='../sign-in/?returnTo='+encodeURIComponent('/high-style-match/customer/');
+      return;
+    }
+    const projects=await HSMCloud.listProjects();
+    const projectCount=document.getElementById('projectCount');
+    const approvalCount=document.getElementById('approvalCount');
+    const deliveredCount=document.getElementById('deliveredCount');
+    if(projectCount) projectCount.textContent=String(projects.length);
+    if(approvalCount) approvalCount.textContent=String(projects.filter(p=>p.status==='review').length);
+    if(deliveredCount) deliveredCount.textContent=String(projects.filter(p=>p.status==='delivered').length);
+    const email=document.getElementById('userEmail');
+    if(email) email.textContent=session.user.email||'Customer';
+    const avatar=document.getElementById('avatar');
+    if(avatar) avatar.textContent=(session.user.email||'C').slice(0,1).toUpperCase();
+    const section=document.querySelector('.projects');
+    if(section){
+      const esc=v=>String(v||'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]||c));
+      const rows=projects.map(p=>`<div class="project-row"><div><strong>${esc(p.name)}</strong><span>${esc(p.client_name||'Client')} · ${p.shoot_date?new Date(p.shoot_date+'T12:00:00').toLocaleDateString():''} · ${esc(p.status)}</span></div><a class="open" href="./project/?id=${encodeURIComponent(p.id)}" style="text-decoration:none">Open project</a></div>`).join('');
+      const existingEmpty=section.querySelector('.empty');
+      if(existingEmpty) existingEmpty.outerHTML=rows||'<div class="empty">No projects have been shared with this account yet.</div>';
+      else if(rows) section.insertAdjacentHTML('beforeend',rows);
+    }
+    const signOut=document.getElementById('signOut');
+    if(signOut) signOut.onclick=async()=>{await HSMCloud.signOut();location.href='../sign-in/'};
+  }catch(error){
+    console.warn('Customer project list unavailable',error);
+  }
+})();
+</script>
+
 </body>
 </html>
