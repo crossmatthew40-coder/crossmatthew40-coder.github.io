@@ -13,7 +13,7 @@ The browser product is designed to keep working locally even when cloud services
 - Private signed preview URLs
 - Customer invitation UI and secure Edge Function
 - Delivery records and delivery-open tracking
-- Notification preference storage and optional transactional email function
+- Notification preferences, review-event notification outbox and email worker
 - Automatic metadata backup snapshots and expiry maintenance function
 - Admin console, client error logging and system diagnostics page
 - Stripe Checkout, Billing Portal and webhook function scaffolding
@@ -28,6 +28,7 @@ Create a dedicated Supabase project, then run in order:
 
 1. `high-style-match/supabase/schema.sql`
 2. `high-style-match/supabase/production.sql`
+3. `high-style-match/supabase/notifications.sql`
 
 Copy only the public Project URL and anon key into `high-style-match/auth-config.js`.
 
@@ -41,6 +42,7 @@ Deploy these Supabase Edge Functions:
 - `delivery-open`
 - `daily-maintenance`
 - `send-notification`
+- `notification-worker`
 - `create-checkout-session`
 - `create-billing-portal`
 - `stripe-webhook`
@@ -72,7 +74,7 @@ Use `admin` only for accounts that should see the admin console.
 
 ### 4. Authentication URLs
 
-Add the live High Style Match URLs to Supabase Auth redirect allow-list. When a custom domain is ready, use it as the preferred production URL.
+Add the live High Style Match URLs to the Supabase Auth redirect allow-list. When a custom domain is ready, use it as the preferred production URL.
 
 Current URL:
 
@@ -82,9 +84,11 @@ Preferred future URL:
 
 `https://app.highstylegroup.co.uk/`
 
-### 5. Email
+### 5. Email and notifications
 
-The optional `send-notification` function is prepared for Resend. Verify the High Style Group sending domain before using `notifications@highstylegroup.co.uk` in production.
+The notification worker is prepared for Resend. Verify the High Style Group sending domain before using `notifications@highstylegroup.co.uk` in production.
+
+Schedule `notification-worker` at a sensible interval and send the `x-cron-secret` header. Customer approvals and customer feedback are placed into `notification_outbox` by database triggers before the worker sends them.
 
 ### 6. Billing
 
@@ -127,14 +131,16 @@ Run one real photography job end to end:
 
 Do not invite real customers until all of these are true:
 
-- Supabase schema + production extension ran successfully
+- All three Supabase SQL files ran successfully
 - RLS tested with two separate customer accounts
 - Private preview storage confirmed
-- No service-role or Stripe secret exists in the frontend repo
+- No service-role, email-provider or Stripe secret exists in the frontend repo
 - Customer invite emails work
 - Account reset/magic-link flow works
 - Cloud sync recovers after offline use
+- Notification worker sends expected approval/change alerts
+- Daily maintenance completes and provider-level database backups are enabled
 - Real Capture One field test completed
 - Privacy/terms drafts reviewed for the final business entity
-- Billing disabled until intentionally configured
+- Billing remains disabled until intentionally configured and webhook-tested
 - Production smoke test passes
