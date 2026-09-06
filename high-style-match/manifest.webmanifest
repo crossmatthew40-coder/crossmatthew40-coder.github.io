@@ -1,0 +1,12 @@
+{
+  "name": "High Style Match",
+  "short_name": "HSM",
+  "description": "Photography shoot workflow, tether tracking, review and delivery.",
+  "start_url": "/high-style-match/",
+  "scope": "/high-style-match/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "any",
+  "categories": ["photography", "productivity", "business"]
+}
