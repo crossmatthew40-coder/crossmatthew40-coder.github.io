@@ -1,10 +1,12 @@
-name: Test High Style Match Live
+name: Test High Style Match
 
 on:
   push:
     paths:
+      - 'high-style-match/**'
       - 'tests/hsm-live-smoke.mjs'
       - '.github/workflows/test-hsm-live.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -20,12 +22,19 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install Playwright
         run: |
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Run live High Style Match smoke tests
+      - name: Start local site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/hsm-http.log 2>&1 &
+          sleep 2
+
+      - name: Run High Style Match production smoke tests
+        env:
+          HSM_BASE: http://127.0.0.1:4173/high-style-match/
         run: node tests/hsm-live-smoke.mjs
