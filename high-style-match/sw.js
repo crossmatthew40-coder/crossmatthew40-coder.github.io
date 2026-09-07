@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v1';
+const CACHE='hsm-shell-v2-purple';
 const SHELL=[
   '/high-style-match/',
   '/high-style-match/index.html',
@@ -19,6 +19,16 @@ self.addEventListener('fetch',event=>{
   const url=new URL(req.url);
   if(url.origin!==location.origin) return;
   if(!url.pathname.startsWith('/high-style-match/')) return;
+
+  const isFreshAsset=/\.(?:css|js)$/.test(url.pathname) || url.pathname.endsWith('/app-config.js');
+  if(isFreshAsset){
+    event.respondWith(fetch(req).then(res=>{
+      if(res.ok){const clone=res.clone();caches.open(CACHE).then(c=>c.put(req,clone));}
+      return res;
+    }).catch(()=>caches.match(req)));
+    return;
+  }
+
   if(req.mode==='navigate'){
     event.respondWith(fetch(req).then(res=>{const clone=res.clone();caches.open(CACHE).then(c=>c.put(req,clone));return res}).catch(()=>caches.match(req).then(r=>r||caches.match('/high-style-match/'))));
     return;
