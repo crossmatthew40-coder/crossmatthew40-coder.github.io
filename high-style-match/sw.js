@@ -1,14 +1,11 @@
-const CACHE='hsm-shell-v4-login-fast';
+const CACHE='hsm-shell-v5-opening-refresh';
 
-// Keep the install cache deliberately small so the service worker becomes
-// active quickly. Heavier workflow pages are cached on first use instead.
 const ESSENTIAL=[
   '/high-style-match/',
   '/high-style-match/index.html',
   '/high-style-match/sign-in/',
   '/high-style-match/subscribe/',
   '/high-style-match/auth-config.js',
-  '/high-style-match/app-config.js',
   '/high-style-match/high-style-mono-theme.css',
   '/high-style-logo.svg'
 ];
@@ -37,40 +34,36 @@ self.addEventListener('fetch',event=>{
   if(url.origin!==location.origin)return;
   if(!(url.pathname.startsWith('/high-style-match/')||url.pathname==='/high-style-logo.svg'))return;
 
-  const staticAsset=/\.(?:css|js|svg|png|jpg|jpeg|webp|ico)$/.test(url.pathname);
+  // App configuration controls the opening screen and must never be served one version behind.
+  if(url.pathname==='/high-style-match/app-config.js'){
+    event.respondWith(caches.open(CACHE).then(async cache=>{
+      try{
+        const fresh=await fetch(new Request(req,{cache:'no-store'}));
+        if(fresh.ok)cache.put(req,fresh.clone());
+        return fresh;
+      }catch{
+        return (await cache.match(req,{ignoreSearch:true}))||Response.error();
+      }
+    }));
+    return;
+  }
 
+  const staticAsset=/\.(?:css|js|svg|png|jpg|jpeg|webp|ico)$/.test(url.pathname);
   if(staticAsset){
-    // Return UI assets instantly when cached, then refresh silently.
     event.respondWith(caches.open(CACHE).then(async cache=>{
       const cached=await cache.match(req,{ignoreSearch:true});
-      const fresh=fetch(req).then(res=>{
-        if(res.ok)cache.put(req,res.clone());
-        return res;
-      }).catch(()=>null);
-      if(cached){
-        event.waitUntil(fresh);
-        return cached;
-      }
+      const fresh=fetch(req).then(res=>{if(res.ok)cache.put(req,res.clone());return res}).catch(()=>null);
+      if(cached){event.waitUntil(fresh);return cached}
       return (await fresh)||Response.error();
     }));
     return;
   }
 
   if(req.mode==='navigate'){
-    // Login/signup URLs carry query strings such as ?mode=login. Match the
-    // already-cached page regardless of those query parameters.
     event.respondWith(caches.open(CACHE).then(async cache=>{
       const cached=await cache.match(req,{ignoreSearch:true});
-      const fresh=fetch(req).then(res=>{
-        if(res.ok)cache.put(req,res.clone());
-        return res;
-      }).catch(()=>null);
-
-      if(cached){
-        event.waitUntil(fresh);
-        return cached;
-      }
-
+      const fresh=fetch(req).then(res=>{if(res.ok)cache.put(req,res.clone());return res}).catch(()=>null);
+      if(cached){event.waitUntil(fresh);return cached}
       return (await fresh)||cache.match('/high-style-match/',{ignoreSearch:true});
     }));
     return;
