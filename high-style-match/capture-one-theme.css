@@ -1,0 +1,99 @@
+/* High Style Match — Capture One-inspired product language.
+   Inspired by the visual discipline of professional imaging software, not a copy. */
+:root{
+  --accent:#f5ff00!important;
+  --accent-2:#f5ff00!important;
+  --ink:#f5f5f2!important;
+  --muted:#9b9b97!important;
+  --muted-2:#6c6c68!important;
+  --bg:#080808!important;
+  --surface:#101010!important;
+  --surface-2:#171717!important;
+  --line:#292929!important;
+  --dark:#050505!important;
+  --dark-2:#0b0b0b!important;
+  --shadow:0 18px 50px rgba(0,0,0,.24)!important;
+  --radius:6px!important;
+  --radius-sm:4px!important;
+}
+html,body{background:#080808!important;color:#f5f5f2!important}
+body{font-family:Arial,Helvetica,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;letter-spacing:-.01em}
+.app{background:#080808!important}
+.sidebar{background:#080808!important;border-right:1px solid #242424!important;padding-top:18px!important}
+.brand{padding-bottom:28px!important}
+.brandmark{background:#000!important;border:1px solid #272727!important;border-radius:4px!important;box-shadow:none!important}
+.brand strong{font-size:15px!important;font-weight:700!important;letter-spacing:-.025em!important;text-transform:none!important}
+.brand small{color:#747470!important;text-transform:uppercase!important;font-size:9px!important;letter-spacing:.14em!important}
+.nav-label{color:#62625e!important;font-size:9px!important;letter-spacing:.16em!important}
+.nav button{border-radius:4px!important;color:#9b9b97!important;padding:10px 11px!important;font-weight:600!important}
+.nav button:hover{background:#151515!important;color:#fff!important}
+.nav button.on{background:#1a1a1a!important;color:#fff!important;box-shadow:inset 2px 0 0 #f5ff00!important}
+.nav button.on svg{color:#f5ff00!important}
+.sidebar-bottom{border-color:#242424!important}
+.storage-card{background:#101010!important;border:1px solid #242424!important;border-radius:4px!important}
+.topbar{background:rgba(8,8,8,.92)!important;border-bottom:1px solid #242424!important;backdrop-filter:blur(20px)!important;color:#f5f5f2!important}
+.crumb,.crumb b{color:#8b8b87!important}
+.content{max-width:1440px!important;padding:38px!important}
+.eyebrow{color:#f5ff00!important;font-size:9px!important;letter-spacing:.18em!important;text-transform:uppercase!important;font-weight:800!important}
+.hero-title,.page-head h1{font-size:clamp(38px,5vw,68px)!important;line-height:.96!important;letter-spacing:-.055em!important;font-weight:700!important;text-transform:uppercase!important;max-width:850px}
+.hero-copy{font-size:15px!important;color:#a5a5a1!important;max-width:720px!important}
+.panel,.stat,.workspace-head,.photo-card,.mini-stat,.setting-card,.live-current,.live-next-card,.live-queue-panel,.cull-stat,.template-row,.table-row,.activity-item,.provider-card{background:#101010!important;border:1px solid #272727!important;border-radius:6px!important;box-shadow:none!important;color:#f5f5f2!important}
+.panel-pad{padding:24px!important}
+.panel-head h2{font-size:17px!important;text-transform:uppercase!important;letter-spacing:-.02em!important}
+.panel-head p,.muted,.photo-body select,.field-hint{color:#8e8e8a!important}
+.stat{padding:20px!important}
+.stat b{font-size:34px!important;font-weight:700!important}
+.stat .stat-icon{background:#1a1a1a!important;color:#f5ff00!important;border-radius:4px!important}
+.btn{border-radius:3px!important;min-height:42px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.04em!important;font-size:11px!important}
+.btn.primary{background:#f5ff00!important;color:#070707!important;box-shadow:none!important}
+.btn.primary:hover{background:#fff!important;transform:none!important;box-shadow:none!important}
+.btn.secondary,.icon-btn{background:#161616!important;color:#eee!important;border:1px solid #343434!important}
+.btn.secondary:hover,.icon-btn:hover{background:#222!important}
+.btn.ghost{color:#a3a39f!important}
+input,textarea,select,.select,.field input,.field textarea,.field select{background:#111!important;color:#f2f2ee!important;border:1px solid #343434!important;border-radius:3px!important}
+input:focus,textarea:focus,select:focus,.field input:focus,.field textarea:focus,.field select:focus{border-color:#f5ff00!important;box-shadow:0 0 0 1px #f5ff00!important}
+.upload-zone,.empty,.review-block,.workflow-step,.download-box,.delivery-step{background:#0e0e0e!important;border-color:#303030!important;border-radius:6px!important;color:#f5f5f2!important}
+.workflow-step span,.wizard-step i,.wp,.live-check-stat{border-radius:3px!important}
+.workflow-step span,.wizard-step.on i,.wizard-step.done i{background:#f5ff00!important;color:#080808!important}
+.tabs{border-color:#303030!important}
+.tabs button{color:#7f7f7b!important;text-transform:uppercase!important;font-size:10px!important;letter-spacing:.08em!important}
+.tabs button.on{color:#fff!important;border-bottom-color:#f5ff00!important}
+.callout,.shot-hub-hero,.smart-cull-hero,.delivery-hero,.live-paywall,.live-launch-main,.desktop-cap{background:#0c0c0c!important;border:1px solid #2a2a2a!important;border-radius:6px!important;box-shadow:none!important}
+.callout:after,.shot-hub-hero:after,.smart-cull-hero:after,.delivery-hero:after,.live-paywall:after{display:none!important}
+.callout h2,.shot-hub-hero h1,.smart-cull-hero h2,.delivery-hero h2,.live-paywall h2,.live-launch-main h2{font-weight:700!important;letter-spacing:-.045em!important;text-transform:uppercase!important}
+.callout .eyebrow,.shot-hub-hero .eyebrow,.smart-cull-hero .eyebrow,.delivery-hero .eyebrow{color:#f5ff00!important}
+.pill,.review-status,.cull-badge,.live-state,.core-badge,.desktop-only-badge{border-radius:2px!important;text-transform:uppercase!important;letter-spacing:.06em!important}
+.progress,.confidence,.storage-meter,.cull-progress,.live-meter{border-radius:0!important;background:#242424!important}
+.progress i,.confidence i,.storage-meter i,.cull-progress i,.live-meter i{background:#f5ff00!important;border-radius:0!important}
+.photo-card{overflow:hidden!important}
+.thumb{background:#111!important}
+.photo-body{background:#0d0d0d!important}
+.photo-name{font-size:11px!important;text-transform:uppercase!important;letter-spacing:.04em!important}
+.table-row.header{color:#71716d!important}
+.table-row:not(.header):hover,.shoot-row:hover,.template-row:hover{border-color:#4a4a46!important;background:#141414!important}
+.workspace-head{background:#0e0e0e!important}
+.workspace-head h1{font-size:34px!important;text-transform:uppercase!important}
+.wp{background:#161616!important;color:#7d7d79!important;border:1px solid #252525!important}
+.wp.active{background:#f5ff00!important;color:#080808!important}
+.wp.active i{background:#080808!important;border-color:#080808!important;color:#f5ff00!important}
+.wp.done{background:#151515!important;color:#d8d8d4!important}
+.hsm-upgrade-strip{background:#0d0d0d!important;border-color:#2b2b2b!important;border-radius:6px!important;box-shadow:none!important}
+.hsm-upgrade-head h3{text-transform:uppercase!important;font-size:22px!important}
+.hsm-stage{background:#121212!important;border-color:#2d2d2d!important;border-radius:3px!important;color:#aaa!important}
+.hsm-stage.on{background:#f5ff00!important;color:#070707!important;border-color:#f5ff00!important}
+.hsm-stage.on span{color:#333!important}
+.hsm-attention-card{background:#111!important;border-color:#2c2c2c!important;border-radius:3px!important}
+.hsm-attention-card label{color:#747470!important}.hsm-attention-card b{font-size:24px!important}.hsm-attention-card small{color:#777!important}
+.hsm-byl-btn,.hsm-focus-btn{border-radius:3px!important;text-transform:uppercase!important;letter-spacing:.04em!important;font-size:10px!important}
+.hsm-byl-btn{background:#f5ff00!important;color:#080808!important;border-color:#f5ff00!important}
+.hsm-focus-btn{background:#151515!important;color:#fff!important;border-color:#333!important}
+.hsm-checkmodal{background:#0b0b0b!important;border-color:#333!important;border-radius:6px!important}.hsm-checkitem{background:#111!important;border-color:#292929!important;border-radius:3px!important}
+.hsm-opening{background:#050505!important}
+.hsm-opening-title{text-transform:uppercase!important;font-weight:700!important;letter-spacing:-.055em!important}
+.hsm-opening-sub{color:#f5ff00!important}
+.live-top{background:#090909!important;border:1px solid #2a2a2a!important;border-radius:6px!important}
+.live-current h2{font-size:clamp(42px,6vw,74px)!important;text-transform:uppercase!important}
+.live-touch{border-radius:3px!important;background:#181818!important;color:#fff!important;border:1px solid #303030!important;text-transform:uppercase!important;font-size:11px!important;letter-spacing:.04em!important}
+.live-touch.primary{background:#f5ff00!important;color:#080808!important;border-color:#f5ff00!important}
+.live-touch.success,.live-touch.warn{background:#181818!important}
+@media(max-width:720px){.content{padding:22px 14px 34px!important}.hero-title,.page-head h1{font-size:38px!important}.sidebar{border-right:0!important;border-bottom:1px solid #242424!important}}
