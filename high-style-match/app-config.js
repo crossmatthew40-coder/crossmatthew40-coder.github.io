@@ -38,12 +38,20 @@ window.HSM_APP = {
     const logoUrl = window.HSM_APP.logoUrl;
 
     document.querySelectorAll('.brandmark').forEach((mark) => {
+      const isOpeningLogo = !!mark.closest('.hsm-opening-logo');
+
       mark.innerHTML = '';
-      mark.style.background = '#000';
+      mark.style.background = isOpeningLogo ? 'transparent' : '#000';
       mark.style.boxShadow = 'none';
-      mark.style.borderRadius = '12px';
-      mark.style.overflow = 'hidden';
-      mark.style.padding = '7px';
+      mark.style.borderRadius = isOpeningLogo ? '0' : '12px';
+      mark.style.overflow = 'visible';
+      mark.style.padding = isOpeningLogo ? '0' : '7px';
+
+      if (isOpeningLogo) {
+        mark.style.width = 'clamp(180px, 24vw, 300px)';
+        mark.style.height = 'clamp(58px, 8vw, 96px)';
+        mark.style.flex = '0 0 auto';
+      }
 
       const img = document.createElement('img');
       img.src = logoUrl;
@@ -52,6 +60,7 @@ window.HSM_APP = {
       img.style.height = '100%';
       img.style.display = 'block';
       img.style.objectFit = 'contain';
+      img.style.objectPosition = 'center';
       mark.appendChild(img);
     });
 
