@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.0.2-logo-clean',
+  version: '1.0.3-subscription-gate',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -38,21 +38,43 @@ window.HSM_APP = {
     if (!document.querySelector('link[data-hsm-pro-theme]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = './capture-one-theme.css?v=20260907-3';
+      link.href = './capture-one-theme.css?v=20260907-4';
       link.dataset.hsmProTheme = 'true';
       document.head.appendChild(link);
     }
     if (!document.querySelector('link[data-hsm-purple-theme]')) {
       const purple = document.createElement('link');
       purple.rel = 'stylesheet';
-      purple.href = './high-style-purple-theme.css?v=20260907-3';
+      purple.href = './high-style-purple-theme.css?v=20260907-4';
       purple.dataset.hsmPurpleTheme = 'true';
       document.head.appendChild(purple);
     }
   }
 
+  function ensureTwoSecondOpening(){
+    const style = document.createElement('style');
+    style.textContent = `
+      .hsm-opening{animation:hsmOpeningOut .4s ease 2s both!important}
+      .hsm-opening-logo{animation:hsmLogoSlide .7s cubic-bezier(.16,1,.3,1) both!important}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function routeNewVisitorsAfterSplash(){
+    const path = location.pathname.replace(/\/+$/, '/');
+    const isMainEntry = path === '/high-style-match/' || path.endsWith('/high-style-match/');
+    if (!isMainEntry) return;
+    if (sessionStorage.getItem('hsm_gate_seen') === '1') return;
+
+    window.setTimeout(() => {
+      sessionStorage.setItem('hsm_gate_seen','1');
+      location.href = './subscribe/';
+    }, 2050);
+  }
+
   function apply(){
     loadTheme();
+    ensureTwoSecondOpening();
     const logoUrl = window.HSM_APP.logoUrl;
 
     document.querySelectorAll('.brandmark').forEach((mark) => {
@@ -95,12 +117,14 @@ window.HSM_APP = {
     }
     favicon.type = 'image/svg+xml';
     favicon.href = logoUrl;
+
+    routeNewVisitorsAfterSplash();
   }
 
   function loadProductUpgrades(){
     if (document.querySelector('script[data-hsm-upgrades]')) return;
     const script = document.createElement('script');
-    script.src = './product-upgrades.js?v=20260907-3';
+    script.src = './product-upgrades.js?v=20260907-4';
     script.defer = true;
     script.dataset.hsmUpgrades = 'true';
     document.head.appendChild(script);
