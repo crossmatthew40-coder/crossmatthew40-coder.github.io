@@ -52,4 +52,32 @@ input:focus,textarea:focus,select:focus,.field input:focus,.field textarea:focus
 .hsm-opening{background:#05060A!important}.hsm-opening-sub{color:#A992FF!important}
 .live-touch{background:#171A22!important;color:#fff!important;border-color:#303542!important}.live-touch.primary{background:linear-gradient(135deg,#6D4EEE,#8D6CFF)!important;color:#fff!important;border-color:#8D6CFF!important}
 .core-badge,.desktop-only-badge{background:rgba(109,78,238,.15)!important;color:#C2B5FF!important;border-color:rgba(141,108,255,.25)!important}
+
+/* Use the original High Style logo asset exactly as supplied. Do not redraw, skew or recolour it. */
+.brandmark i{display:none!important}
+.brandmark{
+  background-color:#000!important;
+  background-image:url('/high-style-logo.svg')!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:78% auto!important;
+  box-shadow:none!important;
+}
+.hsm-opening-logo .brandmark{
+  width:clamp(220px,28vw,340px)!important;
+  height:clamp(78px,10vw,112px)!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background-color:transparent!important;
+  background-size:contain!important;
+}
+.brandmark img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+  filter:none!important;
+}
 @media(max-width:720px){.sidebar{border-right:0!important;border-bottom:1px solid #242837!important}}
