@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.0.1-purple-theme',
+  version: '1.0.2-logo-clean',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -38,14 +38,14 @@ window.HSM_APP = {
     if (!document.querySelector('link[data-hsm-pro-theme]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = './capture-one-theme.css?v=20260907-2';
+      link.href = './capture-one-theme.css?v=20260907-3';
       link.dataset.hsmProTheme = 'true';
       document.head.appendChild(link);
     }
     if (!document.querySelector('link[data-hsm-purple-theme]')) {
       const purple = document.createElement('link');
       purple.rel = 'stylesheet';
-      purple.href = './high-style-purple-theme.css?v=20260907-2';
+      purple.href = './high-style-purple-theme.css?v=20260907-3';
       purple.dataset.hsmPurpleTheme = 'true';
       document.head.appendChild(purple);
     }
@@ -59,11 +59,13 @@ window.HSM_APP = {
       const isOpeningLogo = !!mark.closest('.hsm-opening-logo');
 
       mark.innerHTML = '';
-      mark.style.background = isOpeningLogo ? 'transparent' : '#000';
+      mark.style.background = 'transparent';
+      mark.style.backgroundColor = 'transparent';
       mark.style.boxShadow = 'none';
-      mark.style.borderRadius = isOpeningLogo ? '0' : '4px';
+      mark.style.border = '0';
+      mark.style.borderRadius = '0';
       mark.style.overflow = 'visible';
-      mark.style.padding = isOpeningLogo ? '0' : '7px';
+      mark.style.padding = '0';
 
       if (isOpeningLogo) {
         mark.style.width = 'clamp(180px, 24vw, 300px)';
@@ -79,6 +81,9 @@ window.HSM_APP = {
       img.style.display = 'block';
       img.style.objectFit = 'contain';
       img.style.objectPosition = 'center';
+      img.style.background = 'transparent';
+      img.style.border = '0';
+      img.style.boxShadow = 'none';
       mark.appendChild(img);
     });
 
@@ -95,7 +100,7 @@ window.HSM_APP = {
   function loadProductUpgrades(){
     if (document.querySelector('script[data-hsm-upgrades]')) return;
     const script = document.createElement('script');
-    script.src = './product-upgrades.js?v=20260907-2';
+    script.src = './product-upgrades.js?v=20260907-3';
     script.defer = true;
     script.dataset.hsmUpgrades = 'true';
     document.head.appendChild(script);
