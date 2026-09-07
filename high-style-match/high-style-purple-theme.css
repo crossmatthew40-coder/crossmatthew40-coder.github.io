@@ -16,7 +16,6 @@
 html,body,.app{background:#06070A!important;color:#F7F7FB!important}
 .sidebar{background:linear-gradient(180deg,#08090D 0%,#0D0F15 58%,#151020 100%)!important;border-right:1px solid #242837!important}
 .topbar{background:rgba(11,13,18,.92)!important;border-bottom:1px solid #242837!important;color:#F7F7FB!important}
-.brandmark{background:#050506!important;border-color:#292D37!important}
 .brand small,.nav-label{color:#747A87!important}
 .nav button{color:#A5AAB6!important}
 .nav button:hover{background:#171A22!important;color:#fff!important}
@@ -53,31 +52,37 @@ input:focus,textarea:focus,select:focus,.field input:focus,.field textarea:focus
 .live-touch{background:#171A22!important;color:#fff!important;border-color:#303542!important}.live-touch.primary{background:linear-gradient(135deg,#6D4EEE,#8D6CFF)!important;color:#fff!important;border-color:#8D6CFF!important}
 .core-badge,.desktop-only-badge{background:rgba(109,78,238,.15)!important;color:#C2B5FF!important;border-color:rgba(141,108,255,.25)!important}
 
-/* Use the original High Style logo asset exactly as supplied. Do not redraw, skew or recolour it. */
+/* Exact High Style logo, with no surrounding box or treatment. */
+.brandmark,
+.brand .brandmark,
+.hsm-opening-logo .brandmark{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+  padding:0!important;
+}
 .brandmark i{display:none!important}
-.brandmark{
-  background-color:#000!important;
-  background-image:url('/high-style-logo.svg')!important;
-  background-repeat:no-repeat!important;
-  background-position:center!important;
-  background-size:78% auto!important;
+.brandmark img,
+.brand .brandmark img,
+.hsm-opening-logo .brandmark img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+  filter:none!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
   box-shadow:none!important;
 }
 .hsm-opening-logo .brandmark{
   width:clamp(220px,28vw,340px)!important;
   height:clamp(78px,10vw,112px)!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background-color:transparent!important;
-  background-size:contain!important;
-}
-.brandmark img{
-  width:100%!important;
-  height:100%!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  transform:none!important;
-  filter:none!important;
 }
 @media(max-width:720px){.sidebar{border-right:0!important;border-bottom:1px solid #242837!important}}
