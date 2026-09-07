@@ -6,6 +6,7 @@ window.HSM_APP = {
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
   notificationsEmail: 'notifications@highstylegroup.co.uk',
+  logoUrl: '/high-style-logo.svg',
   sync: {
     enabled: true,
     intervalMs: 60000,
@@ -31,3 +32,42 @@ window.HSM_APP = {
     billing: false
   }
 };
+
+(function applyHighStyleBranding(){
+  function apply(){
+    const logoUrl = window.HSM_APP.logoUrl;
+
+    document.querySelectorAll('.brandmark').forEach((mark) => {
+      mark.innerHTML = '';
+      mark.style.background = '#000';
+      mark.style.boxShadow = 'none';
+      mark.style.borderRadius = '12px';
+      mark.style.overflow = 'hidden';
+      mark.style.padding = '7px';
+
+      const img = document.createElement('img');
+      img.src = logoUrl;
+      img.alt = 'High Style';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.display = 'block';
+      img.style.objectFit = 'contain';
+      mark.appendChild(img);
+    });
+
+    let favicon = document.querySelector('link[rel="icon"]');
+    if (!favicon) {
+      favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      document.head.appendChild(favicon);
+    }
+    favicon.type = 'image/svg+xml';
+    favicon.href = logoUrl;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', apply, { once: true });
+  } else {
+    apply();
+  }
+})();
