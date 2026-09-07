@@ -1,249 +1,42 @@
-import { AwsClient } from 'aws4fetch';
+const enc=new TextEncoder();
 
-const enc = new TextEncoder();
+function cors(env){return{'Access-Control-Allow-Origin':env.ALLOWED_ORIGIN||'*','Access-Control-Allow-Methods':'GET,POST,PUT,OPTIONS','Access-Control-Allow-Headers':'Content-Type,X-HSM-Admin-Key,X-HSM-Delivery-Password','Access-Control-Max-Age':'86400','Vary':'Origin'}}
+function json(env,data,status=200){return new Response(JSON.stringify(data),{status,headers:{...cors(env),'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}})}
+function safeName(v='file'){const s=String(v).replace(/[\\/]+/g,'-').replace(/[^a-zA-Z0-9._ -]+/g,'').trim();return(s||'file').slice(0,180)}
+function b64(bytes){let s='';for(const b of bytes)s+=String.fromCharCode(b);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/g,'')}
+function unb64(v){const p=String(v).replace(/-/g,'+').replace(/_/g,'/').padEnd(Math.ceil(v.length/4)*4,'=');return Uint8Array.from(atob(p),c=>c.charCodeAt(0))}
+function randomToken(n=32){const b=new Uint8Array(n);crypto.getRandomValues(b);return b64(b)}
+async function sha256(v){const d=await crypto.subtle.digest('SHA-256',enc.encode(String(v)));return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+function ct(a,b){a=String(a||'');b=String(b||'');if(a.length!==b.length)return false;let d=0;for(let i=0;i<a.length;i++)d|=a.charCodeAt(i)^b.charCodeAt(i);return d===0}
+async function passwordHash(password,salt){const key=await crypto.subtle.importKey('raw',enc.encode(String(password)),'PBKDF2',false,['deriveBits']);const bits=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:unb64(salt),iterations:150000},key,256);return b64(new Uint8Array(bits))}
+async function requireAdmin(req,env){if(!env.ADMIN_KEY)throw json(env,{error:'Delivery admin key is not configured.'},503);const supplied=req.headers.get('X-HSM-Admin-Key')||'';const[a,b]=await Promise.all([sha256(supplied),sha256(env.ADMIN_KEY)]);if(!ct(a,b))throw json(env,{error:'Unauthorized'},401)}
 
-function cors(env) {
-  return {
-    'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN || '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type,X-HSM-Admin-Key,X-HSM-Delivery-Password',
-    'Access-Control-Max-Age': '86400',
-    'Vary': 'Origin'
-  };
-}
+const metaKey=id=>`__meta/${id}.json`;
+async function getDelivery(env,id){const obj=await env.BUCKET.get(metaKey(id));if(!obj)return null;try{return JSON.parse(await obj.text())}catch{return null}}
+async function saveDelivery(env,d){d.updatedAt=new Date().toISOString();await env.BUCKET.put(metaKey(d.id),JSON.stringify(d),{httpMetadata:{contentType:'application/json'}});return d}
+function event(d,type,fileId=null){d.events=(d.events||[]).slice(-49);d.events.push({type,fileId,at:new Date().toISOString()})}
 
-function json(env, data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { ...cors(env), 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }
-  });
-}
+async function verifyAccess(req,env,id){const d=await getDelivery(env,id);if(!d)throw json(env,{error:'Delivery not found.'},404);if(d.status!=='ready')throw json(env,{error:'Delivery is not ready.'},409);if(d.expiresAt&&Date.parse(d.expiresAt)<=Date.now())throw json(env,{error:'Delivery expired.'},410);const token=new URL(req.url).searchParams.get('token')||'';if(!ct(await sha256(token),d.tokenHash))throw json(env,{error:'Invalid delivery link.'},403);if(d.passwordHash){const pw=req.headers.get('X-HSM-Delivery-Password')||'';if(!pw)throw json(env,{error:'password_required'},401);if(!ct(await passwordHash(pw,d.passwordSalt),d.passwordHash))throw json(env,{error:'invalid_password'},401)}return d}
 
-function safeName(value = 'file') {
-  const cleaned = String(value).replace(/[\\/]+/g, '-').replace(/[^a-zA-Z0-9._ -]+/g, '').trim();
-  return (cleaned || 'file').slice(0, 180);
-}
+async function createDelivery(req,env){await requireAdmin(req,env);const body=await req.json();const incoming=Array.isArray(body.files)?body.files:[];if(!incoming.length)return json(env,{error:'Add at least one file.'},400);if(incoming.length>500)return json(env,{error:'A delivery can contain up to 500 files.'},400);const id=crypto.randomUUID(),token=randomToken(),now=new Date().toISOString();let passwordSalt=null,passwordHashValue=null;if(body.password){passwordSalt=randomToken(18);passwordHashValue=await passwordHash(String(body.password),passwordSalt)}const files=incoming.map(f=>{const fileId=crypto.randomUUID(),name=safeName(f.name),type=String(f.type||'application/octet-stream').slice(0,180),size=Math.max(0,Number(f.size)||0);return{id:fileId,name,type,size,key:`files/${id}/${fileId}-${name}`,uploadId:null,uploaded:false}});const d={id,name:String(body.name||'Client delivery').trim().slice(0,160)||'Client delivery',tokenHash:await sha256(token),status:'uploading',createdAt:now,completedAt:null,expiresAt:body.expiresAt?new Date(body.expiresAt).toISOString():null,passwordSalt,passwordHash:passwordHashValue,viewedAt:null,downloadCount:0,files,events:[]};event(d,'created');await saveDelivery(env,d);return json(env,{id,token,files:files.map(({id,name,type,size})=>({id,name,type,size}))},201)}
 
-function bytesToHex(bytes) {
-  return [...bytes].map(b => b.toString(16).padStart(2, '0')).join('');
-}
+async function startUpload(req,env,id,fileId){await requireAdmin(req,env);const d=await getDelivery(env,id);if(!d)return json(env,{error:'Delivery not found.'},404);if(d.status!=='uploading')return json(env,{error:'Delivery is no longer accepting uploads.'},409);const f=d.files.find(x=>x.id===fileId);if(!f)return json(env,{error:'File not found.'},404);if(f.uploaded)return json(env,{error:'File is already uploaded.'},409);if(f.uploadId)return json(env,{uploadId:f.uploadId});const upload=await env.BUCKET.createMultipartUpload(f.key,{httpMetadata:{contentType:f.type||'application/octet-stream'}});f.uploadId=upload.uploadId;await saveDelivery(env,d);return json(env,{uploadId:f.uploadId})}
 
-function bytesToBase64Url(bytes) {
-  let s = '';
-  for (const b of bytes) s += String.fromCharCode(b);
-  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
-}
+async function uploadPart(req,env,id,fileId,partNumber){await requireAdmin(req,env);const d=await getDelivery(env,id);if(!d)return json(env,{error:'Delivery not found.'},404);const f=d.files.find(x=>x.id===fileId);if(!f)return json(env,{error:'File not found.'},404);const uploadId=new URL(req.url).searchParams.get('uploadId')||'';if(!uploadId||uploadId!==f.uploadId)return json(env,{error:'Upload session is not valid.'},409);const n=Number(partNumber);if(!Number.isInteger(n)||n<1||n>10000)return json(env,{error:'Invalid part number.'},400);const upload=env.BUCKET.resumeMultipartUpload(f.key,uploadId);const part=await upload.uploadPart(n,req.body);return json(env,{partNumber:part.partNumber,etag:part.etag})}
 
-function base64UrlToBytes(value) {
-  const padded = String(value).replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(value.length / 4) * 4, '=');
-  const raw = atob(padded);
-  return Uint8Array.from(raw, c => c.charCodeAt(0));
-}
+async function completeFile(req,env,id,fileId){await requireAdmin(req,env);const d=await getDelivery(env,id);if(!d)return json(env,{error:'Delivery not found.'},404);const f=d.files.find(x=>x.id===fileId);if(!f)return json(env,{error:'File not found.'},404);const body=await req.json();if(!body.uploadId||body.uploadId!==f.uploadId)return json(env,{error:'Upload session is not valid.'},409);const parts=Array.isArray(body.parts)?body.parts:[];if(!parts.length)return json(env,{error:'No uploaded parts were supplied.'},400);const upload=env.BUCKET.resumeMultipartUpload(f.key,f.uploadId);await upload.complete(parts.map(p=>({partNumber:Number(p.partNumber),etag:String(p.etag)})));f.uploaded=true;f.uploadId=null;event(d,'file_uploaded',f.id);await saveDelivery(env,d);return json(env,{ok:true})}
 
-function randomToken(size = 32) {
-  const bytes = new Uint8Array(size);
-  crypto.getRandomValues(bytes);
-  return bytesToBase64Url(bytes);
-}
+async function abortFile(req,env,id,fileId){await requireAdmin(req,env);const d=await getDelivery(env,id);if(!d)return json(env,{error:'Delivery not found.'},404);const f=d.files.find(x=>x.id===fileId);if(!f||!f.uploadId)return json(env,{ok:true});try{await env.BUCKET.resumeMultipartUpload(f.key,f.uploadId).abort()}catch{}f.uploadId=null;await saveDelivery(env,d);return json(env,{ok:true})}
 
-async function sha256(value) {
-  const digest = await crypto.subtle.digest('SHA-256', enc.encode(String(value)));
-  return bytesToHex(new Uint8Array(digest));
-}
+async function completeDelivery(req,env,id){await requireAdmin(req,env);const d=await getDelivery(env,id);if(!d)return json(env,{error:'Delivery not found.'},404);const missing=d.files.filter(f=>!f.uploaded);if(missing.length)return json(env,{error:`${missing.length} file${missing.length===1?' is':'s are'} still uploading.`},409);d.status='ready';d.completedAt=new Date().toISOString();event(d,'ready');await saveDelivery(env,d);return json(env,{ok:true})}
 
-function constantTimeEqual(a, b) {
-  a = String(a || ''); b = String(b || '');
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
+async function deliveryInfo(req,env,id){const d=await verifyAccess(req,env,id);if(!d.viewedAt)d.viewedAt=new Date().toISOString();event(d,'viewed');await saveDelivery(env,d);return json(env,{id:d.id,name:d.name,expiresAt:d.expiresAt,passwordProtected:!!d.passwordHash,files:d.files.filter(f=>f.uploaded).map(({id,name,type,size})=>({id,name,type,size}))})}
 
-async function passwordHash(password, saltB64) {
-  const key = await crypto.subtle.importKey('raw', enc.encode(String(password)), 'PBKDF2', false, ['deriveBits']);
-  const bits = await crypto.subtle.deriveBits({
-    name: 'PBKDF2',
-    hash: 'SHA-256',
-    salt: base64UrlToBytes(saltB64),
-    iterations: 150000
-  }, key, 256);
-  return bytesToBase64Url(new Uint8Array(bits));
-}
+async function hmac(env,value){const key=await crypto.subtle.importKey('raw',enc.encode(env.ADMIN_KEY||''),{name:'HMAC',hash:'SHA-256'},false,['sign']);return b64(new Uint8Array(await crypto.subtle.sign('HMAC',key,enc.encode(value))))}
+async function prepareDownload(req,env,id){const d=await verifyAccess(req,env,id);const body=await req.json();const f=d.files.find(x=>x.id===body.fileId&&x.uploaded);if(!f)return json(env,{error:'File not found.'},404);const exp=Math.floor(Date.now()/1000)+900,sig=await hmac(env,`${id}.${f.id}.${exp}`);const u=new URL(req.url);const url=`${u.origin}/api/files/${encodeURIComponent(id)}/${encodeURIComponent(f.id)}?exp=${exp}&sig=${encodeURIComponent(sig)}`;return json(env,{url,name:f.name})}
 
-async function requireAdmin(request, env) {
-  if (!env.ADMIN_KEY) throw new Response('Delivery admin key is not configured.', { status: 503 });
-  const supplied = request.headers.get('X-HSM-Admin-Key') || '';
-  const [a, b] = await Promise.all([sha256(supplied), sha256(env.ADMIN_KEY)]);
-  if (!constantTimeEqual(a, b)) throw new Response('Unauthorized', { status: 401 });
-}
+async function streamFile(req,env,id,fileId){const u=new URL(req.url),exp=Number(u.searchParams.get('exp')||0),sig=u.searchParams.get('sig')||'';if(!exp||exp<Math.floor(Date.now()/1000))return json(env,{error:'Download link expired.'},410);if(!ct(sig,await hmac(env,`${id}.${fileId}.${exp}`)))return json(env,{error:'Invalid download link.'},403);const d=await getDelivery(env,id);if(!d||d.status!=='ready')return json(env,{error:'Delivery not found.'},404);if(d.expiresAt&&Date.parse(d.expiresAt)<=Date.now())return json(env,{error:'Delivery expired.'},410);const f=d.files.find(x=>x.id===fileId&&x.uploaded);if(!f)return json(env,{error:'File not found.'},404);const obj=await env.BUCKET.get(f.key);if(!obj)return json(env,{error:'File is missing from storage.'},404);d.downloadCount=(d.downloadCount||0)+1;event(d,'download',f.id);await saveDelivery(env,d);const headers=new Headers();headers.set('Content-Type',f.type||'application/octet-stream');headers.set('Content-Disposition',`attachment; filename*=UTF-8''${encodeURIComponent(f.name)}`);headers.set('Cache-Control','private, no-store');if(obj.size!=null)headers.set('Content-Length',String(obj.size));return new Response(obj.body,{headers})}
 
-function s3Client(env) {
-  return new AwsClient({
-    service: 's3',
-    region: 'auto',
-    accessKeyId: env.R2_ACCESS_KEY_ID,
-    secretAccessKey: env.R2_SECRET_ACCESS_KEY
-  });
-}
+async function handle(req,env){if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors(env)});if(!env.BUCKET)return json(env,{error:'R2 bucket binding is missing.'},503);const u=new URL(req.url),path=u.pathname.replace(/\/+$/,'')||'/';if(req.method==='GET'&&path==='/api/health')return json(env,{ok:true,service:'high-style-match-delivery',storage:'r2'});if(req.method==='POST'&&path==='/api/deliveries')return createDelivery(req,env);let m=path.match(/^\/api\/deliveries\/([^/]+)$/);if(req.method==='GET'&&m)return deliveryInfo(req,env,decodeURIComponent(m[1]));m=path.match(/^\/api\/deliveries\/([^/]+)\/complete$/);if(req.method==='POST'&&m)return completeDelivery(req,env,decodeURIComponent(m[1]));m=path.match(/^\/api\/deliveries\/([^/]+)\/download$/);if(req.method==='POST'&&m)return prepareDownload(req,env,decodeURIComponent(m[1]));m=path.match(/^\/api\/deliveries\/([^/]+)\/files\/([^/]+)\/start$/);if(req.method==='POST'&&m)return startUpload(req,env,decodeURIComponent(m[1]),decodeURIComponent(m[2]));m=path.match(/^\/api\/deliveries\/([^/]+)\/files\/([^/]+)\/parts\/(\d+)$/);if(req.method==='PUT'&&m)return uploadPart(req,env,decodeURIComponent(m[1]),decodeURIComponent(m[2]),m[3]);m=path.match(/^\/api\/deliveries\/([^/]+)\/files\/([^/]+)\/complete$/);if(req.method==='POST'&&m)return completeFile(req,env,decodeURIComponent(m[1]),decodeURIComponent(m[2]));m=path.match(/^\/api\/deliveries\/([^/]+)\/files\/([^/]+)\/abort$/);if(req.method==='POST'&&m)return abortFile(req,env,decodeURIComponent(m[1]),decodeURIComponent(m[2]));m=path.match(/^\/api\/files\/([^/]+)\/([^/]+)$/);if(req.method==='GET'&&m)return streamFile(req,env,decodeURIComponent(m[1]),decodeURIComponent(m[2]));return json(env,{error:'Not found.'},404)}
 
-function r2ObjectUrl(env, key, expires) {
-  const encodedKey = key.split('/').map(encodeURIComponent).join('/');
-  return `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${encodeURIComponent(env.R2_BUCKET_NAME)}/${encodedKey}?X-Amz-Expires=${expires}`;
-}
-
-async function presign(env, key, method, contentType = '', expires = 900) {
-  if (!env.R2_ACCOUNT_ID || !env.R2_ACCESS_KEY_ID || !env.R2_SECRET_ACCESS_KEY || !env.R2_BUCKET_NAME) {
-    throw new Error('R2 is not fully configured.');
-  }
-  const headers = {};
-  if (method === 'PUT') headers['Content-Type'] = contentType || 'application/octet-stream';
-  const signed = await s3Client(env).sign(new Request(r2ObjectUrl(env, key, expires), { method, headers }), {
-    aws: { signQuery: true }
-  });
-  return signed.url.toString();
-}
-
-async function getDelivery(env, id) {
-  return env.DB.prepare('SELECT * FROM deliveries WHERE id = ?').bind(id).first();
-}
-
-async function verifyDeliveryAccess(request, env, id) {
-  const delivery = await getDelivery(env, id);
-  if (!delivery) throw new Response('Delivery not found', { status: 404 });
-  if (delivery.status !== 'ready') throw new Response('Delivery is not ready', { status: 409 });
-  if (delivery.expires_at && Date.parse(delivery.expires_at) <= Date.now()) throw new Response('Delivery expired', { status: 410 });
-
-  const url = new URL(request.url);
-  const token = url.searchParams.get('token') || '';
-  const tokenHash = await sha256(token);
-  if (!constantTimeEqual(tokenHash, delivery.token_hash)) throw new Response('Invalid delivery link', { status: 403 });
-
-  if (delivery.password_hash) {
-    const password = request.headers.get('X-HSM-Delivery-Password') || '';
-    if (!password) throw json(env, { error: 'password_required' }, 401);
-    const candidate = await passwordHash(password, delivery.password_salt);
-    if (!constantTimeEqual(candidate, delivery.password_hash)) throw json(env, { error: 'invalid_password' }, 401);
-  }
-  return delivery;
-}
-
-async function createDelivery(request, env) {
-  await requireAdmin(request, env);
-  const body = await request.json();
-  const files = Array.isArray(body.files) ? body.files : [];
-  if (!files.length) return json(env, { error: 'Add at least one file.' }, 400);
-  if (files.length > 500) return json(env, { error: 'A delivery can contain up to 500 files.' }, 400);
-
-  const id = crypto.randomUUID();
-  const token = randomToken(32);
-  const tokenHash = await sha256(token);
-  const name = String(body.name || 'Client delivery').trim().slice(0, 160) || 'Client delivery';
-  const expiresAt = body.expiresAt ? new Date(body.expiresAt).toISOString() : null;
-
-  let salt = null, pHash = null;
-  if (body.password) {
-    salt = randomToken(18);
-    pHash = await passwordHash(String(body.password), salt);
-  }
-
-  const statements = [env.DB.prepare(
-    'INSERT INTO deliveries (id,name,token_hash,status,expires_at,password_salt,password_hash) VALUES (?,?,?,?,?,?,?)'
-  ).bind(id, name, tokenHash, 'uploading', expiresAt, salt, pHash)];
-
-  const responseFiles = [];
-  for (const file of files) {
-    const fileId = crypto.randomUUID();
-    const originalName = safeName(file.name);
-    const contentType = String(file.type || 'application/octet-stream').slice(0, 180);
-    const size = Math.max(0, Number(file.size) || 0);
-    const key = `${id}/${fileId}-${originalName}`;
-    statements.push(env.DB.prepare(
-      'INSERT INTO delivery_files (id,delivery_id,object_key,original_name,content_type,size) VALUES (?,?,?,?,?,?)'
-    ).bind(fileId, id, key, originalName, contentType, size));
-    responseFiles.push({ id: fileId, name: originalName, type: contentType, size, key });
-  }
-
-  await env.DB.batch(statements);
-  await env.DB.prepare('INSERT INTO delivery_events (delivery_id,event_type) VALUES (?,?)').bind(id, 'created').run();
-
-  for (const file of responseFiles) {
-    file.uploadUrl = await presign(env, file.key, 'PUT', file.type, 3600);
-    delete file.key;
-  }
-
-  return json(env, { id, token, files: responseFiles }, 201);
-}
-
-async function completeDelivery(request, env, id) {
-  await requireAdmin(request, env);
-  const delivery = await getDelivery(env, id);
-  if (!delivery) return json(env, { error: 'Delivery not found.' }, 404);
-  await env.DB.prepare("UPDATE deliveries SET status='ready', completed_at=CURRENT_TIMESTAMP WHERE id=?").bind(id).run();
-  await env.DB.prepare('INSERT INTO delivery_events (delivery_id,event_type) VALUES (?,?)').bind(id, 'ready').run();
-  return json(env, { ok: true });
-}
-
-async function deliveryInfo(request, env, id) {
-  const delivery = await verifyDeliveryAccess(request, env, id);
-  const { results = [] } = await env.DB.prepare(
-    'SELECT id,original_name,content_type,size FROM delivery_files WHERE delivery_id=? ORDER BY created_at,id'
-  ).bind(id).all();
-  await env.DB.prepare('UPDATE deliveries SET viewed_at=COALESCE(viewed_at,CURRENT_TIMESTAMP) WHERE id=?').bind(id).run();
-  await env.DB.prepare('INSERT INTO delivery_events (delivery_id,event_type) VALUES (?,?)').bind(id, 'viewed').run();
-  return json(env, {
-    id: delivery.id,
-    name: delivery.name,
-    expiresAt: delivery.expires_at,
-    passwordProtected: !!delivery.password_hash,
-    files: results.map(f => ({ id: f.id, name: f.original_name, type: f.content_type, size: f.size }))
-  });
-}
-
-async function downloadFile(request, env, id) {
-  await verifyDeliveryAccess(request, env, id);
-  const body = await request.json();
-  const file = await env.DB.prepare(
-    'SELECT id,object_key,original_name FROM delivery_files WHERE delivery_id=? AND id=?'
-  ).bind(id, body.fileId || '').first();
-  if (!file) return json(env, { error: 'File not found.' }, 404);
-  const url = await presign(env, file.object_key, 'GET', '', 900);
-  await env.DB.prepare('UPDATE deliveries SET download_count=download_count+1 WHERE id=?').bind(id).run();
-  await env.DB.prepare('INSERT INTO delivery_events (delivery_id,event_type,file_id) VALUES (?,?,?)').bind(id, 'download', file.id).run();
-  return json(env, { url, name: file.original_name });
-}
-
-async function handle(request, env) {
-  if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(env) });
-  const url = new URL(request.url);
-  const path = url.pathname.replace(/\/+$/, '') || '/';
-
-  if (request.method === 'GET' && path === '/api/health') return json(env, { ok: true, service: 'high-style-match-delivery' });
-  if (request.method === 'POST' && path === '/api/deliveries') return createDelivery(request, env);
-
-  let match = path.match(/^\/api\/deliveries\/([^/]+)$/);
-  if (request.method === 'GET' && match) return deliveryInfo(request, env, decodeURIComponent(match[1]));
-
-  match = path.match(/^\/api\/deliveries\/([^/]+)\/complete$/);
-  if (request.method === 'POST' && match) return completeDelivery(request, env, decodeURIComponent(match[1]));
-
-  match = path.match(/^\/api\/deliveries\/([^/]+)\/download$/);
-  if (request.method === 'POST' && match) return downloadFile(request, env, decodeURIComponent(match[1]));
-
-  return json(env, { error: 'Not found.' }, 404);
-}
-
-export default {
-  async fetch(request, env) {
-    try {
-      return await handle(request, env);
-    } catch (error) {
-      if (error instanceof Response) {
-        const headers = new Headers(error.headers);
-        for (const [k, v] of Object.entries(cors(env))) headers.set(k, v);
-        return new Response(error.body, { status: error.status, statusText: error.statusText, headers });
-      }
-      console.error(error);
-      return json(env, { error: error?.message || 'Delivery server error.' }, 500);
-    }
-  }
-};
+export default{async fetch(req,env){try{return await handle(req,env)}catch(e){if(e instanceof Response){const h=new Headers(e.headers);for(const[k,v]of Object.entries(cors(env)))h.set(k,v);return new Response(e.body,{status:e.status,statusText:e.statusText,headers:h})}console.error(e);return json(env,{error:e?.message||'Delivery server error.'},500)}}};
