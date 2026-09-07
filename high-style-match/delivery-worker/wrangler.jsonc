@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "high-style-match-delivery",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-07",
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGIN": "https://crossmatthew40-coder.github.io",
+    "R2_BUCKET_NAME": "high-style-match-deliveries"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "high-style-match-delivery",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+    }
+  ]
+}
