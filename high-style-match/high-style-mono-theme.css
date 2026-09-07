@@ -1,0 +1,43 @@
+/* High Style Match — monochrome professional UI override */
+:root{
+  --accent:#FFFFFF!important;
+  --accent-2:#FFFFFF!important;
+  --ink:#FFFFFF!important;
+  --muted:#A3A3A3!important;
+  --muted-2:#737373!important;
+  --bg:#000000!important;
+  --surface:#0B0B0B!important;
+  --surface-2:#111111!important;
+  --line:#292929!important;
+  --dark:#000000!important;
+  --dark-2:#050505!important;
+}
+html,body,.app,.content{background:#000!important;color:#fff!important}
+.sidebar,.topbar{background:#000!important;border-color:#242424!important}
+.brand small,.nav-label,.muted,.panel-head p,.field-hint{color:#8f8f8f!important}
+.nav button{color:#aaa!important}
+.nav button:hover{background:#111!important;color:#fff!important}
+.nav button.on{background:#171717!important;color:#fff!important;box-shadow:inset 2px 0 0 #fff!important}
+.nav button.on svg,.eyebrow{color:#fff!important}
+.panel,.stat,.workspace-head,.photo-card,.mini-stat,.setting-card,.live-current,.live-next-card,.live-queue-panel,.cull-stat,.template-row,.table-row,.activity-item,.provider-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty,.hsm-upgrade-strip,.hsm-attention-card,.hsm-c1-tools{background:#0b0b0b!important;border-color:#292929!important;color:#fff!important;box-shadow:none!important}
+.stat .stat-icon{background:#111!important;color:#fff!important}
+.btn.primary,.live-touch.primary{background:#fff!important;color:#000!important;border-color:#fff!important;box-shadow:none!important}
+.btn.primary:hover,.live-touch.primary:hover{background:#e8e8e8!important;color:#000!important}
+.btn.secondary,.icon-btn,.hsm-byl-btn,.hsm-focus-btn,.hsm-c1-tools a{background:#111!important;color:#fff!important;border-color:#333!important}
+.btn.secondary:hover,.icon-btn:hover,.hsm-byl-btn:hover,.hsm-focus-btn:hover,.hsm-c1-tools a:hover{background:#1a1a1a!important;border-color:#555!important}
+.hsm-c1-tools a:last-child{background:#fff!important;color:#000!important;border-color:#fff!important}
+input,textarea,select,.select,.field input,.field textarea,.field select,.rename-row input,.review-select{background:#050505!important;color:#fff!important;border-color:#333!important}
+input:focus,textarea:focus,select:focus,.field input:focus,.field textarea:focus,.field select:focus,.select:focus,.rename-row input:focus,.review-select:focus{border-color:#fff!important;box-shadow:0 0 0 1px #fff!important}
+.workflow-step span,.wizard-step.on i,.wizard-step.done i{background:#fff!important;color:#000!important}
+.tabs{border-color:#292929!important}.tabs button{color:#888!important}.tabs button.on{color:#fff!important;border-bottom-color:#fff!important}
+.callout,.shot-hub-hero,.smart-cull-hero,.delivery-hero,.live-paywall,.live-launch-main,.desktop-cap,.live-top{background:#080808!important;border-color:#292929!important;color:#fff!important}
+.callout .eyebrow,.shot-hub-hero .eyebrow,.smart-cull-hero .eyebrow,.delivery-hero .eyebrow{color:#fff!important}
+.pill.purple,.cull-badge.purple,.format-badges span,.core-badge,.desktop-only-badge{background:#151515!important;color:#fff!important;border-color:#3a3a3a!important}
+.progress,.confidence,.storage-meter,.cull-progress,.live-meter{background:#222!important}
+.progress i,.confidence i,.storage-meter i,.cull-progress i,.live-meter i{background:#fff!important}
+.table-row:not(.header):hover,.shoot-row:hover,.template-row:hover{border-color:#555!important;background:#111!important}
+.wp{background:#111!important;color:#888!important;border-color:#2a2a2a!important}.wp.active{background:#fff!important;color:#000!important;border-color:#fff!important}.wp.active i{background:#000!important;border-color:#000!important;color:#fff!important}.wp.done{background:#151515!important;color:#ddd!important}
+.hsm-stage{background:#111!important;border-color:#292929!important;color:#aaa!important}.hsm-stage.on{background:#fff!important;color:#000!important;border-color:#fff!important;box-shadow:none!important}.hsm-stage.on span{color:#444!important}
+.hsm-opening{background:#000!important}.hsm-opening-sub,.hsm-opening-brandcopy span{color:#b5b5b5!important}
+.live-touch{background:#111!important;color:#fff!important;border-color:#333!important}
+.badge,.pill,.tag,.status,.chip{background-color:#151515!important;color:#fff!important;border-color:#3a3a3a!important}
