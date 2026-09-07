@@ -34,7 +34,17 @@ window.HSM_APP = {
 };
 
 (function applyHighStyleBranding(){
+  function loadTheme(){
+    if (document.querySelector('link[data-hsm-pro-theme]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = './capture-one-theme.css?v=20260907-1';
+    link.dataset.hsmProTheme = 'true';
+    document.head.appendChild(link);
+  }
+
   function apply(){
+    loadTheme();
     const logoUrl = window.HSM_APP.logoUrl;
 
     document.querySelectorAll('.brandmark').forEach((mark) => {
@@ -43,7 +53,7 @@ window.HSM_APP = {
       mark.innerHTML = '';
       mark.style.background = isOpeningLogo ? 'transparent' : '#000';
       mark.style.boxShadow = 'none';
-      mark.style.borderRadius = isOpeningLogo ? '0' : '12px';
+      mark.style.borderRadius = isOpeningLogo ? '0' : '4px';
       mark.style.overflow = 'visible';
       mark.style.padding = isOpeningLogo ? '0' : '7px';
 
