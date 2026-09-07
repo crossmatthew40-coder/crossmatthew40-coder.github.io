@@ -1,0 +1,46 @@
+name: Apply High Style Match Premium Shoot Mode
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-hsm-premium-shoot-mode.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply premium shoot mode
+        run: python publish/apply-hsm-premium-shoot-mode.py
+
+      - name: Validate embedded JavaScript
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('high-style-match/tether/index.html').read_text(encoding='utf-8')
+          scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',html,re.S)
+          Path('/tmp/hsm-tether-js.js').write_text('\n'.join(scripts),encoding='utf-8')
+          PY
+          node --check /tmp/hsm-tether-js.js
+
+      - name: Publish premium shoot mode
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add high-style-match/tether/index.html
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+          else
+            git commit -m "Add premium live shoot mode to High Style Match"
+            git push
+          fi
