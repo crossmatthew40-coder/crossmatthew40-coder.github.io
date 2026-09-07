@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 190" role="img" aria-label="High Style Creative mark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-label="High Style mark" preserveAspectRatio="xMidYMid meet">
+  <rect width="1254" height="1254" fill="#000000"/>
   <g fill="#ffffff">
-    <path d="M105 18H255L185 152Q175 172 150 172H12L84 38Q93 18 105 18Z"/>
-    <path d="M285 18H435L365 152Q355 172 330 172H192L264 38Q273 18 285 18Z"/>
-    <path d="M465 18H615L545 152Q535 172 510 172H372L444 38Q453 18 465 18Z"/>
+    <path d="M462 479H595L461 696Q441 731 399 731H264L395 511Q417 479 462 479Z"/>
+    <path d="M677 479H810L677 696Q657 731 615 731H482L612 511Q634 479 677 479Z"/>
+    <path d="M894 479H1035L898 696Q877 731 834 731H699L831 511Q853 479 894 479Z"/>
   </g>
 </svg>
