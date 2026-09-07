@@ -35,12 +35,20 @@ window.HSM_APP = {
 
 (function applyHighStyleBranding(){
   function loadTheme(){
-    if (document.querySelector('link[data-hsm-pro-theme]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = './capture-one-theme.css?v=20260907-1';
-    link.dataset.hsmProTheme = 'true';
-    document.head.appendChild(link);
+    if (!document.querySelector('link[data-hsm-pro-theme]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = './capture-one-theme.css?v=20260907-1';
+      link.dataset.hsmProTheme = 'true';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('link[data-hsm-purple-theme]')) {
+      const purple = document.createElement('link');
+      purple.rel = 'stylesheet';
+      purple.href = './high-style-purple-theme.css?v=20260907-1';
+      purple.dataset.hsmPurpleTheme = 'true';
+      document.head.appendChild(purple);
+    }
   }
 
   function apply(){
