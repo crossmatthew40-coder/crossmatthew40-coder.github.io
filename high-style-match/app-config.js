@@ -74,9 +74,19 @@ window.HSM_APP = {
     favicon.href = logoUrl;
   }
 
+  function loadProductUpgrades(){
+    if (document.querySelector('script[data-hsm-upgrades]')) return;
+    const script = document.createElement('script');
+    script.src = './product-upgrades.js?v=20260907-1';
+    script.defer = true;
+    script.dataset.hsmUpgrades = 'true';
+    document.head.appendChild(script);
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', apply, { once: true });
+    document.addEventListener('DOMContentLoaded', () => { apply(); loadProductUpgrades(); }, { once: true });
   } else {
     apply();
+    loadProductUpgrades();
   }
 })();
