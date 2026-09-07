@@ -31,7 +31,9 @@ try{
   const tabs=[['overview','Overview'],['shotlist','Shot List'],['live','Tether'],['photos','Photos'],['cull','Cull'],['review','Review'],['rename','Rename'],['deliver','Deliver'],['history','History']];
   for(const [id,label] of tabs){const b=page.locator(`#tabs button[data-tab="${id}"]`);if(await b.count()===0){fail(`Project tab missing: ${label}`);continue}try{await b.click();await settle(250);const cls=await b.getAttribute('class');if(!String(cls||'').includes('on'))fail(`Project tab did not activate: ${label}`);else pass(`Project tab works: ${label}`);const html=await page.locator('#workspaceBody').innerHTML();if(!html.trim())fail(`Project tab rendered empty content: ${label}`)}catch(e){fail(`Project tab click failed: ${label} — ${e.message}`)}}
 
-  const bodyBg=await page.evaluate(()=>getComputedStyle(document.body).backgroundColor);if(bodyBg==='rgb(0, 0, 0)')pass('Black background theme applied');else fail(`Expected black body background, got ${bodyBg}`);
+  const bodyBg=await page.evaluate(()=>getComputedStyle(document.body).backgroundColor);if(bodyBg==='rgb(12, 12, 16)')pass('Studio near-black background theme applied');else fail(`Expected Studio background rgb(12, 12, 16), got ${bodyBg}`);
+  const accent=await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--accent').trim());if(accent==='#9674ff')pass('Studio purple accent applied');else fail(`Expected Studio purple accent #9674ff, got ${accent}`);
+  if(await page.locator('.hsm-opening').count()===0)pass('Opening logo animation dismisses');else fail('Opening logo animation did not dismiss');
   const scripts=await page.locator('script[src]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('src')));if(scripts.some(x=>String(x).includes('production.js')))pass('Production runtime is loaded');else fail('Production runtime is not loaded on main app');
 
   await expectPage('tether/?shoot=shoot_smoke','body','Tether Mode loads');
