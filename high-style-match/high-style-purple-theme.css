@@ -1,106 +1,15 @@
 /* High Style Match — black / purple / white visual system */
-:root{
-  --accent:#6D4EEE!important;
-  --accent-2:#8D6CFF!important;
-  --ink:#F7F7FB!important;
-  --muted:#A5AAB6!important;
-  --muted-2:#727887!important;
-  --bg:#06070A!important;
-  --surface:#111319!important;
-  --surface-2:#171A22!important;
-  --line:#2A2E39!important;
-  --dark:#040507!important;
-  --dark-2:#0B0D12!important;
-  --shadow:none!important;
-}
-html,body,.app{background:#06070A!important;color:#F7F7FB!important}
-.sidebar{background:#090A0D!important;border-right:1px solid #242837!important}
-.topbar{background:#0B0D12!important;border-bottom:1px solid #242837!important;color:#F7F7FB!important;backdrop-filter:none!important}
-.brand small,.nav-label{color:#747A87!important}
-.nav button{color:#A5AAB6!important;border-radius:3px!important}
-.nav button:hover{background:#14171D!important;color:#fff!important}
-.nav button.on{background:#181A20!important;color:#fff!important;box-shadow:inset 2px 0 0 #8D6CFF!important}
-.nav button.on svg{color:#A992FF!important}
-.eyebrow{color:#9F91E8!important;letter-spacing:.11em!important}
-.panel,.stat,.workspace-head,.photo-card,.mini-stat,.setting-card,.live-current,.live-next-card,.live-queue-panel,.cull-stat,.template-row,.table-row,.activity-item,.provider-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty{background:#101216!important;border-color:#292D35!important;color:#F7F7FB!important;border-radius:5px!important;box-shadow:none!important}
-.panel-head p,.muted,.field-hint,.photo-body select{color:#9DA3AF!important}
-.stat .stat-icon{background:#17141F!important;color:#A992FF!important;border-radius:3px!important}
-.btn,.icon-btn,.live-touch,.hsm-byl-btn,.hsm-focus-btn{border-radius:4px!important;box-shadow:none!important}
-.btn.primary{background:#6D4EEE!important;color:#fff!important;box-shadow:none!important}
-.btn.primary:hover{background:#795CF0!important;color:#fff!important}
-.btn.secondary,.icon-btn{background:#151821!important;color:#F7F7FB!important;border-color:#303542!important}
-.btn.secondary:hover,.icon-btn:hover{background:#1B1F29!important}
-.btn.ghost{color:#A5AAB6!important}
-input,textarea,select,.select,.field input,.field textarea,.field select,.rename-row input,.review-select{background:#0D0F13!important;color:#fff!important;border-color:#303542!important;border-radius:3px!important;box-shadow:none!important}
-input:focus,textarea:focus,select:focus,.field input:focus,.field textarea:focus,.field select:focus,.rename-row input:focus,.review-select:focus{border-color:#8D6CFF!important;box-shadow:0 0 0 1px #8D6CFF!important}
-.workflow-step span,.wizard-step.on i,.wizard-step.done i{background:#6D4EEE!important;color:#fff!important}
-.tabs{border-color:#2A2E39!important}.tabs button{color:#858B98!important}.tabs button.on{color:#fff!important;border-bottom-color:#8D6CFF!important}
-.callout,.shot-hub-hero,.smart-cull-hero,.delivery-hero,.live-paywall,.live-launch-main,.desktop-cap,.live-top{background:#111319!important;border-color:#2B2F39!important;color:#fff!important;border-radius:5px!important;box-shadow:none!important}
-.callout:after,.shot-hub-hero:after,.smart-cull-hero:after,.delivery-hero:after,.live-paywall:after{display:none!important}
-.callout .eyebrow,.shot-hub-hero .eyebrow,.smart-cull-hero .eyebrow,.delivery-hero .eyebrow{color:#A99BF0!important}
-.pill.purple,.cull-badge.purple,.format-badges span{background:#1A1627!important;color:#B9A8FF!important;border:1px solid #302A45!important;border-radius:3px!important}
-.progress,.confidence,.storage-meter,.cull-progress,.live-meter{background:#232733!important;border-radius:2px!important;overflow:hidden!important}
-.progress i,.confidence i,.storage-meter i,.cull-progress i,.live-meter i{background:#6D4EEE!important}
-.thumb{background:#12151B!important}.photo-body{background:#0F1218!important}
-.table-row:not(.header):hover,.shoot-row:hover,.template-row:hover{border-color:#484052!important;background:#151821!important}
-.wp{background:#151821!important;color:#878D99!important;border-color:#282D38!important;border-radius:3px!important}.wp.active{background:#6D4EEE!important;color:#fff!important}.wp.active i{background:#fff!important;border-color:#fff!important;color:#6D4EEE!important}.wp.done{background:#14171D!important;color:#D1D4DB!important}
-.hsm-upgrade-strip{background:#0F1115!important;border-color:#2A2D35!important;border-radius:5px!important;box-shadow:none!important;padding:14px!important}
-.hsm-upgrade-head h3{font-size:17px!important;font-weight:650!important;letter-spacing:-.015em!important}.hsm-upgrade-head p{max-width:620px!important}
-.hsm-stage-row{gap:5px!important}.hsm-stage{background:#12151B!important;border-color:#292D35!important;color:#A7ACB7!important;border-radius:3px!important;padding:9px 10px!important}.hsm-stage.on{background:#25202F!important;color:#fff!important;border-color:#6D4EEE!important;box-shadow:inset 2px 0 0 #8D6CFF!important}.hsm-stage.on span{color:#BDB4D9!important}
-.hsm-attention{gap:6px!important}.hsm-attention-card{background:#0E1014!important;border-color:#292D35!important;border-radius:3px!important;padding:11px!important}.hsm-attention-card label{color:#808695!important}.hsm-attention-card small{color:#8F95A1!important}.hsm-attention-card b{font-size:16px!important;font-weight:650!important}
-.hsm-byl-btn{background:#191C23!important;color:#fff!important;border-color:#343946!important}.hsm-byl-btn:hover{border-color:#6D4EEE!important}.hsm-focus-btn{background:#151821!important;color:#fff!important;border-color:#333847!important}
-.hsm-checkback{backdrop-filter:none!important;background:rgba(0,0,0,.78)!important}.hsm-checkmodal{background:#0C0E13!important;border-color:#332D46!important;border-radius:5px!important;box-shadow:0 18px 60px rgba(0,0,0,.45)!important}.hsm-checkitem{background:#12151B!important;border-color:#2A2E39!important;border-radius:3px!important}
-.hsm-opening{background:#05060A!important}.hsm-opening-sub{color:#9F91E8!important}
-.live-touch{background:#171A22!important;color:#fff!important;border-color:#303542!important}.live-touch.primary{background:#6D4EEE!important;color:#fff!important;border-color:#6D4EEE!important}
-.core-badge,.desktop-only-badge{background:#181522!important;color:#C2B5FF!important;border-color:#2E2940!important;border-radius:3px!important}
-
-/* Reduce generic AI/SaaS styling: flatter hierarchy, smaller radii, restrained accent use. */
-*{scrollbar-color:#30343D #0B0D11!important}
-h1,h2,h3,h4{font-weight:650!important;letter-spacing:-.025em!important}
-p{letter-spacing:0!important}
-.content{background:#0A0C10!important}
-.content>section,.content>.panel{box-shadow:none!important}
-button,a,input,select,textarea{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif!important}
-button{letter-spacing:0!important}
-.badge,.pill,.tag,.status,.chip{border-radius:3px!important}
-.modal,.dialog,.sheet,.popover,.dropdown,.menu{border-radius:5px!important;box-shadow:0 14px 40px rgba(0,0,0,.38)!important}
-.hero,.card,.tile{box-shadow:none!important}
-[class*="gradient"]{filter:none!important}
-.hsm-c1-tools{background:#0F1115!important;border-color:#292D35!important;border-radius:4px!important;box-shadow:none!important}
-.hsm-c1-tools a{border-radius:3px!important;background:#171A22!important;border:1px solid #303542!important;color:#fff!important;box-shadow:none!important}
-.hsm-c1-tools a:last-child{background:#6D4EEE!important;border-color:#6D4EEE!important}
-
+:root{--accent:#6D4EEE!important;--accent-2:#8D6CFF!important;--ink:#F7F7FB!important;--muted:#A5AAB6!important;--muted-2:#727887!important;--bg:#06070A!important;--surface:#111319!important;--surface-2:#171A22!important;--line:#2A2E39!important;--dark:#040507!important;--dark-2:#0B0D12!important;--shadow:none!important;--radius:4px!important;--radius-sm:3px!important}
+html,body,.app{background:#06070A!important;color:#F7F7FB!important}body{font-size:13px!important}.app{grid-template-columns:224px minmax(0,1fr)!important}.sidebar{background:#090A0D!important;border-right:1px solid #242837!important;padding:14px 10px!important}.topbar{height:48px!important;background:#0B0D12!important;border-bottom:1px solid #242837!important;color:#F7F7FB!important;backdrop-filter:none!important;padding:0 18px!important}.content{max-width:none!important;padding:16px 18px 26px!important;background:#0A0C10!important}.brand{padding:4px 5px 16px!important}.brand small,.nav-label{color:#747A87!important}.nav{gap:1px!important}.nav button{color:#A5AAB6!important;border-radius:3px!important;min-height:34px!important;padding:7px 9px!important;font-size:12px!important}.nav button:hover{background:#14171D!important;color:#fff!important}.nav button.on{background:#181A20!important;color:#fff!important;box-shadow:inset 2px 0 0 #8D6CFF!important}.nav button.on svg{color:#A992FF!important}.eyebrow{color:#9F91E8!important;letter-spacing:.11em!important;font-size:9px!important}.hero-title{font-size:27px!important}.hero-copy{font-size:12px!important;line-height:1.45!important}.page-head{margin-bottom:16px!important}
+.panel,.stat,.workspace-head,.photo-card,.mini-stat,.setting-card,.live-current,.live-next-card,.live-queue-panel,.cull-stat,.template-row,.table-row,.activity-item,.provider-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty{background:#101216!important;border-color:#292D35!important;color:#F7F7FB!important;border-radius:4px!important;box-shadow:none!important}.panel-pad{padding:14px!important}.panel-head{margin-bottom:10px!important}.panel-head h2{font-size:14px!important}.panel-head p,.muted,.field-hint,.photo-body select{color:#9DA3AF!important}.stat{padding:12px!important}.stat .stat-icon{background:#17141F!important;color:#A992FF!important;border-radius:3px!important;width:28px!important;height:28px!important}.stat b{font-size:22px!important;margin-top:8px!important}
+.btn,.icon-btn,.live-touch,.hsm-byl-btn,.hsm-focus-btn{border-radius:3px!important;box-shadow:none!important}.btn{min-height:32px!important;padding:7px 10px!important;font-size:11px!important;transition:none!important}.btn.primary{background:#6D4EEE!important;color:#fff!important;box-shadow:none!important}.btn.primary:hover{background:#795CF0!important;color:#fff!important;transform:none!important}.btn.secondary,.icon-btn{background:#151821!important;color:#F7F7FB!important;border-color:#303542!important}.btn.secondary:hover,.icon-btn:hover{background:#1B1F29!important}.btn.ghost{color:#A5AAB6!important}.icon-btn{width:32px!important;height:32px!important}
+input,textarea,select,.select,.field input,.field textarea,.field select,.rename-row input,.review-select{background:#0D0F13!important;color:#fff!important;border-color:#303542!important;border-radius:3px!important;box-shadow:none!important}.field label{color:#B8BDC6!important}.field input:focus,.field textarea:focus,.field select:focus,.select:focus,input:focus,textarea:focus,select:focus,.rename-row input:focus,.review-select:focus{border-color:#8D6CFF!important;box-shadow:0 0 0 1px #8D6CFF!important}
+.workflow-step{padding:11px!important;min-height:104px!important}.workflow-step span,.wizard-step.on i,.wizard-step.done i{background:#6D4EEE!important;color:#fff!important;border-radius:3px!important}.tabs{border-color:#2A2E39!important;margin:12px 0!important}.tabs button{color:#858B98!important;padding:8px 10px!important}.tabs button.on{color:#fff!important;border-bottom-color:#8D6CFF!important}.callout,.shot-hub-hero,.smart-cull-hero,.delivery-hero,.live-paywall,.live-launch-main,.desktop-cap,.live-top{background:#111319!important;border-color:#2B2F39!important;color:#fff!important;border-radius:4px!important;box-shadow:none!important}.callout:after,.shot-hub-hero:after,.smart-cull-hero:after,.delivery-hero:after,.live-paywall:after{display:none!important}.callout .eyebrow,.shot-hub-hero .eyebrow,.smart-cull-hero .eyebrow,.delivery-hero .eyebrow{color:#A99BF0!important}.pill.purple,.cull-badge.purple,.format-badges span{background:#1A1627!important;color:#B9A8FF!important;border:1px solid #302A45!important;border-radius:3px!important}.pill,.core-badge,.desktop-only-badge,.format-badges span{border-radius:3px!important}
+.progress,.confidence,.storage-meter,.cull-progress,.live-meter{background:#232733!important;border-radius:2px!important;overflow:hidden!important;height:5px!important}.progress i,.confidence i,.storage-meter i,.cull-progress i,.live-meter i{background:#6D4EEE!important}.thumb{background:#090A0D!important}.photo-body{background:#0F1218!important;padding:8px!important}.photo-grid,.cull-grid,.match-grid{gap:6px!important}.photo-card{overflow:hidden!important}.photo-card img{display:block!important;background:#08090C!important}.table-row:not(.header):hover,.shoot-row:hover,.template-row:hover{border-color:#484052!important;background:#151821!important;box-shadow:none!important}.shoot-row{border-radius:3px!important;padding:10px!important;background:#101218!important}
+.wp{background:#151821!important;color:#878D99!important;border-color:#282D38!important;border-radius:3px!important}.wp.active{background:#211B31!important;color:#fff!important;border-color:#5F51A0!important}.wp.active i{background:#8D6CFF!important;border-color:#8D6CFF!important;color:#fff!important}.wp.done{background:#14171D!important;color:#D1D4DB!important}.workspace-head{background:#0E1015!important;padding:13px 14px!important}.workspace-head h1{font-size:21px!important}.workspace-progress{margin-top:12px!important;gap:1px!important}.preview-strip,.review-block{border-radius:3px!important}.upload-zone{background:#0D0F14!important;border-radius:4px!important}
+.hsm-opening{background:#05060A!important}.hsm-opening-sub{color:#9F91E8!important}.live-touch{background:#171A22!important;color:#fff!important;border-color:#303542!important}.live-touch.primary{background:#6D4EEE!important;color:#fff!important;border-color:#6D4EEE!important}.core-badge,.desktop-only-badge{background:#181522!important;color:#C2B5FF!important;border-color:#2E2940!important;border-radius:3px!important}
+/* Professional desktop density: flat hierarchy, restrained decoration, image-first workspace. */
+*{scrollbar-color:#30343D #0B0D11!important}h1,h2,h3,h4{font-weight:650!important;letter-spacing:-.025em!important}p{letter-spacing:0!important}button,a,input,select,textarea{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif!important}button{letter-spacing:0!important}.badge,.pill,.tag,.status,.chip{border-radius:3px!important}.modal,.dialog,.sheet,.popover,.dropdown,.menu{border-radius:4px!important;box-shadow:0 14px 40px rgba(0,0,0,.38)!important}.hero,.card,.tile{box-shadow:none!important}.hsm-c1-tools{background:#0F1115!important;border-color:#292D35!important;border-radius:3px!important;box-shadow:none!important;padding:9px 10px!important;margin-bottom:10px!important}.hsm-c1-tools a{border-radius:3px!important;background:#171A22!important;border:1px solid #303542!important;color:#fff!important;box-shadow:none!important;padding:7px 9px!important;font-size:10px!important}.hsm-c1-tools a:last-child{background:#6D4EEE!important;border-color:#6D4EEE!important}
 /* Exact High Style logo, with no surrounding box or treatment. */
-.brandmark,
-.brand .brandmark,
-.hsm-opening-logo .brandmark{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-  outline:0!important;
-  padding:0!important;
-}
-.brandmark i{display:none!important}
-.brandmark img,
-.brand .brandmark img,
-.hsm-opening-logo .brandmark img{
-  width:100%!important;
-  height:100%!important;
-  display:block!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  transform:none!important;
-  filter:none!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-}
-.hsm-opening-logo .brandmark{
-  width:clamp(220px,28vw,340px)!important;
-  height:clamp(78px,10vw,112px)!important;
-}
-@media(max-width:720px){.sidebar{border-right:0!important;border-bottom:1px solid #242837!important}}
+.brandmark,.brand .brandmark,.hsm-opening-logo .brandmark{background:transparent!important;background-color:transparent!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;padding:0!important}.brandmark i{display:none!important}.brandmark img,.brand .brandmark img,.hsm-opening-logo .brandmark img{width:100%!important;height:100%!important;display:block!important;object-fit:contain!important;object-position:center!important;transform:none!important;filter:none!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}.hsm-opening-logo .brandmark{width:clamp(220px,28vw,340px)!important;height:clamp(78px,10vw,112px)!important}
+@media(max-width:900px){.app{grid-template-columns:190px minmax(0,1fr)!important}.content{padding:12px!important}}@media(max-width:720px){.sidebar{border-right:0!important;border-bottom:1px solid #242837!important}.content{padding:10px!important}}
