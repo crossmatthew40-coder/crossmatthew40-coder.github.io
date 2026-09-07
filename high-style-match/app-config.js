@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.0.0-production-foundation',
+  version: '1.0.1-purple-theme',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -38,14 +38,14 @@ window.HSM_APP = {
     if (!document.querySelector('link[data-hsm-pro-theme]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = './capture-one-theme.css?v=20260907-1';
+      link.href = './capture-one-theme.css?v=20260907-2';
       link.dataset.hsmProTheme = 'true';
       document.head.appendChild(link);
     }
     if (!document.querySelector('link[data-hsm-purple-theme]')) {
       const purple = document.createElement('link');
       purple.rel = 'stylesheet';
-      purple.href = './high-style-purple-theme.css?v=20260907-1';
+      purple.href = './high-style-purple-theme.css?v=20260907-2';
       purple.dataset.hsmPurpleTheme = 'true';
       document.head.appendChild(purple);
     }
@@ -95,7 +95,7 @@ window.HSM_APP = {
   function loadProductUpgrades(){
     if (document.querySelector('script[data-hsm-upgrades]')) return;
     const script = document.createElement('script');
-    script.src = './product-upgrades.js?v=20260907-1';
+    script.src = './product-upgrades.js?v=20260907-2';
     script.defer = true;
     script.dataset.hsmUpgrades = 'true';
     document.head.appendChild(script);
