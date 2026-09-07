@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v5-opening-refresh';
+const CACHE='hsm-shell-v6-delivery-config';
 
 const ESSENTIAL=[
   '/high-style-match/',
@@ -11,31 +11,22 @@ const ESSENTIAL=[
 ];
 
 self.addEventListener('install',event=>{
-  event.waitUntil(
-    caches.open(CACHE)
-      .then(cache=>cache.addAll(ESSENTIAL))
-      .then(()=>self.skipWaiting())
-  );
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ESSENTIAL)).then(()=>self.skipWaiting()));
 });
 
 self.addEventListener('activate',event=>{
-  event.waitUntil(
-    caches.keys()
-      .then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))))
-      .then(()=>self.clients.claim())
-  );
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));
 });
 
 self.addEventListener('fetch',event=>{
   const req=event.request;
   if(req.method!=='GET')return;
-
   const url=new URL(req.url);
   if(url.origin!==location.origin)return;
   if(!(url.pathname.startsWith('/high-style-match/')||url.pathname==='/high-style-logo.svg'))return;
 
-  // App configuration controls the opening screen and must never be served one version behind.
-  if(url.pathname==='/high-style-match/app-config.js'){
+  // These files contain live routing/configuration and must never be one version behind.
+  if(url.pathname==='/high-style-match/app-config.js'||url.pathname==='/high-style-match/delivery-config.js'){
     event.respondWith(caches.open(CACHE).then(async cache=>{
       try{
         const fresh=await fetch(new Request(req,{cache:'no-store'}));
