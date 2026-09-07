@@ -116,16 +116,24 @@
 
   async function registerServiceWorker(){
     if(!('serviceWorker' in navigator)) return;
-    try{await navigator.serviceWorker.register('/high-style-match/sw.js',{scope:'/high-style-match/'})}catch(e){console.warn('HSM service worker registration failed',e)}
+    try{
+      await navigator.serviceWorker.register('/high-style-match/sw.js',{
+        scope:'/high-style-match/',
+        updateViaCache:'none'
+      });
+    }catch(e){console.warn('HSM service worker registration failed',e)}
   }
 
   function boot(){
-    addNetworkBadge();installMonitoring();registerServiceWorker();
+    addNetworkBadge();installMonitoring();
     const delay=Math.max(15000,cfg().sync?.intervalMs||60000);
     setTimeout(()=>syncAll(),2500);
     setInterval(()=>syncAll(),delay);
   }
 
   window.HSMProduction={syncAll,syncShoot,syncPreviews,registerServiceWorker};
+
+  // Start the fast shell cache immediately instead of waiting for DOMContentLoaded.
+  registerServiceWorker();
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
 })();
