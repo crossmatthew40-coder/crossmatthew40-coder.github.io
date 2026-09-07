@@ -222,6 +222,49 @@ a{color:#c6afff}.btn a{color:inherit}
 @keyframes hsmOpeningOut{to{opacity:0;visibility:hidden}}
 @media(prefers-reduced-motion:reduce){.hsm-opening{display:none!important}}
 </style>
+<style id="HSM_DASHBOARD_V3">
+.home-dashboard{max-width:1440px;margin:0 auto;padding:8px 0 32px}
+.home-heading{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:28px}
+.home-dashboard .home-kicker{font-size:12px;letter-spacing:.15em;font-weight:700;color:var(--accent-2);margin:0 0 10px}
+.home-heading h1{font-size:clamp(28px,3vw,40px);font-weight:650;letter-spacing:-.045em;line-height:1.15;margin:0 0 10px}
+.home-heading p:not(.home-kicker){margin:0;color:var(--muted);font-size:16px}
+.home-local{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);white-space:nowrap}
+.home-dashboard svg{width:18px;height:18px;flex-shrink:0}
+.home-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#131319;border:1px solid var(--line);border-radius:14px;margin-bottom:28px;overflow:hidden}
+.home-metric{padding:22px 24px;border-right:1px solid var(--line);min-width:0}
+.home-metric:last-child{border:0}.home-metric>span{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--muted)}
+.home-metric svg{color:var(--accent-2)}.home-metric>strong{display:block;font-size:32px;font-weight:600;letter-spacing:-.04em;line-height:1.3;margin-top:12px;font-variant-numeric:tabular-nums}
+.home-layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;align-items:start;gap:26px}
+.home-projects{min-width:0}.home-resume{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 26px;background:linear-gradient(110deg,#251c3c,#17141f);border:1px solid #4b386b;border-radius:14px;margin-bottom:28px}
+.home-resume>div{min-width:0}.home-resume h2{font-size:24px;line-height:1.25;letter-spacing:-.035em;margin:0 0 8px;overflow-wrap:anywhere}
+.home-resume p:not(.home-kicker){font-size:14px;margin:0;color:#d4cbdf}.home-resume p span{color:var(--muted)}.home-resume>.btn{flex-shrink:0}
+.home-section-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 16px}
+.home-dashboard h2{font-weight:600}.home-section-heading h2{font-size:19px;margin:0;letter-spacing:-.025em}
+.home-project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.home-project{min-width:0;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;transition:border-color .2s,transform .2s}
+.home-project:hover{border-color:#685282;transform:translateY(-2px)}
+.home-project-image{aspect-ratio:16/9;background:#101015;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;color:#756a88;overflow:hidden;position:relative}
+.home-project-image>svg{width:30px;height:30px}.home-image-label{font-size:12px;color:var(--muted)}.home-project-image img{display:block;width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.home-project-body{padding:20px}.home-project-client{font-size:13px;font-weight:600;color:var(--accent-2);margin-bottom:6px;overflow-wrap:anywhere}
+.home-project h3{font-size:18px;line-height:1.4;margin:0 0 7px;letter-spacing:-.02em;overflow-wrap:anywhere}
+.home-project-meta{font-size:13px;color:var(--muted);margin:0 0 22px}
+.home-coverage{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);margin-bottom:8px}
+.home-coverage strong{font-weight:500;color:var(--ink)}.home-project .progress{height:4px;background:#2a2535}.home-project .progress i{background:var(--accent)!important}
+.home-project-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:20px}.home-project-footer .pill{font-size:12px}
+.home-guide{padding:24px;background:#111117;border:1px solid var(--line);border-radius:14px}
+.home-guide h2{font-size:19px;margin:0 0 24px;letter-spacing:-.025em}.home-guide ol{list-style:none;padding:0;margin:0}
+.home-guide li{display:flex;gap:14px;position:relative;padding-bottom:23px}.home-guide li:last-child{padding-bottom:0}
+.home-step-number{font-size:12px;font-variant-numeric:tabular-nums;color:var(--accent-2);width:28px;height:28px;border:1px solid #3e324f;border-radius:8px;display:grid;place-items:center;flex-shrink:0;background:#201a2c}
+.home-guide strong{display:block;font-size:14px;font-weight:600;line-height:1.4;margin:3px 0 4px}.home-guide li p{font-size:13px;line-height:1.5;margin:0;color:var(--muted)}
+.home-empty{min-height:330px;border:1px dashed #4a3a62;border-radius:14px;padding:48px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#14121c}
+.home-empty-mark{padding:18px;background:#292039;border-radius:16px;color:var(--accent-2);margin-bottom:20px}.home-empty-mark svg{width:30px;height:30px}
+.home-empty h2{font-size:24px;margin:0 0 10px}.home-empty p{color:var(--muted);font-size:16px;max-width:360px;margin:0 0 24px}
+.home-dashboard button:focus-visible{outline:2px solid var(--accent-2);outline-offset:4px}
+@media(min-width:1600px){.home-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1100px){.home-layout{grid-template-columns:minmax(0,1fr)}.home-guide ol{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}.home-guide li{padding:0}.home-local{display:none}}
+@media(max-width:640px){.home-heading{margin-bottom:22px}.home-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.home-metric{padding:18px}.home-metric:nth-child(2){border-right:0}.home-metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.home-metric>span{font-size:13px}.home-metric>strong{font-size:28px}.home-project-grid{grid-template-columns:minmax(0,1fr)}.home-resume{align-items:flex-start;flex-direction:column;padding:22px}.home-resume>.btn{width:100%}.home-guide ol{grid-template-columns:repeat(2,minmax(0,1fr))}.home-guide{padding:20px}.home-project-body{padding:18px}}
+@media(prefers-reduced-motion:reduce){.home-project{transition:none}.home-project:hover{transform:none}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -353,7 +396,23 @@ function renderShotListHub(){
  document.getElementById('hubCreate').onclick=()=>{sync();if(!draft.shots.length)return toast('Upload a shot list first.');if(!draft.client||!draft.name)return toast('Add a client and shoot name.');const s={id:uid('shoot'),client:draft.client,name:draft.name,date:draft.date,location:draft.location,createdAt:Date.now(),updatedAt:Date.now(),shotText:draft.shotText,shotSourceName:draft.shotSourceName||'Shot list',shots:draft.shots,photos:[],templateId:D.settings.defaultTemplate||'t1',renameOverrides:{},renameSettings:{separator:D.settings.defaultSeparator,caseMode:D.settings.defaultCase,numberStart:D.settings.numberStart,numberPad:D.settings.numberPad},reviewApproved:false,undoStack:[]};activity(s,'Shoot created',`${s.shots.length} shot-list requirements`);D.shoots.unshift(s);save();draft=freshDraft();shootId=String(s.id);screen='workspace';tab='photos';photoFilter='all';renameDraft=[];render();toast('Shoot created — add the photographs next')};
 }
 
-function renderHome(){setTop('<b>High Style Match</b>','<button class="btn primary" id="topNew">'+icon('plus')+'Upload Shot List</button>');const q=stats();C.innerHTML=head('High Style Group','From client brief to delivered shoot.','Upload the client list, import the shoot, cull duplicates, pick the strongest frames, verify coverage, export professionally named copies and track final delivery through WeTransfer.')+`<div class="grid stats"><div class="stat"><div class="stat-top"><span>Shoots</span><div class="stat-icon">${icon('folder')}</div></div><b>${q.shoots}</b><small>Saved on this device</small></div><div class="stat"><div class="stat-top"><span>Photographs</span><div class="stat-icon">${icon('photo')}</div></div><b>${q.photos}</b><small>Stored locally</small></div><div class="stat"><div class="stat-top"><span>Delivered</span><div class="stat-icon">${icon('send')}</div></div><b>${q.delivered}</b><small>Confirmed deliveries</small></div><div class="stat"><div class="stat-top"><span>Renamed</span><div class="stat-icon">${icon('download')}</div></div><b>${q.downloads}</b><small>Copies exported</small></div></div><div class="grid workflow section">${[['1','Shot list','Excel, PDF, Word, CSV + more'],['2','Photographs','JPG, HEIC and RAW previews'],['3','Smart Cull','Best picks + duplicates'],['4','Shoot order','Group bursts and similar frames'],['5','Brief match','Best frame for each requirement'],['6','Review','Covered, check or missing'],['7','Rename','Flexible filename rules + ZIP'],['8','Deliver','WeTransfer + delivery record']].map(x=>`<div class="workflow-step"><span>${x[0]}</span><b>${x[1]}</b><p>${x[2]}</p></div>`).join('')}</div><div class="panel panel-pad section"><div class="panel-head"><div><h2>Recent shoots</h2><p>Pick up exactly where you left off.</p></div><button class="btn secondary small" id="viewAll">View all</button></div>${shootRows(D.shoots.slice(0,5))}</div>`;document.getElementById('topNew').onclick=()=>navigate('shotlist');document.getElementById('viewAll').onclick=()=>navigate('shoots');wireShootRows()}
+function renderHome(){
+ setTop('<span>High Style Match</span><span>›</span><b>Dashboard</b>','<button class="btn primary" id="topNew">'+icon('plus')+'New shoot</button>');
+ const q=stats(),recent=[...D.shoots].sort((a,b)=>(b.updatedAt||b.createdAt||0)-(a.updatedAt||a.createdAt||0)).slice(0,6),current=recent.find(s=>workflowStage(s)<8)||recent[0];
+ const card=(s,i)=>{const c=coverage(s);return `<article class="home-project"><div class="home-project-image" data-home-cover="${i}">${icon('photo')}<span class="home-image-label">No preview available</span></div><div class="home-project-body"><div class="home-project-client">${esc(s.client)}</div><h3>${esc(s.name)}</h3><p class="home-project-meta">${s.photos.length} photos · ${esc(s.date||'Date not set')}</p><div class="home-coverage"><span>Brief coverage</span><strong>${c.percent}%</strong></div><div class="progress"><i style="width:${c.percent}%"></i></div><div class="home-project-footer"><span class="pill ${workflowStage(s)===8?'success':'purple'}">${esc(statusText(s))}</span><button class="btn secondary small open-shoot" data-id="${esc(s.id)}" aria-label="Open ${esc(s.name)}">Open ${icon('arrow')}</button></div></div></article>`};
+ C.innerHTML=`<div class="home-dashboard"><header class="home-heading"><div><p class="home-kicker">YOUR STUDIO</p><h1>Dashboard</h1><p>Your shoots, from first frame to final delivery.</p></div><span class="home-local">${icon('folder')} Saved on this device</span></header>
+ <div class="home-metrics">${[['Shoots',q.shoots,'folder'],['Photographs',q.photos,'photo'],['Delivered',q.delivered,'send'],['Copies exported',q.downloads,'download']].map(([label,value,ic])=>`<div class="home-metric"><span>${icon(ic)}${label}</span><strong>${Number(value).toLocaleString()}</strong></div>`).join('')}</div>
+ <div class="home-layout"><main class="home-projects">
+ ${current?`<section class="home-resume"><div><p class="home-kicker">CONTINUE SHOOT</p><h2>${esc(current.name)}</h2><p>${esc(current.client)} <span>· ${esc(statusText(current))}</span></p></div><button class="btn primary open-shoot" data-id="${esc(current.id)}">Open shoot ${icon('arrow')}</button></section>`:''}
+ <div class="home-section-heading"><h2>Recent shoots</h2><button class="btn secondary small" id="viewAll">View all ${icon('arrow')}</button></div>
+ ${recent.length?`<div class="home-project-grid">${recent.map(card).join('')}</div>`:`<div class="home-empty"><div class="home-empty-mark">${icon('photo')}</div><h2>Your next shoot starts here.</h2><p>Add your client’s shot list, then bring in the photographs.</p><button class="btn primary" id="emptyNew">${icon('plus')}Create your first shoot</button></div>`}
+ </main><aside class="home-guide"><p class="home-kicker">THE WORKFLOW</p><h2>Brief to delivery</h2><ol>${[['Shot list','Add the client’s requirements.'],['Photographs','Import the shoot.'],['Smart Cull','Choose the strongest frames.'],['Shoot order','Group similar photographs.'],['Brief match','Match frames to the list.'],['Review','Check your coverage.'],['Rename','Export named copies.'],['Deliver','Record the final delivery.']].map(([title,copy],i)=>`<li><span class="home-step-number">${String(i+1).padStart(2,'0')}</span><div><strong>${title}</strong><p>${copy}</p></div></li>`).join('')}</ol></aside></div></div>`;
+ document.getElementById('topNew').onclick=()=>navigate('shotlist');
+ document.getElementById('viewAll').onclick=()=>navigate('shoots');
+ wireShootRows();
+ const root=C.querySelector('.home-dashboard');
+ recent.forEach(async(s,i)=>{const p=s.photos.find(p=>p.previewKey)||s.photos[0];if(!p)return;try{const url=await photoURL(p),el=root.querySelector('[data-home-cover="'+i+'"]');if(url&&el&&root.isConnected){const img=document.createElement('img');img.alt='';img.loading='lazy';img.src=url;img.onerror=()=>img.remove();img.onload=()=>{el.replaceChildren(img)};}}catch{}});
+}
 function shootRows(arr){if(!arr.length)return `<div class="empty"><div class="empty-icon">${icon('folder')}</div><h3>No shoots yet</h3><p>Create your first project, upload a client shot list and High Style Match will guide you through the rest.</p><button class="btn primary" id="emptyNew">${icon('plus')}Upload First Shot List</button></div>`;return `<div class="shoot-list">${arr.map(s=>{const c=coverage(s);return `<div class="shoot-row"><div><strong>${esc(s.client)}</strong><div class="meta">${esc(s.name)}${s.date?' · '+esc(s.date):''}</div></div><div><div class="progress"><i style="width:${c.percent}%"></i></div><div class="meta">${c.matched}/${c.total} requirements</div></div><div class="actions"><span class="pill ${workflowStage(s)>=6?'success':'purple'}">${esc(statusText(s))}</span><button class="btn secondary small open-shoot" data-id="${esc(s.id)}">Open ${icon('arrow')}</button></div></div>`}).join('')}</div>`}
 function wireShootRows(){const e=document.getElementById('emptyNew');if(e)e.onclick=()=>navigate('shotlist');document.querySelectorAll('.open-shoot').forEach(b=>b.onclick=()=>openShoot(b.dataset.id))}
 function openShoot(id){shootId=String(id);screen='workspace';tab='overview';photoFilter='all';cullFilter='all';reviewFilter='all';renameDraft=[];render()}
