@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.0.3-subscription-gate',
+  version: '1.0.4-plan-catalog',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -20,7 +20,28 @@ window.HSM_APP = {
   billing: {
     provider: 'stripe',
     checkoutFunction: 'create-checkout-session',
-    portalFunction: 'create-billing-portal'
+    portalFunction: 'create-billing-portal',
+    plans: {
+      solo: { name:'Solo', monthlyGBP:7, trialDays:7, activeProjects:5, clientReviewProjects:1 },
+      creator: { name:'Creator', monthlyGBP:15, trialDays:7, activeProjects:'unlimited', clientReviewProjects:'standard' },
+      pro: { name:'Pro', monthlyGBP:25, trialDays:7, activeProjects:'unlimited', clientReviewProjects:'unlimited', recommended:true },
+      studio: { name:'Studio', monthlyGBP:49, trialDays:7, activeProjects:'unlimited', clientReviewProjects:'unlimited', team:true }
+    },
+    addOns: {
+      cloudStorage: { name:'Cloud Storage Pack' },
+      clientBranding: { name:'Client Branding Pack' },
+      aiCull: { name:'AI Cull Pack' },
+      extraSeat: { name:'Extra Team Seat' },
+      archive: { name:'Archive Pack' },
+      priorityProcessing: { name:'Priority Processing' },
+      whiteLabel: { name:'White-label Client Portal' }
+    }
+  },
+  entitlements: {
+    solo: ['shotLists','liveShoot','projectTracking','simpleRename','basicCull','limitedClientReview'],
+    creator: ['shotLists','liveShoot','projectTracking','advancedRename','basicCull','beforeYouLeave','duplicateGrouping','ratings','shotMatching','clientFeedback','deliveryTracking'],
+    pro: ['shotLists','liveShoot','projectTracking','advancedRename','smartCull','beforeYouLeave','duplicateGrouping','ratings','advancedMatching','compareMode','rawJpegPairing','workflowAutomation','cloudPreviewSync','unlimitedClientReview','deliveryOpenTracking','clientBranding','workflowTemplates'],
+    studio: ['shotLists','liveShoot','projectTracking','advancedRename','smartCull','beforeYouLeave','duplicateGrouping','ratings','advancedMatching','compareMode','rawJpegPairing','workflowAutomation','cloudPreviewSync','unlimitedClientReview','deliveryOpenTracking','clientBranding','workflowTemplates','teamMembers','sharedProjects','rolePermissions','adminDashboard','photographerAssignments','sharedClients','activityHistory','teamReview','usageReporting','prioritySupport']
   },
   features: {
     customerReview: true,
@@ -38,14 +59,14 @@ window.HSM_APP = {
     if (!document.querySelector('link[data-hsm-pro-theme]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = './capture-one-theme.css?v=20260907-4';
+      link.href = './capture-one-theme.css?v=20260907-5';
       link.dataset.hsmProTheme = 'true';
       document.head.appendChild(link);
     }
     if (!document.querySelector('link[data-hsm-purple-theme]')) {
       const purple = document.createElement('link');
       purple.rel = 'stylesheet';
-      purple.href = './high-style-purple-theme.css?v=20260907-4';
+      purple.href = './high-style-purple-theme.css?v=20260907-5';
       purple.dataset.hsmPurpleTheme = 'true';
       document.head.appendChild(purple);
     }
@@ -124,7 +145,7 @@ window.HSM_APP = {
   function loadProductUpgrades(){
     if (document.querySelector('script[data-hsm-upgrades]')) return;
     const script = document.createElement('script');
-    script.src = './product-upgrades.js?v=20260907-4';
+    script.src = './product-upgrades.js?v=20260907-5';
     script.defer = true;
     script.dataset.hsmUpgrades = 'true';
     document.head.appendChild(script);
