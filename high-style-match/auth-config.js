@@ -9,7 +9,18 @@ window.HSM_AUTH = {
 
 (function(){
   const path=location.pathname;
-  if(path.includes('/high-style-match/customer/')||path.includes('/high-style-match/admin/')){
+
+  // Compliance/accessibility/privacy runtime for every High Style Match web page
+  // that loads the shared auth configuration.
+  if(!document.querySelector('script[data-hsm-compliance]')){
+    const c=document.createElement('script');
+    c.src='/high-style-match/site-compliance.js?v=20260909-2';
+    c.defer=true;
+    c.dataset.hsmCompliance='true';
+    document.head.appendChild(c);
+  }
+
+  if(path.includes('/high-style-match/customer/')||path.includes('/high-style-match/customer-v2/')||path.includes('/high-style-match/admin/')){
     if(!document.querySelector('script[data-hsm-role-guard]')){
       const s=document.createElement('script');
       s.src='/high-style-match/role-guard.js?v=20260908-1';
