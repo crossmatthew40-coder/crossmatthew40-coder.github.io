@@ -47,18 +47,26 @@ try{
   if(transferText.includes('delivery')||transferText.includes('deliver'))pass('Deliver interface content present');else fail('Deliver interface content missing');
 
   await open('delivery/','body','Client delivery page loads');
-  await open('sign-in/','#signInForm','Sign-in form loads');
-  if(await page.locator('#skipLogin').count())pass('Local skip sign-in is available while auth is offline');else fail('Skip sign-in fallback missing');
+
+  await open('sign-in/','#form','Unified sign-in form loads');
+  if(await page.locator('[data-role="photographer"]').count()&&await page.locator('[data-role="customer"]').count())pass('Photographer and client account choices are present');else fail('Account role choices missing');
+  if(await page.locator('#signupTab').count())pass('Photographer account creation control is present');else fail('Photographer signup control missing');
+  await page.locator('[data-role="customer"]').click();await settle(80);if(await page.locator('#clientInvite.on').count())pass('Client invite-only guidance appears');else fail('Client invite guidance missing');
   if(await page.locator('.hsm-form-notice').count())pass('Personal-data form notice is present');else fail('Personal-data form notice missing');
 
+  await open('account/','body','Legacy photographer sign-in route loads');
+  await open('profile/','body','Account profile page loads');
+
   await open('subscribe/','#openLocal','Subscription gate has local access fallback');
-  if((await page.locator('body').innerText()).includes('BILLING NOT LIVE'))pass('Subscription page does not pretend billing is live');else fail('Subscription page billing state is unclear');
+  const subText=await page.locator('body').innerText();
+  if(subText.includes('£25')&&subText.includes('High Style Match Complete'))pass('Single £25 Complete subscription is displayed');else fail('Single £25 plan is not clearly displayed');
+  if(subText.includes('BILLING NOT LIVE'))pass('Subscription page does not pretend billing is live');else fail('Subscription page billing state is unclear');
 
   for(const [path,heading] of [['privacy/','Privacy Policy'],['cookies/','Cookie & local storage policy'],['terms/','Terms of Use'],['refunds/','Refunds & cancellation'],['accessibility/','Accessibility'],['copyright/','Copyright & image rights'],['legal/','Legal & business information']]){
     await open(path,'h1',`${heading} page loads`);const text=await page.locator('h1').innerText();if(text.includes(heading.split(' ')[0]))pass(`${heading} heading present`);else fail(`${heading} heading unexpected: ${text}`)
   }
 
-  for(const asset of ['manifest.webmanifest','sw.js','app-config.js','cloud.js','production.js','functional-runtime.js','capture-delivery-tools.js','delivery-config.js','site-compliance.js']){const r=await context.request.get(`${BASE}${asset}?smoke=${now}`);if(r.ok())pass(`Asset available: ${asset}`);else fail(`Asset unavailable: ${asset} (${r.status()})`)}
+  for(const asset of ['manifest.webmanifest','sw.js','app-config.js','cloud.js','production.js','functional-runtime.js','capture-delivery-tools.js','delivery-config.js','site-compliance.js','auth-router.js','role-guard.js']){const r=await context.request.get(`${BASE}${asset}?smoke=${now}`);if(r.ok())pass(`Asset available: ${asset}`);else fail(`Asset unavailable: ${asset} (${r.status()})`)}
 
   const m=await browser.newPage({viewport:{width:390,height:844}});const errs=[];m.on('pageerror',e=>errs.push(String(e.message||e)));await m.addInitScript(()=>sessionStorage.setItem('hsm_gate_seen','1'));await m.goto(`${BASE}?mobileSmoke=${now}`,{waitUntil:'domcontentloaded',timeout:30000});await m.waitForTimeout(550);if(await m.locator('#content').count())pass('Main mobile layout loads');else fail('Main mobile layout missing');if(errs.length)fail(`Mobile page errors: ${errs.join(' | ')}`);await m.close();
 }catch(e){fail(`Smoke test crashed: ${e.stack||e.message||e}`)}
