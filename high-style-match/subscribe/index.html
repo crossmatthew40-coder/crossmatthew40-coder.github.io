@@ -4,88 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
-<title>Choose your plan — High Style Match</title>
+<title>High Style Match</title>
 <style>
-:root{--bg:#000;--panel:#0b0b0b;--panel2:#111;--line:#292929;--ink:#fff;--muted:#9b9b9b}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}body{min-height:100vh}.shell{min-height:100vh;padding:28px}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1260px;width:100%;margin:0 auto}.brand{display:flex;align-items:center;gap:12px}.brand img{width:118px;height:40px;object-fit:contain;display:block}.brand span{color:#8a8a8a;font-size:11px;letter-spacing:.13em;text-transform:uppercase}.signin{border:1px solid #333;background:#111;color:#fff;border-radius:4px;padding:10px 14px;text-decoration:none;font-size:12px;font-weight:750}.signin:hover{background:#1a1a1a}.hero{max-width:920px;margin:84px auto 42px;text-align:center}.eyebrow{font-size:11px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:#fff}.hero h1{font-size:clamp(40px,7vw,76px);line-height:.95;letter-spacing:-.065em;margin:14px 0 18px}.hero p{max-width:720px;margin:0 auto;color:var(--muted);font-size:16px;line-height:1.6}.plans{width:min(1260px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.plan{background:#0b0b0b;border:1px solid var(--line);border-radius:5px;padding:24px;display:flex;flex-direction:column;min-height:565px;position:relative;overflow:hidden}.plan.featured{border-color:#fff;background:#101010;box-shadow:none}.plan.featured:before{content:"MOST POPULAR";position:absolute;top:17px;right:17px;font-size:9px;font-weight:900;letter-spacing:.12em;color:#000;background:#fff;border:1px solid #fff;border-radius:3px;padding:6px 8px}.plan h2{font-size:21px;margin:0 0 7px}.plan .desc{color:#8e8e8e;line-height:1.5;font-size:12px;min-height:58px}.price{font-size:43px;font-weight:820;letter-spacing:-.055em;margin:20px 0 2px}.price small{font-size:13px;font-weight:650;color:#8f8f8f;letter-spacing:0}.trial{font-size:11px;color:#d0d0d0}.features{display:grid;gap:10px;margin:22px 0 26px;padding:0;list-style:none}.features li{font-size:11.5px;line-height:1.35;color:#d0d0d0;display:flex;gap:9px}.features li:before{content:"✓";color:#fff;font-weight:900;flex:0 0 auto}.cta{margin-top:auto;border-radius:4px;min-height:46px;padding:0 16px;background:#111;color:#fff;border:1px solid #333;font-weight:800;text-decoration:none;display:flex;align-items:center;justify-content:center}.cta:hover{background:#1a1a1a}.featured .cta{background:#fff;color:#000;border-color:#fff}.featured .cta:hover{background:#e8e8e8}.section{width:min(1260px,100%);margin:62px auto 0}.section-head{text-align:center;max-width:760px;margin:0 auto 26px}.section-head h2{font-size:34px;letter-spacing:-.04em;margin:8px 0 10px}.compare{overflow-x:auto;border:1px solid #292929;border-radius:5px;background:#080808}.compare table{border-collapse:collapse;width:100%;min-width:800px}.compare th,.compare td{padding:14px 16px;border-bottom:1px solid #202020;text-align:center;font-size:11px}.compare th:first-child,.compare td:first-child{text-align:left}.compare th{color:#fff;background:#111;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.compare td{color:#bdbdbd}.yes{color:#fff;font-weight:900}.no{color:#555}.loginrow{display:flex;justify-content:center;gap:12px;margin-top:34px}.loginrow a{font-size:12px;text-decoration:none;font-weight:760}.loginrow .login,.loginrow .signup{color:#fff}.foot{max-width:900px;margin:22px auto 4px;text-align:center;color:#707070;font-size:10px;line-height:1.6}
-@media(max-width:1050px){.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:680px){.plans{grid-template-columns:1fr}.plan{min-height:0}.hero{margin-top:56px}.brand span{display:none}.shell{padding:20px 16px}.hero h1{font-size:46px}.section{margin-top:46px}}
+:root{--bg:#000;--panel:#0b0b0b;--line:#292929;--ink:#fff;--muted:#9b9b9b}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",sans-serif}body{min-height:100vh}.shell{min-height:100vh;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;max-width:1180px;margin:0 auto}.brand{display:flex;align-items:center;gap:10px}.brand img{width:110px;height:42px;object-fit:contain}.brand span{font-size:10px;letter-spacing:.14em;color:#888;text-transform:uppercase}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 15px;border-radius:4px;text-decoration:none;font-weight:800;font-size:12px}.btn.primary{background:#fff;color:#000;border:1px solid #fff}.btn.secondary{background:#111;color:#fff;border:1px solid #333}.hero{max-width:830px;margin:78px auto 34px;text-align:center}.eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:850}.hero h1{font-size:clamp(40px,7vw,72px);line-height:.96;letter-spacing:-.06em;margin:14px 0}.hero p{color:var(--muted);line-height:1.6;font-size:15px;max-width:690px;margin:0 auto}.beta{max-width:900px;margin:28px auto;border:1px solid #343434;background:#0b0b0b;padding:20px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.beta strong{font-size:18px;display:block}.beta p{margin:6px 0 0;color:#999;font-size:12px;line-height:1.5}.plans{max-width:1180px;margin:34px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.plan{border:1px solid var(--line);background:#0b0b0b;padding:18px;min-height:270px}.plan h2{margin:0;font-size:18px}.price{font-size:34px;font-weight:820;letter-spacing:-.05em;margin:16px 0 3px}.price small{font-size:12px;color:#888}.plan p{font-size:11px;line-height:1.5;color:#999}.plan ul{padding-left:17px;color:#cfcfcf;font-size:11px;line-height:1.7}.tag{display:inline-flex;margin-top:13px;border:1px solid #333;background:#111;color:#aaa;padding:6px 8px;font-size:9px;font-weight:800;letter-spacing:.08em}.foot{max-width:900px;margin:26px auto 0;color:#6f6f6f;font-size:10px;line-height:1.6;text-align:center}@media(max-width:900px){.plans{grid-template-columns:1fr 1fr}.beta{grid-template-columns:1fr}}@media(max-width:560px){.plans{grid-template-columns:1fr}.shell{padding:18px 14px}.hero{margin-top:54px}.top .btn{padding:0 10px}}
 </style>
 </head>
 <body>
 <div class="shell">
-  <header class="top">
-    <div class="brand"><img src="../../high-style-logo.svg" alt="High Style"><span>Match</span></div>
-    <a class="signin" href="../sign-in/?mode=login">Log in</a>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="eyebrow">High Style Match</div>
-      <h1>Choose your subscription.</h1>
-      <p>Pick the level that fits how you work, from occasional solo shoots to teams running multiple clients and productions.</p>
-    </section>
-
-    <section class="plans">
-      <article class="plan">
-        <h2>Solo</h2>
-        <div class="desc">For photographers doing occasional shoots who want the core Match workflow.</div>
-        <div class="price">£7<small>/month</small></div>
-        <div class="trial">7-day free trial</div>
-        <ul class="features"><li>Shot lists</li><li>Live Shoot mode</li><li>Basic project tracking</li><li>Simple file renaming</li><li>Basic culling</li><li>5 active projects</li><li>1 client review link at a time</li></ul>
-        <a class="cta plan-cta" data-plan="solo" href="../sign-in/?mode=signup&plan=solo">Start free trial</a>
-      </article>
-
-      <article class="plan">
-        <h2>Creator</h2>
-        <div class="desc">For regular freelance photographers who need a faster, more complete workflow.</div>
-        <div class="price">£15<small>/month</small></div>
-        <div class="trial">7-day free trial</div>
-        <ul class="features"><li>Everything in Solo</li><li>Unlimited projects</li><li>Before You Leave checks</li><li>Advanced rename rules</li><li>Duplicate grouping</li><li>Ratings, picks and rejects</li><li>Shot matching</li><li>Client favourites, comments and approvals</li><li>Basic delivery tracking</li></ul>
-        <a class="cta plan-cta" data-plan="creator" href="../sign-in/?mode=signup&plan=creator">Start free trial</a>
-      </article>
-
-      <article class="plan featured">
-        <h2>Pro</h2>
-        <div class="desc">The full professional High Style Match workflow for working photographers.</div>
-        <div class="price">£25<small>/month</small></div>
-        <div class="trial">7-day free trial</div>
-        <ul class="features"><li>Everything in Creator</li><li>Smart Cull</li><li>Advanced image matching</li><li>Similar-photo compare mode</li><li>RAW + JPEG pairing</li><li>Workflow automation</li><li>Cloud preview sync</li><li>Unlimited client review projects</li><li>Delivery-open tracking</li><li>Custom client branding</li><li>Reusable workflow templates</li></ul>
-        <a class="cta plan-cta" data-plan="pro" href="../sign-in/?mode=signup&plan=pro">Start free trial</a>
-      </article>
-
-      <article class="plan">
-        <h2>Studio</h2>
-        <div class="desc">For agencies, studios and teams managing multiple photographers and clients.</div>
-        <div class="price">£49<small>/month</small></div>
-        <div class="trial">7-day free trial</div>
-        <ul class="features"><li>Everything in Pro</li><li>Team members</li><li>Shared projects</li><li>Role permissions</li><li>Admin dashboard</li><li>Photographer assignments</li><li>Shared client lists</li><li>Team activity history</li><li>Team review tools</li><li>Larger cloud allowance</li><li>Branded client portals</li><li>Usage reporting</li><li>Priority support</li></ul>
-        <a class="cta plan-cta" data-plan="studio" href="../sign-in/?mode=signup&plan=studio">Start free trial</a>
-      </article>
-    </section>
-
-    <section class="section">
-      <div class="section-head"><div class="eyebrow">Compare subscriptions</div><h2>See what changes between each level.</h2></div>
-      <div class="compare"><table><thead><tr><th>Feature</th><th>Solo</th><th>Creator</th><th>Pro</th><th>Studio</th></tr></thead><tbody>
-        <tr><td>Active projects</td><td>5</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
-        <tr><td>Live Shoot</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><td>Before You Leave checks</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><td>Advanced matching + duplicate grouping</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><td>Smart Cull</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><td>Cloud preview sync</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><td>Unlimited client review projects</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><td>Team members + permissions</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-        <tr><td>Admin + usage reporting</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-      </tbody></table></div>
-    </section>
-
-    <div class="loginrow"><a class="login" href="../sign-in/?mode=login">Already subscribed? Log in</a><a class="signup" href="../sign-in/?mode=signup">Create an account</a></div>
-    <div class="foot">Subscription prices are product placeholders until live Stripe billing is enabled. Plan selection is already passed into the sign-up flow so checkout can use it when billing goes live.</div>
-  </main>
+<header class="top"><div class="brand"><img src="../../high-style-logo.svg" alt="High Style"><span>Match</span></div><a class="btn secondary" href="../sign-in/?mode=login">Sign in</a></header>
+<main>
+<section class="hero"><div class="eyebrow">High Style Match</div><h1>The photography workflow from brief to delivery.</h1><p>Use the working local workflow now. Subscription checkout is intentionally disabled until live billing and account infrastructure are connected.</p></section>
+<section class="beta"><div><strong>Local workflow access is open.</strong><p>Projects, shot lists, photo import, Smart Cull, brief matching, review, rename, Desktop Tether Mode and Mobile Live can be used without a paid account on this build.</p></div><a class="btn primary" id="openLocal" href="../">Open High Style Match</a></section>
+<section class="plans">
+<article class="plan"><h2>Solo</h2><div class="price">£7<small>/month</small></div><p>For occasional individual shoots.</p><ul><li>Shot lists</li><li>Local projects</li><li>Basic culling</li><li>Rename workflow</li></ul><span class="tag">BILLING NOT LIVE</span></article>
+<article class="plan"><h2>Creator</h2><div class="price">£15<small>/month</small></div><p>For regular freelance photography work.</p><ul><li>Advanced rename</li><li>Duplicate grouping</li><li>Brief matching</li><li>Delivery tracking</li></ul><span class="tag">BILLING NOT LIVE</span></article>
+<article class="plan"><h2>Pro</h2><div class="price">£25<small>/month</small></div><p>For the full professional workflow.</p><ul><li>Smart Cull</li><li>Advanced matching</li><li>Mobile + desktop capture workflows</li><li>Large-file delivery when cloud is connected</li></ul><span class="tag">BILLING NOT LIVE</span></article>
+<article class="plan"><h2>Studio</h2><div class="price">£49<small>/month</small></div><p>For teams and agencies.</p><ul><li>Shared projects</li><li>Permissions</li><li>Admin tools</li><li>Team workflow</li></ul><span class="tag">BILLING NOT LIVE</span></article>
+</section>
+<div class="foot">Prices remain product placeholders until Stripe is intentionally enabled and tested. No payment is taken from this page.</div>
+</main>
 </div>
-<script>
-  document.querySelectorAll('a[href*="sign-in"]').forEach(a=>a.addEventListener('click',()=>sessionStorage.setItem('hsm_gate_seen','1')));
-  document.querySelectorAll('.plan-cta').forEach(a=>a.addEventListener('click',()=>{localStorage.setItem('hsm_selected_plan',a.dataset.plan||'pro');sessionStorage.setItem('hsm_gate_seen','1')}));
-</script>
+<script>document.getElementById('openLocal').addEventListener('click',()=>{sessionStorage.setItem('hsm_gate_seen','1');sessionStorage.setItem('hsm_login_skipped','1')});document.querySelectorAll('a[href*="sign-in"]').forEach(a=>a.addEventListener('click',()=>sessionStorage.setItem('hsm_gate_seen','1')));</script>
 </body>
 </html>
