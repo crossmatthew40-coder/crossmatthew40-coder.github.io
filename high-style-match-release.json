@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "published_at": "2026-09-08T21:55:00Z",
+  "notes": "Production v2: large-shoot Smart Cull, shot-list matching, rename/export, cloud review and desktop packaging.",
+  "downloads": {
+    "macos_arm64": {"url": null, "sha256": null},
+    "macos_x64": {"url": null, "sha256": null},
+    "windows_x64": {"url": null, "sha256": null},
+    "windows_arm64": {"url": null, "sha256": null},
+    "linux_x64": {"url": null, "sha256": null},
+    "linux_arm64": {"url": null, "sha256": null}
+  }
+}
