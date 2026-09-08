@@ -1,11 +1,11 @@
 (function(){
   function loadRuntime(){
-    if(document.querySelector('script[data-hsm-functional-runtime]'))return;
-    const s=document.createElement('script');
-    s.src='./functional-runtime.js?v=20260908-1';
-    s.defer=true;
-    s.dataset.hsmFunctionalRuntime='true';
-    document.head.appendChild(s);
+    if(!document.querySelector('script[data-hsm-functional-runtime]')){
+      const s=document.createElement('script');s.src='./functional-runtime.js?v=20260908-1';s.defer=true;s.dataset.hsmFunctionalRuntime='true';document.head.appendChild(s)
+    }
+    if(!document.querySelector('script[data-hsm-compliance]')){
+      const c=document.createElement('script');c.src='./site-compliance.js?v=20260908-1';c.defer=true;c.dataset.hsmCompliance='true';document.head.appendChild(c)
+    }
   }
   let scheduled=false;
   function run(){
