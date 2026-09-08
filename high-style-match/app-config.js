@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.1.11-functional-local',
+  version: '1.1.12-single-plan',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -10,26 +10,28 @@ window.HSM_APP = {
   sync: { enabled:false, intervalMs:60000, previewBatchSize:8, maxPreviewBytes:3000000 },
   monitoring: { enabled:true, reportClientErrors:false },
   billing: {
-    provider:'stripe', checkoutFunction:'create-checkout-session', portalFunction:'create-billing-portal',
+    provider:'stripe',
+    checkoutFunction:'create-checkout-session',
+    portalFunction:'create-billing-portal',
     plans:{
-      solo:{name:'Solo',monthlyGBP:7,trialDays:7,activeProjects:5,clientReviewProjects:1},
-      creator:{name:'Creator',monthlyGBP:15,trialDays:7,activeProjects:'unlimited',clientReviewProjects:'standard'},
-      pro:{name:'Pro',monthlyGBP:25,trialDays:7,activeProjects:'unlimited',clientReviewProjects:'unlimited',recommended:true},
-      studio:{name:'Studio',monthlyGBP:49,trialDays:7,activeProjects:'unlimited',clientReviewProjects:'unlimited',team:true}
+      complete:{name:'High Style Match Complete',monthlyGBP:25,trialDays:7,activeProjects:'unlimited',clientReviewProjects:'unlimited',everythingIncluded:true}
     }
   },
   entitlements:{
-    solo:['shotLists','liveShoot','projectTracking','simpleRename','basicCull'],
-    creator:['shotLists','liveShoot','projectTracking','advancedRename','basicCull','beforeYouLeave','duplicateGrouping','ratings','shotMatching','deliveryTracking','captureOneBridge'],
-    pro:['shotLists','liveShoot','projectTracking','advancedRename','smartCull','beforeYouLeave','duplicateGrouping','ratings','advancedMatching','compareMode','rawJpegPairing','workflowAutomation','workflowTemplates','captureOneBridge','largeFileDelivery'],
-    studio:['shotLists','liveShoot','projectTracking','advancedRename','smartCull','beforeYouLeave','duplicateGrouping','ratings','advancedMatching','compareMode','rawJpegPairing','workflowAutomation','workflowTemplates','activityHistory','captureOneBridge','largeFileDelivery']
+    complete:[
+      'shotLists','liveShoot','projectTracking','advancedRename','smartCull','beforeYouLeave',
+      'duplicateGrouping','ratings','advancedMatching','compareMode','rawJpegPairing','workflowAutomation',
+      'workflowTemplates','activityHistory','captureOneBridge','largeFileDelivery','deliveryTracking',
+      'clientFeedback','clientReview','cloudPreviewSync','clientBranding','teamMembers','sharedProjects',
+      'rolePermissions','adminDashboard','photographerAssignments','sharedClients','teamReview','usageReporting'
+    ]
   },
   // These flags describe what is genuinely usable on the current public build.
   // Cloud/account/billing flags can be enabled after their external services are deployed and tested.
   features:{customerReview:false,customerInvites:false,cloudProjects:false,offlineQueue:true,deliveryTracking:true,adminConsole:false,captureOneBridge:true,largeFileDelivery:false,billing:false}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260908-1';
+  const BUILD='20260908-2';
   function loadTheme(){
     if(!document.querySelector('link[data-hsm-mono-theme]')){
       const mono=document.createElement('link');
@@ -98,7 +100,6 @@ window.HSM_APP = {
     }
   `;document.head.appendChild(style)}
   function routeNewVisitorsAfterSplash(){
-    // Do not force users into a payment/account gate while billing is intentionally offline.
     if(!window.HSM_APP.features.billing)return;
     const path=location.pathname.replace(/\/+$/,'/');
     const isMainEntry=path==='/high-style-match/'||path.endsWith('/high-style-match/');
