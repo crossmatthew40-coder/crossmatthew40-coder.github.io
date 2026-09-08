@@ -4,94 +4,36 @@
   window.__HSM_COMPLIANCE__=true;
 
   const ROOT='/high-style-match/';
-  const policyLinks=[
-    ['Privacy',ROOT+'privacy/'],
-    ['Cookies',ROOT+'cookies/'],
-    ['Terms',ROOT+'terms/'],
-    ['Refunds',ROOT+'refunds/'],
-    ['Accessibility',ROOT+'accessibility/'],
-    ['Copyright',ROOT+'copyright/']
-  ];
+  const policyLinks=[['Privacy',ROOT+'privacy/'],['Cookies',ROOT+'cookies/'],['Terms',ROOT+'terms/'],['Refunds',ROOT+'refunds/'],['Accessibility',ROOT+'accessibility/'],['Copyright',ROOT+'copyright/'],['Business',ROOT+'legal/']];
 
-  const style=document.createElement('style');
-  style.id='hsm-compliance-style';
-  style.textContent=`
+  const style=document.createElement('style');style.id='hsm-compliance-style';style.textContent=`
     .hsm-skip{position:fixed;left:12px;top:12px;z-index:100000;background:#fff;color:#000;padding:9px 12px;border-radius:3px;font:700 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transform:translateY(-180%);transition:.12s;text-decoration:none}.hsm-skip:focus{transform:none}
     :where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:2px solid #fff!important;outline-offset:3px!important}
-    .hsm-legal-footer{border-top:1px solid #242424;margin-top:34px;padding:18px 14px;color:#8d8d8d;font:11px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:flex;gap:10px 18px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#000}
-    .hsm-legal-links{display:flex;gap:9px 14px;flex-wrap:wrap}.hsm-legal-footer a{color:#cfcfcf;text-decoration:none}.hsm-legal-footer a:hover{text-decoration:underline}.hsm-business{max-width:560px}
+    .hsm-legal-footer{border-top:1px solid #242424;margin-top:34px;padding:18px 14px;color:#8d8d8d;font:11px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:flex;gap:10px 18px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#000}.hsm-legal-links{display:flex;gap:9px 14px;flex-wrap:wrap}.hsm-legal-footer a{color:#cfcfcf;text-decoration:none}.hsm-legal-footer a:hover{text-decoration:underline}.hsm-business{max-width:560px}
     .hsm-cookie{position:fixed;left:14px;right:14px;bottom:14px;z-index:99999;max-width:720px;margin:auto;background:#0b0b0b;color:#fff;border:1px solid #3a3a3a;padding:14px;box-shadow:0 16px 50px rgba(0,0,0,.45);font:12px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.hsm-cookie p{margin:0;color:#bdbdbd}.hsm-cookie strong{display:block;margin-bottom:4px}.hsm-cookie-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.hsm-cookie button,.hsm-cookie a{min-height:36px;border-radius:3px;padding:0 11px;font:750 11px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}.hsm-cookie button{background:#fff;color:#000;border:1px solid #fff}.hsm-cookie a{background:#111;color:#fff;border:1px solid #333}
-    .hsm-form-notice{margin:8px 0 12px;color:#8f8f8f;font:10px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.hsm-form-notice a{color:#d7d7d7}
+    .hsm-form-notice,.hsm-rights-check{margin:8px 0 12px;color:#8f8f8f;font:10px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.hsm-form-notice a,.hsm-rights-check a{color:#d7d7d7}.hsm-rights-check{border:1px solid #2f2f2f;background:#0b0b0b;padding:10px}.hsm-rights-check label{display:flex;align-items:flex-start;gap:8px;color:#c3c3c3}.hsm-rights-check input{margin-top:2px}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
-  `;
-  document.head.appendChild(style);
+  `;document.head.appendChild(style);
 
   function mainTarget(){return document.querySelector('main,#content,.content,.shell,.wrap,.page')||document.body}
   function addSkip(){if(document.querySelector('.hsm-skip'))return;const target=mainTarget();if(!target.id)target.id='hsm-main';const a=document.createElement('a');a.className='hsm-skip';a.href='#'+target.id;a.textContent='Skip to main content';document.body.prepend(a)}
+  function readableAlt(img){if(img.hasAttribute('alt'))return;const label=img.getAttribute('aria-label')||img.getAttribute('title')||'';if(label){img.alt=label;return}const src=(img.getAttribute('src')||'').split('/').pop()||'';if(/logo|brandmark|high-style/i.test(src))img.alt='High Style Match';else if(src){const base=decodeURIComponent(src).replace(/\.[a-z0-9]+(?:\?.*)?$/i,'').replace(/[-_]+/g,' ').trim();img.alt=base?`Photograph preview: ${base}`:'Photograph preview'}else img.alt=''}
 
-  function readableAlt(img){
-    if(img.hasAttribute('alt'))return;
-    const label=img.getAttribute('aria-label')||img.getAttribute('title')||'';
-    if(label){img.alt=label;return}
-    const src=(img.getAttribute('src')||'').split('/').pop()||'';
-    if(/logo|brandmark|high-style/i.test(src))img.alt='High Style Match';
-    else if(src){const base=decodeURIComponent(src).replace(/\.[a-z0-9]+(?:\?.*)?$/i,'').replace(/[-_]+/g,' ').trim();img.alt=base?`Photograph preview: ${base}`:'Photograph preview'}
-    else img.alt='';
-  }
+  function clearLabels(){document.querySelectorAll('img').forEach(readableAlt);document.querySelectorAll('button').forEach((b,i)=>{const txt=(b.textContent||'').trim();if(!txt&&!b.getAttribute('aria-label'))b.setAttribute('aria-label',b.getAttribute('title')||`Action ${i+1}`);if(/^open$/i.test(txt)&&!b.getAttribute('aria-label'))b.setAttribute('aria-label','Open client link');if(/^share$/i.test(txt)&&!b.getAttribute('aria-label'))b.setAttribute('aria-label','Share client link');if(/^copy$/i.test(txt)&&!b.getAttribute('aria-label'))b.setAttribute('aria-label','Copy link')});document.querySelectorAll('input,select,textarea').forEach((el,i)=>{if(el.type==='hidden')return;const id=el.id||'',hasLabel=id&&document.querySelector(`label[for="${CSS.escape(id)}"]`);if(!hasLabel&&!el.getAttribute('aria-label')&&!el.getAttribute('aria-labelledby'))el.setAttribute('aria-label',el.placeholder||el.name||`Field ${i+1}`)})}
 
-  function clearLabels(){
-    document.querySelectorAll('img').forEach(readableAlt);
-    document.querySelectorAll('button').forEach((b,i)=>{
-      const txt=(b.textContent||'').trim();
-      if(!txt&&!b.getAttribute('aria-label'))b.setAttribute('aria-label',b.getAttribute('title')||`Action ${i+1}`);
-      if(/^open$/i.test(txt)&&!b.getAttribute('aria-label'))b.setAttribute('aria-label','Open client link');
-      if(/^share$/i.test(txt)&&!b.getAttribute('aria-label'))b.setAttribute('aria-label','Share client link');
-      if(/^copy$/i.test(txt)&&!b.getAttribute('aria-label'))b.setAttribute('aria-label','Copy link');
-    });
-    document.querySelectorAll('input,select,textarea').forEach((el,i)=>{
-      if(el.type==='hidden')return;
-      const id=el.id||'';
-      const hasLabel=id&&document.querySelector(`label[for="${CSS.escape(id)}"]`);
-      if(!hasLabel&&!el.getAttribute('aria-label')&&!el.getAttribute('aria-labelledby'))el.setAttribute('aria-label',el.placeholder||el.name||`Field ${i+1}`);
-    });
-  }
+  function formNotices(){document.querySelectorAll('form').forEach(form=>{if(form.querySelector('.hsm-form-notice'))return;const collectsPersonal=!!form.querySelector('input[type="email"],input[name*="name" i],input[name*="email" i],input[type="tel"]');if(!collectsPersonal)return;const n=document.createElement('div');n.className='hsm-form-notice';n.innerHTML='Personal information is used only to provide the requested account or service. See the <a href="'+ROOT+'privacy/">Privacy Policy</a>.';const submit=form.querySelector('button[type="submit"],input[type="submit"]');if(submit)submit.insertAdjacentElement('beforebegin',n);else form.appendChild(n)})}
 
-  function formNotices(){
-    document.querySelectorAll('form').forEach(form=>{
-      if(form.querySelector('.hsm-form-notice'))return;
-      const collectsPersonal=!!form.querySelector('input[type="email"],input[name*="name" i],input[name*="email" i],input[type="tel"]');
-      if(!collectsPersonal)return;
-      const n=document.createElement('div');n.className='hsm-form-notice';n.innerHTML='Personal information is used only to provide the requested account or service. See the <a href="'+ROOT+'privacy/">Privacy Policy</a>.';
-      const submit=form.querySelector('button[type="submit"],input[type="submit"]');
-      if(submit)submit.insertAdjacentElement('beforebegin',n);else form.appendChild(n);
-    });
-  }
+  function deliveryRights(){if(!location.pathname.includes('/high-style-match/transfer/')||document.querySelector('.hsm-rights-check'))return;const send=document.getElementById('send');if(!send)return;const wrap=document.createElement('div');wrap.className='hsm-rights-check';wrap.innerHTML='<label><input id="hsmRightsConfirm" type="checkbox"> <span>I confirm I own these files or have permission to deliver them, and I have authority to share any personal data included. <a href="'+ROOT+'copyright/">Copyright & image rights</a></span></label>';send.closest('.actions')?.insertAdjacentElement('beforebegin',wrap);const c=wrap.querySelector('input');const originalDisabled=send.disabled;send.disabled=true;c.addEventListener('change',()=>{send.disabled=originalDisabled||!c.checked})}
 
-  function hardenEmbeds(){
-    document.querySelectorAll('iframe').forEach(f=>{
-      if(!f.title)f.title='Embedded content';
-      if(!f.loading)f.loading='lazy';
-      if(!f.referrerPolicy)f.referrerPolicy='strict-origin-when-cross-origin';
-    });
-    document.querySelectorAll('.fake-review,.testimonial-placeholder,[data-fake-review],[data-demo-review]').forEach(el=>el.remove());
-  }
+  function hardenEmbeds(){document.querySelectorAll('iframe').forEach(f=>{if(!f.title)f.title='Embedded content';if(!f.loading)f.loading='lazy';if(!f.referrerPolicy)f.referrerPolicy='strict-origin-when-cross-origin';try{const u=new URL(f.src,location.href);f.dataset.hsmThirdParty=u.origin===location.origin?'same-origin':'third-party'}catch{f.dataset.hsmThirdParty='unknown'}});document.querySelectorAll('.fake-review,.testimonial-placeholder,[data-fake-review],[data-demo-review]').forEach(el=>el.remove())}
 
-  function footer(){
-    if(document.querySelector('.hsm-legal-footer'))return;
-    const f=document.createElement('footer');f.className='hsm-legal-footer';
-    f.innerHTML='<div class="hsm-business"><strong style="color:#fff">High Style Match</strong> · a High Style Group product · support@highstylegroup.co.uk<br><span>Only essential browser storage is used on the current public build. Cloud accounts and paid billing remain disabled until their services are configured.</span></div><nav class="hsm-legal-links" aria-label="Legal and policy links">'+policyLinks.map(([n,u])=>`<a href="${u}">${n}</a>`).join('')+'</nav>';
-    document.body.appendChild(f);
-  }
+  function trackingAudit(){const patterns=/google-analytics|googletagmanager|facebook\.net|connect\.facebook|hotjar|clarity\.ms|segment\.com|mixpanel|amplitude/i;const found=[...document.scripts].filter(s=>patterns.test(s.src||''));document.documentElement.dataset.hsmTracking=found.length?'third-party-detected':'none-detected';if(found.length)console.warn('High Style Match compliance check: third-party tracking scripts detected:',found.map(s=>s.src))}
 
-  function cookieNotice(){
-    if(localStorage.getItem('hsm_cookie_choice_v1')||document.querySelector('.hsm-cookie'))return;
-    const box=document.createElement('section');box.className='hsm-cookie';box.setAttribute('role','dialog');box.setAttribute('aria-label','Cookie and local storage notice');
-    box.innerHTML='<strong>Essential storage only</strong><p>High Style Match currently uses local browser storage needed for projects, preferences and session state. No advertising or analytics cookies are enabled on this public build.</p><div class="hsm-cookie-actions"><button type="button" id="hsmEssentialOnly">Continue with essential storage</button><a href="'+ROOT+'cookies/">Cookie policy</a></div>';
-    document.body.appendChild(box);
-    box.querySelector('#hsmEssentialOnly').addEventListener('click',()=>{localStorage.setItem('hsm_cookie_choice_v1','essential');box.remove()});
-  }
+  function footer(){if(document.querySelector('.hsm-legal-footer'))return;const f=document.createElement('footer');f.className='hsm-legal-footer';f.innerHTML='<div class="hsm-business"><strong style="color:#fff">High Style Match</strong> · a High Style Group product · support@highstylegroup.co.uk<br><span>Only essential browser storage is used on the current public build. Cloud accounts and paid billing remain disabled until their services are configured.</span></div><nav class="hsm-legal-links" aria-label="Legal and policy links">'+policyLinks.map(([n,u])=>`<a href="${u}">${n}</a>`).join('')+'</nav>';document.body.appendChild(f)}
 
-  function run(){addSkip();clearLabels();formNotices();hardenEmbeds();footer();cookieNotice()}
+  function cookieNotice(){if(localStorage.getItem('hsm_cookie_choice_v1')||document.querySelector('.hsm-cookie'))return;const box=document.createElement('section');box.className='hsm-cookie';box.setAttribute('role','dialog');box.setAttribute('aria-label','Cookie and local storage notice');box.innerHTML='<strong>Essential storage only</strong><p>High Style Match currently uses local browser storage needed for projects, preferences and session state. No advertising or analytics cookies are enabled on this public build.</p><div class="hsm-cookie-actions"><button type="button" id="hsmEssentialOnly">Continue with essential storage</button><a href="'+ROOT+'cookies/">Cookie policy</a></div>';document.body.appendChild(box);box.querySelector('#hsmEssentialOnly').addEventListener('click',()=>{localStorage.setItem('hsm_cookie_choice_v1','essential');box.remove()})}
+
+  function run(){addSkip();clearLabels();formNotices();deliveryRights();hardenEmbeds();trackingAudit();footer();cookieNotice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
-  new MutationObserver(()=>{clearLabels();formNotices();hardenEmbeds()}).observe(document.documentElement,{subtree:true,childList:true});
+  new MutationObserver(()=>{clearLabels();formNotices();deliveryRights();hardenEmbeds()}).observe(document.documentElement,{subtree:true,childList:true});
 })();
