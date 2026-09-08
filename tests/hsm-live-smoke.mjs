@@ -7,7 +7,7 @@ const browser=await chromium.launch({headless:true});
 const context=await browser.newContext({viewport:{width:1440,height:1000}});
 const page=await context.newPage();
 const pageErrors=[];page.on('pageerror',e=>pageErrors.push(String(e.message||e)));
-const settle=(ms=260)=>page.waitForTimeout(ms);
+const settle=(ms=300)=>page.waitForTimeout(ms);
 async function visible(sel,label,timeout=7000){try{await page.locator(sel).first().waitFor({state:'visible',timeout});pass(label)}catch(e){fail(`${label}: ${e.message}`)}}
 async function open(path,sel,label){try{await page.goto(`${BASE}${path}${path.includes('?')?'&':'?'}smoke=${now}`,{waitUntil:'domcontentloaded',timeout:30000});await settle();await visible(sel,label)}catch(e){fail(`${label}: ${e.message}`)}}
 
@@ -18,7 +18,7 @@ try{
 
   const seed={shoots:[{id:'shoot_smoke',client:'Smoke Test Client',name:'Smoke Test Shoot',date:'2026-09-08',location:'Test Studio',createdAt:now,updatedAt:now,shotText:'Burger — Landscape\nBurger — Portrait\nCocktail — Overhead',shotSourceName:'Smoke test',shots:[{id:'shot_1',subject:'Burger',variant:'Landscape',skip:false},{id:'shot_2',subject:'Burger',variant:'Portrait',skip:false},{id:'shot_3',subject:'Cocktail',variant:'Overhead',skip:false}],photos:[],templateId:'t1',renameOverrides:{},renameSettings:{separator:'_',caseMode:'asis',numberStart:1,numberPad:3},reviewApproved:false,cullCompleted:false,cullSkipped:false,undoStack:[],delivery:{history:[]}}],templates:[{id:'t1',name:'Client · Subject · Orientation',pattern:'{client}_{subject}_{orientation}_{number}'}],history:[],activity:[],settings:{defaultTemplate:'t1',groupGapSeconds:45,analysisConcurrency:2,defaultSeparator:'_',defaultCase:'asis',numberStart:1,numberPad:3,deliveryProvider:'high-style-match'}};
   await page.evaluate(data=>localStorage.setItem('hsmPremium1',JSON.stringify(data)),seed);
-  await page.reload({waitUntil:'domcontentloaded'});await settle(500);
+  await page.reload({waitUntil:'domcontentloaded'});await settle(650);
 
   const sidebar=[['home','Dashboard'],['shoots','Projects'],['live','Tether Mode'],['photos','Photos'],['cull','Cull'],['review','Review'],['deliver','Deliver'],['clients','Clients'],['globalhistory','History'],['settings','Settings']];
   for(const [id,label] of sidebar){const b=page.locator(`#nav button[data-nav="${id}"]`);if(!await b.count()){fail(`Sidebar item missing: ${label}`);continue}try{await b.click();await settle();pass(`Sidebar works: ${label}`)}catch(e){fail(`Sidebar click failed: ${label} — ${e.message}`)}}
@@ -30,6 +30,10 @@ try{
   const theme=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()}));
   if(theme.body==='rgb(0, 0, 0)'||theme.body==='rgb(8, 9, 11)')pass('Monochrome near-black background applied');else fail(`Unexpected body background ${theme.body}`);
   if(['#fff','#FFFFFF','white'].includes(theme.accent))pass('Monochrome white accent applied');else fail(`Expected white accent, got ${theme.accent}`);
+
+  if(await page.locator('.hsm-skip').count())pass('Skip-to-content accessibility link is present');else fail('Skip-to-content link missing');
+  if(await page.locator('.hsm-legal-footer').count())pass('Legal footer is present');else fail('Legal footer missing');
+  if(await page.locator('.hsm-cookie').count())pass('Essential storage notice renders');else fail('Essential storage notice missing');
 
   await open('tether/?shoot=shoot_smoke','body','Desktop Tether Mode loads');
   if((await page.locator('body').innerText()).toLowerCase().includes('capture'))pass('Tether capture workflow present');else fail('Tether capture workflow text missing');
@@ -45,13 +49,18 @@ try{
   await open('delivery/','body','Client delivery page loads');
   await open('sign-in/','#signInForm','Sign-in form loads');
   if(await page.locator('#skipLogin').count())pass('Local skip sign-in is available while auth is offline');else fail('Skip sign-in fallback missing');
+  if(await page.locator('.hsm-form-notice').count())pass('Personal-data form notice is present');else fail('Personal-data form notice missing');
 
   await open('subscribe/','#openLocal','Subscription gate has local access fallback');
   if((await page.locator('body').innerText()).includes('BILLING NOT LIVE'))pass('Subscription page does not pretend billing is live');else fail('Subscription page billing state is unclear');
 
-  for(const asset of ['manifest.webmanifest','sw.js','app-config.js','cloud.js','production.js','functional-runtime.js','capture-delivery-tools.js','delivery-config.js']){const r=await context.request.get(`${BASE}${asset}?smoke=${now}`);if(r.ok())pass(`Asset available: ${asset}`);else fail(`Asset unavailable: ${asset} (${r.status()})`)}
+  for(const [path,heading] of [['privacy/','Privacy Policy'],['cookies/','Cookie & local storage policy'],['terms/','Terms of Use'],['refunds/','Refunds & cancellation'],['accessibility/','Accessibility'],['copyright/','Copyright & image rights'],['legal/','Legal & business information']]){
+    await open(path,'h1',`${heading} page loads`);const text=await page.locator('h1').innerText();if(text.includes(heading.split(' ')[0]))pass(`${heading} heading present`);else fail(`${heading} heading unexpected: ${text}`)
+  }
 
-  const m=await browser.newPage({viewport:{width:390,height:844}});const errs=[];m.on('pageerror',e=>errs.push(String(e.message||e)));await m.addInitScript(()=>sessionStorage.setItem('hsm_gate_seen','1'));await m.goto(`${BASE}?mobileSmoke=${now}`,{waitUntil:'domcontentloaded',timeout:30000});await m.waitForTimeout(450);if(await m.locator('#content').count())pass('Main mobile layout loads');else fail('Main mobile layout missing');if(errs.length)fail(`Mobile page errors: ${errs.join(' | ')}`);await m.close();
+  for(const asset of ['manifest.webmanifest','sw.js','app-config.js','cloud.js','production.js','functional-runtime.js','capture-delivery-tools.js','delivery-config.js','site-compliance.js']){const r=await context.request.get(`${BASE}${asset}?smoke=${now}`);if(r.ok())pass(`Asset available: ${asset}`);else fail(`Asset unavailable: ${asset} (${r.status()})`)}
+
+  const m=await browser.newPage({viewport:{width:390,height:844}});const errs=[];m.on('pageerror',e=>errs.push(String(e.message||e)));await m.addInitScript(()=>sessionStorage.setItem('hsm_gate_seen','1'));await m.goto(`${BASE}?mobileSmoke=${now}`,{waitUntil:'domcontentloaded',timeout:30000});await m.waitForTimeout(550);if(await m.locator('#content').count())pass('Main mobile layout loads');else fail('Main mobile layout missing');if(errs.length)fail(`Mobile page errors: ${errs.join(' | ')}`);await m.close();
 }catch(e){fail(`Smoke test crashed: ${e.stack||e.message||e}`)}
 if(pageErrors.length)fail(`Uncaught page errors: ${pageErrors.join(' | ')}`);
 await browser.close();
