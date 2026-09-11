@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.1.13-live-accounts',
+  version: '1.1.14-adobe-handoff',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -29,7 +29,7 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:true,largeFileDelivery:false,billing:false}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260908-3';
+  const BUILD='20260911-1';
   function loadTheme(){
     if(!document.querySelector('link[data-hsm-mono-theme]')){
       const mono=document.createElement('link');
