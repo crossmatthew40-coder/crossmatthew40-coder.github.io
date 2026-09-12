@@ -1,0 +1,106 @@
+/* High Style Match — solid controls + light-blue reference background */
+:root{
+  --hsm-sky:#c6deef;
+  --hsm-sky-top:#d8eaf6;
+  --hsm-sky-bottom:#b9d4e7;
+  --hsm-solid:#6f879a;
+  --hsm-solid-dark:#5d768a;
+  --hsm-solid-deep:#526c80;
+  --hsm-white:#f8fbfd;
+}
+html{background:var(--hsm-sky)!important}
+body{
+  background:
+    radial-gradient(46rem 34rem at 18% -3%,rgba(246,252,255,.92),transparent 63%),
+    radial-gradient(38rem 30rem at 90% 82%,rgba(248,187,157,.16),transparent 62%),
+    linear-gradient(155deg,var(--hsm-sky-top) 0%,var(--hsm-sky) 46%,var(--hsm-sky-bottom) 100%)!important;
+  background-attachment:fixed!important;
+}
+body::after{background:rgba(239,249,255,.48)!important;opacity:.72!important}
+
+/* Solid app chrome */
+.sidebar{
+  background:linear-gradient(180deg,#6b8498 0%,#5f788c 100%)!important;
+  border-color:rgba(255,255,255,.16)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.topbar{
+  background:#7891a4!important;
+  border-color:rgba(255,255,255,.15)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.nav button{
+  background:#71899c!important;
+  border-color:#71899c!important;
+  color:rgba(255,255,255,.86)!important;
+}
+.nav button:hover{background:#7d95a7!important;border-color:#7d95a7!important;color:#fff!important}
+.nav button.on{background:#f7fafc!important;border-color:#f7fafc!important;color:#5c7488!important;box-shadow:0 8px 22px rgba(66,92,111,.12)!important}
+.nav button.on svg{color:#5c7488!important}
+.storage-card{background:#6f8799!important;border-color:#6f8799!important}
+
+/* All interactive buttons are opaque solid fills */
+.btn,.icon-btn,.hsm-ai button,.hsm-bp button,.filters button,.cull-toolbar button,.tabs button,.hsm-groups button,.hsm-stars button{
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.btn.primary,.hsm-ai button:not(.secondary),.hsm-bp button.primary,.filters button.on,.tabs button.on,.hsm-rec,.cull-badge.pick,.hsm-chip.ai{
+  background:#f8fbfd!important;
+  color:#587084!important;
+  border-color:#f8fbfd!important;
+  box-shadow:0 10px 24px rgba(63,89,109,.12)!important;
+}
+.btn.primary:hover,.hsm-ai button:not(.secondary):hover,.hsm-bp button.primary:hover,.filters button.on:hover,.tabs button.on:hover{
+  background:#ffffff!important;color:#4e687d!important;
+}
+.btn.secondary,.icon-btn,.hsm-ai button.secondary,.hsm-bp button:not(.primary),.filters button:not(.on),.cull-toolbar button,.tabs button:not(.on),.hsm-groups button{
+  background:var(--hsm-solid)!important;
+  color:#fff!important;
+  border-color:var(--hsm-solid)!important;
+  box-shadow:none!important;
+}
+.btn.secondary:hover,.icon-btn:hover,.hsm-ai button.secondary:hover,.hsm-bp button:not(.primary):hover,.filters button:not(.on):hover,.cull-toolbar button:hover,.tabs button:not(.on):hover,.hsm-groups button:hover{
+  background:#7b93a5!important;border-color:#7b93a5!important;color:#fff!important;
+}
+.btn.danger{background:#9b6769!important;color:#fff!important;border-color:#9b6769!important}
+
+/* Keep content surfaces soft, but not see-through enough to feel unfinished */
+.panel,.stat,.mini-stat,.setting-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty,.cull-stat,.template-row,.table-row,.activity-item,.provider-card,.photo-card,.hsm-ai{
+  background:linear-gradient(145deg,#9fb7c8 0%,#8faabc 100%)!important;
+  border-color:rgba(255,255,255,.18)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.workspace-head,.smart-cull-hero,.shot-hub-hero,.delivery-hero,.callout{
+  background:linear-gradient(150deg,#6f899d 0%,#668095 100%)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.photo-body{background:#839daf!important}
+.visual-score>div{background:#758fa3!important}
+.cull-badge,.pill,.tag,.status,.chip,.hsm-chip{background:#7790a3!important;border-color:#7790a3!important;color:#fff!important;backdrop-filter:none!important}
+
+/* Best Picks keeps the video palette with solid panes and controls */
+.hsm-bp{
+  background:
+    radial-gradient(38rem 30rem at 18% 0%,rgba(247,252,255,.80),transparent 62%),
+    linear-gradient(155deg,#d5e8f5 0%,#c4ddef 48%,#b7d3e7 100%)!important;
+}
+.hsm-bph{background:#6f889c!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.hsm-bpm,.hsm-bps{background:#8099ac!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.hsm-card,.hsm-cmp{background:#91a9ba!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.hsm-card .body,.hsm-cmp .body{background:#829caf!important}
+.hsm-cov div{background:#718b9f!important;border-color:#718b9f!important}
+.hsm-groups button.on{background:#f8fbfd!important;color:#587084!important;border-color:#f8fbfd!important}
+
+/* Forms should feel like actual controls instead of translucent glass */
+input,textarea,select,.select,.field input,.field textarea,.field select,.rename-row input,.review-select{
+  background:#6f899d!important;
+  border-color:#6f899d!important;
+  color:#fff!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.58)!important}
+
+@media(max-width:760px){
+  body{background:linear-gradient(155deg,#d9ebf7 0%,#c7dfef 52%,#bad5e7 100%)!important}
+  .sidebar{background:#688195!important}
+  .topbar{background:#7892a5!important}
+}
