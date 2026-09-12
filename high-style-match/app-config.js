@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.2.0-ai-vision',
+  version: '1.3.0-best-picks',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -19,17 +19,16 @@ window.HSM_APP = {
   },
   entitlements:{
     complete:[
-      'shotLists','liveShoot','projectTracking','advancedRename','smartCull','beforeYouLeave',
-      'duplicateGrouping','ratings','advancedMatching','compareMode','rawJpegPairing','workflowAutomation',
-      'workflowTemplates','activityHistory','captureOneBridge','largeFileDelivery','deliveryTracking',
-      'clientFeedback','clientReview','cloudPreviewSync','clientBranding','teamMembers','sharedProjects',
-      'rolePermissions','adminDashboard','photographerAssignments','sharedClients','teamReview','usageReporting'
+      'shotLists','projectTracking','advancedRename','smartCull','aiVision','bestPicksStudio','aiCompare',
+      'preferenceLearning','shotListCoverage','duplicateGrouping','ratings','advancedMatching','compareMode','rawJpegPairing','workflowAutomation',
+      'workflowTemplates','activityHistory','largeFileDelivery','deliveryTracking','clientFeedback','clientReview','cloudPreviewSync',
+      'clientBranding','teamMembers','sharedProjects','rolePermissions','adminDashboard','photographerAssignments','sharedClients','teamReview','usageReporting'
     ]
   },
-  features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:true,largeFileDelivery:false,billing:false,aiVision:true}
+  features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260912-1';
+  const BUILD='20260912-2';
   function loadTheme(){
     if(!document.querySelector('link[data-hsm-mono-theme]')){
       const mono=document.createElement('link');
@@ -50,7 +49,13 @@ window.HSM_APP = {
   function routeNewVisitorsAfterSplash(){if(!window.HSM_APP.features.billing)return;const path=location.pathname.replace(/\/+$/,'/');const isMainEntry=path==='/high-style-match/'||path.endsWith('/high-style-match/');if(!isMainEntry||sessionStorage.getItem('hsm_gate_seen')==='1')return;setTimeout(()=>{sessionStorage.setItem('hsm_gate_seen','1');location.href='./subscribe/'},5000)}
   function apply(){loadTheme();ensureOpening();const logoUrl=window.HSM_APP.logoUrl;document.querySelectorAll('.brandmark').forEach(mark=>{const opening=mark.closest('.hsm-opening-logo');mark.innerHTML='';Object.assign(mark.style,{background:'transparent',backgroundColor:'transparent',boxShadow:'none',border:'0',borderRadius:'0',overflow:'visible',padding:'0'});const img=document.createElement('img');img.src=logoUrl;img.alt='High Style';img.decoding='async';Object.assign(img.style,{width:'100%',height:'100%',display:'block',objectFit:'contain',objectPosition:'center',background:'transparent',border:'0',boxShadow:'none',transform:'none',filter:'none'});mark.appendChild(img);if(opening){opening.querySelectorAll('.hsm-opening-brandcopy').forEach(el=>el.remove());const copy=document.createElement('div');copy.className='hsm-opening-brandcopy';copy.innerHTML='<strong>High Style Match</strong><span>Part of the High Style Group</span>';opening.appendChild(copy)}});let favicon=document.querySelector('link[rel="icon"]');if(!favicon){favicon=document.createElement('link');favicon.rel='icon';document.head.appendChild(favicon)}favicon.type='image/svg+xml';favicon.href=logoUrl;routeNewVisitorsAfterSplash()}
   function loadScript(src,key){if(document.querySelector(`script[data-${key}]`))return;const s=document.createElement('script');s.src=src;s.defer=true;s.setAttribute(`data-${key}`,'true');document.head.appendChild(s)}
-  function loadNonCriticalTools(){loadScript(`./product-upgrades.js?v=${BUILD}`,'hsm-upgrades');loadScript(`./capture-delivery-tools.js?v=${BUILD}`,'hsm-capture-delivery');loadScript(`./adobe-actions.js?v=${BUILD}`,'hsm-adobe-actions');loadScript(`./ai-vision-v2.js?v=${BUILD}`,'hsm-ai-vision')}
+  function loadNonCriticalTools(){
+    loadScript(`./product-upgrades.js?v=${BUILD}`,'hsm-upgrades');
+    loadScript(`./capture-delivery-tools.js?v=${BUILD}`,'hsm-capture-delivery');
+    loadScript(`./adobe-actions.js?v=${BUILD}`,'hsm-adobe-actions');
+    loadScript(`./ai-vision-v2.js?v=${BUILD}`,'hsm-ai-vision');
+    loadScript(`./best-picks-studio.js?v=${BUILD}`,'hsm-best-picks-studio');
+  }
   function scheduleNonCritical(){if('requestIdleCallback'in window)requestIdleCallback(loadNonCriticalTools,{timeout:500});else setTimeout(loadNonCriticalTools,120)}
   function boot(){apply();scheduleNonCritical()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot()
