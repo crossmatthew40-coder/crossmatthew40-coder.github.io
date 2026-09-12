@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v6-delivery-config';
+const CACHE='hsm-shell-v7-best-picks';
 
 const ESSENTIAL=[
   '/high-style-match/',
