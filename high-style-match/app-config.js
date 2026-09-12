@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.5.0-reference-video',
+  version: '1.5.1-solid-controls',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -28,7 +28,7 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260913-1';
+  const BUILD='20260913-2';
   function loadTheme(){
     if(!document.querySelector('link[data-hsm-mono-theme]')){
       const mono=document.createElement('link');
@@ -50,15 +50,20 @@ window.HSM_APP = {
       reference.rel='stylesheet';reference.href=`./reference-video-theme.css?v=${BUILD}`;reference.dataset.hsmReferenceVideo='true';
       document.head.appendChild(reference);
     }
+    if(!document.querySelector('link[data-hsm-solid-controls]')){
+      const solid=document.createElement('link');
+      solid.rel='stylesheet';solid.href=`./solid-controls-theme.css?v=${BUILD}`;solid.dataset.hsmSolidControls='true';
+      document.head.appendChild(solid);
+    }
   }
   function ensureOpening(){const style=document.createElement('style');style.textContent=`
-    .hsm-opening{animation:hsmOpeningOut .3s ease 4.7s both!important;background:radial-gradient(38rem 30rem at 22% 5%,rgba(235,247,255,.92),transparent 60%),linear-gradient(155deg,#c4dcef,#aac9df 50%,#bdd5e7)!important}
-    .hsm-opening:before{content:"";position:absolute;right:-5vw;bottom:-20vh;width:34vw;height:66vh;border-radius:48%;background:linear-gradient(160deg,rgba(99,69,54,.14),rgba(247,156,112,.20));filter:blur(60px);transform:rotate(-12deg)}
+    .hsm-opening{animation:hsmOpeningOut .3s ease 4.7s both!important;background:radial-gradient(38rem 30rem at 22% 5%,rgba(235,247,255,.92),transparent 60%),linear-gradient(155deg,#d8eaf6,#c7dfef 50%,#bad5e7)!important}
+    .hsm-opening:before{content:"";position:absolute;right:-5vw;bottom:-20vh;width:34vw;height:66vh;border-radius:48%;background:linear-gradient(160deg,rgba(99,69,54,.10),rgba(247,156,112,.14));filter:blur(60px);transform:rotate(-12deg)}
     .hsm-opening-logo{animation:hsmLogoSlide .55s cubic-bezier(.16,1,.3,1) both!important;display:grid!important;grid-template-columns:auto auto!important;grid-template-rows:auto!important;align-items:center!important;justify-content:center!important;column-gap:28px!important;width:min(94vw,1040px)!important;max-width:1040px!important;padding:24px!important;margin:auto!important;position:relative!important;z-index:1!important}
     .hsm-opening-logo>.brandmark{grid-column:1!important;width:clamp(150px,18vw,240px)!important;height:clamp(150px,18vw,240px)!important;max-width:32vh!important;max-height:32vh!important;flex:none!important;filter:drop-shadow(0 24px 50px rgba(72,96,115,.16))!important}
     .hsm-opening-brandcopy{grid-column:2!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;text-align:left!important;min-width:0!important}
     .hsm-opening-brandcopy strong{display:block!important;margin:0!important;font-size:clamp(40px,5vw,72px)!important;font-weight:460!important;letter-spacing:-.055em!important;line-height:.92!important;color:#fff!important;white-space:nowrap!important;text-shadow:0 16px 45px rgba(78,104,124,.14)!important}
-    .hsm-opening-brandcopy span{display:block!important;margin-top:13px!important;font-size:clamp(8px,.9vw,11px)!important;letter-spacing:.14em!important;text-transform:uppercase!important;color:rgba(255,255,255,.62)!important;font-weight:520!important;white-space:nowrap!important}
+    .hsm-opening-brandcopy span{display:block!important;margin-top:13px!important;font-size:clamp(8px,.9vw,11px)!important;letter-spacing:.14em!important;text-transform:uppercase!important;color:rgba(255,255,255,.68)!important;font-weight:520!important;white-space:nowrap!important}
     .hsm-opening-sub{display:none!important}
     @media(max-width:720px){.hsm-opening-logo{grid-template-columns:auto auto!important;column-gap:14px!important;width:98vw!important;padding:10px!important}.hsm-opening-logo>.brandmark{width:clamp(90px,27vw,132px)!important;height:clamp(90px,27vw,132px)!important}.hsm-opening-brandcopy strong{font-size:clamp(24px,7vw,36px)!important}.hsm-opening-brandcopy span{font-size:7px!important;letter-spacing:.1em!important;margin-top:7px!important}}
   `;document.head.appendChild(style)}
