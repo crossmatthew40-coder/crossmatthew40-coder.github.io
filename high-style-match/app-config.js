@@ -1,7 +1,7 @@
 // High Style Match production configuration.
 // Public, browser-safe values only. Never put private API keys here.
 window.HSM_APP = {
-  version: '1.3.1-canva-refresh',
+  version: '1.4.0-living-glass',
   canonicalBase: 'https://crossmatthew40-coder.github.io/high-style-match/',
   preferredDomain: 'https://app.highstylegroup.co.uk/',
   supportEmail: 'support@highstylegroup.co.uk',
@@ -28,7 +28,7 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260912-3';
+  const BUILD='20260912-4';
   function loadTheme(){
     if(!document.querySelector('link[data-hsm-mono-theme]')){
       const mono=document.createElement('link');
@@ -39,6 +39,11 @@ window.HSM_APP = {
       const refresh=document.createElement('link');
       refresh.rel='stylesheet';refresh.href=`./canva-visual-refresh.css?v=${BUILD}`;refresh.dataset.hsmCanvaRefresh='true';
       document.head.appendChild(refresh);
+    }
+    if(!document.querySelector('link[data-hsm-living-glass]')){
+      const glass=document.createElement('link');
+      glass.rel='stylesheet';glass.href=`./living-glass-theme.css?v=${BUILD}`;glass.dataset.hsmLivingGlass='true';
+      document.head.appendChild(glass);
     }
   }
   function ensureOpening(){const style=document.createElement('style');style.textContent=`
