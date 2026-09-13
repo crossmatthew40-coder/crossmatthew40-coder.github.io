@@ -28,7 +28,7 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260913-9';
+  const BUILD='20260913-10';
   function loadTheme(){
     if(!document.querySelector('link[data-hsm-premium-product]')){
       const theme=document.createElement('link');
@@ -57,9 +57,9 @@ window.HSM_APP = {
       body{background:radial-gradient(40rem 30rem at 72% 2%,rgba(255,218,201,.78),transparent 58%),radial-gradient(42rem 36rem at 9% 76%,rgba(255,196,167,.55),transparent 58%),radial-gradient(48rem 38rem at 105% 87%,rgba(130,202,244,.65),transparent 64%),linear-gradient(135deg,#dbeefa 0%,#cce5f7 48%,#e9f2f8 100%)!important;background-attachment:fixed!important}
       body:before{right:auto!important;left:20vw!important;bottom:-24vh!important;width:48vw!important;height:42vh!important;background:rgba(255,224,207,.55)!important;filter:blur(80px)!important}
       body:after{left:-20vw!important;top:-15vw!important;background:rgba(164,214,245,.7)!important;filter:blur(85px)!important}
-      .app{grid-template-columns:244px minmax(0,1fr)!important}
+      .app{grid-template-columns:244px minmax(0,1fr)!important;background:transparent!important;color-scheme:light!important}
       .sidebar{margin:15px 0 15px 15px!important;height:calc(100vh - 30px)!important;padding:20px 12px!important;border:1px solid rgba(255,255,255,.52)!important;border-radius:30px!important;background:linear-gradient(160deg,rgba(54,91,124,.84),rgba(72,119,153,.72))!important;box-shadow:0 24px 64px rgba(38,76,107,.23)!important;backdrop-filter:blur(32px) saturate(125%)!important;-webkit-backdrop-filter:blur(32px) saturate(125%)!important}
-      .brand{padding:7px 10px 28px!important}.brand strong{font-size:16px!important;font-weight:580!important}.brand small{color:rgba(255,255,255,.68)!important}
+      .brand{padding:7px 10px 28px!important}.brand strong{font-size:16px!important;font-weight:580!important;white-space:nowrap!important}.brand small{color:rgba(255,255,255,.68)!important}#hsmLocalBadge{display:none!important}
       .nav{gap:7px!important}.nav button{min-height:50px!important;border:1px solid transparent!important;background:transparent!important;color:rgba(255,255,255,.78)!important;border-radius:17px!important;font-size:12px!important}.nav button:hover{background:rgba(255,255,255,.13)!important;color:#fff!important}.nav button.on{background:linear-gradient(135deg,rgba(213,238,255,.53),rgba(255,255,255,.26))!important;border-color:rgba(255,255,255,.38)!important;color:#fff!important;box-shadow:inset 0 1px rgba(255,255,255,.25),0 10px 24px rgba(28,70,104,.14)!important}.nav button.on svg{color:#fff!important}
       .storage-card{background:rgba(25,66,99,.16)!important;border:1px solid rgba(255,255,255,.16)!important}
       .topbar{height:64px!important;margin:15px 20px 0!important;border:1px solid rgba(255,255,255,.58)!important;border-radius:20px!important;background:rgba(239,248,254,.38)!important;box-shadow:0 15px 40px rgba(56,99,132,.08)!important;backdrop-filter:blur(28px) saturate(135%)!important;-webkit-backdrop-filter:blur(28px) saturate(135%)!important}
