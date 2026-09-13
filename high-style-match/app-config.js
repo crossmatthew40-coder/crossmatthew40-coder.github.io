@@ -28,7 +28,7 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260913-12';
+  const BUILD='20260913-13';
   function loadTheme(){
     let theme=document.querySelector('link[data-hsm-premium-product]');
     if(!theme){theme=document.createElement('link');theme.rel='stylesheet';theme.dataset.hsmPremiumProduct='true'}

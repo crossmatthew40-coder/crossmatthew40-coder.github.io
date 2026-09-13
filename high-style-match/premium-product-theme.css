@@ -349,13 +349,13 @@ body::after{width:44vw!important;height:44vw!important;left:auto!important;right
 }
 .global-search{background:#dceef5!important;border-color:rgba(255,255,255,.84)!important;box-shadow:inset 0 1px #fff!important}.global-search input{background:transparent!important}
 
-.panel,.stat,.mini-stat,.setting-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty,.cull-stat,.template-row,.table-row,.activity-item,.provider-card,.photo-card,.side-card,.shot-progress-card,.recent-card,.dash-stat,.home-project,.home-guide,.home-metric,.hsm-ai,.workflow-focus,.home-workflow,.hsm-bpm,.hsm-bps,.hsm-card,.hsm-cmp{
+.panel,.stat,.mini-stat,.setting-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty,.home-empty,.cull-stat,.template-row,.table-row,.activity-item,.provider-card,.photo-card,.side-card,.shot-progress-card,.recent-card,.dash-stat,.home-project,.home-guide,.home-metric,.hsm-ai,.workflow-focus,.home-workflow,.hsm-bpm,.hsm-bps,.hsm-card,.hsm-cmp{
   background:linear-gradient(118deg,rgba(247,252,254,.70),rgba(220,238,245,.48) 52%,rgba(204,226,237,.40))!important;
   border-color:rgba(255,255,255,.78)!important;
   box-shadow:0 24px 58px rgba(31,62,82,.12),inset 0 1px rgba(255,255,255,.76)!important;
   backdrop-filter:blur(28px) saturate(124%)!important;-webkit-backdrop-filter:blur(28px) saturate(124%)!important;
 }
-.panel,.setting-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty,.photo-card,.side-card,.shot-progress-card,.recent-card,.home-project,.home-guide,.hsm-ai,.hsm-bpm,.hsm-bps{border-radius:26px!important}
+.panel,.setting-card,.review-block,.workflow-step,.download-box,.delivery-step,.upload-zone,.empty,.home-empty,.photo-card,.side-card,.shot-progress-card,.recent-card,.home-project,.home-guide,.hsm-ai,.hsm-bpm,.hsm-bps{border-radius:26px!important}
 .home-metric,.stat,.mini-stat,.cull-stat,.dash-stat{border-radius:22px!important}
 
 .shot-hub-hero,.workspace-head,.smart-cull-hero,.review-hero,.delivery-hero,.callout,.home-resume,.hsm-bph{
@@ -377,6 +377,7 @@ body::after{width:44vw!important;height:44vw!important;left:auto!important;right
 .filters,.tabs,.hsm-bpt{background:rgba(169,199,214,.54)!important;border-color:rgba(255,255,255,.60)!important}.filters button.on,.tabs button.on,.hsm-groups button.on,.hsm-bpt button.on{background:#293641!important;color:#fff!important;border-color:#293641!important}
 
 .home-heading h1{color:#17354d!important;font-weight:510!important}.home-heading p:not(.home-kicker),.home-local{color:#4f6b7f!important}.home-local{background:#dceef5!important;border-color:rgba(255,255,255,.82)!important}
+.home-empty{border-color:rgba(255,255,255,.82)!important;color:#17354d!important}.home-empty h2{color:#17354d!important}.home-empty p{color:#5a7385!important}.home-empty-mark{background:#293641!important;color:#ddf45b!important;box-shadow:0 12px 26px rgba(32,55,70,.18)!important}
 .home-metric>span,.cull-stat label{color:#365873!important;font-weight:650!important}
 .home-metric>strong,.cull-stat b,.dash-stat b,.stat b,.mini-stat b{
   font-family:"SF Mono","Roboto Mono",ui-monospace,monospace!important;font-weight:650!important;letter-spacing:.04em!important;
