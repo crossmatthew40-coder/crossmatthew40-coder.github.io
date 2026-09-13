@@ -20,27 +20,22 @@ try{
   await page.evaluate(data=>localStorage.setItem('hsmPremium1',JSON.stringify(data)),seed);
   await page.reload({waitUntil:'domcontentloaded'});await settle(650);
 
-  const sidebar=[['home','Dashboard'],['shoots','Projects'],['live','Tether Mode'],['photos','Photos'],['cull','Cull'],['review','Review'],['deliver','Deliver'],['clients','Clients'],['globalhistory','History'],['settings','Settings']];
+  const sidebar=[['home','Dashboard'],['shoots','Projects'],['photos','Photos'],['cull','Smart Cull'],['review','Review'],['deliver','Export'],['clients','Clients'],['globalhistory','History'],['settings','Settings']];
   for(const [id,label] of sidebar){const b=page.locator(`#nav button[data-nav="${id}"]`);if(!await b.count()){fail(`Sidebar item missing: ${label}`);continue}try{await b.click();await settle();pass(`Sidebar works: ${label}`)}catch(e){fail(`Sidebar click failed: ${label} — ${e.message}`)}}
 
   await page.locator('#nav button[data-nav="photos"]').click();await settle();await visible('#tabs','Project tabs render');
-  const tabs=['overview','shotlist','live','photos','cull','review','rename','deliver','history'];
+  const tabs=['overview','shotlist','photos','cull','review','rename','deliver','history'];
   for(const id of tabs){const b=page.locator(`#tabs button[data-tab="${id}"]`);if(!await b.count()){fail(`Project tab missing: ${id}`);continue}try{await b.click();await settle();if(String(await b.getAttribute('class')||'').includes('on'))pass(`Project tab works: ${id}`);else fail(`Project tab did not activate: ${id}`);if(!(await page.locator('#workspaceBody').innerHTML()).trim())fail(`Project tab rendered empty content: ${id}`)}catch(e){fail(`Project tab failed: ${id} — ${e.message}`)}}
 
-  const theme=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()}));
-  if(theme.body==='rgb(0, 0, 0)'||theme.body==='rgb(8, 9, 11)')pass('Monochrome near-black background applied');else fail(`Unexpected body background ${theme.body}`);
-  if(['#fff','#FFFFFF','white'].includes(theme.accent))pass('Monochrome white accent applied');else fail(`Expected white accent, got ${theme.accent}`);
+  const theme=await page.evaluate(()=>({accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),bg:getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(),premium:!!document.querySelector('link[data-hsm-premium-product]')}));
+  if(theme.premium)pass('Premium product theme is loaded');else fail('Premium product theme is missing');
+  if(theme.accent.toLowerCase()==='#426b84')pass('Slate-blue product accent applied');else fail(`Expected slate-blue accent, got ${theme.accent}`);
+  if(theme.bg.toLowerCase()==='#e5f1f8')pass('Light-blue product background applied');else fail(`Expected light-blue background, got ${theme.bg}`);
+  if(!await page.locator('[data-nav="live"],#tabs [data-tab="live"]').count())pass('Tether workflow is absent from active navigation');else fail('Tether workflow is still visible');
 
   if(await page.locator('.hsm-skip').count())pass('Skip-to-content accessibility link is present');else fail('Skip-to-content link missing');
   if(await page.locator('.hsm-legal-footer').count())pass('Legal footer is present');else fail('Legal footer missing');
   if(await page.locator('.hsm-cookie').count())pass('Essential storage notice renders');else fail('Essential storage notice missing');
-
-  await open('tether/?shoot=shoot_smoke','body','Desktop Tether Mode loads');
-  if((await page.locator('body').innerText()).toLowerCase().includes('capture'))pass('Tether capture workflow present');else fail('Tether capture workflow text missing');
-
-  await open('mobile-live/?shoot=shoot_smoke','body','Mobile Live loads');
-  const mobileLiveText=(await page.locator('body').innerText()).toLowerCase();
-  if(mobileLiveText.includes('mobile live')&&mobileLiveText.includes('now shooting'))pass('Mobile Live workflow present');else fail('Mobile Live workflow incomplete');
 
   await open('transfer/','body','Deliver workspace loads');
   const transferText=(await page.locator('body').innerText()).toLowerCase();
@@ -66,7 +61,7 @@ try{
     await open(path,'h1',`${heading} page loads`);const text=await page.locator('h1').innerText();if(text.includes(heading.split(' ')[0]))pass(`${heading} heading present`);else fail(`${heading} heading unexpected: ${text}`)
   }
 
-  for(const asset of ['manifest.webmanifest','sw.js','app-config.js','cloud.js','production.js','functional-runtime.js','capture-delivery-tools.js','delivery-config.js','site-compliance.js','auth-router.js','role-guard.js']){const r=await context.request.get(`${BASE}${asset}?smoke=${now}`);if(r.ok())pass(`Asset available: ${asset}`);else fail(`Asset unavailable: ${asset} (${r.status()})`)}
+  for(const asset of ['manifest.webmanifest','sw.js','app-config.js','premium-product-theme.css','cloud.js','production.js','functional-runtime.js','capture-delivery-tools.js','ai-vision-v2.js','best-picks-studio.js','adobe-actions.js','delivery-config.js','site-compliance.js','auth-router.js','role-guard.js']){const r=await context.request.get(`${BASE}${asset}?smoke=${now}`);if(r.ok())pass(`Asset available: ${asset}`);else fail(`Asset unavailable: ${asset} (${r.status()})`)}
 
   const m=await browser.newPage({viewport:{width:390,height:844}});const errs=[];m.on('pageerror',e=>errs.push(String(e.message||e)));await m.addInitScript(()=>sessionStorage.setItem('hsm_gate_seen','1'));await m.goto(`${BASE}?mobileSmoke=${now}`,{waitUntil:'domcontentloaded',timeout:30000});await m.waitForTimeout(550);if(await m.locator('#content').count())pass('Main mobile layout loads');else fail('Main mobile layout missing');if(errs.length)fail(`Mobile page errors: ${errs.join(' | ')}`);await m.close();
 }catch(e){fail(`Smoke test crashed: ${e.stack||e.message||e}`)}

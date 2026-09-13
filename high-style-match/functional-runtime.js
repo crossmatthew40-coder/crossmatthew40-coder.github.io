@@ -63,9 +63,9 @@
     if(!host)return;
     const card=document.createElement('section');
     card.id='hsmRuntimeReadiness';
-    card.style.cssText='border:1px solid #292929;background:#0b0b0b;padding:16px;color:#fff;grid-column:1/-1';
-    const item=(name,ready,copy)=>`<div style="display:grid;grid-template-columns:110px 78px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid #222;font-size:11px"><b>${name}</b><span style="font-weight:800">${ready?'READY':'LOCAL'}</span><span style="color:#999">${copy}</span></div>`;
-    card.innerHTML=`<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#999;margin-bottom:4px">System readiness</div><h2 style="margin:0 0 8px;font-size:18px">What is active on this build</h2>${item('Workflow',true,'Projects, shot lists, Smart Cull, matching, review and rename work locally on this device.')}${item('Desktop tether',true,'Chrome/Edge folder watching is available; native desktop packaging still requires device build testing.')}${item('Mobile Live',true,'Manual mobile import is active. Native iPad background folder monitoring requires the installed iOS build.')}${item('Cloud accounts',authReady,authReady?'Connected.':'Disabled until the public Supabase project settings are added.')}${item('Delivery',deliveryReady,deliveryReady?'Cloud delivery API connected.':'Local workflow remains available; cloud sending activates after the Cloudflare Worker URL is deployed.')}${item('Billing',billingReady,billingReady?'Stripe billing enabled.':'Billing is intentionally disabled; no customer can be charged from this build.')}`;
+    card.style.cssText='border:1px solid #c4d8e4;background:#f8fbfd;padding:18px;color:#203746;grid-column:1/-1;border-radius:24px';
+    const item=(name,ready,copy)=>`<div style="display:grid;grid-template-columns:120px 78px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid #d7e5ed;font-size:11px"><b>${name}</b><span style="font-weight:800;color:#426b84">${ready?'READY':'LOCAL'}</span><span style="color:#617989">${copy}</span></div>`;
+    card.innerHTML=`<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#617989;margin-bottom:4px">System readiness</div><h2 style="margin:0 0 8px;font-size:18px">What is active on this build</h2>${item('Core workflow',true,'Shot lists, uploads, Smart Cull, matching, coverage and rename/export work locally on this device.')}${item('AI Vision',true,'Local AI analysis is available on supported WebGPU devices.')}${item('Best Picks',true,'Best Picks Studio, AI Compare and Adobe handoff are active after Smart Cull.')}${item('Cloud accounts',authReady,authReady?'Connected.':'Disabled until the public Supabase project settings are added.')}${item('Delivery',deliveryReady,deliveryReady?'Cloud delivery API connected.':'Local export remains available; cloud sending activates after the delivery service is deployed.')}${item('Billing',billingReady,billingReady?'Stripe billing enabled.':'Billing is intentionally disabled; no customer can be charged from this build.')}`;
     host.prepend(card);
   }
 
@@ -81,7 +81,7 @@
     if(document.getElementById('hsmLocalBadge'))return;
     const top=document.querySelector('.top-actions,.topbar,.brand');if(!top)return;
     const badge=document.createElement('span');badge.id='hsmLocalBadge';badge.textContent=authReady&&deliveryReady?'CONNECTED':'LOCAL WORKFLOW';
-    badge.style.cssText='display:inline-flex;align-items:center;border:1px solid #333;background:#111;color:#aaa;padding:5px 7px;font-size:9px;font-weight:800;letter-spacing:.09em;border-radius:3px';
+    badge.style.cssText='display:inline-flex;align-items:center;border:1px solid #b8cfdd;background:#f8fbfd;color:#4f6e81;padding:6px 9px;font-size:9px;font-weight:800;letter-spacing:.09em;border-radius:999px';
     top.appendChild(badge);
   }
 

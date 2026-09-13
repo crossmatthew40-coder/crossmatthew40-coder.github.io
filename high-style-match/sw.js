@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v7-best-picks';
+const CACHE='hsm-shell-v9-functional-product';
 
 const ESSENTIAL=[
   '/high-style-match/',
@@ -6,7 +6,13 @@ const ESSENTIAL=[
   '/high-style-match/sign-in/',
   '/high-style-match/subscribe/',
   '/high-style-match/auth-config.js',
-  '/high-style-match/high-style-mono-theme.css',
+  '/high-style-match/premium-product-theme.css',
+  '/high-style-match/ai-vision-v2.js',
+  '/high-style-match/ai-vision-worker.js',
+  '/high-style-match/best-picks-studio.js',
+  '/high-style-match/adobe-actions.js',
+  '/high-style-match/functional-runtime.js',
+  '/high-style-match/site-compliance.js',
   '/high-style-logo.svg'
 ];
 
@@ -42,20 +48,26 @@ self.addEventListener('fetch',event=>{
   const staticAsset=/\.(?:css|js|svg|png|jpg|jpeg|webp|ico)$/.test(url.pathname);
   if(staticAsset){
     event.respondWith(caches.open(CACHE).then(async cache=>{
-      const cached=await cache.match(req,{ignoreSearch:true});
-      const fresh=fetch(req).then(res=>{if(res.ok)cache.put(req,res.clone());return res}).catch(()=>null);
-      if(cached){event.waitUntil(fresh);return cached}
-      return (await fresh)||Response.error();
+      try{
+        const fresh=await fetch(new Request(req,{cache:'no-store'}));
+        if(fresh.ok)cache.put(req,fresh.clone());
+        return fresh;
+      }catch{
+        return (await cache.match(req,{ignoreSearch:true}))||Response.error();
+      }
     }));
     return;
   }
 
   if(req.mode==='navigate'){
     event.respondWith(caches.open(CACHE).then(async cache=>{
-      const cached=await cache.match(req,{ignoreSearch:true});
-      const fresh=fetch(req).then(res=>{if(res.ok)cache.put(req,res.clone());return res}).catch(()=>null);
-      if(cached){event.waitUntil(fresh);return cached}
-      return (await fresh)||cache.match('/high-style-match/',{ignoreSearch:true});
+      try{
+        const fresh=await fetch(new Request(req,{cache:'no-store'}));
+        if(fresh.ok)cache.put(req,fresh.clone());
+        return fresh;
+      }catch{
+        return (await cache.match(req,{ignoreSearch:true}))||cache.match('/high-style-match/',{ignoreSearch:true});
+      }
     }));
     return;
   }

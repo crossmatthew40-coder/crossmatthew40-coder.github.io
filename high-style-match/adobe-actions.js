@@ -52,6 +52,13 @@
   }
 
   function currentBestIds(){
+    const shoot=window.HSMCore?.getShoot?.();
+    if(shoot){
+      const stateIds=(shoot.photos||[])
+        .filter(p=>!p.cullExcluded&&(p.cullManualPick||p.cullStatus==='pick'||p.cullStatus==='unique'))
+        .map(p=>String(p.id));
+      if(stateIds.length) return [...new Set(stateIds)];
+    }
     const ids=[];
     document.querySelectorAll('.cull-card').forEach(card=>{
       if(!card.querySelector('.cull-badge.pick')) return;
