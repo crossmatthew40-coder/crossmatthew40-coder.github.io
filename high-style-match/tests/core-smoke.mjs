@@ -44,5 +44,7 @@ assert.match(bestPicks,/buildStoredZip/,'Best Picks ZIP export is not connected'
 assert.match(ai,/runCompatible/,'AI compatibility pass is missing');
 assert.match(config,/hsm-nav-tab/,'Collapsible mobile navigation tab is missing');
 assert.match(config,/hsm-mobile-nav-open/,'Mobile navigation does not expose an open state');
+assert.match(config,/hsm-reference-theme/,'Reference glass theme is missing');
+assert.match(html,/Good morning/,'Personalised dashboard greeting is missing');
 
 console.log('High Style Match core smoke checks passed.');

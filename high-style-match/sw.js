@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v10-collapsible-mobile-nav';
+const CACHE='hsm-shell-v11-reference-glass-ui';
 
 const ESSENTIAL=[
   '/high-style-match/',
