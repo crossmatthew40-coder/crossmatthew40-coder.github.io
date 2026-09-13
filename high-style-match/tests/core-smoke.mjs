@@ -38,8 +38,11 @@ assert.ok(bytes.some((_,index)=>bytes[index]===0x50&&bytes[index+1]===0x4b&&byte
 const adobe=fs.readFileSync(path.join(root,'adobe-actions.js'),'utf8');
 const bestPicks=fs.readFileSync(path.join(root,'best-picks-studio.js'),'utf8');
 const ai=fs.readFileSync(path.join(root,'ai-vision-v2.js'),'utf8');
+const config=fs.readFileSync(path.join(root,'app-config.js'),'utf8');
 assert.match(adobe,/HSMCore\?\.getShoot/,'Adobe handoff does not read the active project');
 assert.match(bestPicks,/buildStoredZip/,'Best Picks ZIP export is not connected');
 assert.match(ai,/runCompatible/,'AI compatibility pass is missing');
+assert.match(config,/hsm-nav-tab/,'Collapsible mobile navigation tab is missing');
+assert.match(config,/hsm-mobile-nav-open/,'Mobile navigation does not expose an open state');
 
 console.log('High Style Match core smoke checks passed.');

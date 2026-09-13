@@ -28,7 +28,7 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260913-7';
+  const BUILD='20260913-8';
   function loadTheme(){
     if(!document.querySelector('link[data-hsm-premium-product]')){
       const theme=document.createElement('link');
@@ -49,7 +49,43 @@ window.HSM_APP = {
     @media(max-width:720px){.hsm-opening-logo{grid-template-columns:auto auto!important;column-gap:14px!important;width:98vw!important;padding:10px!important}.hsm-opening-logo>.brandmark{width:clamp(90px,27vw,132px)!important;height:clamp(90px,27vw,132px)!important}.hsm-opening-brandcopy strong{font-size:clamp(24px,7vw,36px)!important}.hsm-opening-brandcopy span{font-size:7px!important;letter-spacing:.1em!important;margin-top:7px!important}}
   `;document.head.appendChild(style)}
   function routeNewVisitorsAfterSplash(){if(!window.HSM_APP.features.billing)return;const path=location.pathname.replace(/\/+$/,'/');const isMainEntry=path==='/high-style-match/'||path.endsWith('/high-style-match/');if(!isMainEntry||sessionStorage.getItem('hsm_gate_seen')==='1')return;setTimeout(()=>{sessionStorage.setItem('hsm_gate_seen','1');location.href='./subscribe/'},5000)}
-  function apply(){loadTheme();ensureOpening();const logoUrl=window.HSM_APP.logoUrl;document.querySelectorAll('.brandmark').forEach(mark=>{const opening=mark.closest('.hsm-opening-logo');mark.innerHTML='';Object.assign(mark.style,{background:'transparent',backgroundColor:'transparent',boxShadow:'none',border:'0',borderRadius:'0',overflow:'visible',padding:'0'});const img=document.createElement('img');img.src=logoUrl;img.alt='High Style';img.decoding='async';Object.assign(img.style,{width:'100%',height:'100%',display:'block',objectFit:'contain',objectPosition:'center',background:'transparent',border:'0',boxShadow:'none',transform:'none',filter:'none'});mark.appendChild(img);if(opening){opening.querySelectorAll('.hsm-opening-brandcopy').forEach(el=>el.remove());const copy=document.createElement('div');copy.className='hsm-opening-brandcopy';copy.innerHTML='<strong>High Style Match</strong><span>Part of the High Style Group</span>';opening.appendChild(copy)}});let favicon=document.querySelector('link[rel="icon"]');if(!favicon){favicon=document.createElement('link');favicon.rel='icon';document.head.appendChild(favicon)}favicon.type='image/svg+xml';favicon.href=logoUrl;routeNewVisitorsAfterSplash()}
+  function ensureMobileNavigation(){
+    if(document.querySelector('.hsm-nav-tab'))return;
+    const sidebar=document.querySelector('.sidebar');
+    if(!sidebar)return;
+    sidebar.id=sidebar.id||'hsm-navigation';
+    const style=document.createElement('style');
+    style.id='hsm-mobile-navigation-style';
+    style.textContent=`
+      .hsm-nav-tab{display:none}
+      @media(max-width:900px){
+        .main{padding-bottom:68px!important}
+        .sidebar{bottom:62px!important;transform:translate3d(0,calc(100% + 82px),0)!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s ease,visibility 0s linear .28s!important;box-shadow:0 20px 55px rgba(40,70,89,.24)!important}
+        body.hsm-mobile-nav-open .sidebar{transform:translate3d(0,0,0)!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition-delay:0s!important}
+        .sidebar .hsm-legal{display:none!important}
+        .hsm-nav-tab{position:fixed;z-index:1002;left:50%;bottom:max(8px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:9px;min-width:132px;height:46px;padding:0 18px;border:0;border-radius:16px;background:#426b84;color:#fff;box-shadow:0 12px 30px rgba(45,78,99,.25);font:700 11px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;letter-spacing:.02em}
+        .hsm-nav-tab:active{transform:translateX(-50%) scale(.97)}
+        .hsm-nav-tab-icon{position:relative;width:16px;height:12px;border-top:2px solid currentColor;border-bottom:2px solid currentColor}
+        .hsm-nav-tab-icon:after{content:"";position:absolute;left:0;right:0;top:4px;border-top:2px solid currentColor}
+        body.hsm-mobile-nav-open .hsm-nav-tab-icon{height:16px;border:0}
+        body.hsm-mobile-nav-open .hsm-nav-tab-icon:before,body.hsm-mobile-nav-open .hsm-nav-tab-icon:after{content:"";position:absolute;left:7px;top:0;height:17px;border-left:2px solid currentColor}
+        body.hsm-mobile-nav-open .hsm-nav-tab-icon:before{transform:rotate(45deg)}
+        body.hsm-mobile-nav-open .hsm-nav-tab-icon:after{transform:rotate(-45deg)}
+      }
+    `;
+    document.head.appendChild(style);
+    const button=document.createElement('button');
+    button.type='button';button.className='hsm-nav-tab';button.setAttribute('aria-controls',sidebar.id);button.setAttribute('aria-expanded','false');button.innerHTML='<span class="hsm-nav-tab-icon" aria-hidden="true"></span><span>Menu</span>';
+    const label=button.lastElementChild;
+    const setOpen=open=>{document.body.classList.toggle('hsm-mobile-nav-open',open);button.setAttribute('aria-expanded',String(open));label.textContent=open?'Close':'Menu'};
+    button.addEventListener('click',()=>setOpen(!document.body.classList.contains('hsm-mobile-nav-open')));
+    sidebar.addEventListener('click',event=>{if(event.target.closest('.nav button'))setOpen(false)});
+    document.addEventListener('pointerdown',event=>{if(document.body.classList.contains('hsm-mobile-nav-open')&&!sidebar.contains(event.target)&&!button.contains(event.target))setOpen(false)});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape')setOpen(false)});
+    matchMedia('(max-width:900px)').addEventListener?.('change',event=>{if(!event.matches)setOpen(false)});
+    document.body.appendChild(button);
+  }
+  function apply(){loadTheme();ensureOpening();ensureMobileNavigation();const logoUrl=window.HSM_APP.logoUrl;document.querySelectorAll('.brandmark').forEach(mark=>{const opening=mark.closest('.hsm-opening-logo');mark.innerHTML='';Object.assign(mark.style,{background:'transparent',backgroundColor:'transparent',boxShadow:'none',border:'0',borderRadius:'0',overflow:'visible',padding:'0'});const img=document.createElement('img');img.src=logoUrl;img.alt='High Style';img.decoding='async';Object.assign(img.style,{width:'100%',height:'100%',display:'block',objectFit:'contain',objectPosition:'center',background:'transparent',border:'0',boxShadow:'none',transform:'none',filter:'none'});mark.appendChild(img);if(opening){opening.querySelectorAll('.hsm-opening-brandcopy').forEach(el=>el.remove());const copy=document.createElement('div');copy.className='hsm-opening-brandcopy';copy.innerHTML='<strong>High Style Match</strong><span>Part of the High Style Group</span>';opening.appendChild(copy)}});let favicon=document.querySelector('link[rel="icon"]');if(!favicon){favicon=document.createElement('link');favicon.rel='icon';document.head.appendChild(favicon)}favicon.type='image/svg+xml';favicon.href=logoUrl;routeNewVisitorsAfterSplash()}
   function loadScript(src,key){if(document.querySelector(`script[data-${key}]`))return;const s=document.createElement('script');s.src=src;s.defer=true;s.setAttribute(`data-${key}`,'true');document.head.appendChild(s)}
   function loadNonCriticalTools(){
     loadScript(`./functional-runtime.js?v=${BUILD}`,'hsm-functional-runtime');
