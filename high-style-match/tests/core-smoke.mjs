@@ -39,6 +39,7 @@ const adobe=fs.readFileSync(path.join(root,'adobe-actions.js'),'utf8');
 const bestPicks=fs.readFileSync(path.join(root,'best-picks-studio.js'),'utf8');
 const ai=fs.readFileSync(path.join(root,'ai-vision-v2.js'),'utf8');
 const config=fs.readFileSync(path.join(root,'app-config.js'),'utf8');
+const theme=fs.readFileSync(path.join(root,'premium-product-theme.css'),'utf8');
 assert.match(adobe,/HSMCore\?\.getShoot/,'Adobe handoff does not read the active project');
 assert.match(bestPicks,/buildStoredZip/,'Best Picks ZIP export is not connected');
 assert.match(ai,/runCompatible/,'AI compatibility pass is missing');
@@ -46,5 +47,7 @@ assert.match(config,/hsm-nav-tab/,'Collapsible mobile navigation tab is missing'
 assert.match(config,/hsm-mobile-nav-open/,'Mobile navigation does not expose an open state');
 assert.match(config,/hsm-reference-theme/,'Reference glass theme is missing');
 assert.match(html,/Good morning/,'Personalised dashboard greeting is missing');
+assert.match(theme,/Reference glass dashboard/,'Production reference theme is missing from the external stylesheet');
+assert.match(theme,/body\.hsm-mobile-nav-open \.sidebar/,'Mobile navigation open state is not styled externally');
 
 console.log('High Style Match core smoke checks passed.');
