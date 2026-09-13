@@ -48,6 +48,7 @@ assert.match(config,/hsm-mobile-nav-open/,'Mobile navigation does not expose an 
 assert.match(config,/hsm-reference-theme/,'Reference glass theme is missing');
 assert.match(html,/Good morning/,'Personalised dashboard greeting is missing');
 assert.match(theme,/Reference glass dashboard/,'Production reference theme is missing from the external stylesheet');
+assert.match(theme,/Cinematic air interface/,'Video-inspired cinematic theme is missing from the external stylesheet');
 assert.match(theme,/body\.hsm-mobile-nav-open \.sidebar/,'Mobile navigation open state is not styled externally');
 
 console.log('High Style Match core smoke checks passed.');

@@ -28,13 +28,12 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260913-11';
+  const BUILD='20260913-12';
   function loadTheme(){
-    if(!document.querySelector('link[data-hsm-premium-product]')){
-      const theme=document.createElement('link');
-      theme.rel='stylesheet';theme.href=`./premium-product-theme.css?v=${BUILD}`;theme.dataset.hsmPremiumProduct='true';
-      document.head.appendChild(theme);
-    }
+    let theme=document.querySelector('link[data-hsm-premium-product]');
+    if(!theme){theme=document.createElement('link');theme.rel='stylesheet';theme.dataset.hsmPremiumProduct='true'}
+    theme.href=`./premium-product-theme.css?v=${BUILD}`;
+    document.head.appendChild(theme);
   }
   function ensureOpening(){const style=document.createElement('style');style.textContent=`
     .hsm-opening{animation:hsmOpeningOut .48s ease 1.35s both!important;background:radial-gradient(38rem 30rem at 22% 5%,rgba(249,253,255,.95),transparent 60%),linear-gradient(155deg,#e9f5fb,#d6e9f4 50%,#c7dfed)!important;overflow:hidden!important}

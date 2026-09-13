@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v13-external-reference-ui';
+const CACHE='hsm-shell-v14-cinematic-air-ui';
 
 const ESSENTIAL=[
   '/high-style-match/',
