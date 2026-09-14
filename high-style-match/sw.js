@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v15-cinematic-air-ui';
+const CACHE='hsm-shell-v16-production-studio';
 
 const ESSENTIAL=[
   '/high-style-match/',
@@ -10,6 +10,7 @@ const ESSENTIAL=[
   '/high-style-match/ai-vision-v2.js',
   '/high-style-match/ai-vision-worker.js',
   '/high-style-match/best-picks-studio.js',
+  '/high-style-match/production-studio-tools.js',
   '/high-style-match/adobe-actions.js',
   '/high-style-match/functional-runtime.js',
   '/high-style-match/site-compliance.js',

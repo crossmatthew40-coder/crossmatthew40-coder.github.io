@@ -28,7 +28,7 @@ window.HSM_APP = {
   features:{customerReview:true,customerInvites:true,cloudProjects:true,offlineQueue:true,deliveryTracking:true,adminConsole:true,captureOneBridge:false,largeFileDelivery:false,billing:false,aiVision:true,bestPicksStudio:true,aiCompare:true,preferenceLearning:true,shotListCoverage:true}
 };
 (function applyHighStyleBranding(){
-  const BUILD='20260913-13';
+  const BUILD='20260914-14';
   function loadTheme(){
     let theme=document.querySelector('link[data-hsm-premium-product]');
     if(!theme){theme=document.createElement('link');theme.rel='stylesheet';theme.dataset.hsmPremiumProduct='true'}
@@ -127,6 +127,7 @@ window.HSM_APP = {
     loadScript(`./adobe-actions.js?v=${BUILD}`,'hsm-adobe-actions');
     loadScript(`./ai-vision-v2.js?v=${BUILD}`,'hsm-ai-vision');
     loadScript(`./best-picks-studio.js?v=${BUILD}`,'hsm-best-picks-studio');
+    loadScript(`./production-studio-tools.js?v=${BUILD}`,'hsm-production-studio');
   }
   function scheduleNonCritical(){if('requestIdleCallback'in window)requestIdleCallback(loadNonCriticalTools,{timeout:500});else setTimeout(loadNonCriticalTools,120)}
   function boot(){apply();scheduleNonCritical()}
