@@ -19,6 +19,7 @@ const state={
   lastError:''
 };
 
+function emit(name,detail){try{window.dispatchEvent(new CustomEvent(name,{detail}));}catch{}}
 function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function prettyBytes(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';if(n<1073741824)return(n/1048576).toFixed(1)+' MB';return(n/1073741824).toFixed(1)+' GB';}
 function when(v){try{return new Date(v).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});}catch{return'—';}}
@@ -36,17 +37,21 @@ function persist(){
       updatedAt:Date.now()
     }));
   }catch{}
-  try{window.dispatchEvent(new CustomEvent('hsm:live-bridge',{detail:{...state}}));}catch{}
+  emit('hsm:live-bridge',{...state});
 }
 
 function setConnection(on,title,sub){
   state.connected=!!on;
   const dot=$('#dot'),status=$('#bridgeStatus'),detail=$('#bridgeDetail');
   if(dot)dot.classList.toggle('live',!!on);
-  if(status)status.textContent=title|| (on?'Connected':'Not connected');
+  if(status)status.textContent=title||(on?'Connected':'Not connected');
   if(detail)detail.textContent=sub||'';
   const badge=$('#connectionBadge');
   if(badge){badge.textContent=on?'LIVE':'OFFLINE';badge.classList.toggle('on',!!on);}
+  const liveDot=$('#connDot');if(liveDot)liveDot.classList.toggle('on',!!on);
+  const liveTitle=$('#connTitle');if(liveTitle)liveTitle.textContent=title||(on?'Capture One connected':'Capture One not connected');
+  const liveSub=$('#connSub');if(liveSub)liveSub.textContent=sub||'';
+  emit('hsm:bridge-status',{connected:!!on,title:title||'',detail:sub||'',source:state.source});
   persist();
 }
 
@@ -89,20 +94,31 @@ function renderAnalysis(shot){
 function receiveCapture(shot){
   if(!shot)return;
   state.latest=shot;
-  state.photosDetected=Math.max(state.photosDetected+1,Number(state.photosDetected)||0);
+  state.photosDetected=(Number(state.photosDetected)||0)+1;
   state.shots=[shot,...state.shots.filter(x=>String(x.id)!==String(shot.id))].slice(0,MAX_SHOTS);
   const count=$('#count');if(count)count.textContent=state.photosDetected;
   const latest=$('#latestCapture');if(latest)latest.textContent=shot.name||'New capture';
   const latestTime=$('#latestTime');if(latestTime)latestTime.textContent=when(shot.receivedAt||shot.capturedAt||Date.now());
   renderShot(shot,true);
   renderAnalysis(shot);
+  emit('hsm:capture',shot);
+  persist();
+}
+
+function receiveAnalysis(shot){
+  if(!shot)return;
+  state.shots=state.shots.map(x=>String(x.id)===String(shot.id)?shot:x);
+  if(state.latest&&String(state.latest.id)===String(shot.id))state.latest=shot;
+  renderAnalysis(shot);
+  emit('hsm:analysis',shot);
   persist();
 }
 
 function receiveExport(item){
-  state.exportsDetected++;
+  state.exportsDetected=(Number(state.exportsDetected)||0)+1;
   const el=$('#exports');if(el)el.textContent=state.exportsDetected;
   const last=$('#latestExport');if(last)last.textContent=item?.name||'Export detected';
+  emit('hsm:export',item||{});
   persist();
 }
 
@@ -114,12 +130,15 @@ function applyState(data){
   const c=$('#count');if(c)c.textContent=state.photosDetected;
   const e=$('#exports');if(e)e.textContent=state.exportsDetected;
   const incoming=$('#incoming');
-  if(incoming&&Array.isArray(data.latest)){
-    incoming.innerHTML='';
+  if(Array.isArray(data.latest)){
     state.shots=data.latest.slice(0,MAX_SHOTS);
-    data.latest.slice(0,20).reverse().forEach(x=>renderShot(x,true));
-    if(!data.latest.length)incoming.innerHTML='<div class="empty" data-empty>Take a photograph in Capture One. New frames will appear here automatically.</div>';
-    if(data.latest[0]){state.latest=data.latest[0];renderAnalysis(data.latest[0]);}
+    state.latest=data.latest[0]||state.latest;
+    if(incoming){
+      incoming.innerHTML='';
+      data.latest.slice(0,20).reverse().forEach(x=>renderShot(x,true));
+      if(!data.latest.length)incoming.innerHTML='<div class="empty" data-empty>Take a photograph in Capture One. New frames will appear here automatically.</div>';
+    }
+    if(data.latest[0])renderAnalysis(data.latest[0]);
   }
   persist();
 }
@@ -149,10 +168,10 @@ function listenCompanion(){
   state.eventSource=es;
   es.addEventListener('state',e=>{try{const d=JSON.parse(e.data);applyState(d);setFolders(d);setConnection(true,'Capture One connected',`${baseName(d.captureFolder)||'Capture folder'} · live bridge active`);}catch{}});
   es.addEventListener('capture',e=>{try{receiveCapture(JSON.parse(e.data));}catch{}});
-  es.addEventListener('analysis',e=>{try{const shot=JSON.parse(e.data);state.shots=state.shots.map(x=>String(x.id)===String(shot.id)?shot:x);if(state.latest&&String(state.latest.id)===String(shot.id))state.latest=shot;renderAnalysis(shot);persist();}catch{}});
+  es.addEventListener('analysis',e=>{try{receiveAnalysis(JSON.parse(e.data));}catch{}});
   es.addEventListener('export',e=>{try{receiveExport(JSON.parse(e.data));}catch{receiveExport({});}});
   es.onopen=()=>setConnection(true,'Capture One connected','Companion is watching the session in real time');
-  es.onerror=()=>{setConnection(false,'Companion connection interrupted','Keep High Style Match Companion open, then reconnect.');};
+  es.onerror=()=>setConnection(false,'Companion connection interrupted','Keep High Style Match Companion open, then reconnect.');
 }
 
 async function connectCompanion(){
@@ -213,7 +232,7 @@ function init(){
   $('#reconnect')?.addEventListener('click',connect);
   $('#openCompanion')?.addEventListener('click',()=>window.open(LOCAL_BASE,'_blank','noopener'));
   $('#clearFeed')?.addEventListener('click',()=>{state.shots=[];state.latest=null;state.photosDetected=0;const incoming=$('#incoming');if(incoming)incoming.innerHTML='<div class="empty" data-empty>Live feed cleared. The next Capture One frame will appear here.</div>';const c=$('#count');if(c)c.textContent='0';persist();});
-  $('#next')?.addEventListener('click',()=>window.dispatchEvent(new CustomEvent('hsm:next-shot')));
+  $('#next')?.addEventListener('click',()=>emit('hsm:next-shot',{}));
   if(tauriInvoke()){
     state.mode='tauri';state.source='High Style Match Desktop';
     setConnection(false,'Desktop bridge ready','Choose your Capture One Session folders, then start watching.');
@@ -223,5 +242,5 @@ function init(){
 }
 
 document.addEventListener('DOMContentLoaded',init,{once:true});
-window.HSMLiveBridge={connect,probe:probeCompanion,getState:()=>({...state}),receiveCapture};
+window.HSMLiveBridge={connect,probe:probeCompanion,getState:()=>({...state}),receiveCapture,thumbUrl};
 })();
