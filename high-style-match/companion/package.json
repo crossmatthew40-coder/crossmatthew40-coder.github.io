@@ -1,0 +1,12 @@
+{
+  "name": "high-style-match-companion",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Local Capture One folder bridge for High Style Match Live",
+  "scripts": {
+    "start": "node companion.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
