@@ -11,4 +11,7 @@ window.HSM_DELIVERY = {
   if(!document.querySelector('script[data-hsm-compliance]')){
     const c=document.createElement('script');c.src='/high-style-match/site-compliance.js?v=20260908-1';c.defer=true;c.dataset.hsmCompliance='true';document.head.appendChild(c)
   }
+  if(location.pathname.includes('/high-style-match/transfer/')&&!document.querySelector('script[data-hsm-final-delivery]')){
+    const f=document.createElement('script');f.src='/high-style-match/final-delivery-upgrade.js?v=20260916-1';f.defer=true;f.dataset.hsmFinalDelivery='true';document.head.appendChild(f)
+  }
 })();
