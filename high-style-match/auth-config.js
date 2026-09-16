@@ -20,6 +20,15 @@ window.HSM_AUTH = {
     document.head.appendChild(c);
   }
 
+  // Photographer dashboard bridge for the new Client Review → Approved for Edit → Final Delivery workflow.
+  if((path==='/high-style-match/'||path==='/high-style-match/index.html')&&!document.querySelector('script[data-hsm-client-workflow]')){
+    const w=document.createElement('script');
+    w.src='/high-style-match/client-workflow-integration.js?v=20260916-1';
+    w.defer=true;
+    w.dataset.hsmClientWorkflow='true';
+    document.head.appendChild(w);
+  }
+
   if(path.includes('/high-style-match/customer/')||path.includes('/high-style-match/customer-v2/')||path.includes('/high-style-match/admin/')){
     if(!document.querySelector('script[data-hsm-role-guard]')){
       const s=document.createElement('script');
