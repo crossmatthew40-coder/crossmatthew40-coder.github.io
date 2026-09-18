@@ -4,110 +4,152 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#dceeff">
-<title>High Style Match — Client Delivery Demo</title>
+<title>High Style Match — Client Experience</title>
+<meta name="description" content="Standalone preview of the High Style Match client review and final delivery experience.">
 <style>
 :root{
- --ink:#123b6d;--ink2:#28577f;--muted:#6c89a5;--blue:#2c7fe8;--blue2:#67baf6;
- --bg:#dceeff;--glass:rgba(255,255,255,.48);--glass2:rgba(255,255,255,.72);
- --line:rgba(255,255,255,.88);--line2:rgba(67,111,153,.16);
- --shadow:0 20px 60px rgba(50,92,130,.14);--success:#2a795d;--danger:#a84756;
+  --ink:#123b6d;--ink2:#315f88;--muted:#6c89a5;--blue:#2c7fe8;--blue2:#67baf6;
+  --glass:rgba(255,255,255,.46);--glass-strong:rgba(255,255,255,.74);--line:rgba(255,255,255,.86);
+  --shadow:0 24px 70px rgba(50,92,130,.14);--success:#2a795d;--danger:#a84756;
 }
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Arial,sans-serif;color:var(--ink)}
-body{background:radial-gradient(circle at 84% 7%,rgba(255,219,199,.72),transparent 18%),radial-gradient(circle at 18% 79%,rgba(255,194,162,.4),transparent 16%),radial-gradient(circle at 55% 98%,rgba(255,236,216,.55),transparent 23%),linear-gradient(135deg,#bcdaf4 0%,#edf7ff 47%,#cde6fb 100%);background-attachment:fixed}
-button,input,textarea{font:inherit}button{cursor:pointer}
-.hidden{display:none!important}.wrap{width:min(1280px,100%);margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:650;letter-spacing:-.03em}.mark{width:44px;height:44px;border-radius:14px;background:rgba(39,91,141,.75);border:1px solid rgba(255,255,255,.58);display:grid;place-items:center;box-shadow:var(--shadow)}.mark i{display:block;width:20px;height:4px;background:#fff;border-radius:4px;transform:skewX(-23deg);box-shadow:0 -7px 0 #fff,0 7px 0 #fff}.secure{font-size:12px;color:var(--muted);padding:10px 13px;border:1px solid var(--line);background:rgba(255,255,255,.38);border-radius:999px;backdrop-filter:blur(20px)}
-.card{border-radius:24px;background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-.btn{border:1px solid transparent;border-radius:13px;padding:11px 16px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:650}.btn.primary{background:linear-gradient(135deg,#3187ef,#2b70d5);color:#fff;box-shadow:0 9px 22px rgba(44,127,232,.22)}.btn.secondary{background:rgba(255,255,255,.62);border-color:rgba(255,255,255,.95);color:var(--ink)}.btn.ghost{background:transparent;border-color:rgba(56,103,145,.18);color:var(--ink)}.btn.small{min-height:34px;padding:7px 10px;border-radius:10px;font-size:12px}.btn.liked{background:#e7f2ff;color:#145ca7;border-color:#b7dbff}
-.demo-switch{display:flex;gap:6px;padding:5px;border-radius:16px;background:rgba(255,255,255,.26);border:1px solid rgba(255,255,255,.56)}.demo-switch button{border:0;background:transparent;color:var(--ink2);padding:10px 13px;border-radius:11px;font-weight:650}.demo-switch button.on{background:rgba(255,255,255,.78);box-shadow:0 5px 14px rgba(51,95,135,.08)}
-.gate{min-height:calc(100vh - 120px);display:grid;place-items:center}.gate-card{width:min(650px,100%);padding:46px 28px;text-align:center}.kicker{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:750}.gate h1,.gallery-head h1{font-size:46px;letter-spacing:-.05em;font-weight:520;margin:6px 0 8px}.gate p,.gallery-head p{color:var(--muted);line-height:1.55}
-.otp{display:flex;justify-content:center;gap:8px;margin:28px 0}.otp input{width:70px;height:82px;clip-path:polygon(13% 0,100% 0,87% 100%,0 100%);background:rgba(255,255,255,.52);border:0;outline:0;text-align:center;color:var(--ink);font-size:31px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.96)}.otp input:focus,.otp input.filled{background:rgba(255,255,255,.9);filter:drop-shadow(0 7px 13px rgba(44,127,232,.16))}
-.demo-code{font-size:12px;color:var(--muted);margin-top:13px}.demo-code b{color:var(--ink);letter-spacing:.14em}
-.gallery-head{display:flex;gap:18px;align-items:flex-end;margin-bottom:18px}.gallery-head h1{font-size:40px;margin:3px 0 2px}.gallery-count{margin-left:auto;text-align:right}.gallery-count strong{display:block;font-size:26px;font-weight:540}.gallery-count span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.review-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.photo{overflow:hidden}.media{position:relative;aspect-ratio:4/3;background:rgba(44,90,132,.12);overflow:hidden}.media img{width:100%;height:100%;object-fit:cover;display:block;transition:.25s}.photo:hover img{transform:scale(1.015)}.watermark{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%) rotate(-12deg);font-size:11px;letter-spacing:.17em;color:rgba(255,255,255,.63);text-shadow:0 1px 4px rgba(0,0,0,.32);white-space:nowrap;pointer-events:none}.photo-body{padding:12px}.photo-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.photo-actions{display:flex;gap:7px;margin-top:10px}.photo-actions button{flex:1}.note{width:100%;margin-top:9px;border:1px solid rgba(69,111,149,.18);background:rgba(255,255,255,.58);border-radius:11px;padding:10px;color:var(--ink);min-height:64px;resize:vertical;outline:none}.note:focus{border-color:#8abdf2;box-shadow:0 0 0 4px rgba(60,141,228,.09)}
-.sticky{position:sticky;bottom:14px;margin-top:20px;padding:13px 14px;display:flex;align-items:center;gap:12px;background:rgba(239,248,255,.86)}.sticky span{margin-right:auto;color:var(--muted);font-size:12px}
-.final-actions{display:flex;gap:9px}.download-btn{width:100%;margin-top:9px}
-.notice{padding:13px 15px;border-radius:14px;border:1px solid rgba(255,255,255,.88);background:rgba(255,255,255,.48);font-size:12px;line-height:1.5}.notice.success{background:rgba(230,250,240,.72);color:#236f53}.notice.danger{background:rgba(255,234,238,.76);color:var(--danger)}
-.modal-back{position:fixed;inset:0;background:rgba(45,75,105,.26);backdrop-filter:blur(12px);display:grid;place-items:center;padding:18px;z-index:100}.modal{width:min(620px,100%);border-radius:27px;background:rgba(241,249,255,.97);border:1px solid #fff;box-shadow:0 28px 90px rgba(39,73,106,.28);padding:24px}.modal h2{margin:0 0 8px;font-size:27px;font-weight:520}.actions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}.toast{position:fixed;right:20px;bottom:20px;background:#123d70;color:#fff;padding:13px 16px;border-radius:14px;box-shadow:0 16px 46px rgba(18,61,112,.25);opacity:0;transform:translateY(10px);pointer-events:none;transition:.22s;z-index:200;font-size:13px}.toast.show{opacity:1;transform:none}
-.fullscreen{position:fixed;inset:0;background:rgba(10,25,40,.92);z-index:90;display:grid;grid-template-rows:auto 1fr auto;color:#fff;padding:18px}.full-top,.full-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}.full-img{display:grid;place-items:center;min-height:0}.full-img img{max-width:94vw;max-height:76vh;object-fit:contain;border-radius:14px}.full-bottom{justify-content:center}.full-top button,.full-bottom button{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:10px 14px}
-@media(max-width:1050px){.review-gallery{grid-template-columns:repeat(3,1fr)}}@media(max-width:780px){.wrap{padding:13px}.top{align-items:flex-start}.demo-switch{width:100%}.top{flex-wrap:wrap}.review-gallery{grid-template-columns:repeat(2,1fr)}.gallery-head{display:block}.gallery-count{text-align:left;margin-top:10px}.otp{gap:3px}.otp input{width:49px;height:62px;font-size:23px}.sticky{flex-direction:column;align-items:stretch}.sticky span{margin:0}}@media(max-width:500px){.review-gallery{grid-template-columns:1fr}.gate h1{font-size:37px}.gallery-head h1{font-size:33px}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Inter,Arial,sans-serif;color:var(--ink)}
+body{
+  background:
+    radial-gradient(circle at 85% 6%,rgba(255,220,201,.78),transparent 19%),
+    radial-gradient(circle at 14% 84%,rgba(255,195,164,.42),transparent 17%),
+    radial-gradient(circle at 54% 104%,rgba(255,238,219,.62),transparent 26%),
+    linear-gradient(135deg,#bcdaf4 0%,#eef8ff 47%,#cde6fb 100%);
+  background-attachment:fixed;
+}
+button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.shell{width:min(1440px,100%);margin:auto;padding:18px}
+.topbar{
+  min-height:64px;display:flex;align-items:center;gap:14px;padding:10px 14px;margin-bottom:16px;
+  border:1px solid var(--line);border-radius:21px;background:rgba(244,250,255,.42);
+  box-shadow:0 16px 46px rgba(50,92,130,.09);backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px)
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:220px}
+.mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,rgba(42,103,158,.88),rgba(62,131,182,.65));border:1px solid rgba(255,255,255,.64);display:grid;place-items:center;box-shadow:0 9px 22px rgba(44,90,132,.2)}
+.mark i{width:19px;height:3px;background:#fff;border-radius:9px;transform:skewX(-24deg);box-shadow:0 -7px 0 #fff,0 7px 0 #fff}
+.brand b{display:block;font-size:16px;letter-spacing:-.03em}.brand span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-top:3px}
+.preview-nav{display:flex;gap:5px;padding:4px;border-radius:14px;background:rgba(255,255,255,.24);border:1px solid rgba(255,255,255,.56)}
+.preview-nav button{border:0;background:transparent;color:var(--ink2);padding:10px 12px;border-radius:10px;font-size:11px;font-weight:700}
+.preview-nav button.on{background:rgba(255,255,255,.82);box-shadow:0 5px 14px rgba(51,95,135,.09)}
+.demo-pill{margin-left:auto;font-size:10px;color:var(--muted);padding:8px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.72);background:rgba(255,255,255,.3)}
+.card{background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border-radius:24px}
+.btn{border:1px solid transparent;border-radius:13px;min-height:42px;padding:10px 15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;color:var(--ink)}
+.btn.primary{background:linear-gradient(135deg,#378fe9,#2476d4);color:#fff;border-color:#4b9aeb;box-shadow:0 10px 24px rgba(39,117,201,.22)}
+.btn.secondary{background:rgba(255,255,255,.58);border-color:rgba(255,255,255,.94)}
+.btn.ghost{background:transparent;border-color:rgba(58,103,145,.18)}
+.btn.like.on{background:#e7f2ff;color:#145ca7;border-color:#b7dbff}
+.kicker{font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);font-weight:800}
+.hero{padding:30px 32px;margin-bottom:14px;display:flex;align-items:flex-end;gap:22px;justify-content:space-between;overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;right:-70px;top:22px;width:420px;height:1px;background:linear-gradient(90deg,transparent,rgba(70,128,177,.35),transparent);transform:rotate(-13deg)}
+.hero>div,.hero>.hero-side{position:relative;z-index:1}.hero h1{font-size:clamp(35px,5vw,64px);font-weight:520;letter-spacing:-.055em;line-height:.94;margin:7px 0 10px}.hero p{max-width:760px;margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.hero-side{text-align:right}.hero-side strong{display:block;font-size:30px;font-weight:520}.hero-side span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-top:4px}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.photo-card{overflow:hidden;transition:.18s}.photo-card:hover{transform:translateY(-2px);background:rgba(255,255,255,.57)}
+.photo-art{aspect-ratio:4/3;position:relative;overflow:hidden;cursor:pointer;background:#d7e8f3}
+.photo-art:before,.photo-art:after{content:"";position:absolute;inset:auto;border-radius:50%;filter:blur(.2px)}
+.photo-art.a{background:linear-gradient(145deg,#1d2229 0%,#443b35 47%,#bd7b4b 100%)}.photo-art.a:before{width:43%;aspect-ratio:1;background:radial-gradient(circle at 48% 42%,#f6d48d 0 11%,#c35f35 12% 27%,#632f22 28% 39%,#d9ab63 40% 51%,#2b1c18 52%);left:28%;top:24%;box-shadow:0 16px 30px rgba(0,0,0,.3)}.photo-art.a:after{width:64%;height:13%;background:rgba(255,255,255,.14);left:18%;bottom:13%;transform:rotate(-4deg)}
+.photo-art.b{background:linear-gradient(135deg,#122633,#315d68 48%,#f0a05e)}.photo-art.b:before{width:26%;height:58%;border-radius:42% 42% 35% 35%;background:linear-gradient(#f9d0a3 0 9%,#e8733e 10% 55%,#8d2c24 56% 100%);left:37%;top:17%;box-shadow:inset 0 0 0 3px rgba(255,255,255,.28),0 14px 25px rgba(0,0,0,.2)}.photo-art.b:after{width:8%;height:8%;background:#f5d675;left:47%;top:14%;box-shadow:17px 8px 0 #f7efc8}
+.photo-art.c{background:linear-gradient(140deg,#e9e2d8,#b8a497 54%,#644a40)}.photo-art.c:before{width:58%;height:38%;border-radius:50%;background:radial-gradient(ellipse,#e7d3aa 0 28%,#8f4b2f 29% 47%,#3d2c25 48% 53%,#eee0c2 54% 70%);left:21%;top:31%;transform:rotate(-8%)}.photo-art.c:after{width:34%;height:2%;background:#fff;left:10%;top:17%;transform:rotate(19deg);box-shadow:180px 120px 0 rgba(255,255,255,.4)}
+.photo-art.d{background:linear-gradient(145deg,#3d543c,#819a67 52%,#e3bf83)}.photo-art.d:before{width:52%;height:52%;background:radial-gradient(circle,#f1d991 0 13%,#b95f3d 14% 26%,#6d833c 27% 39%,#f2e6c9 40% 52%,#784c2b 53% 62%);left:24%;top:23%;box-shadow:0 16px 30px rgba(0,0,0,.18)}.photo-art.d:after{width:17%;height:17%;background:#e8cb8d;right:9%;bottom:8%}
+.photo-art.e{background:linear-gradient(135deg,#57342e,#9b674f 50%,#ecc49c)}.photo-art.e:before{width:45%;height:45%;background:radial-gradient(circle,#fff0cf 0 20%,#d89a69 21% 41%,#6b3c2e 42% 56%,#d8a476 57%);left:28%;top:25%;box-shadow:0 14px 29px rgba(0,0,0,.2)}.photo-art.e:after{width:15%;height:15%;background:#fff0d8;left:18%;top:16%;filter:blur(8px)}
+.photo-art.f{background:linear-gradient(140deg,#111f29,#233b4d 50%,#7c8894)}.photo-art.f:before{width:21%;height:61%;border-radius:12px 12px 5px 5px;background:linear-gradient(90deg,#d8dce0,#fff,#bbc4ca);left:40%;top:18%;box-shadow:-95px 20px 0 -26px rgba(255,255,255,.2),95px -10px 0 -24px rgba(255,198,155,.24)}.photo-art.f:after{width:11%;height:4%;border-radius:20px;background:#fff;left:45%;top:14%}
+.photo-art.g{background:linear-gradient(135deg,#211918,#49342d 52%,#b4815f)}.photo-art.g:before{width:57%;height:36%;border-radius:50%;background:radial-gradient(ellipse,#d9ae70 0 20%,#8a4c31 21% 42%,#2e201c 43% 48%,#efd4aa 49% 62%);left:22%;top:34%}.photo-art.g:after{width:23%;height:7%;background:#f3d5a1;right:10%;top:18%;transform:rotate(-12deg)}
+.photo-art.h{background:linear-gradient(145deg,#a6c7db,#ecf1ef 46%,#7f8f96)}.photo-art.h:before{width:68%;height:54%;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,.82) 0 28%,rgba(75,104,117,.45) 29% 31%,rgba(255,255,255,.72) 32% 61%,rgba(75,104,117,.45) 62% 64%,rgba(255,255,255,.65) 65%);left:16%;top:25%;box-shadow:0 10px 26px rgba(42,70,91,.2)}.photo-art.h:after{width:28%;height:18%;border-radius:50%;background:#d9bea1;left:36%;bottom:7%}
+.proof{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%) rotate(-13deg);color:rgba(255,255,255,.68);font-size:9px;letter-spacing:.17em;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.28)}
+.photo-body{padding:11px}.photo-name{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.actions-row{display:flex;gap:7px;margin-top:9px}.actions-row .btn{flex:1;min-height:36px;padding:7px 9px;font-size:11px}
+.note{width:100%;min-height:63px;resize:vertical;margin-top:8px;border:1px solid rgba(67,111,153,.16);background:rgba(255,255,255,.57);border-radius:11px;padding:9px;color:var(--ink);outline:none;font-size:11px}.note:focus{border-color:#83baf1;box-shadow:0 0 0 4px rgba(60,141,228,.08)}
+.sticky{position:sticky;bottom:12px;margin-top:18px;padding:12px 14px;display:flex;align-items:center;gap:12px;background:rgba(239,248,255,.86);z-index:20}.sticky span{margin-right:auto;color:var(--muted);font-size:12px}
+.secure-note{margin-top:13px;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.86);background:rgba(255,255,255,.38);font-size:11px;color:var(--muted);line-height:1.5}
+.gate{min-height:calc(100vh - 120px);display:grid;place-items:center}.gate-card{width:min(680px,100%);padding:46px 30px;text-align:center}.gate-card h1{font-size:clamp(36px,6vw,56px);letter-spacing:-.055em;line-height:.96;margin:7px 0 10px;font-weight:520}.gate-card p{max-width:520px;margin:0 auto;color:var(--muted);line-height:1.6;font-size:13px}
+.otp{display:flex;justify-content:center;gap:7px;margin:28px 0}.otp input{width:66px;height:80px;clip-path:polygon(14% 0,100% 0,86% 100%,0 100%);border:0;outline:0;background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.96);text-align:center;color:var(--ink);font-size:29px}.otp input:focus,.otp input.filled{background:rgba(255,255,255,.9);filter:drop-shadow(0 7px 13px rgba(44,127,232,.15))}
+.code-tip{font-size:11px;color:var(--muted);margin-top:13px}.code-tip b{color:var(--ink);letter-spacing:.16em}
+.delivery-grid .photo-body{display:grid;gap:7px}.delivery-grid .btn{width:100%}
+.modal-back{position:fixed;inset:0;background:rgba(28,50,70,.42);backdrop-filter:blur(14px);display:grid;place-items:center;padding:18px;z-index:100}.modal{width:min(640px,100%);padding:24px;background:rgba(244,250,255,.97);border:1px solid #fff;border-radius:26px;box-shadow:0 30px 90px rgba(32,63,91,.26)}.modal h2{font-size:27px;letter-spacing:-.04em;font-weight:520;margin:5px 0 8px}.modal p{color:var(--muted);line-height:1.55}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.full{position:fixed;inset:0;background:rgba(12,28,42,.94);z-index:100;color:#fff;display:grid;grid-template-rows:auto 1fr auto;padding:18px}.full-head,.full-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}.full-view{display:grid;place-items:center;min-height:0}.full-art{width:min(1040px,90vw);height:min(680px,72vh);border-radius:22px}.full button{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:10px 14px}.full-foot{justify-content:center}
+.success{min-height:calc(100vh - 130px);display:grid;place-items:center}.success-card{width:min(650px,100%);padding:46px 30px;text-align:center}.success-card .tick{font-size:58px}.success-card h1{font-size:44px;letter-spacing:-.05em;font-weight:520;margin:6px 0}.success-card p{color:var(--muted);line-height:1.6}
+@media(max-width:1080px){.gallery{grid-template-columns:repeat(3,1fr)}}@media(max-width:780px){.shell{padding:10px}.topbar{flex-wrap:wrap}.brand{min-width:0}.preview-nav{order:3;width:100%}.preview-nav button{flex:1}.demo-pill{margin-left:auto}.hero{display:block;padding:24px 20px}.hero-side{text-align:left;margin-top:15px}.gallery{grid-template-columns:repeat(2,1fr)}.sticky{flex-direction:column;align-items:stretch}.sticky span{margin:0}.otp{gap:3px}.otp input{width:48px;height:61px;font-size:22px}}@media(max-width:520px){.gallery{grid-template-columns:1fr}.hero h1{font-size:40px}.gate-card{padding:34px 12px}.topbar{border-radius:17px}.demo-pill{font-size:9px}}
 </style>
 </head>
 <body>
-<div class="wrap">
- <header class="top">
-   <div class="brand"><span class="mark"><i></i></span><span>High Style Match</span></div>
-   <div class="demo-switch">
-     <button class="on" data-stage="review">Client Review</button>
-     <button data-stage="final">Final Delivery</button>
-   </div>
-   <div class="secure">◉ Secure Client Gallery Demo</div>
- </header>
- <main id="app"></main>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><span class="mark"><i></i></span><div><b>High Style Match</b><span>Client Experience</span></div></div>
+    <nav class="preview-nav" aria-label="Demo pages">
+      <button class="on" data-view="review">Client Review</button>
+      <button data-view="verify">Verification</button>
+      <button data-view="delivery">Final Delivery</button>
+    </nav>
+    <div class="demo-pill">Interactive standalone demo</div>
+  </header>
+  <main id="app"></main>
 </div>
-<div id="modal"></div>
-<div id="toast" class="toast"></div>
+<div id="overlay"></div>
 <script>
-const app=document.getElementById("app"),modal=document.getElementById("modal"),toastEl=document.getElementById("toast");
-const state={stage:"review",verified:false,liked:new Set(),notes:{},submitted:false,current:0};
+const app=document.getElementById("app"),overlay=document.getElementById("overlay");
+const state={view:"review",liked:new Set(["p2"]),notes:{p2:"Could we make this one slightly warmer?"},submitted:false};
 const photos=[
- {id:"1",name:"Burger_Hero_01.jpg",src:"https://picsum.photos/seed/hsmfood01/1200/900"},
- {id:"2",name:"Cocktail_Hero_02.jpg",src:"https://picsum.photos/seed/hsmfood02/1200/900"},
- {id:"3",name:"Restaurant_Detail_03.jpg",src:"https://picsum.photos/seed/hsmfood03/1200/900"},
- {id:"4",name:"Starter_Overhead_04.jpg",src:"https://picsum.photos/seed/hsmfood04/1200/900"},
- {id:"5",name:"Dessert_Closeup_05.jpg",src:"https://picsum.photos/seed/hsmfood05/1200/900"},
- {id:"6",name:"Bar_Service_06.jpg",src:"https://picsum.photos/seed/hsmfood06/1200/900"},
- {id:"7",name:"Main_Course_07.jpg",src:"https://picsum.photos/seed/hsmfood07/1200/900"},
- {id:"8",name:"Dining_Room_08.jpg",src:"https://picsum.photos/seed/hsmfood08/1200/900"}
+ {id:"p1",name:"Burger_Hero_01.jpg",art:"a"},{id:"p2",name:"Aperitivo_02.jpg",art:"b"},
+ {id:"p3",name:"Pasta_Detail_03.jpg",art:"c"},{id:"p4",name:"Starter_Overhead_04.jpg",art:"d"},
+ {id:"p5",name:"Dessert_Closeup_05.jpg",art:"e"},{id:"p6",name:"Bar_Service_06.jpg",art:"f"},
+ {id:"p7",name:"Main_Course_07.jpg",art:"g"},{id:"p8",name:"Dining_Room_08.jpg",art:"h"}
 ];
-function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toastEl.classList.remove("show"),2400)}
-function render(){
- document.querySelectorAll("[data-stage]").forEach(b=>b.classList.toggle("on",b.dataset.stage===state.stage));
- if(!state.verified)return renderGate();
- if(state.stage==="review")return renderReview();
- return renderFinal();
-}
-function renderGate(){
- app.innerHTML='<div class="gate"><section class="card gate-card"><div class="kicker">'+(state.stage==="review"?"PRIVATE CLIENT REVIEW":"FINAL DELIVERY")+'</div><h1>Your photos are ready.</h1><p>Enter the six-digit verification code sent to your email to access this private gallery.</p><div class="otp">'+Array.from({length:6},(_,i)=>'<input inputmode="numeric" maxlength="1" aria-label="Verification digit '+(i+1)+'">').join("")+'</div><div id="gateError" class="notice danger hidden"></div><button class="btn primary" id="verifyBtn">Open Gallery</button><div class="demo-code">Demo code: <b>482691</b></div></section></div>';
- const inputs=[...document.querySelectorAll(".otp input")];
- inputs.forEach((x,i)=>{x.addEventListener("input",()=>{x.value=x.value.replace(/\D/g,"").slice(0,1);x.classList.toggle("filled",!!x.value);if(x.value&&inputs[i+1])inputs[i+1].focus()});x.addEventListener("keydown",e=>{if(e.key==="Backspace"&&!x.value&&inputs[i-1])inputs[i-1].focus()});x.addEventListener("paste",e=>{const d=e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);if(d){e.preventDefault();d.split("").forEach((n,j)=>{if(inputs[j]){inputs[j].value=n;inputs[j].classList.add("filled")}})}})});
- inputs[0]?.focus();
- document.getElementById("verifyBtn").onclick=()=>{const code=inputs.map(x=>x.value).join("");if(code!=="482691"){const e=document.getElementById("gateError");e.textContent="That code is not correct. Try 482691 for this demo.";e.classList.remove("hidden");return}state.verified=true;render()};
-}
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+function art(p,proof=true,extra=""){return '<div class="photo-art '+p.art+' '+extra+'">'+(proof?'<div class="proof">HIGH STYLE — CLIENT PROOF</div>':"")+'</div>'}
+function setView(v){state.view=v;overlay.innerHTML="";document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("on",b.dataset.view===v));render()}
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>setView(b.dataset.view));
+function render(){if(state.view==="review")renderReview();else if(state.view==="verify")renderVerify();else renderDelivery()}
 function renderReview(){
- if(state.submitted){app.innerHTML='<div class="gate"><section class="card gate-card"><div style="font-size:54px">✓</div><div class="kicker">SELECTIONS RECEIVED</div><h1>Thank you.</h1><p>Your selected photographs and notes have been returned to the photographer and are ready for editing.</p><button class="btn secondary" id="resetDemo">Review again</button></section></div>';document.getElementById("resetDemo").onclick=()=>{state.submitted=false;render()};return}
- app.innerHTML='<div class="gallery-head"><div><div class="kicker">CLIENT REVIEW — BEFORE EDITING</div><h1>Autumn Menu Shoot</h1><p>'+photos.length+' photographs • Like the images you want edited and leave notes where needed.</p></div><div class="gallery-count"><strong id="likedCount">'+state.liked.size+' / '+photos.length+'</strong><span>selected</span></div></div><div class="review-gallery">'+photos.map((p,i)=>'<article class="card photo"><div class="media" data-open="'+i+'"><img src="'+p.src+'" alt=""><div class="watermark">HIGH STYLE — CLIENT PROOF</div></div><div class="photo-body"><div class="photo-name">'+p.name+'</div><div class="photo-actions"><button class="btn small '+(state.liked.has(p.id)?"liked":"secondary")+'" data-like="'+p.id+'">'+(state.liked.has(p.id)?"♥ Liked":"♡ Like")+'</button><button class="btn secondary small" data-open="'+i+'">View</button></div><textarea class="note" data-note="'+p.id+'" placeholder="Add a note for the photographer…">'+(state.notes[p.id]||"")+'</textarea></div></article>').join("")+'</div><div class="card sticky"><span><b id="bottomLiked">'+state.liked.size+'</b> photos selected. Your progress saves automatically.</span><button class="btn primary" id="submitReview">Submit Selections →</button></div>';
+ if(state.submitted){app.innerHTML='<section class="success"><div class="card success-card"><div class="tick">✓</div><div class="kicker">SELECTIONS RECEIVED</div><h1>Thank you.</h1><p>Your photo choices and notes have been securely returned to the photographer. The selected photographs are now ready for editing.</p><button class="btn secondary" id="reviewAgain">Back to review demo</button></div></section>';document.getElementById("reviewAgain").onclick=()=>{state.submitted=false;renderReview()};return}
+ app.innerHTML=
+ '<section class="card hero"><div><div class="kicker">CLIENT REVIEW — BEFORE EDITING</div><h1>Autumn Menu Shoot</h1><p>Choose the photographs you want the photographer to edit. Like an image to select it, add a note if you want a specific change, then submit your final choices.</p></div><div class="hero-side"><strong id="heroCount">'+state.liked.size+' / '+photos.length+'</strong><span>selected</span></div></section>'+
+ '<section class="gallery">'+photos.map((p,i)=>'<article class="card photo-card">'+
+   '<div data-open="'+i+'">'+art(p,true)+'</div>'+
+   '<div class="photo-body"><div class="photo-name">'+esc(p.name)+'</div><div class="actions-row">'+
+   '<button class="btn small like '+(state.liked.has(p.id)?"on":"")+'" data-like="'+p.id+'">'+(state.liked.has(p.id)?"♥ Liked":"♡ Like")+'</button>'+
+   '<button class="btn secondary small" data-open="'+i+'">View</button></div>'+
+   '<textarea class="note" data-note="'+p.id+'" placeholder="Add a note for the photographer…">'+esc(state.notes[p.id]||"")+'</textarea></div></article>').join("")+'</section>'+
+ '<div class="card sticky"><span><b id="bottomCount">'+state.liked.size+'</b> photographs selected. Likes and notes save automatically in the real gallery.</span><button class="btn primary" id="submitSelection">Submit Selections →</button></div>'+
+ '<div class="secure-note">🔒 In the live system, this gallery is private, code-verified and uses short-lived signed image links. Original RAW files are never exposed to the client.</div>';
  document.querySelectorAll("[data-like]").forEach(b=>b.onclick=()=>{state.liked.has(b.dataset.like)?state.liked.delete(b.dataset.like):state.liked.add(b.dataset.like);renderReview()});
  document.querySelectorAll("[data-note]").forEach(t=>t.oninput=()=>state.notes[t.dataset.note]=t.value);
- document.querySelectorAll("[data-open]").forEach(x=>x.onclick=()=>openFullscreen(+x.dataset.open));
- document.getElementById("submitReview").onclick=()=>{if(!state.liked.size)return toast("Like at least one photograph first.");openSubmit()};
+ document.querySelectorAll("[data-open]").forEach(x=>x.onclick=()=>openFull(+x.dataset.open,true));
+ document.getElementById("submitSelection").onclick=()=>{if(!state.liked.size)return showMessage("Select at least one photograph first.");showSubmit()}
 }
-function openSubmit(){
- modal.innerHTML='<div class="modal-back"><div class="modal"><div class="kicker">CLIENT CONFIRMATION</div><h2>Submit selections?</h2><p>You selected <b>'+state.liked.size+' of '+photos.length+'</b> photographs. These will be returned to the photographer for editing.</p><div class="notice success">Your notes stay attached to each selected image.</div><div class="actions" style="margin-top:15px"><button class="btn secondary" id="keepReviewing">Keep Reviewing</button><button class="btn primary" id="confirmSubmit">Approve '+state.liked.size+' Photos</button></div></div></div>';
- document.getElementById("keepReviewing").onclick=()=>modal.innerHTML="";
- document.getElementById("confirmSubmit").onclick=()=>{state.submitted=true;modal.innerHTML="";render()};
+function renderVerify(){
+ app.innerHTML='<section class="gate"><div class="card gate-card"><div class="kicker">SECURE CLIENT GALLERY</div><h1>Your photos are ready.</h1><p>The client receives a private link and a separate six-digit verification code by email. Enter the code to unlock the gallery.</p><div class="otp">'+Array.from({length:6},(_,i)=>'<input maxlength="1" inputmode="numeric" aria-label="Digit '+(i+1)+'">').join("")+'</div><button class="btn primary" id="unlock">Open Gallery</button><div class="code-tip">Demo code: <b>482691</b></div></div></section>';
+ const inputs=[...document.querySelectorAll(".otp input")];inputs.forEach((x,i)=>{x.oninput=()=>{x.value=x.value.replace(/\D/g,"").slice(0,1);x.classList.toggle("filled",!!x.value);if(x.value&&inputs[i+1])inputs[i+1].focus()};x.onkeydown=e=>{if(e.key==="Backspace"&&!x.value&&inputs[i-1])inputs[i-1].focus()};x.onpaste=e=>{const v=e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);if(v){e.preventDefault();v.split("").forEach((d,j)=>{if(inputs[j]){inputs[j].value=d;inputs[j].classList.add("filled")}})}}});inputs[0]?.focus();
+ document.getElementById("unlock").onclick=()=>{const code=inputs.map(x=>x.value).join("");if(code!=="482691")return showMessage("That code is not correct. Use 482691 for this demo.");setView("review")}
 }
-function openFullscreen(index){
- state.current=index;const p=photos[index];
- modal.innerHTML='<div class="fullscreen"><div class="full-top"><div><b>'+p.name+'</b></div><button id="closeFull">Close ×</button></div><div class="full-img"><img src="'+p.src+'" alt=""></div><div class="full-bottom"><button id="prevPhoto">← Previous</button><button id="fullLike">'+(state.liked.has(p.id)?"♥ Liked":"♡ Like")+'</button><button id="nextPhoto">Next →</button></div></div>';
- document.getElementById("closeFull").onclick=()=>{modal.innerHTML="";renderReview()};
- document.getElementById("prevPhoto").onclick=()=>openFullscreen((index-1+photos.length)%photos.length);
- document.getElementById("nextPhoto").onclick=()=>openFullscreen((index+1)%photos.length);
- document.getElementById("fullLike").onclick=()=>{state.liked.has(p.id)?state.liked.delete(p.id):state.liked.add(p.id);openFullscreen(index)};
+function renderDelivery(){
+ app.innerHTML=
+ '<section class="card hero"><div><div class="kicker">FINAL DELIVERY</div><h1>Autumn Menu Shoot</h1><p>The selected photographs have been edited and are now ready for the client to view and download. Final Delivery uses a new verification code, separate from the review stage.</p></div><div class="hero-side"><button class="btn primary" id="downloadAll">↓ Download All</button></div></section>'+
+ '<section class="gallery delivery-grid">'+photos.slice(0,6).map((p,i)=>'<article class="card photo-card"><div data-final-open="'+i+'">'+art(p,false)+'</div><div class="photo-body"><div class="photo-name">'+esc(p.name)+'</div><button class="btn primary" data-demo-download="'+p.id+'">↓ Download</button></div></article>').join("")+'</section>'+
+ '<div class="secure-note">Demo only: these buttons simulate downloads. In the live app each final file is delivered through a private, time-limited signed URL and the download event can be tracked by the photographer.</div>';
+ document.querySelectorAll("[data-final-open]").forEach(x=>x.onclick=()=>openFull(+x.dataset.finalOpen,false));
+ document.querySelectorAll("[data-demo-download]").forEach(b=>b.onclick=()=>showMessage("This would download the full-resolution final file and record the download in High Style Match."));
+ document.getElementById("downloadAll").onclick=()=>showMessage("This would prepare the complete final delivery ZIP for the client.")
 }
-function renderFinal(){
- app.innerHTML='<div class="gallery-head"><div><div class="kicker">FINAL DELIVERY</div><h1>Autumn Menu Shoot</h1><p>'+photos.length+' finished photographs ready to view and download.</p></div><div class="gallery-count final-actions"><button class="btn primary" id="downloadAll">↓ Download All</button></div></div><div class="review-gallery">'+photos.map((p,i)=>'<article class="card photo"><div class="media" data-final-open="'+i+'"><img src="'+p.src+'" alt=""></div><div class="photo-body"><div class="photo-name">'+p.name+'</div><button class="btn primary download-btn" data-download="'+p.src+'">↓ Download</button></div></article>').join("")+'</div><div class="notice" style="margin-top:18px">Demo mode: download buttons open the sample image. In the real High Style Match delivery, these use private signed download URLs and tracked downloads.</div>';
- document.querySelectorAll("[data-final-open]").forEach(x=>x.onclick=()=>openFinalFullscreen(+x.dataset.finalOpen));
- document.querySelectorAll("[data-download]").forEach(b=>b.onclick=()=>window.open(b.dataset.download,"_blank"));
- document.getElementById("downloadAll").onclick=()=>toast("In production this creates a ZIP of all final photographs.");
+function showSubmit(){
+ overlay.innerHTML='<div class="modal-back"><div class="modal"><div class="kicker">CLIENT CONFIRMATION</div><h2>Submit selections?</h2><p>You have selected <b>'+state.liked.size+' of '+photos.length+'</b> photographs. These will be sent back to the photographer for editing.</p><div class="secure-note">Any notes written under a selected photograph stay attached to that image.</div><div class="modal-actions"><button class="btn secondary" id="keep">Keep Reviewing</button><button class="btn primary" id="confirm">Approve '+state.liked.size+' Photos</button></div></div></div>';
+ document.getElementById("keep").onclick=()=>overlay.innerHTML="";
+ document.getElementById("confirm").onclick=()=>{overlay.innerHTML="";state.submitted=true;renderReview()}
 }
-function openFinalFullscreen(index){
- const p=photos[index];modal.innerHTML='<div class="fullscreen"><div class="full-top"><div><b>'+p.name+'</b></div><button id="closeFull">Close ×</button></div><div class="full-img"><img src="'+p.src+'" alt=""></div><div class="full-bottom"><button id="prevPhoto">← Previous</button><button id="fullDownload">↓ Download</button><button id="nextPhoto">Next →</button></div></div>';
- document.getElementById("closeFull").onclick=()=>modal.innerHTML="";
- document.getElementById("prevPhoto").onclick=()=>openFinalFullscreen((index-1+photos.length)%photos.length);
- document.getElementById("nextPhoto").onclick=()=>openFinalFullscreen((index+1)%photos.length);
- document.getElementById("fullDownload").onclick=()=>window.open(p.src,"_blank");
+function showMessage(message){overlay.innerHTML='<div class="modal-back"><div class="modal"><div class="kicker">HIGH STYLE MATCH DEMO</div><h2>Preview action</h2><p>'+esc(message)+'</p><div class="modal-actions"><button class="btn primary" id="ok">Got it</button></div></div></div>';document.getElementById("ok").onclick=()=>overlay.innerHTML=""}
+function openFull(index,review){
+ const p=photos[index],arr=review?photos:photos.slice(0,6);
+ overlay.innerHTML='<div class="full"><div class="full-head"><b>'+esc(p.name)+'</b><button id="closeFull">Close ×</button></div><div class="full-view">'+art(p,review,"full-art")+'</div><div class="full-foot"><button id="prev">← Previous</button>'+(review?'<button id="fullLike">'+(state.liked.has(p.id)?"♥ Liked":"♡ Like")+'</button>':'<button id="fullDownload">↓ Download</button>')+'<button id="next">Next →</button></div></div>';
+ const at=arr.findIndex(x=>x.id===p.id);
+ document.getElementById("closeFull").onclick=()=>{overlay.innerHTML="";render()};
+ document.getElementById("prev").onclick=()=>openFull((at-1+arr.length)%arr.length,review);
+ document.getElementById("next").onclick=()=>openFull((at+1)%arr.length,review);
+ if(review)document.getElementById("fullLike").onclick=()=>{state.liked.has(p.id)?state.liked.delete(p.id):state.liked.add(p.id);openFull(at,true)};
+ else document.getElementById("fullDownload").onclick=()=>showMessage("The live gallery would download this final image using its signed private URL.")
 }
-document.querySelectorAll("[data-stage]").forEach(b=>b.onclick=()=>{state.stage=b.dataset.stage;state.verified=false;modal.innerHTML="";render()});
 render();
 </script>
 </body>
