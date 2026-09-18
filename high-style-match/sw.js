@@ -1,9 +1,13 @@
-const CACHE='hsm-shell-v16-production-studio';
+const CACHE='hsm-shell-v17-production-app';
 
 const ESSENTIAL=[
   '/high-style-match/',
   '/high-style-match/index.html',
   '/high-style-match/sign-in/',
+  '/high-style-match/app/',
+  '/high-style-match/app/index.html',
+  '/high-style-match/app/styles.css',
+  '/high-style-match/app/app.js',
   '/high-style-match/subscribe/',
   '/high-style-match/auth-config.js',
   '/high-style-match/premium-product-theme.css',
@@ -67,7 +71,7 @@ self.addEventListener('fetch',event=>{
         if(fresh.ok)cache.put(req,fresh.clone());
         return fresh;
       }catch{
-        return (await cache.match(req,{ignoreSearch:true}))||cache.match('/high-style-match/',{ignoreSearch:true});
+        return (await cache.match(req,{ignoreSearch:true}))||cache.match('/high-style-match/app/',{ignoreSearch:true})||cache.match('/high-style-match/',{ignoreSearch:true});
       }
     }));
     return;
