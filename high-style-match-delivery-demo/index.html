@@ -67,6 +67,8 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 .secure-note{margin-top:13px;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.86);background:rgba(255,255,255,.38);font-size:11px;color:var(--muted);line-height:1.5}
 .gate{min-height:calc(100vh - 120px);display:grid;place-items:center}.gate-card{width:min(680px,100%);padding:46px 30px;text-align:center}.gate-card h1{font-size:clamp(36px,6vw,56px);letter-spacing:-.055em;line-height:.96;margin:7px 0 10px;font-weight:520}.gate-card p{max-width:520px;margin:0 auto;color:var(--muted);line-height:1.6;font-size:13px}
 .otp{display:flex;justify-content:center;gap:7px;margin:28px 0}.otp input{width:66px;height:80px;clip-path:polygon(14% 0,100% 0,86% 100%,0 100%);border:0;outline:0;background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.96);text-align:center;color:var(--ink);font-size:29px}.otp input:focus,.otp input.filled{background:rgba(255,255,255,.9);filter:drop-shadow(0 7px 13px rgba(44,127,232,.15))}
+.gate-card.code-ok .otp input{animation:demoCodeOk .55s ease both;background:#fff;color:#1760aa;box-shadow:inset 0 0 0 1px rgba(47,131,230,.65),0 0 26px rgba(77,166,246,.28)}
+@keyframes demoCodeOk{0%{transform:translateY(0)}45%{transform:translateY(-5px);filter:brightness(1.14)}100%{transform:translateY(0)}}
 .code-tip{font-size:11px;color:var(--muted);margin-top:13px}.code-tip b{color:var(--ink);letter-spacing:.16em}
 .delivery-grid .photo-body{display:grid;gap:7px}.delivery-grid .btn{width:100%}
 .modal-back{position:fixed;inset:0;background:rgba(28,50,70,.42);backdrop-filter:blur(14px);display:grid;place-items:center;padding:18px;z-index:100}.modal{width:min(640px,100%);padding:24px;background:rgba(244,250,255,.97);border:1px solid #fff;border-radius:26px;box-shadow:0 30px 90px rgba(32,63,91,.26)}.modal h2{font-size:27px;letter-spacing:-.04em;font-weight:520;margin:5px 0 8px}.modal p{color:var(--muted);line-height:1.55}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
@@ -122,8 +124,10 @@ function renderReview(){
 }
 function renderVerify(){
  app.innerHTML='<section class="gate"><div class="card gate-card"><div class="kicker">SECURE CLIENT GALLERY</div><h1>Your photos are ready.</h1><p>The client receives a private link and a separate six-digit verification code by email. Enter the code to unlock the gallery.</p><div class="otp">'+Array.from({length:6},(_,i)=>'<input maxlength="1" inputmode="numeric" aria-label="Digit '+(i+1)+'">').join("")+'</div><button class="btn primary" id="unlock">Open Gallery</button><div class="code-tip">Demo code: <b>482691</b></div></div></section>';
- const inputs=[...document.querySelectorAll(".otp input")];inputs.forEach((x,i)=>{x.oninput=()=>{x.value=x.value.replace(/\D/g,"").slice(0,1);x.classList.toggle("filled",!!x.value);if(x.value&&inputs[i+1])inputs[i+1].focus()};x.onkeydown=e=>{if(e.key==="Backspace"&&!x.value&&inputs[i-1])inputs[i-1].focus()};x.onpaste=e=>{const v=e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);if(v){e.preventDefault();v.split("").forEach((d,j)=>{if(inputs[j]){inputs[j].value=d;inputs[j].classList.add("filled")}})}}});inputs[0]?.focus();
- document.getElementById("unlock").onclick=()=>{const code=inputs.map(x=>x.value).join("");if(code!=="482691")return showMessage("That code is not correct. Use 482691 for this demo.");setView("review")}
+ const inputs=[...document.querySelectorAll(".otp input")],card=document.querySelector(".gate-card");
+ const check=()=>{const code=inputs.map(x=>x.value).join("");if(code.length!==6)return;if(code!=="482691")return showMessage("That code is not correct. Use 482691 for this demo.");card.classList.add("code-ok");setTimeout(()=>setView("review"),560)};
+ inputs.forEach((x,i)=>{x.oninput=()=>{x.value=x.value.replace(/\D/g,"").slice(0,1);x.classList.toggle("filled",!!x.value);if(x.value&&inputs[i+1])inputs[i+1].focus();check()};x.onkeydown=e=>{if(e.key==="Backspace"&&!x.value&&inputs[i-1])inputs[i-1].focus()};x.onpaste=e=>{const v=e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);if(v){e.preventDefault();v.split("").forEach((d,j)=>{if(inputs[j]){inputs[j].value=d;inputs[j].classList.add("filled")}});check()}}});inputs[0]?.focus();
+ document.getElementById("unlock").onclick=check
 }
 function renderDelivery(){
  app.innerHTML=
