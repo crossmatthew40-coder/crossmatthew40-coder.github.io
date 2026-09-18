@@ -17,7 +17,7 @@
   function homeForRole(role){
     if(role==='customer') return '/high-style-match/customer/';
     if(role==='admin') return '/high-style-match/admin/';
-    return '/high-style-match/';
+    return '/high-style-match/app/';
   }
   async function session(){const sb=await getClient();const {data,error}=await sb.auth.getSession();if(error)throw error;return data.session||null}
   async function profile(){
