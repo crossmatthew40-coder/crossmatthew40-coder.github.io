@@ -5,118 +5,354 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#dceeff">
 <title>Photographer Sign In — High Style Match</title>
+<meta name="description" content="Sign in to your High Style Match photographer workspace.">
+<link rel="stylesheet" href="../app/styles.css?v=20260918-auth2">
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",sans-serif;color:#183c61}
-body{
-  display:grid;place-items:center;padding:24px;
-  background:
-    radial-gradient(circle at 82% 10%,rgba(255,218,196,.72),transparent 18%),
-    radial-gradient(circle at 10% 80%,rgba(255,195,166,.42),transparent 17%),
-    linear-gradient(135deg,#dbeefa,#eef7fd 48%,#cfe7f8 100%);
-}
-button,input{font:inherit}
-.shell{width:min(1040px,100%);display:grid;grid-template-columns:.92fr 1.08fr;min-height:640px;border:1px solid rgba(255,255,255,.72);border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(55,96,132,.18);background:rgba(245,251,255,.6);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px)}
-.brandpanel{padding:38px;border-right:1px solid rgba(255,255,255,.72);display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(160deg,rgba(49,91,130,.86),rgba(64,113,153,.72));color:#fff}
-.brand{display:flex;align-items:center;gap:14px}.brand img{width:84px;height:84px;object-fit:contain}.brand b{display:block;font-size:18px}.brand small{color:rgba(255,255,255,.7)}
-.brandcopy h1{font-size:49px;line-height:.96;letter-spacing:-.055em;margin:0 0 17px;font-weight:520}.brandcopy p{color:rgba(255,255,255,.74);font-size:14px;line-height:1.65;max-width:390px}
-.brand-note{font-size:12px;color:rgba(255,255,255,.66);line-height:1.6}
-.panel{padding:46px;display:grid;align-content:center}
-.eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#6d88a0}
-.panel h2{font-size:36px;letter-spacing:-.045em;margin:10px 0 8px;font-weight:560}.intro{color:#6d879f;font-size:13px;line-height:1.55;margin:0 0 22px}
-.tabs{display:flex;gap:7px;margin-bottom:18px}.tab{border:1px solid rgba(91,135,174,.2);background:rgba(255,255,255,.48);color:#5a7792;padding:9px 12px;border-radius:11px;cursor:pointer;font-weight:740;font-size:11px}.tab.on{background:#2f83e6;color:#fff;border-color:#2f83e6}
-.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:11px;font-weight:760}.field input{width:100%;background:rgba(255,255,255,.68);border:1px solid rgba(91,135,174,.2);color:#183c61;padding:13px;border-radius:12px;outline:none}.field input:focus{border-color:#4f9ae5;box-shadow:0 0 0 3px rgba(47,131,230,.12)}
-.password-wrap{display:flex;gap:7px}.password-wrap input{flex:1}.reveal{min-width:76px;border:1px solid rgba(91,135,174,.2);background:rgba(255,255,255,.48);color:#476985;border-radius:11px;font-size:10px;font-weight:760}
-.requirements{font-size:10px;color:#7b91a5;line-height:1.5;margin:-5px 0 13px}
-.checkrow{display:flex;align-items:flex-start;gap:9px;color:#6c8499;font-size:10px;line-height:1.45;margin:4px 0 14px}.checkrow input{margin-top:2px}.checkrow a{color:#2f6da7}
-.primary,.secondary{width:100%;min-height:46px;border-radius:12px;font-weight:780;cursor:pointer}.primary{background:linear-gradient(135deg,#378fe9,#2476d4);color:#fff;border:1px solid #4b9aeb;box-shadow:0 10px 24px rgba(39,117,201,.2)}.secondary{margin-top:9px;background:rgba(255,255,255,.5);color:#315f88;border:1px solid rgba(255,255,255,.78)}.primary[disabled],.secondary[disabled]{opacity:.55;cursor:wait}
-.textbtn{border:0;background:transparent;color:#69839b;padding:10px 0;cursor:pointer;font-size:11px}.status{display:none;margin-top:13px;padding:12px;border:1px solid rgba(91,135,174,.18);border-radius:12px;background:rgba(255,255,255,.55);color:#345a7e;font-size:11px;line-height:1.5}.status.on{display:block}.status.error{border-color:#e4b5bd;background:#fff0f3;color:#9e4756}
-.bottom{margin-top:18px;display:flex;justify-content:space-between;gap:12px;font-size:10px}.bottom a{color:#6d869c;text-decoration:none}.service{font-size:10px;color:#7c91a5;margin-top:13px}.service strong{color:#466a89}
-@media(max-width:760px){body{padding:0}.shell{grid-template-columns:1fr;border-radius:0;min-height:100vh}.brandpanel{border-right:0;border-bottom:1px solid rgba(255,255,255,.3);padding:22px}.brandcopy{display:none}.brand img{width:58px;height:58px}.brand-note{margin-top:16px}.panel{padding:30px 20px}.panel h2{font-size:31px}}
+.auth-art{position:relative;overflow:hidden}
+.auth-art:before,.auth-art:after{content:"";position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.72),transparent);transform:rotate(-15deg);pointer-events:none}
+.auth-art:before{width:470px;right:-130px;top:180px}.auth-art:after{width:350px;left:-110px;bottom:155px;transform:rotate(18deg)}
+.auth-art>*{position:relative;z-index:1}
+.auth-brand{display:flex;align-items:center;gap:12px;font-size:23px;letter-spacing:-.035em}
+.auth-brand-mark{width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);display:grid;place-items:center}
+.auth-brand-mark i{display:block;width:19px;height:4px;border-radius:4px;background:#fff;transform:skewX(-23deg);box-shadow:0 -7px 0 #fff,0 7px 0 #fff}
+.auth-art-foot{font-size:12px;line-height:1.55;color:rgba(255,255,255,.7);max-width:350px}
+.auth-form{display:grid;align-content:center}
+.auth-form .form-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.auth-form .field{margin:0}
+.auth-form .btn{width:100%}
+.auth-tabs{display:flex;gap:6px;margin-bottom:18px;padding:4px;border:1px solid rgba(255,255,255,.58);background:rgba(255,255,255,.22);border-radius:14px}
+.auth-tab{flex:1;border:0;background:transparent;color:var(--ink2);padding:10px;border-radius:10px;font-weight:650}
+.auth-tab.on{background:rgba(255,255,255,.76);box-shadow:0 5px 14px rgba(51,95,135,.08)}
+.password-wrap{display:grid;grid-template-columns:1fr auto;gap:7px}
+.password-wrap .btn{width:auto;min-width:72px}
+.auth-help{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
+.auth-link{border:0;background:transparent;color:var(--blue);padding:5px 0;font-size:12px}
+.requirements{font-size:11px;color:var(--muted);line-height:1.5;margin-top:-4px}
+.terms{display:flex;align-items:flex-start;gap:9px;color:var(--muted);font-size:11px;line-height:1.45}.terms input{margin-top:3px}.terms a{color:var(--blue)}
+.account-status{margin-top:12px}
+.account-status.hidden{display:none!important}
+.service-line{font-size:11px;color:var(--muted);margin-top:12px}.service-line strong{color:var(--ink2)}
+.auth-footer{display:flex;justify-content:space-between;gap:12px;margin-top:18px;font-size:11px;color:var(--muted)}.auth-footer a{text-decoration:none}
+.reset-title{margin-bottom:18px}
+@media(max-width:780px){.auth-shell{padding:0}.auth-card{min-height:100vh;border-radius:0}.auth-form{min-height:100vh}.auth-help{align-items:flex-start;flex-direction:column;gap:2px}}
 </style>
 </head>
 <body>
-<main class="shell">
-  <section class="brandpanel">
-    <div class="brand"><img src="/high-style-logo.svg" alt="High Style Match"><div><b>High Style Match</b><small>Photographer workspace</small></div></div>
-    <div class="brandcopy"><h1>Shoot.<br>Select.<br>Deliver.</h1><p>One account for the photographer. Clients never need an account — they access private proof and final-delivery galleries using the secure code sent to them.</p></div>
-    <div class="brand-note">Photographer accounts own projects, uploads, client approvals, editing notes and final delivery.</div>
-  </section>
-  <section class="panel">
-    <div class="eyebrow">Photographer account</div>
-    <h2 id="title">Sign in.</h2>
-    <p class="intro" id="intro">Access your High Style Match photography workspace.</p>
-    <div class="tabs"><button class="tab on" data-mode="login">Sign in</button><button class="tab" data-mode="signup">Create account</button></div>
+<div class="auth-shell">
+  <main class="card auth-card">
+    <section class="auth-art">
+      <div class="auth-brand"><span class="auth-brand-mark"><i></i></span><span>High Style Match</span></div>
+      <div>
+        <h1>Shoot. Select.<br>Approve. Edit.<br>Deliver.</h1>
+        <p>One photographer account for projects, uploads, Smart Cull, client approval, editing notes and secure final delivery.</p>
+      </div>
+      <div class="auth-art-foot">Clients never create an account. They only access the private galleries you send them using their secure verification code.</div>
+    </section>
 
-    <form id="form">
-      <div class="field" id="nameField" hidden><label for="name">Business / studio name</label><input id="name" autocomplete="organization"></div>
-      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required></div>
-      <div class="field"><label for="password">Password</label><div class="password-wrap"><input id="password" type="password" autocomplete="current-password" minlength="8" required><button class="reveal" id="reveal" type="button">Show</button></div></div>
-      <div class="requirements" id="requirements" hidden>Use at least 8 characters. A longer passphrase is recommended.</div>
-      <div class="field" id="confirmField" hidden><label for="confirmPassword">Confirm password</label><input id="confirmPassword" type="password" autocomplete="new-password" minlength="8"></div>
-      <label class="checkrow" id="termsRow" hidden><input id="terms" type="checkbox"> <span>I agree to the <a href="../terms/" target="_blank" rel="noopener">Terms</a> and acknowledge the <a href="../privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
-      <button class="primary" id="submit" type="submit">Sign in</button>
-    </form>
+    <section class="auth-form">
+      <div id="normalAuth">
+        <h2 id="title">Welcome back</h2>
+        <p id="intro">Sign in to your High Style Match photographer workspace.</p>
 
-    <button class="secondary" id="magic" type="button">Email me a sign-in link</button>
-    <button class="textbtn" id="reset" type="button">Forgot password?</button>
-    <button class="textbtn" id="resend" type="button" hidden>Resend confirmation email</button>
-    <div class="status" id="status"></div>
-    <div class="service" id="service"></div>
-    <div class="bottom"><a href="../">← High Style Match</a><a href="../privacy/">Privacy</a></div>
-  </section>
-</main>
+        <div class="auth-tabs">
+          <button class="auth-tab on" type="button" data-mode="login">Sign in</button>
+          <button class="auth-tab" type="button" data-mode="signup">Create account</button>
+        </div>
+
+        <form id="authForm" class="form-grid" novalidate>
+          <div class="field full hidden" id="businessField">
+            <label for="businessName">Business / studio name</label>
+            <input id="businessName" autocomplete="organization" placeholder="High Style Creative">
+          </div>
+
+          <div class="field full">
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@studio.com">
+          </div>
+
+          <div class="field full">
+            <label for="password">Password</label>
+            <div class="password-wrap">
+              <input id="password" type="password" autocomplete="current-password" minlength="8" required>
+              <button class="btn secondary small" id="togglePassword" type="button">Show</button>
+            </div>
+          </div>
+
+          <div class="requirements hidden" id="passwordRequirements">Use at least 8 characters. A longer passphrase is recommended.</div>
+
+          <div class="field full hidden" id="confirmField">
+            <label for="confirmPassword">Confirm password</label>
+            <input id="confirmPassword" type="password" autocomplete="new-password" minlength="8">
+          </div>
+
+          <label class="terms hidden" id="termsRow">
+            <input id="terms" type="checkbox">
+            <span>I agree to the <a href="../terms/" target="_blank" rel="noopener">Terms</a> and acknowledge the <a href="../privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+          </label>
+
+          <div class="field full">
+            <button class="btn primary" id="submitButton" type="submit">Sign in</button>
+          </div>
+        </form>
+
+        <button class="btn secondary" id="magicLink" type="button" style="width:100%;margin-top:9px">Email me a sign-in link</button>
+
+        <div class="auth-help">
+          <button class="auth-link" id="forgotPassword" type="button">Forgot password?</button>
+          <button class="auth-link hidden" id="resendConfirmation" type="button">Resend confirmation email</button>
+        </div>
+
+        <div class="notice account-status hidden" id="status" role="status" aria-live="polite"></div>
+        <div class="service-line" id="service"></div>
+        <div class="auth-footer"><a href="../">← High Style Match</a><a href="../privacy/">Privacy</a></div>
+      </div>
+
+      <div id="resetAuth" class="hidden">
+        <div class="kicker">ACCOUNT SECURITY</div>
+        <h2 class="reset-title">Choose a new password</h2>
+        <p>Enter a new password for your photographer account.</p>
+        <form id="resetForm" class="form-grid">
+          <div class="field full">
+            <label for="newPassword">New password</label>
+            <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required>
+          </div>
+          <div class="field full">
+            <label for="newPasswordConfirm">Confirm new password</label>
+            <input id="newPasswordConfirm" type="password" minlength="8" autocomplete="new-password" required>
+          </div>
+          <div class="field full"><button class="btn primary" id="resetSubmit" type="submit">Update password</button></div>
+        </form>
+        <div class="notice account-status hidden" id="resetStatus" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+</div>
 
 <script src="../auth-config.js"></script>
 <script src="../auth-router.js"></script>
 <script>
-(()=>{
- const qs=new URLSearchParams(location.search),tabs=[...document.querySelectorAll('.tab')];let mode=qs.get('mode')==='signup'?'signup':'login';
- const $=id=>document.getElementById(id),status=$('status'),show=(m,err=false)=>{status.textContent=m;status.className='status on'+(err?' error':'')},clear=()=>{status.className='status';status.textContent=''};
- function render(){
-   tabs.forEach(b=>b.classList.toggle('on',b.dataset.mode===mode));
-   nameField.hidden=mode!=='signup';confirmField.hidden=mode!=='signup';termsRow.hidden=mode!=='signup';requirements.hidden=mode!=='signup';
-   confirmPassword.required=mode==='signup';terms.required=mode==='signup';
-   title.textContent=mode==='signup'?'Create your photographer account.':'Sign in.';
-   intro.textContent=mode==='signup'?'Create the workspace that owns your projects, photos and client galleries.':'Access your High Style Match photography workspace.';
-   submit.textContent=mode==='signup'?'Create photographer account':'Sign in';
-   password.autocomplete=mode==='signup'?'new-password':'current-password';resend.hidden=true
- }
- tabs.forEach(b=>b.onclick=()=>{mode=b.dataset.mode;render();clear()});
- service.innerHTML=HSMAuthRouter.configured()?'<strong>Secure account service connected.</strong>':'Account service is not connected.';
- async function client(){if(!HSMAuthRouter.configured())throw new Error('Secure accounts are not connected yet.');return HSMAuthRouter.getClient()}
- async function route(){await HSMAuthRouter.routeAfterSignIn('photographer',qs.get('returnTo')||'/high-style-match/app/')}
- form.addEventListener('submit',async e=>{
-   e.preventDefault();clear();submit.disabled=true;const oldText=submit.textContent;submit.textContent=mode==='signup'?'Creating account…':'Signing in…';
-   try{
-     const sb=await client();
-     if(mode==='signup'){
-       if(password.value!==confirmPassword.value)throw new Error('The passwords do not match.');
-       if(!terms.checked)throw new Error('Please accept the Terms and Privacy Policy to continue.');
-       const {data,error}=await sb.auth.signUp({
-         email:email.value.trim(),password:password.value,
-         options:{
-           data:{display_name:name.value.trim()||email.value.trim(),business_name:name.value.trim()||null,account_type:'photographer',requested_role:'photographer'},
-           emailRedirectTo:new URL('./?returnTo='+encodeURIComponent(qs.get('returnTo')||'/high-style-match/app/'),location.href).href
-         }
-       });
-       if(error)throw error;
-       if(data.session)await route();
-       else{show('Account created. Confirm your email using the message we sent you, then return here to sign in.');resend.hidden=false}
-     }else{
-       const {error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});
-       if(error)throw error;
-       await route()
-     }
-   }catch(err){const m=err.message||String(err);show(m,true);if(/confirm/i.test(m))resend.hidden=false}
-   finally{submit.disabled=false;submit.textContent=oldText}
- });
- reveal.onclick=()=>{const on=password.type==='password';password.type=on?'text':'password';confirmPassword.type=on?'text':'password';reveal.textContent=on?'Hide':'Show'};
- magic.onclick=async()=>{clear();try{if(!email.value.trim())throw new Error('Enter your email address first.');const sb=await client();const {error}=await sb.auth.signInWithOtp({email:email.value.trim(),options:{emailRedirectTo:new URL('./?returnTo='+encodeURIComponent(qs.get('returnTo')||'/high-style-match/app/'),location.href).href}});if(error)throw error;show('Sign-in link sent. Check your email.')}catch(err){show(err.message||String(err),true)}};
- resend.onclick=async()=>{clear();try{if(!email.value.trim())throw new Error('Enter your email address first.');const sb=await client();const {error}=await sb.auth.resend({type:'signup',email:email.value.trim(),options:{emailRedirectTo:new URL('./?returnTo='+encodeURIComponent(qs.get('returnTo')||'/high-style-match/app/'),location.href).href}});if(error)throw error;show('Confirmation email resent. Check your inbox and spam folder.')}catch(err){show(err.message||String(err),true)}};
- reset.onclick=async()=>{clear();try{if(!email.value.trim())throw new Error('Enter your email address first.');const sb=await client();const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:new URL('./?reset=1',location.href).href});if(error)throw error;show('Password reset email sent.')}catch(err){show(err.message||String(err),true)}};
- if(HSMAuthRouter.configured())HSMAuthRouter.context().then(c=>{if(c&&['photographer','admin'].includes(c.profile?.role))location.href=qs.get('returnTo')||'/high-style-match/app/'}).catch(()=>{});
- render();
+(async()=>{
+  const qs=new URLSearchParams(location.search);
+  const $=id=>document.getElementById(id);
+  const els={
+    normalAuth:$("normalAuth"),resetAuth:$("resetAuth"),title:$("title"),intro:$("intro"),
+    authForm:$("authForm"),businessField:$("businessField"),businessName:$("businessName"),
+    email:$("email"),password:$("password"),confirmField:$("confirmField"),confirmPassword:$("confirmPassword"),
+    termsRow:$("termsRow"),terms:$("terms"),passwordRequirements:$("passwordRequirements"),
+    submitButton:$("submitButton"),togglePassword:$("togglePassword"),magicLink:$("magicLink"),
+    forgotPassword:$("forgotPassword"),resendConfirmation:$("resendConfirmation"),
+    status:$("status"),service:$("service"),resetForm:$("resetForm"),newPassword:$("newPassword"),
+    newPasswordConfirm:$("newPasswordConfirm"),resetSubmit:$("resetSubmit"),resetStatus:$("resetStatus")
+  };
+  const tabs=[...document.querySelectorAll("[data-mode]")];
+  let mode=qs.get("mode")==="signup"?"signup":"login";
+
+  const show=(node,message,type="info")=>{
+    node.textContent=message;
+    node.classList.remove("hidden","danger","success","warn");
+    if(type!=="info")node.classList.add(type);
+  };
+  const hide=node=>{node.textContent="";node.classList.add("hidden");node.classList.remove("danger","success","warn")};
+  const validEmail=value=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  async function getClient(){
+    if(!window.HSMAuthRouter?.configured?.()) throw new Error("Secure account service is not connected.");
+    return window.HSMAuthRouter.getClient();
+  }
+
+  function destination(){
+    const requested=qs.get("returnTo");
+    return requested&&requested.startsWith("/high-style-match/")?requested:"/high-style-match/app/";
+  }
+
+  function renderMode(){
+    const signup=mode==="signup";
+    tabs.forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));
+    els.businessField.classList.toggle("hidden",!signup);
+    els.confirmField.classList.toggle("hidden",!signup);
+    els.termsRow.classList.toggle("hidden",!signup);
+    els.passwordRequirements.classList.toggle("hidden",!signup);
+    els.confirmPassword.required=signup;
+    els.terms.required=signup;
+    els.password.autocomplete=signup?"new-password":"current-password";
+    els.title.textContent=signup?"Create your photographer account":"Welcome back";
+    els.intro.textContent=signup?"Create the workspace that owns your projects, photos and client galleries.":"Sign in to your High Style Match photographer workspace.";
+    els.submitButton.textContent=signup?"Create photographer account":"Sign in";
+    els.resendConfirmation.classList.add("hidden");
+    hide(els.status);
+  }
+
+  tabs.forEach(button=>button.addEventListener("click",()=>{
+    mode=button.dataset.mode;
+    renderMode();
+  }));
+
+  els.togglePassword.addEventListener("click",()=>{
+    const reveal=els.password.type==="password";
+    els.password.type=reveal?"text":"password";
+    els.confirmPassword.type=reveal?"text":"password";
+    els.togglePassword.textContent=reveal?"Hide":"Show";
+  });
+
+  els.authForm.addEventListener("submit",async event=>{
+    event.preventDefault();
+    hide(els.status);
+    const email=els.email.value.trim().toLowerCase();
+    const password=els.password.value;
+    if(!validEmail(email)){show(els.status,"Enter a valid email address.","danger");els.email.focus();return}
+    if(password.length<8){show(els.status,"Your password must contain at least 8 characters.","danger");els.password.focus();return}
+
+    const old=els.submitButton.textContent;
+    els.submitButton.disabled=true;
+    els.submitButton.textContent=mode==="signup"?"Creating account…":"Signing in…";
+
+    try{
+      const sb=await getClient();
+
+      if(mode==="signup"){
+        if(els.confirmPassword.value!==password) throw new Error("The passwords do not match.");
+        if(!els.terms.checked) throw new Error("Please accept the Terms and Privacy Policy to continue.");
+
+        const redirect=new URL(location.href);
+        redirect.search="";
+        redirect.hash="";
+        redirect.searchParams.set("returnTo",destination());
+
+        const {data,error}=await sb.auth.signUp({
+          email,password,
+          options:{
+            data:{
+              display_name:els.businessName.value.trim()||email,
+              business_name:els.businessName.value.trim()||null,
+              account_type:"photographer",
+              requested_role:"photographer"
+            },
+            emailRedirectTo:redirect.toString()
+          }
+        });
+        if(error) throw error;
+
+        if(data.session){
+          location.replace(destination());
+          return;
+        }
+        show(els.status,"Account created. Check your email and confirm the address, then High Style Match will let you in.","success");
+        els.resendConfirmation.classList.remove("hidden");
+      }else{
+        const {data,error}=await sb.auth.signInWithPassword({email,password});
+        if(error) throw error;
+        if(!data.session) throw new Error("No session was created. Please try again.");
+        location.replace(destination());
+      }
+    }catch(error){
+      const raw=String(error?.message||error||"Sign in failed.");
+      let friendly=raw;
+      if(/email not confirmed/i.test(raw)){
+        friendly="Your email address has not been confirmed yet. Use Resend confirmation email below, then open the link in that email.";
+        els.resendConfirmation.classList.remove("hidden");
+      }else if(/invalid login credentials/i.test(raw)){
+        friendly="That email and password do not match. Check both and try again.";
+      }else if(/user already registered/i.test(raw)){
+        friendly="An account already exists with that email. Switch to Sign in.";
+      }else if(/rate limit/i.test(raw)){
+        friendly="Too many attempts were made. Wait a moment, then try again.";
+      }
+      show(els.status,friendly,"danger");
+    }finally{
+      els.submitButton.disabled=false;
+      els.submitButton.textContent=old;
+    }
+  });
+
+  els.magicLink.addEventListener("click",async()=>{
+    hide(els.status);
+    const email=els.email.value.trim().toLowerCase();
+    if(!validEmail(email)){show(els.status,"Enter your email address first.","danger");els.email.focus();return}
+    els.magicLink.disabled=true;
+    const old=els.magicLink.textContent;
+    els.magicLink.textContent="Sending link…";
+    try{
+      const sb=await getClient();
+      const redirect=new URL(location.href);redirect.search="";redirect.hash="";redirect.searchParams.set("returnTo",destination());
+      const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:redirect.toString(),shouldCreateUser:false}});
+      if(error)throw error;
+      show(els.status,"Sign-in link sent. Open the email on this device and High Style Match will sign you in.","success");
+    }catch(error){show(els.status,error?.message||String(error),"danger")}
+    finally{els.magicLink.disabled=false;els.magicLink.textContent=old}
+  });
+
+  els.resendConfirmation.addEventListener("click",async()=>{
+    hide(els.status);
+    const email=els.email.value.trim().toLowerCase();
+    if(!validEmail(email)){show(els.status,"Enter the email address you used to create the account.","danger");return}
+    els.resendConfirmation.disabled=true;
+    try{
+      const sb=await getClient();
+      const redirect=new URL(location.href);redirect.search="";redirect.hash="";redirect.searchParams.set("returnTo",destination());
+      const {error}=await sb.auth.resend({type:"signup",email,options:{emailRedirectTo:redirect.toString()}});
+      if(error)throw error;
+      show(els.status,"Confirmation email resent. Check your inbox and spam folder.","success");
+    }catch(error){show(els.status,error?.message||String(error),"danger")}
+    finally{els.resendConfirmation.disabled=false}
+  });
+
+  els.forgotPassword.addEventListener("click",async()=>{
+    hide(els.status);
+    const email=els.email.value.trim().toLowerCase();
+    if(!validEmail(email)){show(els.status,"Enter your account email first.","danger");els.email.focus();return}
+    els.forgotPassword.disabled=true;
+    try{
+      const sb=await getClient();
+      const redirect=new URL(location.href);redirect.search="";redirect.hash="";redirect.searchParams.set("reset","1");
+      const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:redirect.toString()});
+      if(error)throw error;
+      show(els.status,"Password reset email sent. Open the link in that email to choose a new password.","success");
+    }catch(error){show(els.status,error?.message||String(error),"danger")}
+    finally{els.forgotPassword.disabled=false}
+  });
+
+  els.resetForm.addEventListener("submit",async event=>{
+    event.preventDefault();hide(els.resetStatus);
+    const one=els.newPassword.value,two=els.newPasswordConfirm.value;
+    if(one.length<8){show(els.resetStatus,"Use at least 8 characters.","danger");return}
+    if(one!==two){show(els.resetStatus,"The passwords do not match.","danger");return}
+    els.resetSubmit.disabled=true;
+    try{
+      const sb=await getClient();
+      const {data:{session}}=await sb.auth.getSession();
+      if(!session)throw new Error("This password-reset link is no longer active. Request a new password reset email.");
+      const {error}=await sb.auth.updateUser({password:one});
+      if(error)throw error;
+      show(els.resetStatus,"Password updated. Opening High Style Match…","success");
+      setTimeout(()=>location.replace(destination()),700);
+    }catch(error){show(els.resetStatus,error?.message||String(error),"danger")}
+    finally{els.resetSubmit.disabled=false}
+  });
+
+  els.service.innerHTML=window.HSMAuthRouter?.configured?.()
+    ?"<strong>Secure photographer account service connected.</strong>"
+    :"Account service is not connected.";
+
+  try{
+    const sb=await getClient();
+    const {data:{session}}=await sb.auth.getSession();
+
+    if(qs.get("reset")==="1"){
+      els.normalAuth.classList.add("hidden");
+      els.resetAuth.classList.remove("hidden");
+      if(!session) show(els.resetStatus,"Open this page from the password-reset email so the secure recovery session can be verified.","warn");
+      return;
+    }
+
+    if(session){
+      location.replace(destination());
+      return;
+    }
+  }catch(error){
+    show(els.status,error?.message||String(error),"danger");
+  }
+
+  renderMode();
 })();
 </script>
 <script src="../site-compliance.js?v=20260908-1"></script>
