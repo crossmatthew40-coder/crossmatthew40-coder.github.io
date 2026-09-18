@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#dceeff">
+<title>High Style Match — Client Delivery Demo</title>
+<style>
+:root{
+ --ink:#123b6d;--ink2:#28577f;--muted:#6c89a5;--blue:#2c7fe8;--blue2:#67baf6;
+ --bg:#dceeff;--glass:rgba(255,255,255,.48);--glass2:rgba(255,255,255,.72);
+ --line:rgba(255,255,255,.88);--line2:rgba(67,111,153,.16);
+ --shadow:0 20px 60px rgba(50,92,130,.14);--success:#2a795d;--danger:#a84756;
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Arial,sans-serif;color:var(--ink)}
+body{background:radial-gradient(circle at 84% 7%,rgba(255,219,199,.72),transparent 18%),radial-gradient(circle at 18% 79%,rgba(255,194,162,.4),transparent 16%),radial-gradient(circle at 55% 98%,rgba(255,236,216,.55),transparent 23%),linear-gradient(135deg,#bcdaf4 0%,#edf7ff 47%,#cde6fb 100%);background-attachment:fixed}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.hidden{display:none!important}.wrap{width:min(1280px,100%);margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:650;letter-spacing:-.03em}.mark{width:44px;height:44px;border-radius:14px;background:rgba(39,91,141,.75);border:1px solid rgba(255,255,255,.58);display:grid;place-items:center;box-shadow:var(--shadow)}.mark i{display:block;width:20px;height:4px;background:#fff;border-radius:4px;transform:skewX(-23deg);box-shadow:0 -7px 0 #fff,0 7px 0 #fff}.secure{font-size:12px;color:var(--muted);padding:10px 13px;border:1px solid var(--line);background:rgba(255,255,255,.38);border-radius:999px;backdrop-filter:blur(20px)}
+.card{border-radius:24px;background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.btn{border:1px solid transparent;border-radius:13px;padding:11px 16px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:650}.btn.primary{background:linear-gradient(135deg,#3187ef,#2b70d5);color:#fff;box-shadow:0 9px 22px rgba(44,127,232,.22)}.btn.secondary{background:rgba(255,255,255,.62);border-color:rgba(255,255,255,.95);color:var(--ink)}.btn.ghost{background:transparent;border-color:rgba(56,103,145,.18);color:var(--ink)}.btn.small{min-height:34px;padding:7px 10px;border-radius:10px;font-size:12px}.btn.liked{background:#e7f2ff;color:#145ca7;border-color:#b7dbff}
+.demo-switch{display:flex;gap:6px;padding:5px;border-radius:16px;background:rgba(255,255,255,.26);border:1px solid rgba(255,255,255,.56)}.demo-switch button{border:0;background:transparent;color:var(--ink2);padding:10px 13px;border-radius:11px;font-weight:650}.demo-switch button.on{background:rgba(255,255,255,.78);box-shadow:0 5px 14px rgba(51,95,135,.08)}
+.gate{min-height:calc(100vh - 120px);display:grid;place-items:center}.gate-card{width:min(650px,100%);padding:46px 28px;text-align:center}.kicker{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:750}.gate h1,.gallery-head h1{font-size:46px;letter-spacing:-.05em;font-weight:520;margin:6px 0 8px}.gate p,.gallery-head p{color:var(--muted);line-height:1.55}
+.otp{display:flex;justify-content:center;gap:8px;margin:28px 0}.otp input{width:70px;height:82px;clip-path:polygon(13% 0,100% 0,87% 100%,0 100%);background:rgba(255,255,255,.52);border:0;outline:0;text-align:center;color:var(--ink);font-size:31px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.96)}.otp input:focus,.otp input.filled{background:rgba(255,255,255,.9);filter:drop-shadow(0 7px 13px rgba(44,127,232,.16))}
+.demo-code{font-size:12px;color:var(--muted);margin-top:13px}.demo-code b{color:var(--ink);letter-spacing:.14em}
+.gallery-head{display:flex;gap:18px;align-items:flex-end;margin-bottom:18px}.gallery-head h1{font-size:40px;margin:3px 0 2px}.gallery-count{margin-left:auto;text-align:right}.gallery-count strong{display:block;font-size:26px;font-weight:540}.gallery-count span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.review-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.photo{overflow:hidden}.media{position:relative;aspect-ratio:4/3;background:rgba(44,90,132,.12);overflow:hidden}.media img{width:100%;height:100%;object-fit:cover;display:block;transition:.25s}.photo:hover img{transform:scale(1.015)}.watermark{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%) rotate(-12deg);font-size:11px;letter-spacing:.17em;color:rgba(255,255,255,.63);text-shadow:0 1px 4px rgba(0,0,0,.32);white-space:nowrap;pointer-events:none}.photo-body{padding:12px}.photo-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.photo-actions{display:flex;gap:7px;margin-top:10px}.photo-actions button{flex:1}.note{width:100%;margin-top:9px;border:1px solid rgba(69,111,149,.18);background:rgba(255,255,255,.58);border-radius:11px;padding:10px;color:var(--ink);min-height:64px;resize:vertical;outline:none}.note:focus{border-color:#8abdf2;box-shadow:0 0 0 4px rgba(60,141,228,.09)}
+.sticky{position:sticky;bottom:14px;margin-top:20px;padding:13px 14px;display:flex;align-items:center;gap:12px;background:rgba(239,248,255,.86)}.sticky span{margin-right:auto;color:var(--muted);font-size:12px}
+.final-actions{display:flex;gap:9px}.download-btn{width:100%;margin-top:9px}
+.notice{padding:13px 15px;border-radius:14px;border:1px solid rgba(255,255,255,.88);background:rgba(255,255,255,.48);font-size:12px;line-height:1.5}.notice.success{background:rgba(230,250,240,.72);color:#236f53}.notice.danger{background:rgba(255,234,238,.76);color:var(--danger)}
+.modal-back{position:fixed;inset:0;background:rgba(45,75,105,.26);backdrop-filter:blur(12px);display:grid;place-items:center;padding:18px;z-index:100}.modal{width:min(620px,100%);border-radius:27px;background:rgba(241,249,255,.97);border:1px solid #fff;box-shadow:0 28px 90px rgba(39,73,106,.28);padding:24px}.modal h2{margin:0 0 8px;font-size:27px;font-weight:520}.actions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}.toast{position:fixed;right:20px;bottom:20px;background:#123d70;color:#fff;padding:13px 16px;border-radius:14px;box-shadow:0 16px 46px rgba(18,61,112,.25);opacity:0;transform:translateY(10px);pointer-events:none;transition:.22s;z-index:200;font-size:13px}.toast.show{opacity:1;transform:none}
+.fullscreen{position:fixed;inset:0;background:rgba(10,25,40,.92);z-index:90;display:grid;grid-template-rows:auto 1fr auto;color:#fff;padding:18px}.full-top,.full-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}.full-img{display:grid;place-items:center;min-height:0}.full-img img{max-width:94vw;max-height:76vh;object-fit:contain;border-radius:14px}.full-bottom{justify-content:center}.full-top button,.full-bottom button{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:10px 14px}
+@media(max-width:1050px){.review-gallery{grid-template-columns:repeat(3,1fr)}}@media(max-width:780px){.wrap{padding:13px}.top{align-items:flex-start}.demo-switch{width:100%}.top{flex-wrap:wrap}.review-gallery{grid-template-columns:repeat(2,1fr)}.gallery-head{display:block}.gallery-count{text-align:left;margin-top:10px}.otp{gap:3px}.otp input{width:49px;height:62px;font-size:23px}.sticky{flex-direction:column;align-items:stretch}.sticky span{margin:0}}@media(max-width:500px){.review-gallery{grid-template-columns:1fr}.gate h1{font-size:37px}.gallery-head h1{font-size:33px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <header class="top">
+   <div class="brand"><span class="mark"><i></i></span><span>High Style Match</span></div>
+   <div class="demo-switch">
+     <button class="on" data-stage="review">Client Review</button>
+     <button data-stage="final">Final Delivery</button>
+   </div>
+   <div class="secure">◉ Secure Client Gallery Demo</div>
+ </header>
+ <main id="app"></main>
+</div>
+<div id="modal"></div>
+<div id="toast" class="toast"></div>
+<script>
+const app=document.getElementById("app"),modal=document.getElementById("modal"),toastEl=document.getElementById("toast");
+const state={stage:"review",verified:false,liked:new Set(),notes:{},submitted:false,current:0};
+const photos=[
+ {id:"1",name:"Burger_Hero_01.jpg",src:"https://picsum.photos/seed/hsmfood01/1200/900"},
+ {id:"2",name:"Cocktail_Hero_02.jpg",src:"https://picsum.photos/seed/hsmfood02/1200/900"},
+ {id:"3",name:"Restaurant_Detail_03.jpg",src:"https://picsum.photos/seed/hsmfood03/1200/900"},
+ {id:"4",name:"Starter_Overhead_04.jpg",src:"https://picsum.photos/seed/hsmfood04/1200/900"},
+ {id:"5",name:"Dessert_Closeup_05.jpg",src:"https://picsum.photos/seed/hsmfood05/1200/900"},
+ {id:"6",name:"Bar_Service_06.jpg",src:"https://picsum.photos/seed/hsmfood06/1200/900"},
+ {id:"7",name:"Main_Course_07.jpg",src:"https://picsum.photos/seed/hsmfood07/1200/900"},
+ {id:"8",name:"Dining_Room_08.jpg",src:"https://picsum.photos/seed/hsmfood08/1200/900"}
+];
+function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toastEl.classList.remove("show"),2400)}
+function render(){
+ document.querySelectorAll("[data-stage]").forEach(b=>b.classList.toggle("on",b.dataset.stage===state.stage));
+ if(!state.verified)return renderGate();
+ if(state.stage==="review")return renderReview();
+ return renderFinal();
+}
+function renderGate(){
+ app.innerHTML='<div class="gate"><section class="card gate-card"><div class="kicker">'+(state.stage==="review"?"PRIVATE CLIENT REVIEW":"FINAL DELIVERY")+'</div><h1>Your photos are ready.</h1><p>Enter the six-digit verification code sent to your email to access this private gallery.</p><div class="otp">'+Array.from({length:6},(_,i)=>'<input inputmode="numeric" maxlength="1" aria-label="Verification digit '+(i+1)+'">').join("")+'</div><div id="gateError" class="notice danger hidden"></div><button class="btn primary" id="verifyBtn">Open Gallery</button><div class="demo-code">Demo code: <b>482691</b></div></section></div>';
+ const inputs=[...document.querySelectorAll(".otp input")];
+ inputs.forEach((x,i)=>{x.addEventListener("input",()=>{x.value=x.value.replace(/\D/g,"").slice(0,1);x.classList.toggle("filled",!!x.value);if(x.value&&inputs[i+1])inputs[i+1].focus()});x.addEventListener("keydown",e=>{if(e.key==="Backspace"&&!x.value&&inputs[i-1])inputs[i-1].focus()});x.addEventListener("paste",e=>{const d=e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);if(d){e.preventDefault();d.split("").forEach((n,j)=>{if(inputs[j]){inputs[j].value=n;inputs[j].classList.add("filled")}})}})});
+ inputs[0]?.focus();
+ document.getElementById("verifyBtn").onclick=()=>{const code=inputs.map(x=>x.value).join("");if(code!=="482691"){const e=document.getElementById("gateError");e.textContent="That code is not correct. Try 482691 for this demo.";e.classList.remove("hidden");return}state.verified=true;render()};
+}
+function renderReview(){
+ if(state.submitted){app.innerHTML='<div class="gate"><section class="card gate-card"><div style="font-size:54px">✓</div><div class="kicker">SELECTIONS RECEIVED</div><h1>Thank you.</h1><p>Your selected photographs and notes have been returned to the photographer and are ready for editing.</p><button class="btn secondary" id="resetDemo">Review again</button></section></div>';document.getElementById("resetDemo").onclick=()=>{state.submitted=false;render()};return}
+ app.innerHTML='<div class="gallery-head"><div><div class="kicker">CLIENT REVIEW — BEFORE EDITING</div><h1>Autumn Menu Shoot</h1><p>'+photos.length+' photographs • Like the images you want edited and leave notes where needed.</p></div><div class="gallery-count"><strong id="likedCount">'+state.liked.size+' / '+photos.length+'</strong><span>selected</span></div></div><div class="review-gallery">'+photos.map((p,i)=>'<article class="card photo"><div class="media" data-open="'+i+'"><img src="'+p.src+'" alt=""><div class="watermark">HIGH STYLE — CLIENT PROOF</div></div><div class="photo-body"><div class="photo-name">'+p.name+'</div><div class="photo-actions"><button class="btn small '+(state.liked.has(p.id)?"liked":"secondary")+'" data-like="'+p.id+'">'+(state.liked.has(p.id)?"♥ Liked":"♡ Like")+'</button><button class="btn secondary small" data-open="'+i+'">View</button></div><textarea class="note" data-note="'+p.id+'" placeholder="Add a note for the photographer…">'+(state.notes[p.id]||"")+'</textarea></div></article>').join("")+'</div><div class="card sticky"><span><b id="bottomLiked">'+state.liked.size+'</b> photos selected. Your progress saves automatically.</span><button class="btn primary" id="submitReview">Submit Selections →</button></div>';
+ document.querySelectorAll("[data-like]").forEach(b=>b.onclick=()=>{state.liked.has(b.dataset.like)?state.liked.delete(b.dataset.like):state.liked.add(b.dataset.like);renderReview()});
+ document.querySelectorAll("[data-note]").forEach(t=>t.oninput=()=>state.notes[t.dataset.note]=t.value);
+ document.querySelectorAll("[data-open]").forEach(x=>x.onclick=()=>openFullscreen(+x.dataset.open));
+ document.getElementById("submitReview").onclick=()=>{if(!state.liked.size)return toast("Like at least one photograph first.");openSubmit()};
+}
+function openSubmit(){
+ modal.innerHTML='<div class="modal-back"><div class="modal"><div class="kicker">CLIENT CONFIRMATION</div><h2>Submit selections?</h2><p>You selected <b>'+state.liked.size+' of '+photos.length+'</b> photographs. These will be returned to the photographer for editing.</p><div class="notice success">Your notes stay attached to each selected image.</div><div class="actions" style="margin-top:15px"><button class="btn secondary" id="keepReviewing">Keep Reviewing</button><button class="btn primary" id="confirmSubmit">Approve '+state.liked.size+' Photos</button></div></div></div>';
+ document.getElementById("keepReviewing").onclick=()=>modal.innerHTML="";
+ document.getElementById("confirmSubmit").onclick=()=>{state.submitted=true;modal.innerHTML="";render()};
+}
+function openFullscreen(index){
+ state.current=index;const p=photos[index];
+ modal.innerHTML='<div class="fullscreen"><div class="full-top"><div><b>'+p.name+'</b></div><button id="closeFull">Close ×</button></div><div class="full-img"><img src="'+p.src+'" alt=""></div><div class="full-bottom"><button id="prevPhoto">← Previous</button><button id="fullLike">'+(state.liked.has(p.id)?"♥ Liked":"♡ Like")+'</button><button id="nextPhoto">Next →</button></div></div>';
+ document.getElementById("closeFull").onclick=()=>{modal.innerHTML="";renderReview()};
+ document.getElementById("prevPhoto").onclick=()=>openFullscreen((index-1+photos.length)%photos.length);
+ document.getElementById("nextPhoto").onclick=()=>openFullscreen((index+1)%photos.length);
+ document.getElementById("fullLike").onclick=()=>{state.liked.has(p.id)?state.liked.delete(p.id):state.liked.add(p.id);openFullscreen(index)};
+}
+function renderFinal(){
+ app.innerHTML='<div class="gallery-head"><div><div class="kicker">FINAL DELIVERY</div><h1>Autumn Menu Shoot</h1><p>'+photos.length+' finished photographs ready to view and download.</p></div><div class="gallery-count final-actions"><button class="btn primary" id="downloadAll">↓ Download All</button></div></div><div class="review-gallery">'+photos.map((p,i)=>'<article class="card photo"><div class="media" data-final-open="'+i+'"><img src="'+p.src+'" alt=""></div><div class="photo-body"><div class="photo-name">'+p.name+'</div><button class="btn primary download-btn" data-download="'+p.src+'">↓ Download</button></div></article>').join("")+'</div><div class="notice" style="margin-top:18px">Demo mode: download buttons open the sample image. In the real High Style Match delivery, these use private signed download URLs and tracked downloads.</div>';
+ document.querySelectorAll("[data-final-open]").forEach(x=>x.onclick=()=>openFinalFullscreen(+x.dataset.finalOpen));
+ document.querySelectorAll("[data-download]").forEach(b=>b.onclick=()=>window.open(b.dataset.download,"_blank"));
+ document.getElementById("downloadAll").onclick=()=>toast("In production this creates a ZIP of all final photographs.");
+}
+function openFinalFullscreen(index){
+ const p=photos[index];modal.innerHTML='<div class="fullscreen"><div class="full-top"><div><b>'+p.name+'</b></div><button id="closeFull">Close ×</button></div><div class="full-img"><img src="'+p.src+'" alt=""></div><div class="full-bottom"><button id="prevPhoto">← Previous</button><button id="fullDownload">↓ Download</button><button id="nextPhoto">Next →</button></div></div>';
+ document.getElementById("closeFull").onclick=()=>modal.innerHTML="";
+ document.getElementById("prevPhoto").onclick=()=>openFinalFullscreen((index-1+photos.length)%photos.length);
+ document.getElementById("nextPhoto").onclick=()=>openFinalFullscreen((index+1)%photos.length);
+ document.getElementById("fullDownload").onclick=()=>window.open(p.src,"_blank");
+}
+document.querySelectorAll("[data-stage]").forEach(b=>b.onclick=()=>{state.stage=b.dataset.stage;state.verified=false;modal.innerHTML="";render()});
+render();
+</script>
+</body>
+</html>
