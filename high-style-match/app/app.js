@@ -196,9 +196,18 @@ async function getApprovedRows(){
  const rows=data||[];for(const row of rows){const p=row.hsm_photos;if(p&&(p.proof_path||p.preview_path))p._url=await signed("hsm-proofs",p.proof_path||p.preview_path)}return rows
 }
 async function renderApproved(){
- const B=$("#projectBody");B.innerHTML='<div class="card panel"><div class="empty">Loading client approvals…</div></div>';const rows=await getApprovedRows();
- B.innerHTML='<section class="card panel"><div class="panel-head"><div><h2>Approved for Edit</h2><p class="sub">Only photographs chosen by the client, with their notes attached.</p></div><span class="pill green">'+rows.length+" approved</span></div>"+(rows.length?'<div class="approved-list">'+rows.map(row=>{const p=row.hsm_photos;return '<div class="approved-item"><div>'+ (p._url?'<img src="'+esc(p._url)+'">':'<div class="project-cover" style="width:90px;height:70px">'+esc(p.original_filename.split(".").pop())+"</div>")+'</div><div><h4>'+esc(p.display_filename||p.original_filename)+' • ♥ Client selected</h4><p>'+(row.note?'“'+esc(row.note)+'”':"No client note.")+'</p></div><select class="field-select" data-edit-status="'+p.id+'"><option value="awaiting_edit" '+(p.editing_status==="awaiting_edit"?"selected":"")+'>Awaiting Edit</option><option value="editing" '+(p.editing_status==="editing"?"selected":"")+'>Editing</option><option value="complete" '+(p.editing_status==="complete"?"selected":"")+">Complete</option></select></div>'}).join("")+"</div>":'<div class="empty"><h3>Waiting for client approval</h3><p>When the client submits their selection, chosen photos and notes appear here automatically.</p></div>')+"</section>";
- $$("[data-edit-status]").forEach(s=>s.onchange=async()=>{await supabase.from("hsm_photos").update({editing_status:s.value}).eq("id",s.dataset.editStatus);toast("Editing status updated")})
+ const B=$("#projectBody");
+ B.innerHTML='<div class="card panel"><div class="empty">Loading client approvals…</div></div>';
+ const rows=await getApprovedRows();
+ const items=rows.map(row=>{
+   const p=row.hsm_photos;
+   const preview=p._url
+     ? '<img src="'+esc(p._url)+'" alt="">'
+     : '<div class="project-cover" style="width:90px;height:70px">'+esc(p.original_filename.split(".").pop())+'</div>';
+   return '<div class="approved-item"><div>'+preview+'</div><div><h4>'+esc(p.display_filename||p.original_filename)+' • ♥ Client selected</h4><p>'+(row.note?'“'+esc(row.note)+'”':'No client note.')+'</p></div><select class="field-select" data-edit-status="'+p.id+'"><option value="awaiting_edit" '+(p.editing_status==="awaiting_edit"?'selected':'')+'>Awaiting Edit</option><option value="editing" '+(p.editing_status==="editing"?'selected':'')+'>Editing</option><option value="complete" '+(p.editing_status==="complete"?'selected':'')+'>Complete</option></select></div>';
+ }).join("");
+ B.innerHTML='<section class="card panel"><div class="panel-head"><div><h2>Approved for Edit</h2><p class="sub">Only photographs chosen by the client, with their notes attached.</p></div><span class="pill green">'+rows.length+' approved</span></div>'+(rows.length?'<div class="approved-list">'+items+'</div>':'<div class="empty"><h3>Waiting for client approval</h3><p>When the client submits their selection, chosen photos and notes appear here automatically.</p></div>')+'</section>';
+ $$("[data-edit-status]").forEach(s=>s.onchange=async()=>{await supabase.from("hsm_photos").update({editing_status:s.value}).eq("id",s.dataset.editStatus);toast("Editing status updated")});
 }
 async function renderEditing(){
  const B=$("#projectBody");B.innerHTML='<div class="card panel"><div class="empty">Loading editing queue…</div></div>';const rows=await getApprovedRows();
