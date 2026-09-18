@@ -284,7 +284,7 @@ async function renderAnalytics(){
    supabase.from("hsm_photos").select("id,best_pick,editing_status,file_size").eq("workspace_id",S.workspace.id),
    supabase.from("hsm_client_reviews").select("id,status,created_at,submitted_at,hsm_projects!inner(workspace_id)").eq("hsm_projects.workspace_id",S.workspace.id),
    supabase.from("hsm_deliveries").select("id,status,hsm_projects!inner(workspace_id)").eq("hsm_projects.workspace_id",S.workspace.id),
-   supabase.from("hsm_download_events").select("id,created_at,hsm_deliveries!inner(project_id,hsm_projects!inner(workspace_id))").eq("hsm_deliveries.hsm_projects.workspace_id",S.workspace.id)
+   supabase.from("hsm_download_events").select("id,created_at")
  ]);
  const p=photos||[],r=reviews||[],d=deliveries||[],dw=downloads||[],storage=p.reduce((a,x)=>a+Number(x.file_size||0),0);
  const submitted=r.filter(x=>x.submitted_at),avg=submitted.length?Math.round(submitted.reduce((a,x)=>a+(new Date(x.submitted_at)-new Date(x.created_at)),0)/submitted.length/60000):0;
