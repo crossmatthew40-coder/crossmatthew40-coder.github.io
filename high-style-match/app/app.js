@@ -44,8 +44,12 @@ async function init(){
  if(q.get("review"))return renderClient("review",q.get("review"));
  if(q.get("delivery"))return renderClient("delivery",q.get("delivery"));
  const {data:{session}}=await supabase.auth.getSession();
- if(session){S.user=session.user;await bootUser()}else renderAuth();
- supabase.auth.onAuthStateChange(async(_e,session)=>{if(session&&!S.user){S.user=session.user;await bootUser()}if(!session&&S.user){S.user=null;renderAuth()}})
+ if(session){S.user=session.user;await bootUser()}else{
+   const returnTo=encodeURIComponent("/high-style-match/app/");
+   location.replace("/high-style-match/sign-in/?role=photographer&returnTo="+returnTo);
+   return;
+ }
+ supabase.auth.onAuthStateChange(async(_e,session)=>{if(session&&!S.user){S.user=session.user;await bootUser()}if(!session&&S.user){S.user=null;location.replace("/high-style-match/sign-in/?role=photographer&returnTo="+encodeURIComponent("/high-style-match/app/"))}})
 }
 
 function renderAuth(signup=false,message=""){
