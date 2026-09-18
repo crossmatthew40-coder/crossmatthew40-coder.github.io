@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'high-style-match/**'
+      - 'high-style-match-send-demo/**'
+      - 'high-style-match-delivery-demo/**'
       - 'tests/hsm-live-smoke.mjs'
       - '.github/workflows/test-hsm-live.yml'
   workflow_dispatch:
@@ -36,5 +38,5 @@ jobs:
 
       - name: Run High Style Match production smoke tests
         env:
-          HSM_BASE: http://127.0.0.1:4173/high-style-match/
+          HSM_ROOT: http://127.0.0.1:4173/
         run: node tests/hsm-live-smoke.mjs
