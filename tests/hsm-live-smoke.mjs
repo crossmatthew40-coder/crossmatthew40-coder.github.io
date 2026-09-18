@@ -71,8 +71,9 @@ try{
   for(let i=0;i<6;i++) await inputs.nth(i).fill(code[i]);
   await settle(500);
   await visible('.gallery','Correct verification code unlocks Client Review');
-  const body=(await page.locator('body').innerText()).toLowerCase();
-  if(body.includes('add a note for the photographer')&&body.includes('submit selections')) pass('Client Review selection controls render');
+  const notePlaceholder=await page.locator('textarea.note').first().getAttribute('placeholder');
+  const hasSubmit=await page.locator('#submitSelection').isVisible();
+  if((notePlaceholder||'').toLowerCase().includes('add a note for the photographer')&&hasSubmit) pass('Client Review selection controls render');
   else fail('Client Review controls are incomplete');
 
   // Mobile sender demo.
