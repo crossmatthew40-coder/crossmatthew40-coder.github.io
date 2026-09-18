@@ -4,7 +4,7 @@ window.HSM_AUTH = {
   provider: 'supabase',
   url: 'https://wmuuvcrrmzftayyynhki.supabase.co',
   anonKey: 'sb_publishable_fZGXwGrbYXEDHIj1PAxkfg_7Bh3Xkiv',
-  afterSignIn: '/high-style-match/'
+  afterSignIn: '/high-style-match/app/'
 };
 
 (function(){
