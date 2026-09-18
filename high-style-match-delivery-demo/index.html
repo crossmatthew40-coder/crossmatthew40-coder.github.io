@@ -80,8 +80,8 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
   <header class="topbar">
     <div class="brand"><span class="mark"><i></i></span><div><b>High Style Match</b><span>Client Experience</span></div></div>
     <nav class="preview-nav" aria-label="Demo pages">
-      <button class="on" data-view="review">Client Review</button>
-      <button data-view="verify">Verification</button>
+      <button class="on" data-view="verify">Verification</button>
+      <button data-view="review">Client Review</button>
       <button data-view="delivery">Final Delivery</button>
     </nav>
     <div class="demo-pill">Interactive standalone demo</div>
@@ -91,7 +91,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 <div id="overlay"></div>
 <script>
 const app=document.getElementById("app"),overlay=document.getElementById("overlay");
-const state={view:"review",liked:new Set(["p2"]),notes:{p2:"Could we make this one slightly warmer?"},submitted:false};
+const state={view:"verify",liked:new Set(["p2"]),notes:{p2:"Could we make this one slightly warmer?"},submitted:false};
 const photos=[
  {id:"p1",name:"Burger_Hero_01.jpg",art:"a"},{id:"p2",name:"Aperitivo_02.jpg",art:"b"},
  {id:"p3",name:"Pasta_Detail_03.jpg",art:"c"},{id:"p4",name:"Starter_Overhead_04.jpg",art:"d"},
