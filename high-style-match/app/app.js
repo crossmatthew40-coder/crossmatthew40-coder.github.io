@@ -125,7 +125,7 @@ function renderShell(){
  app.innerHTML='<div class="app-shell"><aside class="sidebar"><div class="brand">High Style Match<small>Photographer workspace</small></div><nav class="nav" id="nav">'+
  [["dashboard","⌂","Home"],["projects","▢","Projects"],["reviews","♡","Client Reviews"],["library","◉","Library"],["clients","♙","Clients"],["analytics","⌁","Analytics"],["ai","✦","AI Tools"],["exports","↑","Exports"],["settings","⚙","Settings"]].map(([r,i,n])=>'<button data-route="'+r+'" class="'+(S.route===r&&!S.project?"on":"")+'"><span class="ico">'+i+"</span><span>"+n+'</span>'+(r==="ai"?'<span class="soon">SOON</span>':"")+"</button>").join("")+
  '</nav><div class="sidebar-bottom"><div class="user-mini"><b>'+esc(S.profile?.business_name||S.workspace.name)+'</b><span>'+esc(S.user.email)+'</span></div><button class="btn secondary small" id="signOut" style="width:100%;margin-top:10px">Sign out</button></div></aside><main class="main"><div class="topbar"><input class="search" id="globalSearch" placeholder="Search projects, photos or clients…"><div class="top-actions"><button class="icon-btn" id="notificationsTop" title="Notifications">◌<span id="notificationDot" class="notification-dot hidden"></span></button><button class="icon-btn" id="newProjectTop" title="New project">＋</button><button class="icon-btn" id="refreshTop" title="Refresh">↻</button></div></div><div class="content" id="content"></div></main></div>';
- $("#nav button").forEach(b=>b.onclick=()=>navigate(b.dataset.route));
+ $$("#nav button").forEach(b=>b.onclick=()=>navigate(b.dataset.route));
  $("#signOut").onclick=()=>supabase.auth.signOut({scope:"local"});
  $("#notificationsTop").onclick=openNotifications;
  $("#newProjectTop").onclick=openNewProject;
@@ -137,7 +137,7 @@ async function loadNotificationCount(){const {data}=await supabase.from("hsm_not
 async function openNotifications(){
  const {data,error}=await supabase.from("hsm_notifications").select("*").eq("user_id",S.user.id).order("created_at",{ascending:false}).limit(50);if(error)return toast(error.message);S.notifications=data||[];
  showModal('<div class="modal-head"><div><div class="kicker">PHOTOGRAPHER WORKSPACE</div><h2>Notifications</h2></div><button class="close" data-close>×</button></div><div class="notification-list">'+(S.notifications.length?S.notifications.map(n=>'<button class="notification-item '+(!n.read_at?"unread":"")+'" data-notification="'+n.id+'" data-project-target="'+(n.project_id||"")+'"><b>'+esc(n.title)+'</b><span>'+esc(n.body||"")+'</span><small>'+fmtDate(n.created_at)+'</small></button>').join(""):'<div class="empty"><h3>You are all caught up</h3><p>Client approvals and final downloads will appear here.</p></div>')+'</div>');
- $("[data-notification]",modalRoot).forEach(b=>b.onclick=async()=>{await supabase.from("hsm_notifications").update({read_at:new Date().toISOString()}).eq("id",b.dataset.notification);const pid=b.dataset.projectTarget;closeModal();loadNotificationCount();if(pid)openProject(pid,"overview")});
+ $$("[data-notification]",modalRoot).forEach(b=>b.onclick=async()=>{await supabase.from("hsm_notifications").update({read_at:new Date().toISOString()}).eq("id",b.dataset.notification);const pid=b.dataset.projectTarget;closeModal();loadNotificationCount();if(pid)openProject(pid,"overview")});
 }
 function navigate(route){S.project=null;S.reviewDetail=null;S.route=route;S.tab="overview";renderShell()}
 function renderRoute(){if(S.project)return renderProject();if(S.route==="dashboard")renderDashboard();else if(S.route==="projects")renderProjects();else if(S.route==="reviews")renderClientReviews();else if(S.route==="library")renderLibrary();else if(S.route==="clients")renderClients();else if(S.route==="analytics")renderAnalytics();else if(S.route==="settings")renderSettings();else if(S.route==="ai")renderAI();else renderExports()}
@@ -184,7 +184,7 @@ function renderProject(){
  const C=$("#content"),p=S.project;
  const tabs=[["overview","Overview"],["shotlist",p.mode==="roam"?"Roam Targets":"Shot List"],["upload","Upload"],["cull","Smart Cull"],["aiVision","AI Vision"],["best","Best Picks"],["review","Client Review"],["approved","Approved for Edit"],["editing","Editing"],["delivery","Final Delivery"]];
  C.innerHTML=pageHead(p.name,statusLabel(p.project_type)+" • "+statusLabel(p.mode)+" • "+statusLabel(p.status),'<button class="btn secondary" id="duplicateProject">Duplicate</button><button class="btn secondary" id="archiveProject">'+(p.status==="archived"?"Restore":"Archive")+'</button><button class="btn secondary" id="backProjects">← Projects</button>')+workflow(p)+'<div class="tabs">'+tabs.map(([id,n])=>'<button data-tab="'+id+'" class="'+(S.tab===id?"on":"")+'">'+n+(id==="aiVision"?' · Soon':"")+"</button>").join("")+'</div><div id="projectBody"></div>';
- $("#backProjects").onclick=()=>navigate("projects");$("[data-tab]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;renderProject()});
+ $("#backProjects").onclick=()=>navigate("projects");$$("[data-tab]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;renderProject()});
  if(S.tab==="overview")renderOverview();else if(S.tab==="shotlist")renderShotList();else if(S.tab==="upload")renderUpload();else if(S.tab==="cull")renderCull();else if(S.tab==="best")renderBest();else if(S.tab==="review")renderReview();else if(S.tab==="approved")renderApproved();else if(S.tab==="editing")renderEditing();else if(S.tab==="delivery")renderDelivery();else renderComingSoon("AI Vision")
 }
 async function duplicateCurrentProject(){
@@ -210,8 +210,8 @@ function renderShotList(){
  B.innerHTML='<div class="grid two"><section class="card panel"><div class="panel-head"><div><h2>'+(roam?"Roam Targets":"Shot List")+'</h2><p class="sub">'+(roam?"Roam Mode does not require a fixed brief. Add optional targets if there are subjects or locations you still want to cover.":"Build the brief the shoot should cover. Each line stays attached to the project.")+'</p></div><button class="btn primary" id="addShot">＋ Add Item</button></div><div class="shot-list">'+(S.shotItems.length?S.shotItems.map((s,i)=>'<div class="shot-row"><button class="shot-check '+(s.completed?"done":"")+'" data-shot-complete="'+s.id+'">'+(s.completed?"✓":"")+'</button><div><b>'+esc(s.title)+'</b><span>'+esc(s.description||s.category||"")+'</span></div><span class="pill">'+(s.required_orientation?esc(statusLabel(s.required_orientation)):"Any")+'</span><button class="btn secondary small" data-shot-delete="'+s.id+'">Delete</button></div>').join(""):'<div class="empty"><h3>'+(roam?"No targets added":"No shot-list items yet")+'</h3><p>'+(roam?"That is fine in Roam Mode — the shoot can stay discovery-led.":"Add items manually or paste a list to import the brief.")+'</p></div>')+'</div></section><aside class="card panel"><div class="panel-head"><div><h2>Quick Import</h2><p class="sub">Paste one required shot per line.</p></div></div><textarea id="shotImport" class="big-textarea" placeholder="Burger hero\nCocktail overhead\nRestaurant interior\nTeam portrait"></textarea><div class="actions" style="margin-top:12px"><button class="btn primary" id="importShots">Import List</button></div><div class="notice" style="margin-top:14px">'+S.shotItems.filter(x=>x.completed).length+' of '+S.shotItems.length+' items marked complete.</div></aside></div>';
  $("#addShot").onclick=()=>openShotItem();
  $("#importShots").onclick=async()=>{const lines=$("#shotImport").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(!lines.length)return toast("Paste at least one shot first.");const start=S.shotItems.length;const rows=lines.map((title,i)=>({project_id:S.project.id,title,sort_order:start+i}));const {error}=await supabase.from("hsm_shot_list_items").insert(rows);if(error)return toast(error.message);await loadProjectData();renderShotList();toast(lines.length+" shot-list items imported")};
- $("[data-shot-complete]").forEach(b=>b.onclick=async()=>{const s=S.shotItems.find(x=>x.id===b.dataset.shotComplete);const {error}=await supabase.from("hsm_shot_list_items").update({completed:!s.completed}).eq("id",s.id);if(error)return toast(error.message);s.completed=!s.completed;renderShotList()});
- $("[data-shot-delete]").forEach(b=>b.onclick=async()=>{if(!confirm("Delete this shot-list item?"))return;const {error}=await supabase.from("hsm_shot_list_items").delete().eq("id",b.dataset.shotDelete);if(error)return toast(error.message);await loadProjectData();renderShotList()})
+ $$("[data-shot-complete]").forEach(b=>b.onclick=async()=>{const s=S.shotItems.find(x=>x.id===b.dataset.shotComplete);const {error}=await supabase.from("hsm_shot_list_items").update({completed:!s.completed}).eq("id",s.id);if(error)return toast(error.message);s.completed=!s.completed;renderShotList()});
+ $$("[data-shot-delete]").forEach(b=>b.onclick=async()=>{if(!confirm("Delete this shot-list item?"))return;const {error}=await supabase.from("hsm_shot_list_items").delete().eq("id",b.dataset.shotDelete);if(error)return toast(error.message);await loadProjectData();renderShotList()})
 }
 function openShotItem(){
  showModal('<div class="modal-head"><h2>Add Shot-List Item</h2><button class="close" data-close>×</button></div><form id="shotForm" class="form-grid"><div class="field full"><label>Title</label><input id="shotTitle" required placeholder="Burger hero"></div><div class="field"><label>Orientation</label><select id="shotOrientation"><option value="">Any</option><option value="landscape">Landscape</option><option value="portrait">Portrait</option><option value="overhead">Overhead</option></select></div><div class="field"><label>Category</label><input id="shotCategory" placeholder="Food / Drink / Interior"></div><div class="field full"><label>Notes</label><textarea id="shotNotes"></textarea></div><div class="field full"><button class="btn primary">Add Item</button></div></form>');
@@ -416,7 +416,7 @@ async function renderClientReviews(){
     renderGroup("Reviewing","The client has verified and is making selections.",reviewing,"blue")+
     renderGroup("Completed","Submitted selections ready for editing.",complete,"green")+
    '</div>';
- $("[data-review-detail]").forEach(b=>b.onclick=()=>renderClientReviewDetail(b.dataset.reviewDetail))
+ $$("[data-review-detail]").forEach(b=>b.onclick=()=>renderClientReviewDetail(b.dataset.reviewDetail))
 }
 function reviewDashboardCard(r){
  const p=r.hsm_projects||{};
@@ -446,7 +446,7 @@ async function renderClientReviewDetail(reviewId){
   (visible.length?'<div class="review-result-grid">'+visible.map(row=>{const p=row.hsm_photos||{};return '<article class="card review-result-photo '+(row.liked?"selected":"")+'"><div class="photo-media">'+(p._url?'<img src="'+esc(p._url)+'" alt="">':'Preview unavailable')+(row.liked?'<span class="badge">♥ Selected</span>':'')+'</div><div class="photo-body"><div class="photo-name">'+esc(p.display_filename||p.original_filename||"Photo")+'</div><div class="review-note">'+(row.note?'“'+esc(row.note)+'”':'No client note.')+'</div></div></article>'}).join("")+'</div>':'<div class="empty"><h3>No photographs in this filter</h3><p>Choose another view above.</p></div>')+
   '</section>';
  $("#backReviews").onclick=()=>{S.reviewDetail=null;renderClientReviews()};
- $("[data-review-filter]").forEach(b=>b.onclick=()=>{S.reviewFilter=b.dataset.reviewFilter;renderClientReviewDetail(reviewId)});
+ $$("[data-review-filter]").forEach(b=>b.onclick=()=>{S.reviewFilter=b.dataset.reviewFilter;renderClientReviewDetail(reviewId)});
  $("#moveApproved")?.addEventListener("click",async()=>{
    const {error:e}=await supabase.from("hsm_projects").update({status:"approved_for_edit"}).eq("id",r.project_id);
    if(e)return toast(e.message);
@@ -493,7 +493,7 @@ async function exportProjectManifest(projectId){
 }
 async function renderExports(){
  const C=$("#content");C.innerHTML=pageHead("Exports","Download project manifests and workflow data.")+'<section class="card panel"><div class="panel-head"><div><h2>Project Exports</h2><p class="sub">Export filenames, ratings, cull status and editing state as CSV.</p></div></div><div class="review-list">'+(S.projects.length?S.projects.map(p=>'<div class="review-row"><div><b>'+esc(p.name)+'</b><span>'+esc(statusLabel(p.status))+'</span></div><span>'+esc(p.project_type)+'</span><span></span><button class="btn secondary small" data-export-project="'+p.id+'">Export CSV</button></div>').join(""):'<div class="notice">No projects available to export.</div>')+'</div></section>';
- $("[data-export-project]").forEach(b=>b.onclick=()=>exportProjectManifest(b.dataset.exportProject))
+ $$("[data-export-project]").forEach(b=>b.onclick=()=>exportProjectManifest(b.dataset.exportProject))
 }
 async function renderSettings(){
  const C=$("#content");
