@@ -289,24 +289,47 @@ async function getProjectClient(){
 async function openSendReview(){
  const picks=S.photos.filter(x=>x.best_pick);if(!picks.length)return toast("Choose at least one Best Pick first.");
  const client=await getProjectClient(),latest=S.reviews[0];
- const name=client?.name||latest?.recipient_name||"";
- const email=client?.email||latest?.recipient_email||"";
+ const recipientName=client?.name||latest?.recipient_name||"";
+ const recipientEmail=client?.email||latest?.recipient_email||"";
+ const senderEmail=S.user?.email||"";
+ const profileName=[S.profile?.first_name,S.profile?.last_name].filter(Boolean).join(" ").trim();
+ const senderName=profileName||S.profile?.business_name||S.user?.email||"Your photographer";
  const expiry=String(S.profile?.default_gallery_expiry_hours||168);
- showModal('<div class="modal-head"><div><div class="kicker">SECURE CLIENT REVIEW</div><h2>Send Client Review</h2></div><button class="close" data-close>×</button></div>'+
- '<div class="review-recipient"><span>Sending to</span><b>'+esc(name||"Client")+'</b><strong>'+esc(email||"No email saved")+'</strong></div>'+
- '<div class="notice">'+picks.length+' Best Picks will be sent as watermarked, non-downloadable proofs.</div>'+
- '<form id="reviewForm" class="form-grid" style="margin-top:14px"><div class="field"><label>Client name</label><input id="rName" value="'+esc(name)+'"></div><div class="field"><label>Client email</label><input id="rEmail" type="email" required value="'+esc(email)+'"></div><div class="field"><label>Gallery expiry</label><select id="rExpiry"><option value="24">24 hours</option><option value="168">7 days</option><option value="336">14 days</option><option value="720">30 days</option></select></div><div class="field"><label>Watermark</label><select id="rWatermark"><option value="yes">On — High Style Client Proof</option><option value="no">Off</option></select></div><div class="field full"><label>Message</label><textarea id="rMessage">Please review these photographs and select the images you would like edited.</textarea></div><div class="field full"><div class="actions" style="justify-content:flex-end"><button type="button" class="btn secondary" data-close>Cancel</button><button class="btn primary" type="submit">Send Client Review →</button></div></div></form><div id="reviewResult"></div>');
+ const thumb=picks.slice(0,5).map((p,i)=>p._url?'<img src="'+esc(p._url)+'" alt="">':'<span>'+(i+1)+'</span>').join("");
+ showModal('<div class="modal-head transfer-modal-head"><div><div class="kicker">HIGH STYLE TRANSFER</div><h2>Send Client Review</h2><p class="sub">A private review link and fresh verification code will be emailed to your client.</p></div><button class="close" data-close>×</button></div>'+
+ '<div class="transfer-shell">'+
+   '<form id="reviewForm" class="transfer-form">'+
+    '<div class="transfer-row"><label>Your email</label><input id="rSenderEmail" type="email" required value="'+esc(senderEmail)+'" placeholder="you@studio.com"></div>'+
+    '<div class="transfer-row"><label>Send to</label><input id="rEmail" type="email" required value="'+esc(recipientEmail)+'" placeholder="client@company.com"></div>'+
+    '<div class="transfer-row"><label>Client name</label><input id="rName" value="'+esc(recipientName)+'" placeholder="Client name"></div>'+
+    '<div class="transfer-project"><div><span>Project</span><b>'+esc(S.project.name)+'</b></div><strong>'+picks.length+' photos</strong></div>'+
+    '<div class="transfer-row"><label>Message</label><textarea id="rMessage" rows="4">Hi, here are the photographs from our shoot. Please select the images you would like edited.</textarea></div>'+
+    '<div class="transfer-options"><div class="field"><label>Review expires</label><select id="rExpiry"><option value="24">24 hours</option><option value="168">7 days</option><option value="336">14 days</option><option value="720">30 days</option></select></div><div class="field"><label>Proof watermark</label><select id="rWatermark"><option value="yes">On</option><option value="no">Off</option></select></div></div>'+
+    '<button class="btn primary transfer-send" type="submit"><span>Send Review</span><span>→</span></button>'+
+    '<p class="transfer-small">The client receives a High Style Match email from our secure delivery system. Replies go directly to <b id="replyPreview">'+esc(senderEmail||"your email")+'</b>.</p>'+
+   '</form>'+
+   '<aside class="transfer-visual">'+
+    '<div class="transfer-visual-top"><div><div class="kicker">CLIENT WILL RECEIVE</div><h3>'+esc(senderName)+' sent you a photo review.</h3><p>'+esc(S.project.name)+'</p></div><div class="transfer-badge">Secure</div></div>'+
+    '<div class="transfer-thumb-stack">'+thumb+'</div>'+
+    '<div class="transfer-preview-message"><span>'+picks.length+' photographs</span><b>View Your Photographs</b></div>'+
+    '<div class="transfer-code-preview"><div class="kicker">VERIFICATION CODE</div><div><i>4</i><i>8</i><i>2</i><i>6</i><i>9</i><i>1</i></div><p>A brand-new code is generated every time you send or resend.</p></div>'+
+   '</aside>'+
+ '</div><div id="reviewResult"></div>');
+ $(".modal").classList.add("transfer-modal");
  $("#rExpiry").value=["24","168","336","720"].includes(expiry)?expiry:"168";
- $("#reviewForm").onsubmit=async e=>{e.preventDefault();const btn=e.submitter;btn.disabled=true;try{
-   const recipientEmail=$("#rEmail").value.trim().toLowerCase(),recipientName=$("#rName").value.trim();
+ $("#rSenderEmail").oninput=()=>{$("#replyPreview").textContent=$("#rSenderEmail").value.trim()||"your email"};
+ $("#reviewForm").onsubmit=async e=>{e.preventDefault();const btn=e.submitter;btn.disabled=true;const old=btn.innerHTML;btn.innerHTML='<span>Sending securely…</span><span>↗</span>';try{
+   const sender=$("#rSenderEmail").value.trim().toLowerCase(),recipient=$("#rEmail").value.trim().toLowerCase(),name=$("#rName").value.trim();
+   if(!sender||!recipient)throw new Error("Enter both your email and the client's email.");
    if(S.project.client_id){
-     const {error:clientErr}=await supabase.from("hsm_clients").update({name:recipientName||recipientEmail,email:recipientEmail}).eq("id",S.project.client_id);
+     const {error:clientErr}=await supabase.from("hsm_clients").update({name:name||recipient,email:recipient}).eq("id",S.project.client_id);
      if(clientErr)throw clientErr;
    }
-   const data=await api("hsm-create-review",{project_id:S.project.id,photo_ids:picks.map(x=>x.id),recipient_email:recipientEmail,recipient_name:recipientName||null,message:$("#rMessage").value.trim(),gallery_expires_hours:+$("#rExpiry").value,watermark_enabled:$("#rWatermark").value==="yes"});
-   $("#reviewResult").innerHTML='<div class="code-result"><div class="kicker">Secure review created</div>'+(data.email_status==="sent"?'<p>High Style Match emailed the private gallery link and a new verification code to <b>'+esc(recipientEmail)+'</b>.</p>':'<p>Transactional email is not configured yet. The gallery is real; use this test code until email is connected.</p><strong>'+esc(data.test_code||"—")+'</strong>')+'<div class="actions" style="margin-top:10px"><button class="btn primary" type="button" id="openReviewLink">Open Client Gallery</button><button class="btn secondary" type="button" id="copyReviewLink">Copy Link</button></div></div>';
-   const link=clientUrl("review",data.gallery_token);$("#openReviewLink").onclick=()=>window.open(link,"_blank");$("#copyReviewLink").onclick=()=>navigator.clipboard.writeText(link).then(()=>toast("Link copied"));await loadProjectData();
- }catch(err){toast(err.message)}finally{btn.disabled=false}}
+   const data=await api("hsm-create-review",{project_id:S.project.id,photo_ids:picks.map(x=>x.id),sender_email:sender,sender_name:senderName,recipient_email:recipient,recipient_name:name||null,message:$("#rMessage").value.trim(),gallery_expires_hours:+$("#rExpiry").value,watermark_enabled:$("#rWatermark").value==="yes"});
+   const link=clientUrl("review",data.gallery_token);
+   $("#reviewResult").innerHTML='<div class="transfer-success"><div class="transfer-success-mark">✓</div><div><div class="kicker">REVIEW CREATED</div><h3>'+(data.email_status==="sent"?'Sent to '+esc(recipient):'Secure review ready')+'</h3><p>'+(data.email_status==="sent"?'The client has been emailed a private review link and a new six-digit verification code.':'Transactional email is not configured yet. Use the test code below until the email provider is connected.')+'</p>'+(data.test_code?'<strong class="test-code">'+esc(data.test_code)+'</strong>':'')+'</div><div class="actions"><button class="btn primary" type="button" id="openReviewLink">Open Client Gallery</button><button class="btn secondary" type="button" id="copyReviewLink">Copy Link</button></div></div>';
+   $("#openReviewLink").onclick=()=>window.open(link,"_blank");$("#copyReviewLink").onclick=()=>navigator.clipboard.writeText(link).then(()=>toast("Link copied"));await loadProjectData();
+ }catch(err){toast(err.message)}finally{btn.disabled=false;btn.innerHTML=old}}
 }
 async function renderReview(){
  const B=$("#projectBody"),client=await getProjectClient(),picks=S.photos.filter(x=>x.best_pick);
