@@ -1,4 +1,4 @@
-const CACHE='hsm-shell-v17-production-app';
+const CACHE='hsm-shell-v18-client-review-fix';
 
 const ESSENTIAL=[
   '/high-style-match/',
