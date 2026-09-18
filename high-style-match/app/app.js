@@ -54,7 +54,7 @@ function renderAuth(signup=false,message=""){
  $("#authForm").onsubmit=async e=>{e.preventDefault();const btn=e.submitter;btn.disabled=true;try{
    const email=$("#email").value.trim(),password=$("#password").value;
    if(signup){
-    const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:$("#firstName").value.trim(),business_name:$("#businessName").value.trim()}}});if(error)throw error;
+    const {data,error}=await supabase.auth.signUp({email,password,options:{data:{first_name:$("#firstName").value.trim(),business_name:$("#businessName").value.trim(),display_name:$("#businessName").value.trim()||$("#firstName").value.trim()||email,account_type:"photographer",requested_role:"photographer"}}});if(error)throw error;
     if(data.session){S.user=data.user;await bootUser()}else renderAuth(false,"Account created. Check your email to confirm your address, then sign in.");
    }else{const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;S.user=data.user;await bootUser()}
   }catch(err){toast(err.message)}finally{btn.disabled=false}}
