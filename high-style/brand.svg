@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-labelledby="title desc">
+<title id="title">Creative by Cross</title>
+<desc id="desc">Creative by Cross — Capturing Culinary Creativity</desc>
+<rect width="1000" height="1000" fill="#000"/>
+<circle cx="500" cy="500" r="432" fill="none" stroke="#fff" stroke-width="5"/>
+<circle cx="500" cy="500" r="405" fill="none" stroke="#fff" stroke-width="4"/>
+<defs>
+  <path id="topArc" d="M 170 505 A 330 330 0 0 1 830 505"/>
+  <path id="bottomArc" d="M 195 560 A 350 350 0 0 0 805 560"/>
+</defs>
+<text fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="700" letter-spacing="14">
+  <textPath href="#topArc" startOffset="50%" text-anchor="middle">CREATIVE BY CROSS</textPath>
+</text>
+<text fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="600" letter-spacing="8">
+  <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">CAPTURING CULINARY CREATIVITY</textPath>
+</text>
+<circle cx="183" cy="525" r="9" fill="#fff"/>
+<circle cx="817" cy="525" r="9" fill="#fff"/>
+<g transform="translate(295 450) skewX(-28)" fill="#fff">
+  <rect x="0" y="0" width="130" height="100" rx="18"/>
+  <rect x="165" y="0" width="130" height="100" rx="18"/>
+  <rect x="330" y="0" width="130" height="100" rx="18"/>
+</g>
+</svg>
