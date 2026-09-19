@@ -12,10 +12,10 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "/cancello/staff/icon.svg",
+      "src": "/cancello/staff/icon.svg?v=12",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
