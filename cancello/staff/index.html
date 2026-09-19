@@ -220,6 +220,7 @@ function orderCard(r){
  '<button class="action good" data-act="complete">Complete</button>'+
  '<button class="action" data-act="print">Print</button>'+
  '<button class="action danger" data-act="cancelled">Cancel</button>'+
+ (["complete","cancelled"].includes(r.status)?'<button class="action danger" data-act="delete">Delete pre-order</button>':'')+
  '</div></article>';
 }
 
@@ -267,6 +268,16 @@ function render(){
 async function act(card,action){
  const id=card.dataset.id;
  if(action==="print"){await printDocket(card);return;}
+ if(action==="delete"){
+   const r=rows.find(x=>String(x.id)===String(id));
+   const label=r?"PRE-"+r.order_no+" · Pre-order "+lastName(r.booking_name):"this pre-order";
+   if(!confirm("Permanently delete "+label+"?\n\nThis cannot be undone.")) return;
+   try{
+     await api({action:"delete",id});
+     await load();
+   }catch(error){alert(error.message);}
+   return;
+ }
  const patch={};
  if(action==="phone")patch.phone_confirmed=true;
  else if(action==="save"){const bt=card.querySelector(".booking-time").value;patch.booking_time=bt?new Date(bt).toISOString():null;patch.staff_notes=card.querySelector(".staff-notes").value.trim()||null;}
