@@ -9,7 +9,7 @@
 :root{--navy:#22266f;--ink:#181818;--muted:#6d6d74;--paper:#f5f5f2;--card:#fff;--line:#e7e7e4;--green:#237447;--amber:#a66a12;--red:#a13e3e}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink)}
 button,input,textarea{font:inherit}.hidden{display:none!important}
-.login{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(100%,430px);background:#fff;border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.08)}.brand{font-family:Georgia,serif;color:var(--navy);font-size:36px;letter-spacing:-.04em;margin:0}.sub{color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 22px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#666}.field input,.field textarea{width:100%;border:1px solid #d9d9d5;border-radius:13px;background:#fafafa;padding:13px;outline:none}.field input:focus,.field textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(34,38,111,.08);background:#fff}.primary,.secondary{width:100%;border:0;border-radius:13px;padding:13px 15px;font-weight:800;cursor:pointer}.primary{background:var(--navy);color:white}.secondary{margin-top:8px;background:#efeff6;color:var(--navy)}.msg{font-size:12px;line-height:1.45;margin-top:12px;color:var(--muted)}
+.login{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(18,18,24,.46);backdrop-filter:blur(10px)}.login-card{width:min(100%,420px);background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.18)}.brand{font-family:Georgia,serif;color:var(--navy);font-size:36px;letter-spacing:-.04em;margin:0}.sub{color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 22px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#666}.field input,.field textarea{width:100%;border:1px solid #d9d9d5;border-radius:13px;background:#fafafa;padding:13px;outline:none}.field input:focus,.field textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(34,38,111,.08);background:#fff}.primary,.secondary{width:100%;border:0;border-radius:13px;padding:13px 15px;font-weight:800;cursor:pointer}.primary{background:var(--navy);color:white}.secondary{margin-top:8px;background:#efeff6;color:var(--navy)}.msg{font-size:12px;line-height:1.45;margin-top:12px;color:var(--muted)}
 .app{min-height:100vh}.top{position:sticky;top:0;z-index:20;background:rgba(245,245,242,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.top-in{max-width:1180px;margin:auto;padding:16px 18px 12px}.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px}.top h1{font-family:Georgia,serif;color:var(--navy);font-size:30px;letter-spacing:-.03em;margin:0}.top small{display:block;color:#777;margin-top:2px}.signout{border:1px solid #dadada;background:#fff;border-radius:11px;padding:9px 11px;font-weight:700;color:#555;cursor:pointer}.tabs{display:flex;gap:7px;overflow:auto;padding-top:13px}.tab{white-space:nowrap;border:1px solid #dedede;background:#fff;color:#555;border-radius:999px;padding:9px 13px;font-weight:800;font-size:12px;cursor:pointer}.tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
 .main{max-width:1180px;margin:auto;padding:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}.stat b{display:block;color:var(--navy);font:500 30px/1 Georgia,serif}.stat span{font-size:11px;color:#777;font-weight:700}
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:7px 0 14px}.toolbar h2{margin:0;font-family:Georgia,serif;color:var(--navy);font-size:26px}.refresh{border:1px solid #ddd;background:#fff;border-radius:11px;padding:9px 12px;font-weight:800;color:var(--navy);cursor:pointer}
@@ -21,21 +21,21 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 </style>
 </head>
 <body>
-<section class="login" id="login">
+<section class="login hidden" id="login">
   <div class="login-card">
-    <p class="brand">Cancello Staff</p>
-    <p class="sub">Private pre-order hub for the Cancello team. Access is restricted to Cancello's restaurant email account.</p>
+    <p class="brand">One-time device setup</p>
+    <p class="sub">This browser only needs setting up once. After that, opening Cancello Staff takes you straight into the dashboard.</p>
     <div class="field"><label>Email</label><input id="email" type="email" value="info@cancellorestaurant.com" readonly></div>
     <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Staff password"></div>
-    <button class="primary" id="signin">Sign in</button>
-    <button class="secondary" id="setup">First-time setup</button>
-    <div class="msg" id="login-msg">For first-time setup, choose a password, tap “First-time setup”, then confirm the email sent to Cancello.</div>
+    <button class="primary" id="signin">Unlock this device</button>
+    <button class="secondary" id="setup">Set up this device</button>
+    <div class="msg" id="login-msg">Once this device is connected, future visits open the Staff Hub automatically.</div>
   </div>
 </section>
 
-<div class="app hidden" id="app">
+<div class="app" id="app">
 <header class="top"><div class="top-in">
-  <div class="top-row"><div><h1>Cancello Staff Hub</h1><small id="updated">Pre-orders</small></div><button class="signout" id="signout">Sign out</button></div>
+  <div class="top-row"><div><h1>Cancello Staff Hub</h1><small id="updated">Pre-orders</small></div><button class="signout hidden" id="signout">Sign out</button></div>
   <nav class="tabs">
     <button class="tab active" data-view="today">Today</button>
     <button class="tab" data-view="new">New Orders</button>
@@ -48,7 +48,7 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 <main class="main">
   <section class="stats" id="stats"></section>
   <div class="toolbar"><h2 id="view-title">Today</h2><button class="refresh" id="refresh">↻ Refresh</button></div>
-  <section class="orders" id="orders"></section>
+  <section class="orders" id="orders"><div class="empty">Opening Cancello Staff…</div></section>
 </main>
 </div>
 
@@ -72,7 +72,7 @@ async function ensureSession(){
  const {data}=await supabase.auth.getSession(); const session=data.session;
  if(session?.user?.email===STAFF_EMAIL){showApp();await load();} else {showLogin();}
 }
-function showLogin(){el("login").classList.remove("hidden");el("app").classList.add("hidden");}
+function showLogin(){el("login").classList.remove("hidden");el("app").classList.remove("hidden");}
 function showApp(){el("login").classList.add("hidden");el("app").classList.remove("hidden");}
 
 el("signin").onclick=async()=>{
@@ -87,7 +87,7 @@ el("setup").onclick=async()=>{
  if(password.length<8){el("login-msg").textContent="Choose a password with at least 8 characters.";return;}
  el("login-msg").textContent="Creating staff access…";
  const {error}=await supabase.auth.signUp({email:STAFF_EMAIL,password});
- el("login-msg").textContent=error?error.message:"Check info@cancellorestaurant.com for the confirmation email. After confirming, return here and sign in.";
+ el("login-msg").textContent=error?error.message:"Check info@cancellorestaurant.com once to confirm this device. After that, the Staff Hub will open automatically on this browser.";
 };
 el("signout").onclick=async()=>{await supabase.auth.signOut();showLogin();};
 el("refresh").onclick=load;
@@ -158,7 +158,7 @@ async function act(card,action){
  const {error}=await supabase.from("cancello_preorders").update(patch).eq("id",id);
  if(error){alert(error.message);return;}await load();
 }
-supabase.auth.onAuthStateChange((_event,session)=>{if(!session)showLogin();});
+supabase.auth.onAuthStateChange((_event,session)=>{if(!session)showLogin();else showApp();});
 ensureSession();setInterval(()=>{if(!el("app").classList.contains("hidden"))load();},15000);
 </script>
 </body>
