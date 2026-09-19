@@ -1,4 +1,4 @@
-name: Verify High Style Live
+name: Verify Creative by Cross Live
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Verify live High Style pages
+      - name: Verify live Creative by Cross pages
         shell: bash
         run: |
           set -euo pipefail
@@ -23,20 +23,21 @@ jobs:
           ok=0
           for attempt in {1..12}; do
             home="$(curl -fsSL --max-time 20 "$base/" || true)"
-            if grep -q "Capturing" <<<"$home" && grep -q "High Style Creative" <<<"$home"; then
+            if grep -q "Hospitality" <<<"$home" && grep -q "Creative by Cross" <<<"$home"; then
               ok=1
               break
             fi
             sleep 5
           done
           if [ "$ok" -ne 1 ]; then
-            echo "High Style homepage is not live with expected content."
+            echo "Creative by Cross homepage is not live with expected content."
             exit 1
           fi
 
           curl -fsSL --max-time 20 "$base/work.html" | grep -q "Selected portfolio"
-          curl -fsSL --max-time 20 "$base/about.html" | grep -q "About High Style"
-          curl -fsSL --max-time 20 "$base/services.html" | grep -q "What High Style does"
+          curl -fsSL --max-time 20 "$base/about.html" | grep -q "Creative by"
+          curl -fsSL --max-time 20 "$base/services.html" | grep -q "What I"
           curl -fsSL --max-time 20 "$base/book.html" | grep -q "Start a project"
+          curl -fsSL --max-time 20 "$base/brand.svg" | grep -q "CAPTURING CULINARY CREATIVITY"
 
-          echo "High Style live verification passed."
+          echo "Creative by Cross live verification passed."
