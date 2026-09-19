@@ -23,7 +23,28 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 .items{margin:14px 0;padding:11px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}.item{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:14px}.item b{color:var(--navy)}.allergy{margin:10px 0;padding:11px 12px;border-radius:12px;background:#fff3df;border-left:4px solid #d38919;color:#674c1d;font-size:12px;line-height:1.45}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.mini{border:1px solid #e1e1de;border-radius:11px;padding:9px;background:#fafafa}.mini label{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.1em;font-weight:900;color:#777;margin-bottom:4px}.mini input{width:100%;border:0;background:transparent;padding:0;outline:0;font-size:12px}.notes{margin-top:8px}.notes textarea{width:100%;min-height:58px;border:1px solid #e1e1de;background:#fafafa;border-radius:11px;padding:9px;resize:vertical;outline:0;font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.action{border:1px solid #dedede;background:#fff;border-radius:10px;padding:9px 10px;font-size:11px;font-weight:800;cursor:pointer;color:#444}.action.primary-action{background:var(--navy);border-color:var(--navy);color:#fff}.action.good{background:#edf7ef;color:var(--green);border-color:#d8eadc}.action.warn{background:#fff4df;color:#8b5d12;border-color:#eeddb9}.action.danger{color:var(--red)}
 .empty{grid-column:1/-1;padding:42px 20px;text-align:center;color:#777;background:#fff;border:1px dashed #d7d7d2;border-radius:18px}.setup-note{background:#fff;border:1px solid var(--line);padding:16px;border-radius:18px;color:#555;font-size:13px;line-height:1.55}
 @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.orders{grid-template-columns:1fr}.main{padding:12px}.top-in{padding:13px 12px 10px}.top h1{font-size:25px}.stat{padding:13px}.stat b{font-size:26px}.meta{grid-template-columns:1fr}.toolbar-actions{width:100%;justify-content:stretch}.search{flex:1;width:auto}}
-@media print{body{background:#fff}.top,.stats,.toolbar,.actions,.meta,.notes,.login{display:none!important}.main{padding:0}.orders{display:block}.order{display:none;box-shadow:none;border:0}.order.printing{display:block!important}.order.printing .badge{display:none}.order.printing{font-size:18px}.order.printing h3{font-size:32px}.order.printing .items{font-size:20px}}
+.print-docket{display:none}
+@media print{
+  @page{margin:4mm}
+  html,body{background:#fff!important;width:80mm;margin:0!important;padding:0!important}
+  body *{visibility:hidden!important}
+  .print-docket,.print-docket *{visibility:visible!important}
+  .print-docket{display:block!important;position:absolute;left:0;top:0;width:72mm;padding:2mm 1mm;background:#fff;color:#000;font-family:"Courier New",monospace}
+  .docket-brand{text-align:center;font-weight:900;font-size:25px;letter-spacing:2px;margin:0 0 2mm}
+  .docket-type{text-align:center;font-weight:900;font-size:16px;border-top:2px solid #000;border-bottom:2px solid #000;padding:2mm 0;margin-bottom:3mm}
+  .docket-order{text-align:center;font-size:25px;font-weight:900;margin:2mm 0}
+  .docket-name{text-align:center;font-size:18px;font-weight:900;margin-bottom:3mm;text-transform:uppercase}
+  .docket-rule{border-top:2px dashed #000;margin:3mm 0}
+  .docket-row{display:flex;justify-content:space-between;gap:4mm;font-size:12px;line-height:1.35;margin:1mm 0}
+  .docket-row strong{text-align:right}
+  .docket-section{font-size:13px;font-weight:900;margin:3mm 0 1.5mm;text-transform:uppercase}
+  .docket-item{display:grid;grid-template-columns:12mm 1fr;gap:2mm;align-items:start;font-size:17px;font-weight:900;line-height:1.25;padding:2mm 0;border-bottom:1px dashed #000}
+  .docket-qty{font-size:20px}
+  .docket-alert{border:3px solid #000;padding:2.5mm;margin:3mm 0;font-size:15px;font-weight:900;line-height:1.3}
+  .docket-none{font-size:13px}
+  .docket-notes{font-size:13px;line-height:1.4;white-space:pre-wrap}
+  .docket-footer{text-align:center;border-top:2px dashed #000;margin-top:4mm;padding-top:2mm;font-size:10px}
+}
 </style>
 </head>
 <body>
@@ -47,6 +68,7 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
   <section class="orders" id="orders"><div class="empty">Opening Cancello Staff…</div></section>
 </main>
 </div>
+<section class="print-docket" id="print-docket" aria-hidden="true"></section>
 
 <script type="module">
 const STAFF_API="https://wmuuvcrrmzftayyynhki.supabase.co/functions/v1/cancello-staff-api";
@@ -95,6 +117,14 @@ function toInput(iso){if(!iso)return"";const d=new Date(iso),p=n=>String(n).padS
 function isToday(iso){if(!iso)return false;const d=new Date(iso),n=new Date();return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()&&d.getDate()===n.getDate();}
 function orderDate(r){return r.booking_time||r.created_at;}
 function lastName(name=""){const parts=String(name).trim().split(/\s+/).filter(Boolean);return parts.length?parts[parts.length-1]:"Guest";}
+function docketDateTime(iso){
+  if(!iso)return {date:"Not set",time:"Not set"};
+  const d=new Date(iso);
+  return {
+    date:d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}),
+    time:d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})
+  };
+}
 function badge(s){return '<span class="badge '+esc(s)+'">'+esc(s)+'</span>';}
 async function api(body){
   if(!staffKey) throw new Error("This device is not connected to Cancello Staff.");
@@ -192,6 +222,37 @@ function orderCard(r){
  '</div></article>';
 }
 
+function buildDocket(r,card){
+  const dt=docketDateTime(r.booking_time);
+  const notes=(card?.querySelector(".staff-notes")?.value||r.staff_notes||"").trim();
+  const items=(r.items||[]).map(i=>'<div class="docket-item"><div class="docket-qty">'+esc(i.qty||1)+' ×</div><div>'+esc(i.dish)+'</div></div>').join("");
+  const dietary=(r.dietary||"").trim();
+  return '<div class="docket-brand">CANCELLO</div>'+
+    '<div class="docket-type">KITCHEN PRE-ORDER</div>'+
+    '<div class="docket-order">PRE-'+esc(r.order_no)+'</div>'+
+    '<div class="docket-name">Pre-order '+esc(lastName(r.booking_name))+'</div>'+
+    '<div class="docket-rule"></div>'+
+    '<div class="docket-row"><span>Booked under</span><strong>'+esc(r.booking_name)+'</strong></div>'+
+    '<div class="docket-row"><span>Date</span><strong>'+esc(dt.date)+'</strong></div>'+
+    '<div class="docket-row"><span>Time</span><strong>'+esc(dt.time)+'</strong></div>'+
+    '<div class="docket-rule"></div>'+
+    '<div class="docket-section">Items</div>'+items+
+    '<div class="docket-section">Allergies / Dietary</div>'+
+    (dietary?'<div class="docket-alert">⚠ '+esc(dietary)+'</div>':'<div class="docket-none">NONE DECLARED</div>')+
+    '<div class="docket-section">Kitchen Notes</div>'+
+    '<div class="docket-notes">'+(notes?esc(notes):'—')+'</div>'+
+    '<div class="docket-footer">Printed '+new Date().toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})+'</div>';
+}
+async function printDocket(card){
+  const id=card.dataset.id;
+  const r=rows.find(x=>String(x.id)===String(id));
+  if(!r){alert("Order could not be found.");return;}
+  const docket=el("print-docket");
+  docket.innerHTML=buildDocket(r,card);
+  try{await api({action:"update",id,patch:{printed_at:new Date().toISOString()}});}catch(e){}
+  window.print();
+}
+
 function render(){
  renderStats();
  const titles={all:"All Pre-Orders",today:"Today",new:"New Orders",kitchen:"Kitchen",upcoming:"Upcoming",completed:"Completed"};
@@ -204,7 +265,7 @@ function render(){
 }
 async function act(card,action){
  const id=card.dataset.id;
- if(action==="print"){document.querySelectorAll(".order").forEach(x=>x.classList.remove("printing"));card.classList.add("printing");window.print();card.classList.remove("printing");return;}
+ if(action==="print"){await printDocket(card);return;}
  const patch={};
  if(action==="phone")patch.phone_confirmed=true;
  else if(action==="save"){const bt=card.querySelector(".booking-time").value;patch.booking_time=bt?new Date(bt).toISOString():null;patch.staff_notes=card.querySelector(".staff-notes").value.trim()||null;}
