@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#22266f">
+<title>Cancello Staff Hub</title>
+<style>
+:root{--navy:#22266f;--ink:#181818;--muted:#6d6d74;--paper:#f5f5f2;--card:#fff;--line:#e7e7e4;--green:#237447;--amber:#a66a12;--red:#a13e3e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink)}
+button,input,textarea{font:inherit}.hidden{display:none!important}
+.login{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(100%,430px);background:#fff;border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.08)}.brand{font-family:Georgia,serif;color:var(--navy);font-size:36px;letter-spacing:-.04em;margin:0}.sub{color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 22px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#666}.field input,.field textarea{width:100%;border:1px solid #d9d9d5;border-radius:13px;background:#fafafa;padding:13px;outline:none}.field input:focus,.field textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(34,38,111,.08);background:#fff}.primary,.secondary{width:100%;border:0;border-radius:13px;padding:13px 15px;font-weight:800;cursor:pointer}.primary{background:var(--navy);color:white}.secondary{margin-top:8px;background:#efeff6;color:var(--navy)}.msg{font-size:12px;line-height:1.45;margin-top:12px;color:var(--muted)}
+.app{min-height:100vh}.top{position:sticky;top:0;z-index:20;background:rgba(245,245,242,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.top-in{max-width:1180px;margin:auto;padding:16px 18px 12px}.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px}.top h1{font-family:Georgia,serif;color:var(--navy);font-size:30px;letter-spacing:-.03em;margin:0}.top small{display:block;color:#777;margin-top:2px}.signout{border:1px solid #dadada;background:#fff;border-radius:11px;padding:9px 11px;font-weight:700;color:#555;cursor:pointer}.tabs{display:flex;gap:7px;overflow:auto;padding-top:13px}.tab{white-space:nowrap;border:1px solid #dedede;background:#fff;color:#555;border-radius:999px;padding:9px 13px;font-weight:800;font-size:12px;cursor:pointer}.tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.main{max-width:1180px;margin:auto;padding:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}.stat b{display:block;color:var(--navy);font:500 30px/1 Georgia,serif}.stat span{font-size:11px;color:#777;font-weight:700}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:7px 0 14px}.toolbar h2{margin:0;font-family:Georgia,serif;color:var(--navy);font-size:26px}.refresh{border:1px solid #ddd;background:#fff;border-radius:11px;padding:9px 12px;font-weight:800;color:var(--navy);cursor:pointer}
+.orders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.order{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 5px 18px rgba(0,0,0,.035)}.order-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.code{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#777;font-weight:900}.order h3{margin:3px 0 4px;color:var(--navy);font:500 23px/1.1 Georgia,serif}.phone{color:#555;font-size:12px;text-decoration:none}.badge{border-radius:999px;padding:6px 9px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;background:#eef0f8;color:var(--navy)}.badge.confirmed{background:#edf7ef;color:var(--green)}.badge.preparing{background:#fff3dd;color:var(--amber)}.badge.complete{background:#e9f4ed;color:var(--green)}.badge.cancelled{background:#faeaea;color:var(--red)}
+.items{margin:14px 0;padding:11px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}.item{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:14px}.item b{color:var(--navy)}.allergy{margin:10px 0;padding:11px 12px;border-radius:12px;background:#fff3df;border-left:4px solid #d38919;color:#674c1d;font-size:12px;line-height:1.45}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.mini{border:1px solid #e1e1de;border-radius:11px;padding:9px;background:#fafafa}.mini label{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.1em;font-weight:900;color:#777;margin-bottom:4px}.mini input{width:100%;border:0;background:transparent;padding:0;outline:0;font-size:12px}.notes{margin-top:8px}.notes textarea{width:100%;min-height:58px;border:1px solid #e1e1de;background:#fafafa;border-radius:11px;padding:9px;resize:vertical;outline:0;font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.action{border:1px solid #dedede;background:#fff;border-radius:10px;padding:9px 10px;font-size:11px;font-weight:800;cursor:pointer;color:#444}.action.primary-action{background:var(--navy);border-color:var(--navy);color:#fff}.action.good{background:#edf7ef;color:var(--green);border-color:#d8eadc}.action.warn{background:#fff4df;color:#8b5d12;border-color:#eeddb9}.action.danger{color:var(--red)}
+.empty{grid-column:1/-1;padding:42px 20px;text-align:center;color:#777;background:#fff;border:1px dashed #d7d7d2;border-radius:18px}.prep{display:grid;gap:8px}.prep-row{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px}.prep-row b{font-size:18px;color:var(--navy)}.setup-note{background:#fff;border:1px solid var(--line);padding:16px;border-radius:18px;color:#555;font-size:13px;line-height:1.55}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.orders{grid-template-columns:1fr}.main{padding:12px}.top-in{padding:13px 12px 10px}.top h1{font-size:25px}.stat{padding:13px}.stat b{font-size:26px}.meta{grid-template-columns:1fr}}
+@media print{body{background:#fff}.top,.stats,.toolbar,.actions,.meta,.notes,.login{display:none!important}.main{padding:0}.orders{display:block}.order{display:none;box-shadow:none;border:0}.order.printing{display:block!important}.order.printing .badge{display:none}.order.printing{font-size:18px}.order.printing h3{font-size:32px}.order.printing .items{font-size:20px}}
+</style>
+</head>
+<body>
+<section class="login" id="login">
+  <div class="login-card">
+    <p class="brand">Cancello Staff</p>
+    <p class="sub">Private pre-order hub for the Cancello team. Access is restricted to Cancello's restaurant email account.</p>
+    <div class="field"><label>Email</label><input id="email" type="email" value="info@cancellorestaurant.com" readonly></div>
+    <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Staff password"></div>
+    <button class="primary" id="signin">Sign in</button>
+    <button class="secondary" id="setup">First-time setup</button>
+    <div class="msg" id="login-msg">For first-time setup, choose a password, tap “First-time setup”, then confirm the email sent to Cancello.</div>
+  </div>
+</section>
+
+<div class="app hidden" id="app">
+<header class="top"><div class="top-in">
+  <div class="top-row"><div><h1>Cancello Staff Hub</h1><small id="updated">Pre-orders</small></div><button class="signout" id="signout">Sign out</button></div>
+  <nav class="tabs">
+    <button class="tab active" data-view="today">Today</button>
+    <button class="tab" data-view="new">New Orders</button>
+    <button class="tab" data-view="kitchen">Kitchen</button>
+    <button class="tab" data-view="prep">Prep List</button>
+    <button class="tab" data-view="upcoming">Upcoming</button>
+    <button class="tab" data-view="completed">Completed</button>
+  </nav>
+</div></header>
+<main class="main">
+  <section class="stats" id="stats"></section>
+  <div class="toolbar"><h2 id="view-title">Today</h2><button class="refresh" id="refresh">↻ Refresh</button></div>
+  <section class="orders" id="orders"></section>
+</main>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0/+esm";
+const SUPABASE_URL="https://wmuuvcrrmzftayyynhki.supabase.co";
+const SUPABASE_KEY="sb_publishable_fZGXwGrbYXEDHIj1PAxkfg_7Bh3Xkiv";
+const STAFF_EMAIL="info@cancellorestaurant.com";
+const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
+const el=id=>document.getElementById(id);
+let rows=[],view="today";
+
+function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
+function localDate(iso){if(!iso)return"";return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});}
+function toInput(iso){if(!iso)return"";const d=new Date(iso),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes());}
+function isToday(iso){if(!iso)return false;const d=new Date(iso),n=new Date();return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()&&d.getDate()===n.getDate();}
+function orderDate(r){return r.booking_time||r.created_at;}
+function badge(s){return '<span class="badge '+esc(s)+'">'+esc(s)+'</span>';}
+
+async function ensureSession(){
+ const {data}=await supabase.auth.getSession(); const session=data.session;
+ if(session?.user?.email===STAFF_EMAIL){showApp();await load();} else {showLogin();}
+}
+function showLogin(){el("login").classList.remove("hidden");el("app").classList.add("hidden");}
+function showApp(){el("login").classList.add("hidden");el("app").classList.remove("hidden");}
+
+el("signin").onclick=async()=>{
+ const password=el("password").value; el("login-msg").textContent="Signing in…";
+ const {data,error}=await supabase.auth.signInWithPassword({email:STAFF_EMAIL,password});
+ if(error){el("login-msg").textContent=error.message;return;}
+ if(data.user?.email!==STAFF_EMAIL){await supabase.auth.signOut();el("login-msg").textContent="This account is not authorised.";return;}
+ showApp();await load();
+};
+el("setup").onclick=async()=>{
+ const password=el("password").value;
+ if(password.length<8){el("login-msg").textContent="Choose a password with at least 8 characters.";return;}
+ el("login-msg").textContent="Creating staff access…";
+ const {error}=await supabase.auth.signUp({email:STAFF_EMAIL,password});
+ el("login-msg").textContent=error?error.message:"Check info@cancellorestaurant.com for the confirmation email. After confirming, return here and sign in.";
+};
+el("signout").onclick=async()=>{await supabase.auth.signOut();showLogin();};
+el("refresh").onclick=load;
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");view=t.dataset.view;render();});
+
+async function load(){
+ el("updated").textContent="Updating…";
+ const {data,error}=await supabase.from("cancello_preorders").select("*").order("created_at",{ascending:false}).limit(250);
+ if(error){el("orders").innerHTML='<div class="empty">'+esc(error.message)+'</div>';el("updated").textContent="Unable to load";return;}
+ rows=data||[];el("updated").textContent="Updated "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});render();
+}
+function filtered(){
+ if(view==="new")return rows.filter(r=>r.status==="new");
+ if(view==="kitchen")return rows.filter(r=>["confirmed","preparing"].includes(r.status));
+ if(view==="completed")return rows.filter(r=>["complete","cancelled"].includes(r.status));
+ if(view==="upcoming")return rows.filter(r=>r.booking_time&&new Date(r.booking_time)>new Date()&&!isToday(r.booking_time)&&!["complete","cancelled"].includes(r.status));
+ return rows.filter(r=>isToday(orderDate(r))&&!["complete","cancelled"].includes(r.status));
+}
+function renderStats(){
+ const today=rows.filter(r=>isToday(orderDate(r))&&!["complete","cancelled"].includes(r.status));
+ const dishes=today.reduce((n,r)=>n+(r.items||[]).reduce((x,i)=>x+(Number(i.qty)||1),0),0);
+ el("stats").innerHTML=[
+  ["Today",today.length],["New",rows.filter(r=>r.status==="new").length],["Dishes",dishes],["Allergy alerts",today.filter(r=>r.dietary).length]
+ ].map(([l,n])=>'<div class="stat"><b>'+n+'</b><span>'+l+'</span></div>').join("");
+}
+function orderCard(r){
+ const items=(r.items||[]).map(i=>'<div class="item"><span>'+esc(i.dish)+'</span><b>× '+esc(i.qty||1)+'</b></div>').join("");
+ return '<article class="order" data-id="'+r.id+'">'+
+ '<div class="order-head"><div><span class="code">PRE-'+r.order_no+'</span><h3>'+esc(r.booking_name)+'</h3><a class="phone" href="tel:'+esc(r.phone)+'">'+esc(r.phone)+'</a></div>'+badge(r.status)+'</div>'+
+ '<div class="items">'+items+'</div>'+
+ (r.dietary?'<div class="allergy"><strong>⚠ Allergy / dietary</strong><br>'+esc(r.dietary)+'</div>':'')+
+ '<div class="meta"><div class="mini"><label>Booking date & time</label><input class="booking-time" type="datetime-local" value="'+toInput(r.booking_time)+'"></div><div class="mini"><label>Phone call</label><input class="phone-check" type="text" readonly value="'+(r.phone_confirmed?"Confirmed":"Not marked")+'"></div></div>'+
+ '<div class="notes"><textarea class="staff-notes" placeholder="Private staff notes">'+esc(r.staff_notes||"")+'</textarea></div>'+
+ '<div class="actions">'+
+ '<button class="action good" data-act="phone">✓ Call confirmed</button>'+
+ '<button class="action" data-act="save">Save details</button>'+
+ '<button class="action primary-action" data-act="confirmed">Confirm order</button>'+
+ '<button class="action warn" data-act="preparing">Preparing</button>'+
+ '<button class="action good" data-act="complete">Complete</button>'+
+ '<button class="action" data-act="print">Print</button>'+
+ '<button class="action danger" data-act="cancelled">Cancel</button>'+
+ '</div></article>';
+}
+function renderPrep(list){
+ const map=new Map();
+ list.forEach(r=>(r.items||[]).forEach(i=>map.set(i.dish,(map.get(i.dish)||0)+(Number(i.qty)||1))));
+ const arr=[...map.entries()].sort((a,b)=>b[1]-a[1]);
+ el("orders").className="prep";
+ el("orders").innerHTML=arr.length?arr.map(([d,q])=>'<div class="prep-row"><span>'+esc(d)+'</span><b>× '+q+'</b></div>').join(""):'<div class="empty">No dishes to prep yet.</div>';
+}
+function render(){
+ renderStats();
+ const titles={today:"Today",new:"New Orders",kitchen:"Kitchen",prep:"Prep List",upcoming:"Upcoming",completed:"Completed"};
+ el("view-title").textContent=titles[view];
+ const list=filtered();
+ if(view==="prep"){renderPrep(rows.filter(r=>isToday(orderDate(r))&&!["complete","cancelled"].includes(r.status)));return;}
+ el("orders").className="orders";
+ el("orders").innerHTML=list.length?list.map(orderCard).join(""):'<div class="empty">Nothing here right now.</div>';
+ el("orders").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.closest(".order"),b.dataset.act));
+}
+async function act(card,action){
+ const id=card.dataset.id;
+ if(action==="print"){document.querySelectorAll(".order").forEach(x=>x.classList.remove("printing"));card.classList.add("printing");window.print();card.classList.remove("printing");return;}
+ const patch={updated_at:new Date().toISOString()};
+ if(action==="phone")patch.phone_confirmed=true;
+ else if(action==="save"){const bt=card.querySelector(".booking-time").value;patch.booking_time=bt?new Date(bt).toISOString():null;patch.staff_notes=card.querySelector(".staff-notes").value.trim()||null;}
+ else {patch.status=action;if(action==="complete")patch.completed_at=new Date().toISOString();}
+ const {error}=await supabase.from("cancello_preorders").update(patch).eq("id",id);
+ if(error){alert(error.message);return;}await load();
+}
+supabase.auth.onAuthStateChange((_event,session)=>{if(!session)showLogin();});
+ensureSession();setInterval(()=>{if(!el("app").classList.contains("hidden"))load();},15000);
+</script>
+</body>
+</html>
