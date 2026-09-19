@@ -50,7 +50,7 @@ button,input,select{font:inherit}
 <script>
 const API="https://wmuuvcrrmzftayyynhki.supabase.co/functions/v1/cancello-allocations";
 const el=id=>document.getElementById(id);
-let key="",shift="dinner",data={published:false,assignments:[]};
+let key="",shift="dinner",data={published:false,assignments:[],members:[]};
 function getKey(){const q=new URLSearchParams(location.search).get("access")||"";if(q){localStorage.setItem("cancello_team_key",q);return q}return localStorage.getItem("cancello_team_key")||""}
 function today(){const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
 function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
@@ -58,11 +58,22 @@ async function api(body){if(!key)throw new Error("This team phone is not connect
 function person(a){const m=a.cancello_team_members||{},s=a.cancello_sections||{};return {id:a.team_member_id,name:m.name||"Team member",role:m.default_role||"",section:s.name||"Unassigned",sectionId:a.section_id||"",sort:s.sort_order||999,note:a.duty_note||""}}
 function render(){
  const people=(data.assignments||[]).map(person).sort((a,b)=>a.sort-b.sort||a.name.localeCompare(b.name));
+ const members=(data.members||[]).slice().sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)||(a.name||"").localeCompare(b.name||""));
  const saved=localStorage.getItem("cancello_team_member")||"";
- el("who").innerHTML='<option value="">Choose your name</option>'+people.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join("");
- if(people.some(p=>p.id===saved))el("who").value=saved;
+ const currentChoice=el("who").value||saved;
+ el("who").innerHTML='<option value="">Choose your name</option>'+members.map(m=>'<option value="'+esc(m.id)+'">'+esc(m.name)+'</option>').join("");
+ if(members.some(m=>m.id===currentChoice))el("who").value=currentChoice;
+ const selected=members.find(m=>m.id===el("who").value);
  const me=people.find(p=>p.id===el("who").value);
- el("mine").innerHTML=me?'<div class="kicker">Your allocation</div><h2>'+esc(me.section)+'</h2><p><strong>'+esc(me.name)+'</strong>'+(me.role?' · '+esc(me.role):'')+(me.note?' · '+esc(me.note):'')+'</p>':'<div class="kicker">Your allocation</div><h2>Choose your name</h2><p>Your section will appear here.</p>';
+ if(!selected){
+   el("mine").innerHTML='<div class="kicker">Your allocation</div><h2>Choose your name</h2><p>Your section will appear here.</p>';
+ }else if(!data.published){
+   el("mine").innerHTML='<div class="kicker">Your allocation</div><h2>Waiting for management</h2><p><strong>'+esc(selected.name)+'</strong> · This service has not been published yet.</p>';
+ }else if(me){
+   el("mine").innerHTML='<div class="kicker">Your allocation</div><h2>'+esc(me.section)+'</h2><p><strong>'+esc(me.name)+'</strong>'+(me.role?' · '+esc(me.role):'')+(me.note?' · '+esc(me.note):'')+'</p>';
+ }else{
+   el("mine").innerHTML='<div class="kicker">Your allocation</div><h2>Not working this service</h2><p><strong>'+esc(selected.name)+'</strong> is not on this '+esc(shift)+' allocation.</p>';
+ }
  el("status").textContent=data.published?"Published":"Not published";
  if(!data.published){el("board").innerHTML='<div class="empty"><strong>Management has not published this service yet.</strong><br>When they publish the allocation, it will appear here automatically.</div>';return}
  const groups={};
