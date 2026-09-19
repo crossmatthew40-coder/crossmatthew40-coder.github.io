@@ -21,21 +21,11 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 </style>
 </head>
 <body>
-<section class="login hidden" id="login">
-  <div class="login-card">
-    <p class="brand">One-time device setup</p>
-    <p class="sub">This browser only needs setting up once. After that, opening Cancello Staff takes you straight into the dashboard.</p>
-    <div class="field"><label>Email</label><input id="email" type="email" value="info@cancellorestaurant.com" readonly></div>
-    <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Staff password"></div>
-    <button class="primary" id="signin">Unlock this device</button>
-    <button class="secondary" id="setup">Set up this device</button>
-    <div class="msg" id="login-msg">Once this device is connected, future visits open the Staff Hub automatically.</div>
-  </div>
-</section>
+
 
 <div class="app" id="app">
 <header class="top"><div class="top-in">
-  <div class="top-row"><div><h1>Cancello Staff Hub</h1><small id="updated">Pre-orders</small></div><button class="signout hidden" id="signout">Sign out</button></div>
+  <div class="top-row"><div><h1>Cancello Staff Hub</h1><small id="updated">Opening…</small></div></div>
   <nav class="tabs">
     <button class="tab active" data-view="today">Today</button>
     <button class="tab" data-view="new">New Orders</button>
@@ -53,51 +43,43 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 </div>
 
 <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0/+esm";
-const SUPABASE_URL="https://wmuuvcrrmzftayyynhki.supabase.co";
-const SUPABASE_KEY="sb_publishable_fZGXwGrbYXEDHIj1PAxkfg_7Bh3Xkiv";
-const STAFF_EMAIL="info@cancellorestaurant.com";
-const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
+const STAFF_API="https://wmuuvcrrmzftayyynhki.supabase.co/functions/v1/cancello-staff-api";
 const el=id=>document.getElementById(id);
 let rows=[],view="today";
+let staffKey=localStorage.getItem("cancello_staff_key")||"";
+const hash=location.hash.startsWith("#access=")?decodeURIComponent(location.hash.slice(8)):"";
+if(hash){staffKey=hash;localStorage.setItem("cancello_staff_key",staffKey);history.replaceState(null,"",location.pathname+location.search);}
 
 function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
-function localDate(iso){if(!iso)return"";return new Date(iso).toLocaleString("en-GB",{dateStyle:"medium",timeStyle:"short"});}
 function toInput(iso){if(!iso)return"";const d=new Date(iso),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes());}
 function isToday(iso){if(!iso)return false;const d=new Date(iso),n=new Date();return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()&&d.getDate()===n.getDate();}
 function orderDate(r){return r.booking_time||r.created_at;}
 function badge(s){return '<span class="badge '+esc(s)+'">'+esc(s)+'</span>';}
-
-async function ensureSession(){
- const {data}=await supabase.auth.getSession(); const session=data.session;
- if(session?.user?.email===STAFF_EMAIL){showApp();await load();} else {showLogin();}
+async function api(body){
+  if(!staffKey) throw new Error("This device is not connected to Cancello Staff.");
+  const r=await fetch(STAFF_API,{method:"POST",headers:{"Content-Type":"application/json","X-Cancello-Staff-Key":staffKey},body:JSON.stringify(body)});
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(data.error||"Staff Hub request failed");
+  return data;
 }
-function showLogin(){el("login").classList.remove("hidden");el("app").classList.remove("hidden");}
-function showApp(){el("login").classList.add("hidden");el("app").classList.remove("hidden");}
-
-el("signin").onclick=async()=>{
- const password=el("password").value; el("login-msg").textContent="Signing in…";
- const {data,error}=await supabase.auth.signInWithPassword({email:STAFF_EMAIL,password});
- if(error){el("login-msg").textContent=error.message;return;}
- if(data.user?.email!==STAFF_EMAIL){await supabase.auth.signOut();el("login-msg").textContent="This account is not authorised.";return;}
- showApp();await load();
-};
-el("setup").onclick=async()=>{
- const password=el("password").value;
- if(password.length<8){el("login-msg").textContent="Choose a password with at least 8 characters.";return;}
- el("login-msg").textContent="Creating staff access…";
- const {error}=await supabase.auth.signUp({email:STAFF_EMAIL,password});
- el("login-msg").textContent=error?error.message:"Check info@cancellorestaurant.com once to confirm this device. After that, the Staff Hub will open automatically on this browser.";
-};
-el("signout").onclick=async()=>{await supabase.auth.signOut();showLogin();};
+function accessError(message){
+  el("stats").innerHTML="";
+  el("view-title").textContent="Cancello Staff";
+  el("orders").className="orders";
+  el("orders").innerHTML='<div class="empty"><strong>Staff device not connected.</strong><br><br>'+esc(message)+'<br><br>Open the private Cancello Staff link on this device once.</div>';
+  el("updated").textContent="Private staff access";
+}
 el("refresh").onclick=load;
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");view=t.dataset.view;render();});
 
 async function load(){
  el("updated").textContent="Updating…";
- const {data,error}=await supabase.from("cancello_preorders").select("*").order("created_at",{ascending:false}).limit(250);
- if(error){el("orders").innerHTML='<div class="empty">'+esc(error.message)+'</div>';el("updated").textContent="Unable to load";return;}
- rows=data||[];el("updated").textContent="Updated "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});render();
+ try{
+   const data=await api({action:"list"});
+   rows=data.orders||[];
+   el("updated").textContent="Updated "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+   render();
+ }catch(error){accessError(error.message);}
 }
 function filtered(){
  if(view==="new")return rows.filter(r=>r.status==="new");
@@ -151,15 +133,14 @@ function render(){
 async function act(card,action){
  const id=card.dataset.id;
  if(action==="print"){document.querySelectorAll(".order").forEach(x=>x.classList.remove("printing"));card.classList.add("printing");window.print();card.classList.remove("printing");return;}
- const patch={updated_at:new Date().toISOString()};
+ const patch={};
  if(action==="phone")patch.phone_confirmed=true;
  else if(action==="save"){const bt=card.querySelector(".booking-time").value;patch.booking_time=bt?new Date(bt).toISOString():null;patch.staff_notes=card.querySelector(".staff-notes").value.trim()||null;}
  else {patch.status=action;if(action==="complete")patch.completed_at=new Date().toISOString();}
- const {error}=await supabase.from("cancello_preorders").update(patch).eq("id",id);
- if(error){alert(error.message);return;}await load();
+ try{await api({action:"update",id,patch});await load();}catch(error){alert(error.message);}
 }
-supabase.auth.onAuthStateChange((_event,session)=>{if(!session)showLogin();else showApp();});
-ensureSession();setInterval(()=>{if(!el("app").classList.contains("hidden"))load();},15000);
+load();
+setInterval(load,15000);
 </script>
 </body>
 </html>
