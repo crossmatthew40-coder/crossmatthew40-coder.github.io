@@ -12,7 +12,7 @@ button,input,textarea,select{font:inherit}
 .nav{position:sticky;top:0;z-index:40;height:78px;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.18em;font-weight:600}
-.brand img{width:46px;height:46px;border-radius:50%;display:block}
+.brand img{width:58px;height:28px;object-fit:contain;display:block}
 .links{display:flex;align-items:center;gap:28px;font-size:12px;color:#a7a7a7}
 .links a{transition:.2s}.links a:hover,.links a.active{color:#fff}
 .pill{border:1px solid #333;border-radius:999px;padding:10px 16px;color:#fff!important}
@@ -106,6 +106,8 @@ footer{border-top:1px solid var(--line);padding:55px 0 28px}
 .form{grid-template-columns:1fr}.form label.full,.form button,.notice{grid-column:1}
 }
 @media(max-width:560px){
-.brand span{display:none}.brand img{width:44px;height:44px}
+.brand span{display:none}.brand img{width:58px;height:28px}
 .hero h1{font-size:18vw}.footer-top{gap:30px}.footer-links{flex-direction:column}.footer-bottom{flex-direction:column;gap:12px}
 }
+/* High Style logo motif */
+.section-head>div:before{content:"";display:block;width:38px;height:15px;background:url("bars.svg") center/contain no-repeat;margin-bottom:16px}.footer-logo{object-fit:contain;border-radius:0}.hero-logo img,.brand-panel img,.footer-logo{background:#000}
