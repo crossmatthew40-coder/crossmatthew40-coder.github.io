@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Cancello Kitchen Docket</title>
+<style>
+@page{size:80mm auto;margin:4mm}
+*{box-sizing:border-box}
+html,body{margin:0;background:#f2f2f2;color:#000;font-family:"Courier New",monospace}
+body{min-height:100vh;padding:16px}
+.sheet{width:min(76mm,100%);margin:0 auto;background:#fff;padding:10px;box-shadow:0 8px 28px rgba(0,0,0,.12)}
+.brand{text-align:center;font-weight:900;font-size:27px;letter-spacing:2px;margin-bottom:8px}
+.type{text-align:center;font-weight:900;font-size:16px;border-top:2px solid #000;border-bottom:2px solid #000;padding:8px 0;margin-bottom:10px}
+.order{text-align:center;font-size:27px;font-weight:900;margin:8px 0}
+.name{text-align:center;font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:10px}
+.rule{border-top:2px dashed #000;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:13px;line-height:1.4;margin:4px 0}
+.row strong{text-align:right}
+.section{font-size:14px;font-weight:900;margin:12px 0 6px;text-transform:uppercase}
+.item{display:grid;grid-template-columns:44px 1fr;gap:7px;font-size:18px;font-weight:900;line-height:1.25;padding:8px 0;border-bottom:1px dashed #000}
+.qty{font-size:21px}
+.alert{border:3px solid #000;padding:9px;margin:10px 0;font-size:16px;font-weight:900;line-height:1.3}
+.notes{font-size:14px;line-height:1.4;white-space:pre-wrap}
+.footer{text-align:center;border-top:2px dashed #000;margin-top:14px;padding-top:8px;font-size:10px}
+.controls{width:min(76mm,100%);margin:12px auto 0;display:grid;gap:8px}
+.print{width:100%;border:0;border-radius:13px;padding:16px;background:#22266f;color:#fff;font:800 17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.close{width:100%;border:1px solid #ccc;border-radius:13px;padding:13px;background:#fff;color:#222;font:700 14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.hint{text-align:center;color:#666;font:12px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.error{font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:25px;text-align:center}
+@media print{
+ html,body{background:#fff!important}
+ body{padding:0!important}
+ .sheet{width:72mm;box-shadow:none;padding:0}
+ .controls{display:none!important}
+}
+</style>
+</head>
+<body>
+<main class="sheet" id="sheet"><div class="error">Opening kitchen docket…</div></main>
+<div class="controls" id="controls" hidden>
+  <button class="print" id="print">Print Docket</button>
+  <button class="close" id="close">Back to Cancello Staff</button>
+  <div class="hint">On iPhone, tap Print Docket, choose your AirPrint printer, then tap Print.</div>
+</div>
+<script>
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
+function decodePayload(){
+  const raw=new URLSearchParams(location.hash.slice(1)).get("data");
+  if(!raw) throw new Error("No docket data");
+  const b64=raw.replace(/-/g,"+").replace(/_/g,"/");
+  const bin=atob(b64);
+  const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+function fmt(iso){
+  if(!iso)return {date:"Not set",time:"Not set"};
+  const d=new Date(iso);
+  return {
+    date:d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}),
+    time:d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})
+  };
+}
+function doPrint(){
+  try{
+    if(typeof document.execCommand==="function"){
+      const ok=document.execCommand("print",false,null);
+      if(ok)return;
+    }
+  }catch(e){}
+  window.print();
+}
+try{
+  const d=decodePayload();
+  const dt=fmt(d.booking_time);
+  const items=(d.items||[]).map(i=>'<div class="item"><div class="qty">'+esc(i.qty||1)+' ×</div><div>'+esc(i.dish)+'</div></div>').join("");
+  document.getElementById("sheet").innerHTML=
+    '<div class="brand">CANCELLO</div>'+
+    '<div class="type">KITCHEN PRE-ORDER</div>'+
+    '<div class="order">PRE-'+esc(d.order_no)+'</div>'+
+    '<div class="name">Pre-order '+esc(d.last_name||"Guest")+'</div>'+
+    '<div class="rule"></div>'+
+    '<div class="row"><span>Booked under</span><strong>'+esc(d.booking_name)+'</strong></div>'+
+    '<div class="row"><span>Date</span><strong>'+esc(dt.date)+'</strong></div>'+
+    '<div class="row"><span>Time</span><strong>'+esc(dt.time)+'</strong></div>'+
+    '<div class="rule"></div>'+
+    '<div class="section">Items</div>'+items+
+    '<div class="section">Allergies / Dietary</div>'+
+    (d.dietary?'<div class="alert">⚠ '+esc(d.dietary)+'</div>':'<div>NONE DECLARED</div>')+
+    '<div class="section">Kitchen Notes</div>'+
+    '<div class="notes">'+(d.notes?esc(d.notes):'—')+'</div>'+
+    '<div class="footer">Printed '+new Date().toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})+'</div>';
+  document.getElementById("controls").hidden=false;
+  document.getElementById("print").addEventListener("click",doPrint);
+  document.getElementById("close").addEventListener("click",()=>{if(history.length>1)history.back();else window.close();});
+}catch(e){
+  document.getElementById("sheet").innerHTML='<div class="error"><strong>Could not open docket.</strong><br><br>Return to Cancello Staff and tap Print again.</div>';
+}
+</script>
+</body>
+</html>
