@@ -1,0 +1,19 @@
+{
+  "id": "/cancello/manager/",
+  "name": "Cancello Manager",
+  "short_name": "Manager",
+  "description": "Cancello section allocation for management.",
+  "start_url": "/cancello/manager/",
+  "scope": "/cancello/manager/",
+  "display": "standalone",
+  "background_color": "#f5f5f2",
+  "theme_color": "#22266f",
+  "icons": [
+    {
+      "src": "/cancello/staff/apple-touch-icon-v13.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
