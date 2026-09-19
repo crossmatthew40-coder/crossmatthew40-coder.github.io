@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#22266f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Cancello Team">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="/cancello/staff/apple-touch-icon-v13.png">
+<link rel="icon" href="/cancello/staff/icon.svg">
+<title>Cancello Team</title>
+<style>
+:root{--navy:#22266f;--gold:#d79b37;--paper:#f5f5f2;--ink:#181818;--muted:#777;--line:#e4e4e0;--green:#237447}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;max-width:100%;overflow-x:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink)}
+body{padding-bottom:calc(22px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit}
+.top{position:sticky;top:0;z-index:20;background:rgba(245,245,242,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.topin{max-width:760px;margin:auto;padding:calc(13px + env(safe-area-inset-top)) 13px 11px}.brand{display:flex;align-items:center;gap:10px}.brand img{width:42px;height:42px;border-radius:11px}.brand h1{margin:0;color:var(--navy);font:500 28px Georgia,serif}.brand p{margin:2px 0 0;font-size:11px;color:#777}
+.live{margin-left:auto;font-size:10px;font-weight:900;color:var(--green);background:#edf7ef;border:1px solid #cfe5d6;border-radius:999px;padding:6px 9px}
+.wrap{max-width:760px;margin:auto;padding:13px}.controls{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px}.date{border:1px solid #ddd;border-radius:12px;background:#fff;padding:11px;font-size:16px}.shift{display:flex;gap:6px}.shift button{border:1px solid #ddd;background:#fff;border-radius:11px;padding:10px 12px;font-size:11px;font-weight:850;color:#555}.shift button.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.me{background:var(--navy);color:#fff;border-radius:20px;padding:16px;margin-bottom:11px;box-shadow:0 8px 25px rgba(34,38,111,.12)}.me label{display:block;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:6px}.me select{width:100%;border:0;border-radius:11px;background:#fff;color:#111;padding:11px;font-size:15px}.myresult{margin-top:14px}.myresult .kicker{font-size:9px;text-transform:uppercase;letter-spacing:.12em;opacity:.7;font-weight:900}.myresult h2{font:500 30px Georgia,serif;margin:3px 0}.myresult p{margin:0;opacity:.85;font-size:12px}
+.service{display:flex;align-items:end;justify-content:space-between;gap:10px;margin:14px 2px 9px}.service h2{margin:0;color:var(--navy);font:500 24px Georgia,serif}.service span{font-size:10px;color:#777;font-weight:800}
+.section{background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:10px;overflow:hidden}.section-head{padding:12px 14px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}.section-head h3{font:500 20px Georgia,serif;color:var(--navy);margin:0}.count{font-size:9px;font-weight:900;color:#777}
+.member{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:12px 14px;border-top:1px solid #f0f0ed}.member:first-of-type{border-top:0}.member strong{display:block;font-size:14px}.role{font-size:10px;color:#777;margin-top:2px}.note{font-size:11px;color:#555;text-align:right;max-width:45%}.empty{background:#fff;border:1px dashed #d4d4d0;border-radius:18px;padding:30px 18px;text-align:center;color:#777;line-height:1.5}.updated{text-align:center;color:#999;font-size:10px;margin-top:12px}
+@media(max-width:600px){.topin,.wrap{padding-left:10px;padding-right:10px}.brand h1{font-size:24px}.brand img{width:38px;height:38px}.controls{grid-template-columns:1fr}.shift{display:grid;grid-template-columns:1fr 1fr}.shift button{width:100%}.me{padding:14px}.myresult h2{font-size:27px}.section-head{padding:11px 12px}.member{padding:11px 12px}.note{max-width:42%}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="brand">
+<img src="/cancello/staff/icon.svg?v=12" alt="">
+<div><h1>Cancello Team</h1><p>Your section for service</p></div>
+<span class="live">LIVE</span>
+</div></div></header>
+<main class="wrap">
+<section class="controls">
+<input id="date" class="date" type="date">
+<div class="shift"><button class="active" data-shift="dinner">Dinner</button><button data-shift="lunch">Lunch</button></div>
+</section>
+<section class="me">
+<label>Who are you?</label>
+<select id="who"><option value="">Choose your name</option></select>
+<div class="myresult" id="mine"><div class="kicker">Your allocation</div><h2>Choose your name</h2><p>Your section will appear here.</p></div>
+</section>
+<div class="service"><h2 id="title">Tonight's Sections</h2><span id="status">Checking…</span></div>
+<section id="board"><div class="empty">Loading section allocation…</div></section>
+<div class="updated" id="updated"></div>
+</main>
+<script>
+const API="https://wmuuvcrrmzftayyynhki.supabase.co/functions/v1/cancello-allocations";
+const el=id=>document.getElementById(id);
+let key="",shift="dinner",data={published:false,assignments:[]};
+function getKey(){const q=new URLSearchParams(location.search).get("access")||"";if(q){localStorage.setItem("cancello_team_key",q);return q}return localStorage.getItem("cancello_team_key")||""}
+function today(){const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+async function api(body){if(!key)throw new Error("This team phone is not connected.");const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json","X-Cancello-Allocation-Key":key},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Request failed");return j}
+function person(a){const m=a.cancello_team_members||{},s=a.cancello_sections||{};return {id:a.team_member_id,name:m.name||"Team member",role:m.default_role||"",section:s.name||"Unassigned",sectionId:a.section_id||"",sort:s.sort_order||999,note:a.duty_note||""}}
+function render(){
+ const people=(data.assignments||[]).map(person).sort((a,b)=>a.sort-b.sort||a.name.localeCompare(b.name));
+ const saved=localStorage.getItem("cancello_team_member")||"";
+ el("who").innerHTML='<option value="">Choose your name</option>'+people.map(p=>'<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>').join("");
+ if(people.some(p=>p.id===saved))el("who").value=saved;
+ const me=people.find(p=>p.id===el("who").value);
+ el("mine").innerHTML=me?'<div class="kicker">Your allocation</div><h2>'+esc(me.section)+'</h2><p><strong>'+esc(me.name)+'</strong>'+(me.role?' · '+esc(me.role):'')+(me.note?' · '+esc(me.note):'')+'</p>':'<div class="kicker">Your allocation</div><h2>Choose your name</h2><p>Your section will appear here.</p>';
+ el("status").textContent=data.published?"Published":"Not published";
+ if(!data.published){el("board").innerHTML='<div class="empty"><strong>Management has not published this service yet.</strong><br>When they publish the allocation, it will appear here automatically.</div>';return}
+ const groups={};
+ people.forEach(p=>{(groups[p.section]??=[]).push(p)});
+ const names=Object.keys(groups).sort((a,b)=>(groups[a][0]?.sort||999)-(groups[b][0]?.sort||999)||a.localeCompare(b));
+ el("board").innerHTML=names.length?names.map(name=>'<article class="section"><div class="section-head"><h3>'+esc(name)+'</h3><span class="count">'+groups[name].length+' TEAM</span></div>'+groups[name].map(p=>'<div class="member"><div><strong>'+esc(p.name)+'</strong><div class="role">'+esc(p.role||"Team member")+'</div></div><div class="note">'+esc(p.note)+'</div></div>').join("")+'</article>').join(""):'<div class="empty">No one has been allocated yet.</div>';
+}
+async function load(){try{data=await api({action:"team-view",date:el("date").value,shift});render();el("updated").textContent="Updated "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}catch(e){el("board").innerHTML='<div class="empty">'+esc(e.message)+'</div>'}}
+key=getKey();el("date").value=today();
+document.querySelectorAll("[data-shift]").forEach(b=>b.onclick=()=>{shift=b.dataset.shift;document.querySelectorAll("[data-shift]").forEach(x=>x.classList.toggle("active",x===b));el("title").textContent=shift==="dinner"?"Dinner Sections":"Lunch Sections";load()});
+el("date").onchange=load;el("who").onchange=()=>{localStorage.setItem("cancello_team_member",el("who").value);render()};
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+load();setInterval(load,5000);window.addEventListener("focus",load);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")load()});
+</script>
+</body></html>
