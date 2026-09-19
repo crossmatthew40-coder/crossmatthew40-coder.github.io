@@ -80,8 +80,12 @@ async function recoverStaffKey(){
   if(!key){try{const cache=await caches.open(ACCESS_CACHE);const hit=await cache.match(ACCESS_REQ);if(hit)key=(await hit.text()).trim();}catch(e){}}
   if(key){
     await saveStaffKey(key);
-    if(hashKey) history.replaceState(null,"",location.pathname+location.search);
-    if(queryKey && (!isiOSDevice || standaloneNow())) history.replaceState(null,"",location.pathname);
+    if(hashKey && !queryKey){
+      const u=new URL(location.href);
+      u.hash="";
+      u.searchParams.set("access",key);
+      history.replaceState(null,"",u.pathname+"?"+u.searchParams.toString());
+    }
   }
   return key;
 }
@@ -114,7 +118,7 @@ function updateInstallButton(){installBtn.classList.toggle("hidden",isStandalone
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;updateInstallButton();});
 installBtn.onclick=async()=>{
   if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;updateInstallButton();return;}
-  if(isiOSDevice) alert("On iPhone: tap Share, choose Add to Home Screen, keep Open as Web App switched on, then tap Add.");
+  if(isiOSDevice) alert("On iPhone: keep this private Staff page open, tap Share, choose Add to Home Screen, keep Open as Web App switched on, then tap Add. The private access stays attached to the app.");
   else alert("Use your browser menu and choose Install app or Add to Home screen.");
 };
 window.addEventListener("appinstalled",updateInstallButton);
@@ -191,7 +195,7 @@ function orderCard(r){
 function render(){
  renderStats();
  const titles={all:"All Pre-Orders",today:"Today",new:"New Orders",kitchen:"Kitchen",upcoming:"Upcoming",completed:"Completed"};
- el("view-title").textContent=titles[view];
+ el("view-title").textContent=titles[view]+(view==="all"?" ("+rows.length+")":"");
  const list=filtered();
  
  el("orders").className="orders";
