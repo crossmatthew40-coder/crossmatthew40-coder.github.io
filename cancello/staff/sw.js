@@ -1,4 +1,4 @@
-const CACHE="cancello-staff-v9";
+const CACHE="cancello-staff-v10";
 const SHELL=[
   "/cancello/staff/",
   "/cancello/staff/index.html",
@@ -37,5 +37,36 @@ self.addEventListener("fetch",event=>{
       caches.open(CACHE).then(cache=>cache.put(req,copy));
       return res;
     }))
+  );
+});
+
+self.addEventListener("push",event=>{
+  let data={};
+  try{data=event.data?event.data.json():{};}catch(e){data={body:event.data?event.data.text():"New Cancello pre-order"};}
+  const title=data.title||"New Cancello pre-order";
+  const options={
+    body:data.body||"A new pre-order has been received.",
+    icon:"/cancello/staff/icon.svg",
+    badge:"/cancello/staff/icon.svg",
+    tag:data.tag||"cancello-preorder",
+    renotify:true,
+    data:{url:data.url||"/cancello/staff/"}
+  };
+  event.waitUntil(self.registration.showNotification(title,options));
+});
+
+self.addEventListener("notificationclick",event=>{
+  event.notification.close();
+  const target=new URL(event.notification?.data?.url||"/cancello/staff/",self.location.origin).href;
+  event.waitUntil(
+    self.clients.matchAll({type:"window",includeUncontrolled:true}).then(clients=>{
+      for(const client of clients){
+        if("focus" in client){
+          try{if("navigate" in client) client.navigate(target);}catch(e){}
+          return client.focus();
+        }
+      }
+      if(self.clients.openWindow) return self.clients.openWindow(target);
+    })
   );
 });
