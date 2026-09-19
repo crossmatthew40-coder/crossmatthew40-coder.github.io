@@ -52,6 +52,14 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 const STAFF_API="https://wmuuvcrrmzftayyynhki.supabase.co/functions/v1/cancello-staff-api";
 const el=id=>document.getElementById(id);
 let rows=[],view="all",searchTerm="",installPrompt=null,staffKey="";
+const isiOSDevice=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const standaloneNow=()=>window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
+if(!isiOSDevice){
+  const manifestLink=document.createElement("link");
+  manifestLink.rel="manifest";
+  manifestLink.href="./manifest.webmanifest";
+  document.head.appendChild(manifestLink);
+}
 const ACCESS_CACHE="cancello-staff-device";
 const ACCESS_REQ="/cancello/staff/__device_access__";
 function getCookie(name){return document.cookie.split(";").map(v=>v.trim()).find(v=>v.startsWith(name+"="))?.slice(name.length+1)||"";}
@@ -72,7 +80,8 @@ async function recoverStaffKey(){
   if(!key){try{const cache=await caches.open(ACCESS_CACHE);const hit=await cache.match(ACCESS_REQ);if(hit)key=(await hit.text()).trim();}catch(e){}}
   if(key){
     await saveStaffKey(key);
-    if(queryKey||hashKey) history.replaceState(null,"",location.pathname);
+    if(hashKey) history.replaceState(null,"",location.pathname+location.search);
+    if(queryKey && (!isiOSDevice || standaloneNow())) history.replaceState(null,"",location.pathname);
   }
   return key;
 }
@@ -97,13 +106,12 @@ function accessError(message){
   el("updated").textContent="Private staff access";
 }
 const installBtn=el("install-app");
-const isStandalone=()=>window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
+const isStandalone=standaloneNow;
 function updateInstallButton(){installBtn.classList.toggle("hidden",isStandalone());}
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;updateInstallButton();});
 installBtn.onclick=async()=>{
   if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;updateInstallButton();return;}
-  const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1;
-  if(isiOS) alert("On iPhone: tap Share, choose Add to Home Screen, keep Open as Web App switched on, then tap Add.");
+  if(isiOSDevice) alert("On iPhone: tap Share, choose Add to Home Screen, keep Open as Web App switched on, then tap Add.");
   else alert("Use your browser menu and choose Install app or Add to Home screen.");
 };
 window.addEventListener("appinstalled",updateInstallButton);
