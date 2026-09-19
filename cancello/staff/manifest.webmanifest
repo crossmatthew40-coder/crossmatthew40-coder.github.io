@@ -1,0 +1,21 @@
+{
+  "id": "/cancello/staff/",
+  "name": "Cancello Staff",
+  "short_name": "Cancello",
+  "description": "Cancello pre-order management for the restaurant team.",
+  "start_url": "/cancello/staff/",
+  "scope": "/cancello/staff/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#f5f5f2",
+  "theme_color": "#22266f",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/cancello/staff/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
