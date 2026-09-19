@@ -6,11 +6,20 @@
   "start_url": "/cancello/staff/",
   "scope": "/cancello/staff/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#f5f5f2",
   "theme_color": "#22266f",
   "orientation": "any",
   "icons": [
+    {
+      "src": "/cancello/staff/apple-touch-icon-v13.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/cancello/staff/icon.svg?v=12",
       "sizes": "any",
