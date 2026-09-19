@@ -33,7 +33,7 @@ h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(3
 .preorder-panel[hidden]{display:none}.preorder-head{margin-bottom:14px}.preorder-head h2{font-family:Georgia,"Times New Roman",serif;font-size:26px;font-weight:500;color:var(--navy);margin:0 0 6px;letter-spacing:-.02em}.preorder-head p{margin:0;color:#666;font-size:12px;line-height:1.5}.call-first{margin:0 0 15px;padding:14px;border-radius:15px;background:#f5f4fb;border:1px solid #deddf0;text-align:center}.call-first strong{display:block;color:var(--navy);font-size:15px;margin-bottom:5px}.call-first span{display:block;color:#666;font-size:11px;line-height:1.45;margin-bottom:10px}.call-first a{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:11px;background:var(--navy);color:#fff;text-decoration:none;font-size:13px;font-weight:800}
 .preorder-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.preorder-field{display:flex;flex-direction:column;gap:6px}.preorder-field.full{grid-column:1/-1}.preorder-field label,.order-row label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#666;font-weight:900}
 .preorder-field input,.preorder-field textarea,.order-row input,.order-row select{width:100%;border:1px solid #dcdcdc;background:#fafafa;border-radius:12px;padding:12px 12px;color:#222;font:inherit;font-size:14px;outline:none;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}.preorder-field input:focus,.preorder-field textarea:focus,.order-row input:focus,.order-row select:focus{border-color:var(--navy);background:#fff;box-shadow:0 0 0 3px rgba(34,38,111,.09)}.preorder-field textarea{min-height:86px;resize:vertical}
-.order-block{grid-column:1/-1;margin-top:3px;padding-top:13px;border-top:1px solid #eee}.order-block-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}.order-block-title strong{color:var(--navy);font-size:14px}.order-row{display:grid;grid-template-columns:1fr 82px;gap:8px;padding:10px;border:1px solid #e7e7e7;border-radius:14px;background:#fcfcfc;margin-bottom:8px}.order-row .dish{grid-column:1/2}.row-actions{display:flex;justify-content:flex-end;grid-column:1/-1}.remove-row{border:0;background:transparent;color:#a24b4b;font:800 11px/1 inherit;padding:3px 2px;cursor:pointer}.add-dish{border:1px solid #d9d9df;background:#fff;color:var(--navy);border-radius:11px;padding:9px 11px;font:800 11px/1 inherit;cursor:pointer}
+.order-block{grid-column:1/-1;margin-top:3px;padding-top:13px;border-top:1px solid #eee}.order-block-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}.order-block-title strong{color:var(--navy);font-size:14px}.menu-picker-note{font-size:10px;color:#777;line-height:1.4;margin:-2px 0 10px}.order-row{display:grid;grid-template-columns:1fr 82px;gap:8px;padding:10px;border:1px solid #e7e7e7;border-radius:14px;background:#fcfcfc;margin-bottom:8px}.order-row .dish{grid-column:1/2}.row-actions{display:flex;justify-content:flex-end;grid-column:1/-1}.remove-row{border:0;background:transparent;color:#a24b4b;font:800 11px/1 inherit;padding:3px 2px;cursor:pointer}.add-dish{border:1px solid #d9d9df;background:#fff;color:var(--navy);border-radius:11px;padding:9px 11px;font:800 11px/1 inherit;cursor:pointer}
 .preorder-submit{width:100%;margin-top:12px;border:0;border-radius:14px;background:var(--navy);color:#fff;padding:14px 16px;font:800 14px/1.1 inherit;cursor:pointer;box-shadow:0 6px 18px rgba(34,38,111,.17);transition:transform .18s ease,opacity .18s ease}.preorder-submit:active{transform:scale(.985)}.preorder-submit[disabled]{opacity:.58;cursor:wait}.preorder-status{display:none;margin-top:11px;padding:11px 12px;border-radius:12px;font-size:12px;line-height:1.45}.preorder-status.show{display:block}.preorder-status.ok{background:#eef8f1;color:#245b38}.preorder-status.error{background:#fff0ef;color:#8a3330}.preorder-fine{font-size:10px;color:#888;line-height:1.45;margin:10px 0 0}.preorder-toggle[aria-expanded="true"] .arrow{transform:rotate(90deg)}
 @media(max-width:430px){.preorder-grid{grid-template-columns:1fr}.preorder-field.full,.order-block{grid-column:1}.order-row{grid-template-columns:1fr 78px}}
 .offers{padding:14px;border:1px solid #e5e5e5;border-radius:18px;text-align:left;background:#fff}.offers[hidden]{display:none}.offer{padding:13px 14px;border-radius:14px;background:#f7f6f3}.offer+.offer{margin-top:9px}.offer strong{display:block;color:var(--navy);font-size:19px}.offer span{display:block;margin-top:4px;color:#555;font-size:13px}.fine{font-size:10px;color:#888;margin:9px 2px 0;line-height:1.4}
@@ -112,6 +112,7 @@ body.play-intro .footer{animation:itemIn .32s 2.38s ease forwards}
       <div class="preorder-field full"><label for="guest-phone">Phone number *</label><input id="guest-phone" name="Phone number" type="tel" autocomplete="tel" placeholder="Your contact number" required></div>
       <div class="order-block">
         <div class="order-block-title"><strong>Your food</strong><button class="add-dish" id="add-dish" type="button">+ Add another</button></div>
+        <div class="menu-picker-note">Tap a dish to open the full Cancello menu picker, then scroll through the menu sections.</div>
         <div id="order-rows"></div>
       </div>
       <div class="preorder-field full"><label for="dietary">Allergies / dietary requirements</label><textarea id="dietary" name="Allergies or dietary requirements" placeholder="Optional — please also tell the team when you call."></textarea></div>
@@ -120,9 +121,6 @@ body.play-intro .footer{animation:itemIn .32s 2.38s ease forwards}
     <div class="preorder-status" id="preorder-status" role="status" aria-live="polite"></div>
     <p class="preorder-fine">Pre-orders are only accepted after speaking with Cancello. Please call 01925 291555 before submitting.</p>
   </form>
-  <datalist id="cancello-dishes">
-    <option value="Halloumi Bruschetta"><option value="Bruschetta Goats Cheese"><option value="Burrata and Nduja Dip"><option value="Caprese Salad"><option value="Polpette"><option value="Funghi Cancello"><option value="Gamberoni"><option value="Costine"><option value="Bruschetta Pomodoro"><option value="Cozze Picante"><option value="Mozzarella Fritto"><option value="Arancini"><option value="Calamari"><option value="Prawn and Cray Fish Salad"><option value="Fillet"><option value="Ribeye"><option value="T Bone"><option value="Pollo Rosmarino"><option value="Pollo Pepe"><option value="Pollo Ripieno"><option value="Agnello Zeri"><option value="Agnello Doppio"><option value="Salmon Royale"><option value="Branzino Puttanesca"><option value="Fillet Rossini"><option value="Cauliflower Steak"><option value="Ceasar Salad"><option value="Salmon Salad"><option value="Lemon Sole"><option value="Margherita"><option value="Diavola"><option value="Calabrese"><option value="Rustica"><option value="Calzone Polpette"><option value="Bistecca"><option value="Vegetariana"><option value="Trullo"><option value="Pizza Di Mare"><option value="Spaghetti Bolognese"><option value="Spaghetti Carbonara"><option value="Fettuccine Genovese"><option value="Ravioli Lobster"><option value="Spinach and Ricotta Ravioli"><option value="Linguine Gamberoni"><option value="Fettuccine Al Salmone"><option value="Lasagne"><option value="Rigatoni Fillet"><option value="Rigatoni Salsiccia"><option value="Risotto Gandolfo"><option value="Risotto Funghi"><option value="Risotto Mare"><option value="Rigatoni Arrabbiata"><option value="Gnocchi"><option value="Vegetable Lasagne">
-  </datalist>
 </section>
 <a class="link" href="https://www.instagram.com/wearecancello/" target="_blank" rel="noopener"><div class="left"><div class="iconbox"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></div><div><span class="label">Social</span><span class="value">Instagram</span><span class="note">@wearecancello</span></div></div><div class="arrow">→</div></a>
 <a class="link" href="https://www.tripadvisor.co.uk/Restaurant_Review-g528810-d841168-Reviews-Cancello_Bar_And_Restaurant-Newton_Le_Willows_Merseyside_England.html" target="_blank" rel="noopener"><div class="left"><div class="iconbox"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.3" cy="13" r="3.3"/><circle cx="16.7" cy="13" r="3.3"/><path d="M10.6 13h2.8M4.2 8.8C6.6 7.7 9.1 7.2 12 7.2s5.4.5 7.8 1.6M5.1 17.1 3.8 19.5M18.9 17.1l1.3 2.4"/></svg></div><div><span class="label">Reviews</span><span class="value">Tripadvisor</span><span class="note">Read guest reviews</span></div></div><div class="arrow">→</div></a>
@@ -137,7 +135,50 @@ body.play-intro .footer{animation:itemIn .32s 2.38s ease forwards}
 var toggle=document.querySelector('.offer-toggle'),offers=document.getElementById('latest-offers');
 if(toggle&&offers){toggle.addEventListener('click',function(){var open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));offers.hidden=open;});}
 var preorderToggle=document.querySelector('.preorder-toggle'),preorderPanel=document.getElementById('preorder-panel'),preorderForm=document.getElementById('preorder-form'),orderRows=document.getElementById('order-rows'),addDish=document.getElementById('add-dish'),preorderStatus=document.getElementById('preorder-status'),preorderSubmit=document.getElementById('preorder-submit'),preorderItems=document.getElementById('preorder-items');
-function addOrderRow(values){if(!orderRows)return;var row=document.createElement('div');row.className='order-row';row.innerHTML='<div class="dish"><label>Dish *</label><input class="dish-name" type="text" list="cancello-dishes" placeholder="Choose or type a dish" required></div><div><label>Qty</label><select class="dish-qty" required><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div><div class="row-actions"><button class="remove-row" type="button">Remove</button></div>';if(values){row.querySelector('.dish-name').value=values.dish||'';row.querySelector('.dish-qty').value=values.qty||'1';}row.querySelector('.remove-row').addEventListener('click',function(){if(orderRows.children.length>1)row.remove();else{row.querySelector('.dish-name').value='';row.querySelector('.dish-qty').value='1';}});orderRows.appendChild(row);}
+var cancelloMenu=[
+ {section:'Starters',items:[
+  ['Halloumi Bruschetta (VG)','8.95'],['Bruschetta Goats Cheese','8.00'],['Burrata and Nduja Dip','7.00'],['Caprese Salad','9.50'],['Polpette','8.00'],['Funghi Cancello','7.50'],['Gamberoni','9.50'],['Costine','9.00'],['Bruschetta Pomodoro (VG)','7.00'],['Cozze Picante','10.50'],['Pate (VG)','8.50'],['Mozzarella Fritto (V)','8.50'],['Arancini','8.25'],['Calamari','9.50'],['Prawn and Cray Fish Salad','9.50']
+ ]},
+ {section:'Breads & Sharers',items:[
+  ['Antipasti Di Mare (to share)','19.00'],['Antipasti Di Italiano (to share)','19.00'],['Bread and Olives','6.00'],['Flat Bread with Hummus','6.50'],['Garlic Pizza Bread','6.00'],['Garlic Pizza Bread Tomato, Red Onion & Chilli','7.50'],['Garlic Pizza Bread with Tomato','7.50'],['Garlic Pizza Bread with Cheese','7.00'],['Garlic Pizza Bread Half Cheese/Half Tomato','7.00']
+ ]},
+ {section:'Grill',items:[
+  ['Fillet','31.95'],['Ribeye','27.95'],['T Bone','34.00']
+ ]},
+ {section:'Mains',items:[
+  ['Pollo Rosmarino','24.95'],['Pollo Pepe','24.95'],['Pollo Ripieno','25.50'],['Agnello Zeri','25.00'],['Agnello Doppio','25.00'],['Salmon Royale','24.50'],['Branzino Puttanesca','25.00'],['Fillet Rossini','33.95'],['Cauliflower Steak','22.95'],['Ceasar Salad','17.95'],['Salmon Salad','19.95'],['Lemon Sole','24.95']
+ ]},
+ {section:'Sides',items:[
+  ['Fries','4.25'],['Salad','4.50'],['Rocket & Parmesan Salad','4.95'],['Truffle and Parmesan Fries','6.00'],['Creamed Spinachi','6.00'],['Sweet Potato Fries','4.95'],['Red Onion and Tomato Salad','4.45']
+ ]},
+ {section:'Pizza',items:[
+  ['Margherita','13.00'],['Diavola','15.50'],['Calabrese','14.50'],['Rustica','13.00'],['Calzone Polpette','14.50'],['Bistecca','16.00'],['Vegetariana','14.00'],['Trullo','15.50'],['Pizza Di Mare','15.50']
+ ]},
+ {section:'Pasta & Risotto',items:[
+  ['Spaghetti Bolognese','15.00'],['Spaghetti Carbonara','15.00'],['Fettuccine Genovese','15.00'],['Ravioli Lobster','16.00'],['Spinach and Ricotta Ravioli','14.00'],['Linguine Gamberoni','17.00'],['Fettuccine Al Salmone','16.00'],['Lasagne','15.50'],['Rigatoni Fillet','17.00'],['Rigatoni Salsiccia','17.00'],['Risotto Gandolfo','16.00'],['Risotto Funghi','14.00'],['Risotto Mare','17.00'],['Rigatoni Arrabbiata (VG)','14.00'],['Gnocchi','15.00'],['Vegetable Lasagne','14.50']
+ ]}
+];
+function menuOptions(){
+ var out='<option value="" disabled selected>Scroll to choose a dish</option>';
+ cancelloMenu.forEach(function(group){
+  out+='<optgroup label="'+group.section+'">';
+  group.items.forEach(function(item){out+='<option value="'+item[0].replace(/"/g,'&quot;')+'">'+item[0]+' · £'+item[1]+'</option>';});
+  out+='</optgroup>';
+ });
+ return out;
+}
+function addOrderRow(values){
+ if(!orderRows)return;
+ var row=document.createElement('div');
+ row.className='order-row';
+ row.innerHTML='<div class="dish"><label>Dish *</label><select class="dish-name" required>'+menuOptions()+'</select></div><div><label>Qty</label><select class="dish-qty" required><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div><div class="row-actions"><button class="remove-row" type="button">Remove</button></div>';
+ if(values){row.querySelector('.dish-name').value=values.dish||'';row.querySelector('.dish-qty').value=values.qty||'1';}
+ row.querySelector('.remove-row').addEventListener('click',function(){
+  if(orderRows.children.length>1)row.remove();
+  else{row.querySelector('.dish-name').selectedIndex=0;row.querySelector('.dish-qty').value='1';}
+ });
+ orderRows.appendChild(row);
+}
 if(orderRows&&!orderRows.children.length)addOrderRow();if(addDish)addDish.addEventListener('click',function(){addOrderRow();var rows=orderRows.querySelectorAll('.order-row');rows[rows.length-1].querySelector('.dish-name').focus();});
 if(preorderToggle&&preorderPanel){preorderToggle.addEventListener('click',function(){var open=preorderToggle.getAttribute('aria-expanded')==='true';preorderToggle.setAttribute('aria-expanded',String(!open));preorderPanel.hidden=open;if(!open)setTimeout(function(){preorderPanel.scrollIntoView({behavior:'smooth',block:'nearest'});},40);});}
 function compilePreorder(){if(!orderRows)return'';return Array.prototype.map.call(orderRows.querySelectorAll('.order-row'),function(row,index){var dish=row.querySelector('.dish-name').value.trim(),qty=row.querySelector('.dish-qty').value;return (index+1)+'. '+dish+' — Qty '+qty;}).join('\n');}
