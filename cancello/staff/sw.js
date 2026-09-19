@@ -1,9 +1,10 @@
-const CACHE="cancello-staff-v12";
+const CACHE="cancello-staff-v13";
 const SHELL=[
   "/cancello/staff/",
   "/cancello/staff/index.html",
   "/cancello/staff/manifest.webmanifest",
-  "/cancello/staff/icon.svg"
+  "/cancello/staff/icon.svg",
+  "/cancello/staff/apple-touch-icon-v13.png"
 ];
 
 self.addEventListener("install",event=>{
