@@ -90,6 +90,7 @@ function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt
 function toInput(iso){if(!iso)return"";const d=new Date(iso),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes());}
 function isToday(iso){if(!iso)return false;const d=new Date(iso),n=new Date();return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()&&d.getDate()===n.getDate();}
 function orderDate(r){return r.booking_time||r.created_at;}
+function lastName(name=""){const parts=String(name).trim().split(/\s+/).filter(Boolean);return parts.length?parts[parts.length-1]:"Guest";}
 function badge(s){return '<span class="badge '+esc(s)+'">'+esc(s)+'</span>';}
 async function api(body){
   if(!staffKey) throw new Error("This device is not connected to Cancello Staff.");
@@ -171,7 +172,7 @@ function renderStats(){
 function orderCard(r){
  const items=(r.items||[]).map(i=>'<div class="item"><span>'+esc(i.dish)+'</span><b>× '+esc(i.qty||1)+'</b></div>').join("");
  return '<article class="order" data-id="'+r.id+'">'+
- '<div class="order-head"><div><span class="code">PRE-'+r.order_no+'</span><h3>'+esc(r.booking_name)+'</h3><a class="phone" href="tel:'+esc(r.phone)+'">'+esc(r.phone)+'</a></div>'+badge(r.status)+'</div>'+
+ '<div class="order-head"><div><span class="code">PRE-'+r.order_no+'</span><h3>Pre-order '+esc(lastName(r.booking_name))+'</h3><div class="phone">Booked under '+esc(r.booking_name)+'</div><a class="phone" href="tel:'+esc(r.phone)+'">'+esc(r.phone)+'</a></div>'+badge(r.status)+'</div>'+
  '<div class="items">'+items+'</div>'+
  (r.dietary?'<div class="allergy"><strong>⚠ Allergy / dietary</strong><br>'+esc(r.dietary)+'</div>':'')+
  '<div class="meta"><div class="mini"><label>Booking date & time</label><input class="booking-time" type="datetime-local" value="'+toInput(r.booking_time)+'"></div><div class="mini"><label>Phone call</label><input class="phone-check" type="text" readonly value="'+(r.phone_confirmed?"Confirmed":"Not marked")+'"></div></div>'+
