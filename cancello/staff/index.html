@@ -8,7 +8,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cancello Staff">
-<link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="./icon.svg">
 <link rel="apple-touch-icon" href="./icon.svg">
 <title>Cancello Staff</title>
@@ -52,12 +51,31 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 <script type="module">
 const STAFF_API="https://wmuuvcrrmzftayyynhki.supabase.co/functions/v1/cancello-staff-api";
 const el=id=>document.getElementById(id);
-let rows=[],view="all",searchTerm="",installPrompt=null;
+let rows=[],view="all",searchTerm="",installPrompt=null,staffKey="";
+const ACCESS_CACHE="cancello-staff-device";
+const ACCESS_REQ="/cancello/staff/__device_access__";
 function getCookie(name){return document.cookie.split(";").map(v=>v.trim()).find(v=>v.startsWith(name+"="))?.slice(name.length+1)||"";}
-function saveStaffKey(key){if(!key)return;localStorage.setItem("cancello_staff_key",key);document.cookie="cancello_staff_key="+encodeURIComponent(key)+"; Max-Age=63072000; Path=/cancello/staff/; Secure; SameSite=Strict";}
-let staffKey=localStorage.getItem("cancello_staff_key")||decodeURIComponent(getCookie("cancello_staff_key")||"");
-const hash=location.hash.startsWith("#access=")?decodeURIComponent(location.hash.slice(8)):"";
-if(hash){staffKey=hash;saveStaffKey(staffKey);history.replaceState(null,"",location.pathname+location.search);}
+async function saveStaffKey(key){
+  if(!key)return;
+  staffKey=key;
+  try{localStorage.setItem("cancello_staff_key",key);}catch(e){}
+  try{document.cookie="cancello_staff_key="+encodeURIComponent(key)+"; Max-Age=63072000; Path=/cancello/staff/; Secure; SameSite=Strict";}catch(e){}
+  try{const cache=await caches.open(ACCESS_CACHE);await cache.put(ACCESS_REQ,new Response(key,{headers:{"Content-Type":"text/plain"}}));}catch(e){}
+}
+async function recoverStaffKey(){
+  const qs=new URLSearchParams(location.search);
+  const queryKey=qs.get("access")||"";
+  const hashKey=location.hash.startsWith("#access=")?decodeURIComponent(location.hash.slice(8)):"";
+  let key=queryKey||hashKey;
+  if(!key){try{key=localStorage.getItem("cancello_staff_key")||"";}catch(e){}}
+  if(!key){try{key=decodeURIComponent(getCookie("cancello_staff_key")||"");}catch(e){}}
+  if(!key){try{const cache=await caches.open(ACCESS_CACHE);const hit=await cache.match(ACCESS_REQ);if(hit)key=(await hit.text()).trim();}catch(e){}}
+  if(key){
+    await saveStaffKey(key);
+    if(queryKey||hashKey) history.replaceState(null,"",location.pathname);
+  }
+  return key;
+}
 
 function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
 function toInput(iso){if(!iso)return"";const d=new Date(iso),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes());}
@@ -75,7 +93,7 @@ function accessError(message){
   el("stats").innerHTML="";
   el("view-title").textContent="Cancello Staff";
   el("orders").className="orders";
-  el("orders").innerHTML='<div class="empty"><strong>Staff device not connected.</strong><br><br>'+esc(message)+'<br><br>Open the private Cancello Staff link on this device once.</div>';
+  el("orders").innerHTML='<div class="empty"><strong>This phone needs reconnecting once.</strong><br><br>'+esc(message)+'<br><br>Open the private Cancello Staff link on this phone. After that, the app will remember the device automatically.</div>';
   el("updated").textContent="Private staff access";
 }
 const installBtn=el("install-app");
@@ -92,7 +110,12 @@ window.addEventListener("appinstalled",updateInstallButton);
 updateInstallButton();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+  window.addEventListener("load",async()=>{
+    try{
+      const reg=await navigator.serviceWorker.register("./sw.js?v=3");
+      await reg.update();
+    }catch(e){}
+  });
 }
 
 el("refresh").onclick=load;
@@ -171,10 +194,10 @@ async function act(card,action){
  else {patch.status=action;if(action==="complete")patch.completed_at=new Date().toISOString();}
  try{await api({action:"update",id,patch});await load();}catch(error){alert(error.message);}
 }
-load();
-setInterval(load,5000);
-window.addEventListener("focus",load);
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")load();});
+recoverStaffKey().then(()=>load());
+setInterval(()=>{if(staffKey)load();},5000);
+window.addEventListener("focus",()=>{recoverStaffKey().then(()=>load());});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")recoverStaffKey().then(()=>load());});
 </script>
 </body>
 </html>
