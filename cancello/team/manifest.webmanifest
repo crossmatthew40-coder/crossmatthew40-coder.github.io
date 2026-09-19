@@ -1,0 +1,19 @@
+{
+  "id": "/cancello/team/",
+  "name": "Cancello Team",
+  "short_name": "Cancello Team",
+  "description": "Live Cancello section allocations for the team.",
+  "start_url": "/cancello/team/",
+  "scope": "/cancello/team/",
+  "display": "standalone",
+  "background_color": "#f5f5f2",
+  "theme_color": "#22266f",
+  "icons": [
+    {
+      "src": "/cancello/staff/apple-touch-icon-v13.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
