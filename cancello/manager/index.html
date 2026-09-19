@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#22266f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Cancello Manager">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="/cancello/staff/apple-touch-icon-v13.png">
+<link rel="icon" href="/cancello/staff/icon.svg">
+<title>Cancello Manager</title>
+<style>
+:root{--navy:#22266f;--gold:#d79b37;--paper:#f5f5f2;--ink:#191919;--muted:#747474;--line:#e4e4e0;--green:#237447;--red:#a13e3e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;max-width:100%;overflow-x:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink)}
+body{padding-bottom:calc(22px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit}
+.top{position:sticky;top:0;z-index:20;background:rgba(245,245,242,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.topin{max-width:900px;margin:auto;padding:calc(13px + env(safe-area-inset-top)) 14px 12px}
+.brandrow{display:flex;align-items:center;gap:10px}.brandrow img{width:42px;height:42px;border-radius:11px}.brandrow h1{margin:0;color:var(--navy);font:500 29px/1 Georgia,serif}.brandrow p{margin:3px 0 0;color:var(--muted);font-size:11px}
+.live{margin-left:auto;border:1px solid #ddd;border-radius:999px;padding:7px 10px;font-size:10px;font-weight:900;background:#fff;color:#777}.live.published{background:#edf7ef;color:var(--green);border-color:#cfe5d6}
+.wrap{max-width:900px;margin:auto;padding:14px}.controls{display:grid;grid-template-columns:1fr auto;gap:9px;margin-bottom:12px}.date{border:1px solid #ddd;background:#fff;border-radius:13px;padding:12px;font-size:16px}.shift{display:flex;gap:6px}.shift button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 13px;font-size:12px;font-weight:850;color:#555}.shift button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px}.stat b{display:block;color:var(--navy);font:500 25px Georgia,serif}.stat span{font-size:10px;color:#777;font-weight:800}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:11px}.card h2{font:500 22px Georgia,serif;color:var(--navy);margin:0 0 4px}.card .sub{font-size:11px;color:#777;margin-bottom:12px}
+.person{border-top:1px solid #eee;padding:12px 0}.person:first-of-type{border-top:0}.person-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.person-name{font-weight:850}.role{font-size:10px;color:#777;margin-top:2px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fields select,.fields input,.addrow input{min-width:0;width:100%;border:1px solid #ddd;background:#fafafa;border-radius:11px;padding:11px;font-size:14px;outline:0}.fields select:focus,.fields input:focus,.addrow input:focus{border-color:var(--navy);background:#fff}
+.actions{position:sticky;bottom:0;z-index:15;background:linear-gradient(transparent,var(--paper) 28%);padding-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:0;border-radius:13px;padding:14px;font-weight:900}.save{background:#fff;color:var(--navy);border:1px solid #d9d9df}.publish{background:var(--navy);color:#fff}.unpublish{background:#fff;color:var(--red);border:1px solid #eccaca}
+.addrow{display:grid;grid-template-columns:1fr 1fr auto;gap:7px;margin-top:10px}.addrow.section{grid-template-columns:1fr auto}.smallbtn{border:1px solid #ddd;background:#fff;color:var(--navy);border-radius:10px;padding:10px;font-size:11px;font-weight:850}.danger{color:var(--red)}.listrow{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid #eee;padding:9px 0}.listrow:first-child{border-top:0}.empty{padding:25px 10px;text-align:center;color:#777;font-size:13px}.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:11px 15px;border-radius:999px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:99}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:620px){.topin,.wrap{padding-left:10px;padding-right:10px}.brandrow h1{font-size:24px}.brandrow img{width:38px;height:38px}.controls{grid-template-columns:1fr}.shift{display:grid;grid-template-columns:1fr 1fr}.shift button{width:100%}.summary{grid-template-columns:repeat(3,minmax(0,1fr))}.stat{padding:10px}.stat b{font-size:22px}.stat span{font-size:9px}.fields{grid-template-columns:1fr}.addrow{grid-template-columns:1fr}.addrow.section{grid-template-columns:1fr}.smallbtn{width:100%}.actions{grid-template-columns:1fr 1fr}.live{padding:6px 8px;font-size:9px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="brandrow">
+<img src="/cancello/staff/icon.svg?v=12" alt="">
+<div><h1>Cancello Manager</h1><p>Section allocation • GM & Assistant Manager</p></div>
+<span class="live" id="status">Draft</span>
+</div></div></header>
+<main class="wrap">
+<section class="controls">
+<input class="date" id="date" type="date">
+<div class="shift"><button class="active" data-shift="dinner">Dinner</button><button data-shift="lunch">Lunch</button></div>
+</section>
+<section class="summary" id="summary"></section>
+
+<section class="card">
+<h2>Team Allocation</h2>
+<div class="sub">Choose where each person is working. If this service is already published, saved changes update the Team app live.</div>
+<div id="people"><div class="empty">Loading team…</div></div>
+</section>
+
+<section class="card">
+<h2>Team Members</h2>
+<div class="sub">Add the people you want available on the allocation board.</div>
+<div id="member-list"></div>
+<div class="addrow">
+<input id="new-name" placeholder="Name">
+<input id="new-role" placeholder="Role e.g. Server">
+<button class="smallbtn" id="add-member">Add person</button>
+</div>
+</section>
+
+<section class="card">
+<h2>Sections</h2>
+<div class="sub">Create the areas or duties management can assign.</div>
+<div id="section-list"></div>
+<div class="addrow section">
+<input id="new-section" placeholder="Section name">
+<button class="smallbtn" id="add-section">Add section</button>
+</div>
+</section>
+
+<div class="actions">
+<button class="btn save" id="save">Save Changes</button>
+<button class="btn publish" id="publish">Publish to Team</button>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const API="https://wmuuvcrrmzftayyynhki.supabase.co/functions/v1/cancello-allocations";
+const el=id=>document.getElementById(id);
+let key="",shift="dinner",state={members:[],sections:[],assignments:[],service:null};
+function getKey(){const q=new URLSearchParams(location.search).get("access")||"";if(q){localStorage.setItem("cancello_manager_key",q);return q}return localStorage.getItem("cancello_manager_key")||""}
+function today(){const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+function toast(t){el("toast").textContent=t;el("toast").classList.add("show");setTimeout(()=>el("toast").classList.remove("show"),1800)}
+async function api(body){if(!key)throw new Error("This manager phone is not connected.");const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json","X-Cancello-Allocation-Key":key},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Request failed");return j}
+function assignmentFor(id){return state.assignments.find(a=>a.team_member_id===id)||{}}
+function render(){
+ const assigned=state.assignments.filter(a=>a.section_id).length;
+ el("summary").innerHTML=[
+  ["Team",state.members.length],["Assigned",assigned],["Sections",state.sections.length]
+ ].map(x=>'<div class="stat"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join("");
+ el("status").textContent=state.service?.status==="published"?"Published • Live":"Draft";
+ el("status").className="live "+(state.service?.status==="published"?"published":"");
+ const opts='<option value="">Unassigned</option>'+state.sections.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join("");
+ el("people").innerHTML=state.members.length?state.members.map(m=>{
+   const a=assignmentFor(m.id);
+   return '<div class="person" data-member="'+m.id+'"><div class="person-head"><div><div class="person-name">'+m.name+'</div><div class="role">'+(m.default_role||"Team member")+'</div></div></div><div class="fields"><select class="section">'+opts+'</select><input class="note" placeholder="Duty note (optional)" value="'+(a.duty_note||"").replace(/"/g,"&quot;")+'"></div></div>'
+ }).join(""):'<div class="empty">Add your first team member below.</div>';
+ document.querySelectorAll(".person").forEach(row=>{const a=assignmentFor(row.dataset.member);row.querySelector(".section").value=a.section_id||""});
+ el("member-list").innerHTML=state.members.map(m=>'<div class="listrow"><div><strong>'+m.name+'</strong><div class="role">'+(m.default_role||"")+'</div></div><button class="smallbtn danger" data-del-member="'+m.id+'">Remove</button></div>').join("")||'<div class="empty">No team members yet.</div>';
+ el("section-list").innerHTML=state.sections.map(s=>'<div class="listrow"><strong>'+s.name+'</strong><button class="smallbtn danger" data-del-section="'+s.id+'">Remove</button></div>').join("")||'<div class="empty">No sections yet.</div>';
+ document.querySelectorAll("[data-del-member]").forEach(b=>b.onclick=()=>removeMember(b.dataset.delMember));
+ document.querySelectorAll("[data-del-section]").forEach(b=>b.onclick=()=>removeSection(b.dataset.delSection));
+}
+async function load(){try{const d=await api({action:"manager-state",date:el("date").value,shift});state=d;render()}catch(e){el("people").innerHTML='<div class="empty">'+e.message+'</div>'}}
+function collect(){return [...document.querySelectorAll(".person")].map(r=>({team_member_id:r.dataset.member,section_id:r.querySelector(".section").value||null,duty_note:r.querySelector(".note").value.trim()||null}))}
+async function save(silent=false){await api({action:"save-assignments",date:el("date").value,shift,assignments:collect()});if(!silent)toast("Allocations saved");await load()}
+async function publish(){try{await save(true);await api({action:"publish",date:el("date").value,shift});toast("Published to Cancello Team");await load()}catch(e){alert(e.message)}}
+async function addMember(){const name=el("new-name").value.trim(),role=el("new-role").value.trim();if(!name)return;try{await api({action:"add-member",name,default_role:role});el("new-name").value="";el("new-role").value="";await load()}catch(e){alert(e.message)}}
+async function addSection(){const name=el("new-section").value.trim();if(!name)return;try{await api({action:"add-section",name});el("new-section").value="";await load()}catch(e){alert(e.message)}}
+async function removeMember(id){if(!confirm("Remove this person from Cancello Manager?"))return;try{await api({action:"delete-member",id});await load()}catch(e){alert(e.message)}}
+async function removeSection(id){if(!confirm("Remove this section? Existing allocations will become unassigned."))return;try{await api({action:"delete-section",id});await load()}catch(e){alert(e.message)}}
+key=getKey();el("date").value=today();
+document.querySelectorAll("[data-shift]").forEach(b=>b.onclick=()=>{shift=b.dataset.shift;document.querySelectorAll("[data-shift]").forEach(x=>x.classList.toggle("active",x===b));load()});
+el("date").onchange=load;el("save").onclick=()=>save().catch(e=>alert(e.message));el("publish").onclick=publish;el("add-member").onclick=addMember;el("add-section").onclick=addSection;
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+load();
+</script>
+</body></html>
