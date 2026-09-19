@@ -15,7 +15,7 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:7px 0 14px;flex-wrap:wrap}.toolbar h2{margin:0;font-family:Georgia,serif;color:var(--navy);font-size:26px}.toolbar-actions{display:flex;gap:8px;align-items:center;flex:1;justify-content:flex-end}.search{width:min(330px,100%);border:1px solid #ddd;background:#fff;border-radius:11px;padding:10px 12px;outline:none}.search:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(34,38,111,.08)}.refresh{border:1px solid #ddd;background:#fff;border-radius:11px;padding:9px 12px;font-weight:800;color:var(--navy);cursor:pointer}
 .orders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.order{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 5px 18px rgba(0,0,0,.035)}.order-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.code{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#777;font-weight:900}.order h3{margin:3px 0 4px;color:var(--navy);font:500 23px/1.1 Georgia,serif}.phone{color:#555;font-size:12px;text-decoration:none}.badge{border-radius:999px;padding:6px 9px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;background:#eef0f8;color:var(--navy)}.badge.confirmed{background:#edf7ef;color:var(--green)}.badge.preparing{background:#fff3dd;color:var(--amber)}.badge.complete{background:#e9f4ed;color:var(--green)}.badge.cancelled{background:#faeaea;color:var(--red)}
 .items{margin:14px 0;padding:11px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}.item{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:14px}.item b{color:var(--navy)}.allergy{margin:10px 0;padding:11px 12px;border-radius:12px;background:#fff3df;border-left:4px solid #d38919;color:#674c1d;font-size:12px;line-height:1.45}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.mini{border:1px solid #e1e1de;border-radius:11px;padding:9px;background:#fafafa}.mini label{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.1em;font-weight:900;color:#777;margin-bottom:4px}.mini input{width:100%;border:0;background:transparent;padding:0;outline:0;font-size:12px}.notes{margin-top:8px}.notes textarea{width:100%;min-height:58px;border:1px solid #e1e1de;background:#fafafa;border-radius:11px;padding:9px;resize:vertical;outline:0;font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.action{border:1px solid #dedede;background:#fff;border-radius:10px;padding:9px 10px;font-size:11px;font-weight:800;cursor:pointer;color:#444}.action.primary-action{background:var(--navy);border-color:var(--navy);color:#fff}.action.good{background:#edf7ef;color:var(--green);border-color:#d8eadc}.action.warn{background:#fff4df;color:#8b5d12;border-color:#eeddb9}.action.danger{color:var(--red)}
-.empty{grid-column:1/-1;padding:42px 20px;text-align:center;color:#777;background:#fff;border:1px dashed #d7d7d2;border-radius:18px}.prep{display:grid;gap:8px}.prep-row{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px}.prep-row b{font-size:18px;color:var(--navy)}.setup-note{background:#fff;border:1px solid var(--line);padding:16px;border-radius:18px;color:#555;font-size:13px;line-height:1.55}
+.empty{grid-column:1/-1;padding:42px 20px;text-align:center;color:#777;background:#fff;border:1px dashed #d7d7d2;border-radius:18px}.setup-note{background:#fff;border:1px solid var(--line);padding:16px;border-radius:18px;color:#555;font-size:13px;line-height:1.55}
 @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.orders{grid-template-columns:1fr}.main{padding:12px}.top-in{padding:13px 12px 10px}.top h1{font-size:25px}.stat{padding:13px}.stat b{font-size:26px}.meta{grid-template-columns:1fr}.toolbar-actions{width:100%;justify-content:stretch}.search{flex:1;width:auto}}
 @media print{body{background:#fff}.top,.stats,.toolbar,.actions,.meta,.notes,.login{display:none!important}.main{padding:0}.orders{display:block}.order{display:none;box-shadow:none;border:0}.order.printing{display:block!important}.order.printing .badge{display:none}.order.printing{font-size:18px}.order.printing h3{font-size:32px}.order.printing .items{font-size:20px}}
 </style>
@@ -31,7 +31,6 @@ button,input,textarea{font:inherit}.hidden{display:none!important}
     <button class="tab" data-view="today">Today</button>
     <button class="tab" data-view="new">New Orders</button>
     <button class="tab" data-view="kitchen">Kitchen</button>
-    <button class="tab" data-view="prep">Prep List</button>
     <button class="tab" data-view="upcoming">Upcoming</button>
     <button class="tab" data-view="completed">Completed</button>
   </nav>
@@ -126,19 +125,13 @@ function orderCard(r){
  '<button class="action danger" data-act="cancelled">Cancel</button>'+
  '</div></article>';
 }
-function renderPrep(list){
- const map=new Map();
- list.forEach(r=>(r.items||[]).forEach(i=>map.set(i.dish,(map.get(i.dish)||0)+(Number(i.qty)||1))));
- const arr=[...map.entries()].sort((a,b)=>b[1]-a[1]);
- el("orders").className="prep";
- el("orders").innerHTML=arr.length?arr.map(([d,q])=>'<div class="prep-row"><span>'+esc(d)+'</span><b>× '+q+'</b></div>').join(""):'<div class="empty">No dishes to prep yet.</div>';
-}
+
 function render(){
  renderStats();
- const titles={all:"All Pre-Orders",today:"Today",new:"New Orders",kitchen:"Kitchen",prep:"Prep List",upcoming:"Upcoming",completed:"Completed"};
+ const titles={all:"All Pre-Orders",today:"Today",new:"New Orders",kitchen:"Kitchen",upcoming:"Upcoming",completed:"Completed"};
  el("view-title").textContent=titles[view];
  const list=filtered();
- if(view==="prep"){renderPrep(rows.filter(r=>isToday(orderDate(r))&&!["complete","cancelled"].includes(r.status)));return;}
+ 
  el("orders").className="orders";
  el("orders").innerHTML=list.length?list.map(orderCard).join(""):'<div class="empty">Nothing here right now.</div>';
  el("orders").querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.closest(".order"),b.dataset.act));
