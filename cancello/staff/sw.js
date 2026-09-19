@@ -1,4 +1,4 @@
-const CACHE="cancello-staff-v1";
+const CACHE="cancello-staff-v2";
 const SHELL=[
   "/cancello/staff/",
   "/cancello/staff/index.html",
