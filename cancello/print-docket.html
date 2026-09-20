@@ -40,9 +40,9 @@ body{min-height:100vh;padding:16px}
 <body>
 <main class="sheet" id="sheet"><div class="error">Opening kitchen docket…</div></main>
 <div class="controls" id="controls" hidden>
-  <button class="print" id="print">Print Docket</button>
+  <button class="print" id="print" type="button">Print / AirPrint</button>
   <button class="close" id="close">Back to Cancello Staff</button>
-  <div class="hint">On iPhone, tap Print Docket, choose your AirPrint printer, then tap Print.</div>
+  <div class="hint"><strong>iPhone:</strong> tap Print / AirPrint, choose your printer, then tap Print. If the print sheet still does not appear, use Safari’s Share button and choose Print.</div>
 </div>
 <script>
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
@@ -63,13 +63,18 @@ function fmt(iso){
   };
 }
 function doPrint(){
-  try{
-    if(typeof document.execCommand==="function"){
-      const ok=document.execCommand("print",false,null);
-      if(ok)return;
+  const btn=document.getElementById("print");
+  btn.disabled=true;
+  btn.textContent="Opening Print…";
+  requestAnimationFrame(()=>{
+    try{window.print();}
+    finally{
+      window.setTimeout(()=>{
+        btn.disabled=false;
+        btn.textContent="Print / AirPrint";
+      },700);
     }
-  }catch(e){}
-  window.print();
+  });
 }
 try{
   const d=decodePayload();
