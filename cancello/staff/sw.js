@@ -1,4 +1,4 @@
-const CACHE="cancello-staff-v15";
+const CACHE="cancello-staff-v16";
 const SHELL=[
   "/cancello/staff/",
   "/cancello/staff/index.html",
@@ -44,16 +44,27 @@ self.addEventListener("fetch",event=>{
 self.addEventListener("push",event=>{
   let data={};
   try{data=event.data?event.data.json():{};}catch(e){data={body:event.data?event.data.text():"New Cancello pre-order"};}
-  const title=data.title||"New Cancello pre-order";
+  const title=data.title||data.notification?.title||"New Cancello pre-order";
+  const body=data.body||data.notification?.body||"A new pre-order has been received.";
+  const target=data.url||data.notification?.navigate||"/cancello/staff/";
   const options={
-    body:data.body||"A new pre-order has been received.",
-    icon:"/cancello/staff/icon.svg",
-    badge:"/cancello/staff/icon.svg",
+    body,
+    icon:"/cancello/staff/apple-touch-icon-v13.png",
+    badge:"/cancello/staff/apple-touch-icon-v13.png",
     tag:data.tag||"cancello-preorder",
-    renotify:true,
-    data:{url:data.url||"/cancello/staff/"}
+    data:{url:target}
   };
-  event.waitUntil(self.registration.showNotification(title,options));
+  const work=(async()=>{
+    try{
+      await self.registration.showNotification(title,options);
+    }catch(e){
+      await self.registration.showNotification(title,{body,data:{url:target}});
+    }
+    try{
+      if(self.navigator&&"setAppBadge" in self.navigator) await self.navigator.setAppBadge(1);
+    }catch(e){}
+  })();
+  event.waitUntil(work);
 });
 
 self.addEventListener("notificationclick",event=>{
