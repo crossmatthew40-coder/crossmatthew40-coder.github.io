@@ -394,10 +394,15 @@ async function printDocket(card){
     notes:(card?.querySelector(".staff-notes")?.value||r.staff_notes||"").trim()
   };
   const url="/cancello/print-docket.html#data="+encodeDocketPayload(payload);
-  const opened=window.open(url,"_blank");
-  if(!opened) location.href=url;
-
-  try{await api({action:"update",id,patch:{printed_at:new Date().toISOString()}});}catch(e){}
+  try{
+    fetch(STAFF_API,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","X-Cancello-Staff-Key":staffKey},
+      body:JSON.stringify({action:"update",id,patch:{printed_at:new Date().toISOString()}}),
+      keepalive:true
+    }).catch(()=>{});
+  }catch(e){}
+  location.href=url;
 }
 
 function render(){
