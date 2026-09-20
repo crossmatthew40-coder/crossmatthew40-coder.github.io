@@ -204,7 +204,7 @@ updateInstallButton();
 if("serviceWorker" in navigator){
   window.addEventListener("load",async()=>{
     try{
-      const reg=await navigator.serviceWorker.register("./sw.js?v=10");
+      const reg=await navigator.serviceWorker.register("./sw.js?v=16");
       await reg.update();
     }catch(e){}
   });
@@ -303,7 +303,7 @@ notifyBtn.onclick=async()=>{
     try{
       await reg.showNotification("Cancello Staff",{
         body:"Notifications are on. New pre-orders will appear here.",
-        icon:"/cancello/staff/icon.svg",
+        icon:"/cancello/staff/apple-touch-icon-v13.png",
         tag:"cancello-notifications-enabled",
         data:{url:"/cancello/staff/"}
       });
@@ -326,6 +326,7 @@ async function load(){
    el("sync-dot").className="sync-dot live";
    el("sync-text").textContent="Live";
    render();
+   try{if("clearAppBadge" in navigator) await navigator.clearAppBadge();}catch(e){}
  }catch(error){accessError(error.message);}
 }
 function filtered(){
