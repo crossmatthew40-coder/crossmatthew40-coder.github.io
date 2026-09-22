@@ -1,0 +1,150 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//High Style Cards//The Kirkfield//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:The Kirkfield Weekly Nights
+X-WR-CALDESC:Weekly nights and special events at The Kirkfield with phone reminders.
+BEGIN:VEVENT
+UID:monday-cask-night@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;VALUE=DATE:20260928
+DTEND;VALUE=DATE:20260929
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:£3 Cask Night
+DESCRIPTION:Start the week at The Kirkfield with £3 cask ales every Monday.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://dishcult.com/restaurant/thekirkfield
+BEGIN:VALARM
+TRIGGER:PT11H
+ACTION:DISPLAY
+DESCRIPTION:£3 Cask Night at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tuesday-burger-night@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;VALUE=DATE:20260922
+DTEND;VALUE=DATE:20260923
+RRULE:FREQ=WEEKLY;BYDAY=TU
+SUMMARY:Burger Night
+DESCRIPTION:Tuesday is Burger Night at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://dishcult.com/restaurant/thekirkfield
+BEGIN:VALARM
+TRIGGER:PT11H
+ACTION:DISPLAY
+DESCRIPTION:Burger Night at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wednesday-mexican-night@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;VALUE=DATE:20260923
+DTEND;VALUE=DATE:20260924
+RRULE:FREQ=WEEKLY;BYDAY=WE
+SUMMARY:Mexican Night
+DESCRIPTION:Wednesday is Mexican Night at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://dishcult.com/restaurant/thekirkfield
+BEGIN:VALARM
+TRIGGER:PT11H
+ACTION:DISPLAY
+DESCRIPTION:Mexican Night at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:thursday-steak-night@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;VALUE=DATE:20260924
+DTEND;VALUE=DATE:20260925
+RRULE:FREQ=WEEKLY;BYDAY=TH
+SUMMARY:Steak Night
+DESCRIPTION:Thursday is Steak Night at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://dishcult.com/restaurant/thekirkfield
+BEGIN:VALARM
+TRIGGER:PT11H
+ACTION:DISPLAY
+DESCRIPTION:Steak Night at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fish-friday@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;VALUE=DATE:20260925
+DTEND;VALUE=DATE:20260926
+RRULE:FREQ=WEEKLY;BYDAY=FR
+SUMMARY:Fish Friday
+DESCRIPTION:Fish Friday at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://dishcult.com/restaurant/thekirkfield
+BEGIN:VALARM
+TRIGGER:PT11H
+ACTION:DISPLAY
+DESCRIPTION:Fish Friday at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:friday-live-music@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;TZID=Europe/London:20260925T180000
+DTEND;TZID=Europe/London:20260925T220000
+RRULE:FREQ=WEEKLY;BYDAY=FR
+SUMMARY:Friday Live Music
+DESCRIPTION:Friday live music at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://thekirkfield.co.uk/whats-on/
+BEGIN:VALARM
+TRIGGER:-PT3H
+ACTION:DISPLAY
+DESCRIPTION:Friday Live Music at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sunday-sessions@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;TZID=Europe/London:20260927T180000
+DTEND;TZID=Europe/London:20260927T200000
+RRULE:FREQ=WEEKLY;BYDAY=SU
+SUMMARY:Sunday Sessions
+DESCRIPTION:Sunday evening live music at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://thekirkfield.co.uk/whats-on/
+BEGIN:VALARM
+TRIGGER:-PT3H
+ACTION:DISPLAY
+DESCRIPTION:Sunday Sessions at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:oktoberfest-2026@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;VALUE=DATE:20261003
+DTEND;VALUE=DATE:20261004
+SUMMARY:Oktoberfest
+DESCRIPTION:Oktoberfest at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:https://thekirkfield.co.uk/whats-on/
+BEGIN:VALARM
+TRIGGER:PT11H
+ACTION:DISPLAY
+DESCRIPTION:Oktoberfest at The Kirkfield
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:boogie-bingo-2026@thekirkfield.co.uk
+DTSTAMP:20260922T120000Z
+DTSTART;VALUE=DATE:20261107
+DTEND;VALUE=DATE:20261108
+SUMMARY:Boogie Bingo
+DESCRIPTION:Boogie Bingo at The Kirkfield.
+LOCATION:The Kirkfield\, 2-4 Church Street\, Newton-le-Willows\, WA12 9SU
+URL:tel:+441925222058
+BEGIN:VALARM
+TRIGGER:PT11H
+ACTION:DISPLAY
+DESCRIPTION:Boogie Bingo at The Kirkfield
+END:VALARM
+END:VEVENT
+END:VCALENDAR
