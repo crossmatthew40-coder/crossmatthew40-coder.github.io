@@ -1,0 +1,19 @@
+{
+  "id": "/cancello/",
+  "name": "Cancello Bar & Restaurant",
+  "short_name": "Cancello",
+  "description": "Cancello Bar & Restaurant digital card, menu and event updates.",
+  "start_url": "/cancello/",
+  "scope": "/cancello/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#22266f",
+  "icons": [
+    {
+      "src": "/cancello/staff/apple-touch-icon-v13.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
