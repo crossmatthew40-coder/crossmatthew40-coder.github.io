@@ -21,11 +21,11 @@
  <div class="tabs" role="tablist"><button class="tab active" id="menu-tab" type="button" role="tab" aria-selected="true">Menu</button><button class="tab" id="allergy-tab" type="button" role="tab" aria-selected="false">Allergies</button></div>
 </header>
 <section class="allergy-panel" id="allergy-panel">
- <div class="allergy-top"><div class="allergy-title"><h2>Allergy guide</h2><p>Select every allergen you need to avoid. The menu will estimate which dishes are likely to contain them using the ingredients written on Cancello's menu.</p><span class="estimate-badge">Estimated — not restaurant verified</span></div><button class="clear" id="clear-allergens" type="button">Clear selection</button></div>
+ <div class="allergy-top"><div class="allergy-title"><h2>Allergy guide</h2><p>Select every allergen you need to avoid. The colours below use the allergen sheets supplied by Cancello. Red means the sheet marks the allergen, amber means traces / may contain or the dish is not covered by the supplied sheets, and green means the selected allergen is not marked on the supplied sheet.</p><span class="estimate-badge">Based on Cancello restaurant allergen sheets</span></div><button class="clear" id="clear-allergens" type="button">Clear selection</button></div>
  <div class="allergen-grid" id="allergen-grid"></div>
  <div class="allergy-summary" id="allergy-summary" aria-live="polite"></div>
- <div class="legend"><span><i class="dot red"></i>Likely contains</span><span><i class="dot amber"></i>Possible / check staff</span><span><i class="dot green"></i>Not identified in menu wording</span></div>
- <p class="safety"><strong>Important:</strong> this is an estimated guide generated from the written menu, not Cancello's official allergen matrix. Recipes, brands, preparation methods and cross-contamination can change the result. For any food allergy, always tell restaurant staff before ordering and confirm the dish directly with them.</p>
+ <div class="legend"><span><i class="dot red"></i>Contains / marked on sheet</span><span><i class="dot amber"></i>Traces / may contain / check staff</span><span><i class="dot green"></i>Not marked on supplied sheet</span></div>
+ <p class="safety"><strong>Important:</strong> this guide has been transcribed from the restaurant allergen sheets supplied to us, including T = traces / may contain notes. It must not replace speaking to staff: recipes, suppliers, substitutions, preparation methods and cross-contamination can change. Always tell Cancello staff about an allergy before ordering.</p>
  <a class="call" href="tel:01925291555">Call Cancello: 01925 291555</a>
 </section>
 <div class="viewport"><main class="sheet">
@@ -47,39 +47,114 @@
  {col:3,title:'Pasta & Risotto',items:[['Spaghetti Bolognese','15.00','Slowly cooked meat ragu served with ribbons of pasta'],['Spaghetti Carbonara','15.00','Traditional Italian carbonara with pancetta, Parmesan, with a splash of cream'],['Fettuccine Genovese','15.00','Fettuccine with chicken tossed with our pesto of basil, garlic, pinenuts & Parmesan'],['Ravioli Lobster','16.00','Lobster parcels in a cream tomato saffron and cray fish sauce'],['Spinach and Ricotta Ravioli','14.00','Ricotta and spinach stuffed pasta in creamy spinach sauce'],['Linguine Gamberoni','17.00','Linguine with king prawns, chilli, tomato, courgettes & parsley'],['Fettuccine Al Salmone','16.00','Pieces of salmon, cherry tomatoes, white wine and cream sauce'],['Lasagne','15.50','Classic Italian layered pasta'],['Rigatoni Fillet','17.00','Strips of beef fillet, onions, mushrooms in a brandy & peppercorn sauce'],['Rigatoni Salsiccia','17.00','Homemade Italian fennel sausage in rich creamy tomato sauce'],['Risotto Gandolfo','16.00','Peas, chicken, pancetta and Parmesan risotto'],['Risotto Funghi','14.00','Sauté mushrooms in a creamy risotto'],['Risotto Mare','17.00','Mussels, prawns, cray fish and asparagus in a creamy risotto'],['Rigatoni Arrabbiata (VG)','14.00','Pasta served in spicy tomato & chilli sauce. Add chicken £3 / add beef £3 / add prawns £3'],['Gnocchi','15.00','Gnocchi in a tomato and basil sauce topped with mozzarella and baked'],['Vegetable Lasagne','14.50','Mediterranean roast vegetables in a cheese and tomato sauce with layered pasta']]}
  ];
  const names=Object.fromEntries(allergens);
- const likelyRules={
-  gluten:['bread','toast','toasted','breadcrumbs','pizza','pasta','spaghetti','fettuccine','ravioli','linguine','lasagne','rigatoni','gnocchi','croutons','calzone','coated'],
-  crustaceans:['prawn','prawns','cray fish','crayfish','lobster'],
-  eggs:['aioli','carbonara','marie rose'],
-  fish:['salmon','seabass','anchovies','whitebait','lemon sole'],
-  milk:['halloumi','goat cheese','burrata','mozzarella','cream','creamy','parmesan','butter','gorgonzola','dolcelatte','ricotta','cheese'],
-  molluscs:['mussels','squid','calamari'],
-  sesame:['hummus'],
-  sulphites:['white wine','red wine','marsala','balsamic'],
-  celery:['stock','demi-glace','ragu'],
-  mustard:['marie rose'],
-  nuts:[],peanuts:[],lupin:[],soya:[]
+ const verifiedAllergenData={
+  'Halloumi Bruschetta (VG)':{verified:true,contains:['gluten','sulphites'],traces:['soya','mustard']},
+  'Bruschetta Goats Cheese':{verified:true,contains:['gluten','sulphites'],traces:['soya','mustard']},
+  'Burrata and Nduja Dip':{verified:true,contains:['gluten','milk','sulphites'],traces:['soya','mustard']},
+  'Caprese Salad':{verified:true,contains:['sulphites'],traces:['soya','mustard']},
+  'Polpette':{verified:true,contains:['gluten','sulphites'],traces:['soya','mustard'],note:'Gluten mark relates to bread accompaniment on the supplied sheet.'},
+  'Funghi Cancello':{verified:true,contains:['gluten','sulphites'],traces:['soya','mustard'],note:'Gluten mark relates to bread accompaniment on the supplied sheet.'},
+  'Gamberoni':{verified:true,contains:['gluten','sulphites'],traces:['soya','mustard'],note:'Gluten mark relates to bread accompaniment on the supplied sheet.'},
+  'Costine':{verified:true,contains:['gluten','sulphites'],traces:['soya']},
+  'Bruschetta Pomodoro (VG)':{verified:true,contains:['gluten','sulphites'],traces:['soya','mustard']},
+  'Cozze Picante':{verified:true,contains:['gluten','crustaceans','fish','sulphites','molluscs'],traces:['soya','mustard'],note:'Supplied sheet notes gluten can be avoided without bread.'},
+  'Pate (VG)':{verified:true,contains:['gluten','sulphites'],traces:['soya','mustard']},
+  'Mozzarella Fritto (V)':{verified:true,contains:['gluten','eggs','soya','milk'],traces:[]},
+  'Arancini':{verified:true,contains:['gluten','soya','milk','celery','sulphites','lupin'],traces:[]},
+  'Calamari':{verified:false,contains:[],traces:[],note:'The handwritten marks on the supplied starter sheet are not clear enough to publish safely.'},
+  'Prawn and Cray Fish Salad':{verified:true,contains:['crustaceans','eggs','fish','celery','sesame','molluscs'],traces:[]},
+
+  'Antipasti Di Mare (to share)':{verified:true,contains:['gluten','crustaceans','eggs','fish','milk','mustard','sulphites','molluscs'],traces:[]},
+  'Antipasti Di Italiano (to share)':{verified:true,contains:['gluten','eggs','milk','mustard'],traces:[]},
+  'Bread and Olives':{verified:true,contains:['gluten','sulphites'],traces:[]},
+  'Flat Bread with Hummus':{verified:true,contains:['gluten','soya','sulphites','lupin'],traces:[]},
+  'Garlic Pizza Bread':{verified:true,contains:['gluten'],traces:[]},
+  'Garlic Pizza Bread Tomato, Red Onion & Chilli':{verified:true,contains:['gluten'],traces:[]},
+  'Garlic Pizza Bread with Tomato':{verified:true,contains:['gluten'],traces:[]},
+  'Garlic Pizza Bread with Cheese':{verified:true,contains:['gluten','milk'],traces:[]},
+  'Garlic Pizza Bread Half Cheese/Half Tomato':{verified:true,contains:['gluten','milk'],traces:[]},
+
+  'Fillet':{verified:true,contains:['milk'],traces:[],note:'Sauce and side choice can add further allergens — confirm the full order with staff.'},
+  'Ribeye':{verified:true,contains:['milk'],traces:[],note:'Sauce and side choice can add further allergens — confirm the full order with staff.'},
+  'T Bone':{verified:true,contains:['milk'],traces:[],note:'Sauce and side choice can add further allergens — confirm the full order with staff.'},
+  'Pollo Rosmarino':{verified:true,contains:['milk','sulphites'],traces:[]},
+  'Pollo Pepe':{verified:true,contains:['milk','sulphites'],traces:[]},
+  'Pollo Ripieno':{verified:true,contains:['milk','sulphites'],traces:[]},
+  'Agnello Zeri':{verified:true,contains:['milk','mustard','sulphites'],traces:[]},
+  'Agnello Doppio':{verified:true,contains:['milk','mustard','sulphites'],traces:[]},
+  'Fillet Rossini':{verified:true,contains:['milk','sulphites'],traces:[]},
+  'Cauliflower Steak':{verified:true,contains:[],traces:[]},
+  'Ceasar Salad':{verified:true,contains:['gluten','eggs','fish','milk','mustard'],traces:[]},
+
+  'Salmon Royale':{verified:true,contains:['crustaceans','fish','milk','celery','sulphites','molluscs'],traces:['gluten','soya']},
+  'Branzino Puttanesca':{verified:true,contains:['crustaceans','fish','milk','celery','sulphites','molluscs'],traces:['gluten','soya']},
+  'Salmon Salad':{verified:true,contains:['crustaceans','fish','milk','celery','sulphites','molluscs'],traces:['gluten','soya']},
+  'Lemon Sole':{verified:true,contains:['crustaceans','fish','milk','celery','sulphites','molluscs'],traces:['gluten','soya']},
+
+  'Fries':{verified:true,contains:[],traces:['gluten','milk']},
+  'Salad':{verified:true,contains:['mustard','sulphites'],traces:[]},
+  'Rocket & Parmesan Salad':{verified:true,contains:['milk','mustard','sulphites'],traces:[]},
+  'Truffle and Parmesan Fries':{verified:true,contains:['milk'],traces:['gluten']},
+  'Creamed Spinachi':{verified:true,contains:['milk','sulphites'],traces:[]},
+  'Sweet Potato Fries':{verified:true,contains:[],traces:['gluten']},
+  'Red Onion and Tomato Salad':{verified:true,contains:['mustard','sulphites'],traces:[]},
+
+  'Margherita':{verified:true,contains:['gluten','soya','milk','mustard'],traces:['crustaceans','fish']},
+  'Diavola':{verified:true,contains:['gluten','soya','milk','mustard','sulphites'],traces:['crustaceans','fish']},
+  'Calabrese':{verified:true,contains:['gluten','soya','milk','mustard'],traces:['crustaceans','fish']},
+  'Rustica':{verified:true,contains:['gluten','soya','milk','mustard'],traces:['crustaceans','fish']},
+  'Calzone Polpette':{verified:true,contains:['gluten','soya','milk','mustard','sulphites'],traces:['crustaceans','fish']},
+  'Bistecca':{verified:true,contains:['gluten','soya','milk','celery','mustard','sulphites'],traces:['crustaceans','fish']},
+  'Vegetariana':{verified:true,contains:['gluten','soya','milk','mustard'],traces:['crustaceans','fish']},
+  'Trullo':{verified:true,contains:['gluten','soya','milk','mustard'],traces:['crustaceans','fish']},
+  'Pizza Di Mare':{verified:true,contains:['gluten','crustaceans','fish','soya','milk','mustard','molluscs'],traces:[]}
  };
- const uncertainRules={
-  celery:['sauce','gravy','bbq','dressing','sausage'],
-  gluten:['deep fried','fried','sauce','gravy','stock','dressing'],
-  eggs:['pasta','ravioli','lasagne','gnocchi','dressing','dip'],
-  milk:['mash','mashed potato','risotto','sauce','gravy','pate'],
-  mustard:['dressing','bbq','aioli','sauce'],
-  soya:['bbq','sauce','dressing'],
-  sulphites:['sauce','dressing','cured','salami','sausage','pancetta','parma ham','brandy'],
-  sesame:['dip'],
-  nuts:['pesto'],
-  peanuts:[],lupin:[],crustaceans:[],fish:[],molluscs:[]
- };
- function infer(name,desc){const text=(name+' '+desc).toLowerCase();const likely=[],uncertain=[];for(const [a,words] of Object.entries(likelyRules)){if(words.some(w=>text.includes(w)))likely.push(a)}for(const [a,words] of Object.entries(uncertainRules)){if(!likely.includes(a)&&words.some(w=>text.includes(w)))uncertain.push(a)}return{likely,uncertain}}
  const grid=document.getElementById('menu-grid');
- for(let c=1;c<=3;c++){const col=document.createElement('div');col.className='col';menu.filter(s=>s.col===c).forEach(section=>{const box=document.createElement('section');box.className=section.grill?'grill':'section';box.innerHTML=section.grill?'<div class="grill-title">'+section.title+'</div>':'<div class="head">'+section.title+'</div>';const items=document.createElement('div');items.className='items';section.items.forEach(d=>{const result=infer(d[0],d[2]);const el=document.createElement('div');el.className='item';el.dataset.likely=result.likely.join(',');el.dataset.uncertain=result.uncertain.join(',');el.innerHTML='<div class="nameprice"><span>'+d[0]+'</span><span class="price">'+d[1]+'</span></div>'+(d[2]?'<div class="desc">'+d[2]+'</div>':'')+'<div class="status"></div>';items.appendChild(el)});box.appendChild(items);col.appendChild(box)});if(c===3){const music=document.createElement('div');music.className='music';music.innerHTML='With the finest tribute acts<br>Check out our monthly music nights<small>See our website for more details</small>';col.appendChild(music)}grid.appendChild(col)}
+ for(let c=1;c<=3;c++){const col=document.createElement('div');col.className='col';menu.filter(s=>s.col===c).forEach(section=>{const box=document.createElement('section');box.className=section.grill?'grill':'section';box.innerHTML=section.grill?'<div class="grill-title">'+section.title+'</div>':'<div class="head">'+section.title+'</div>';const items=document.createElement('div');items.className='items';section.items.forEach(d=>{const el=document.createElement('div');el.className='item';el.dataset.dish=d[0];el.innerHTML='<div class="nameprice"><span>'+d[0]+'</span><span class="price">'+d[1]+'</span></div>'+(d[2]?'<div class="desc">'+d[2]+'</div>':'')+'<div class="status"></div>';items.appendChild(el)});box.appendChild(items);col.appendChild(box)});if(c===3){const music=document.createElement('div');music.className='music';music.innerHTML='With the finest tribute acts<br>Check out our monthly music nights<small>See our website for more details</small>';col.appendChild(music)}grid.appendChild(col)}
  const ag=document.getElementById('allergen-grid');allergens.forEach(a=>{const w=document.createElement('div');w.className='allergen';w.innerHTML='<input type="checkbox" id="a-'+a[0]+'" value="'+a[0]+'"><label for="a-'+a[0]+'">'+a[1]+'</label>';ag.appendChild(w)});
  const menuTab=document.getElementById('menu-tab'),allergyTab=document.getElementById('allergy-tab'),clear=document.getElementById('clear-allergens'),summary=document.getElementById('allergy-summary');
  function setMode(allergy){document.body.classList.toggle('allergy-mode',allergy);menuTab.classList.toggle('active',!allergy);allergyTab.classList.toggle('active',allergy);menuTab.setAttribute('aria-selected',String(!allergy));allergyTab.setAttribute('aria-selected',String(allergy));if(allergy)setTimeout(()=>document.getElementById('allergy-panel').scrollIntoView({behavior:'smooth',block:'start'}),30)}
  function pretty(arr){return arr.map(a=>names[a]||a).join(', ')}
- function apply(){const selected=[...ag.querySelectorAll('input:checked')].map(i=>i.value);document.body.classList.toggle('has-selection',selected.length>0);let red=0,amber=0,green=0;document.querySelectorAll('.item').forEach(el=>{el.classList.remove('allergen-contains','allergen-clear','allergen-uncertain');const st=el.querySelector('.status');st.textContent='';if(!selected.length)return;const likely=(el.dataset.likely||'').split(',').filter(Boolean);const uncertain=(el.dataset.uncertain||'').split(',').filter(Boolean);const hits=selected.filter(a=>likely.includes(a));const maybe=selected.filter(a=>uncertain.includes(a));if(hits.length){el.classList.add('allergen-contains');st.textContent='Likely contains: '+pretty(hits);red++}else if(maybe.length){el.classList.add('allergen-uncertain');st.textContent='Possible '+pretty(maybe)+' — check with staff';amber++}else{el.classList.add('allergen-clear');st.textContent='No selected allergen identified in the written menu — still confirm with staff';green++}});if(selected.length){summary.classList.add('show');summary.innerHTML='<strong>Your selection:</strong> '+pretty(selected)+'. <strong>'+red+'</strong> likely contain, <strong>'+amber+'</strong> need extra checking, and <strong>'+green+'</strong> have no selected allergen identified in the menu wording.'}else{summary.classList.remove('show');summary.textContent=''}}
+ function apply(){
+  const selected=[...ag.querySelectorAll('input:checked')].map(i=>i.value);
+  document.body.classList.toggle('has-selection',selected.length>0);
+  let red=0,amber=0,green=0;
+  document.querySelectorAll('.item').forEach(el=>{
+    el.classList.remove('allergen-contains','allergen-clear','allergen-uncertain');
+    const st=el.querySelector('.status');
+    st.textContent='';
+    if(!selected.length)return;
+    const data=verifiedAllergenData[el.dataset.dish];
+    if(!data||!data.verified){
+      el.classList.add('allergen-uncertain');
+      st.textContent=(data&&data.note?data.note:'No restaurant allergen sheet supplied for this dish — check with staff');
+      amber++;
+      return;
+    }
+    const contains=selected.filter(a=>(data.contains||[]).includes(a));
+    const traces=selected.filter(a=>(data.traces||[]).includes(a));
+    if(contains.length){
+      el.classList.add('allergen-contains');
+      st.textContent='Restaurant sheet marks: '+pretty(contains)+(data.note?' · '+data.note:'');
+      red++;
+    }else if(traces.length){
+      el.classList.add('allergen-uncertain');
+      st.textContent='Traces / may contain: '+pretty(traces)+(data.note?' · '+data.note:'');
+      amber++;
+    }else{
+      el.classList.add('allergen-clear');
+      st.textContent='Selected allergen not marked on the supplied restaurant sheet — still confirm with staff'+(data.note?' · '+data.note:'');
+      green++;
+    }
+  });
+  if(selected.length){
+    summary.classList.add('show');
+    summary.innerHTML='<strong>Your selection:</strong> '+pretty(selected)+'. <strong>'+red+'</strong> marked on the restaurant sheets, <strong>'+amber+'</strong> traces / may contain / need staff confirmation, and <strong>'+green+'</strong> are not marked for the selected allergen on the supplied sheets.';
+  }else{
+    summary.classList.remove('show');
+    summary.textContent='';
+  }
+}
  menuTab.addEventListener('click',()=>setMode(false));allergyTab.addEventListener('click',()=>setMode(true));ag.addEventListener('change',apply);clear.addEventListener('click',()=>{ag.querySelectorAll('input').forEach(i=>i.checked=false);apply()});
 })();
 </script>
