@@ -12,6 +12,28 @@
 .hero{height:285px;padding:24px 20px;display:flex;align-items:flex-end;color:white;position:relative;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.7)),url("https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/The_Kirkfield%2C_Newton-le-Willows.jpg/960px-The_Kirkfield%2C_Newton-le-Willows.jpg") center/cover no-repeat}.hero small{display:block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;margin-bottom:8px}.hero h1{font:400 31px/1.1 Georgia,serif;margin:0;max-width:350px}.hero p{font:400 14px/1.5 Georgia,serif;color:rgba(255,255,255,.84);margin:10px 0 0;max-width:335px}
 .content{padding:25px 20px 32px}.eyebrow{text-align:center;font-size:8px;letter-spacing:.25em;text-transform:uppercase;font-weight:700;margin:0 0 9px}.lead{text-align:center;font:400 21px/1.4 Georgia,serif;margin:0 0 22px}
 .actions{display:grid;gap:11px}.action{min-height:62px;border:1px solid var(--ink);border-radius:18px;padding:0 15px;display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.3));box-shadow:var(--shadow);transition:.2s ease}.action:active,.tile:active,.minor:active{transform:scale(.985)}.action.primary{background:linear-gradient(180deg,#292929,#151515);color:#fff}.ico{width:23px;height:23px;display:grid;place-items:center}.ico svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.copy{flex:1}.title{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.sub{font:400 12px/1.2 Georgia,serif;color:var(--muted);margin-top:5px}.primary .sub{color:rgba(255,255,255,.65)}.arr{font-size:21px}
+
+.allergy-profile{margin-top:22px;border:1px solid var(--ink);border-radius:22px;padding:18px;background:rgba(255,255,255,.62);box-shadow:var(--shadow)}
+.allergy-kicker{font-size:8px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted);margin:0 0 8px}
+.allergy-profile h2{font:400 23px/1.18 Georgia,serif;margin:0 0 8px}
+.allergy-summary{font:400 13px/1.5 Georgia,serif;color:var(--muted);margin:0}
+.allergy-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.allergy-actions button{min-height:48px;border:1px solid var(--ink);border-radius:14px;background:transparent;font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;cursor:pointer}
+.allergy-actions .dark{background:var(--ink);color:white}
+.allergy-warning{margin:12px 0 0;font:400 11px/1.45 Arial,sans-serif;color:#746d63}
+.allergen-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:48vh;overflow:auto;margin:14px 0}
+.allergen-chip{min-height:48px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px 11px;text-align:left;font-size:10px;font-weight:700;line-height:1.25;cursor:pointer}
+.allergen-chip.active{background:#171717;color:#fff;border-color:#171717}
+.allergen-chip span{display:block}
+.sheet-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.sheet-actions button,.sheet-actions a{min-height:48px;border:1px solid #171717;border-radius:14px;background:transparent;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.sheet-actions .dark{background:#171717;color:#fff}
+.staff-card{border:2px solid #171717;border-radius:18px;padding:18px;background:#fff}
+.staff-card .label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#6d6962}
+.staff-card h3{font:400 24px/1.2 Georgia,serif;margin:8px 0}
+.staff-card p{font:400 14px/1.5 Georgia,serif;margin:0;color:#3b3936}
+.staff-alert{margin-top:12px;padding:10px 11px;border-radius:12px;background:#f3eee4;font-size:11px;line-height:1.45}
+@media(max-width:340px){.allergy-actions,.allergen-grid,.sheet-actions{grid-template-columns:1fr}}
 .alerts{margin-top:27px;border-radius:24px;padding:22px 18px 18px;color:#fff;background:linear-gradient(145deg,#282724,#141414);box-shadow:0 22px 44px rgba(0,0,0,.18)}.alerts .kicker{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.58);font-weight:700}.alerts h2{font:400 25px/1.16 Georgia,serif;margin:10px 0 8px}.alerts p{font:400 13px/1.52 Georgia,serif;color:rgba(255,255,255,.7);margin:0 0 17px}.alertgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.alertbtn{min-height:50px;border:1px solid rgba(255,255,255,.28);border-radius:15px;background:transparent;color:white;font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}.alertbtn.light{background:#f7f2e8;color:#171717;border-color:#f7f2e8}.status{margin-top:13px;font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.62);display:flex;gap:7px;align-items:center}.dot{width:7px;height:7px;border-radius:50%;background:#aaa}.status.on .dot{background:#8fd3a5}
 .section{margin-top:27px;padding-top:23px;border-top:1px solid var(--line)}.sectiontitle{font-size:8px;font-weight:700;letter-spacing:.23em;text-transform:uppercase;margin:0 0 14px}.weekintro{font:400 14px/1.5 Georgia,serif;color:var(--muted);margin:-3px 0 14px}.allcalendar{width:100%;min-height:52px;border:1px solid var(--ink);border-radius:16px;background:var(--ink);color:white;padding:0 15px;display:flex;align-items:center;justify-content:space-between;font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;cursor:pointer;margin-bottom:11px}
 .events{display:grid;gap:10px}.event{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.52);padding:15px 15px 14px}.eventmeta{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700}.event h3{font:400 20px/1.2 Georgia,serif;margin:7px 0 5px}.event p{font:400 12px/1.48 Georgia,serif;color:var(--muted);margin:0}.event a{display:inline-flex;margin-top:11px;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:3px}
@@ -31,6 +53,17 @@
 <a class="action primary" href="https://dishcult.com/restaurant/thekirkfield?utm_campaign=Book+Button&utm_medium=Book-Button&utm_source=Referral" target="_blank"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 3v8M7 3v8M4 7h3M5.5 11v10M16 3v18M16 3c3 2 4 5 4 8h-4"/></svg></span><span class="copy"><span class="title">Book a Table</span><span class="sub">Breakfast · lunch · dinner</span></span><span class="arr">›</span></a>
 <a class="action" href="https://direct-book.com/properties/KirkfieldHotelDirect" target="_blank"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 20v-9M21 20v-7M3 15h18M6 11V7h5a4 4 0 0 1 4 4v4M3 20h18"/></svg></span><span class="copy"><span class="title">Book a Room</span><span class="sub">Stay the night</span></span><span class="arr">›</span></a>
 <a class="action" href="https://thekirkfield.co.uk/wp-content/uploads/2026/08/New-Summer-Menu-2026.pdf" target="_blank"><span class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4"/></svg></span><span class="copy"><span class="title">View Menus</span><span class="sub">Food and drink</span></span><span class="arr">›</span></a></div>
+
+<section class="allergy-profile" id="allergyProfile">
+  <p class="allergy-kicker">Menu & allergens</p>
+  <h2>Save your allergens before you browse.</h2>
+  <p class="allergy-summary" id="allergySummary">No allergens saved on this phone.</p>
+  <div class="allergy-actions">
+    <button class="dark" type="button" onclick="openAllergySheet()">Set Allergens</button>
+    <button type="button" onclick="showStaffCard()">Show Staff</button>
+  </div>
+  <p class="allergy-warning">This profile is a reminder, not a guarantee that a dish is safe. Ingredients and cross-contact can change. Always tell a member of staff about your allergy before ordering.</p>
+</section>
 <section class="alerts"><div class="kicker">The Kirkfield on your phone</div><h2>Get every weekly-night reminder.</h2><p>Add the card to your Home Screen, then add one Kirkfield calendar. Your phone will remind you about every regular night automatically — no picking individual events.</p><div class="alertgrid"><button class="alertbtn light" id="installBtn">＋ Add to Phone</button><button class="alertbtn" id="alertBtn">◷ Enable All Alerts</button></div><div class="status" id="status"><span class="dot"></span><span id="statusText">Phone reminders not added yet</span></div></section>
 <section class="section" id="events"><p class="sectiontitle">Every week at The Kirkfield</p><p class="weekintro">One calendar covers the full weekly lineup and includes phone reminders.</p><button class="allcalendar" onclick="enableAlerts()"><span>Add All Nights + Reminders</span><span>＋</span></button><div class="events">
 <article class="event"><div class="eventmeta">Every Monday</div><h3>£3 Cask Night</h3><p>Start the week with £3 cask ales.</p><a href="https://dishcult.com/restaurant/thekirkfield" target="_blank">Book a table</a></article>
@@ -45,8 +78,82 @@
 <section class="section"><p class="sectiontitle">Follow us</p><div class="socials"><a class="minor" href="https://www.instagram.com/thekirkfieldhotel/" target="_blank">Instagram</a><a class="minor" href="https://www.facebook.com/TheKirkfield/" target="_blank">Facebook</a></div></section>
 <section class="section"><p class="sectiontitle">Find us</p><div class="address"><strong>The Kirkfield</strong><br>2–4 Church Street<br>Newton-le-Willows<br>WA12 9SU<div class="small"><a href="tel:+441925222058">01925 222 058</a><br><a href="mailto:enquiries@thekirkfield.co.uk">enquiries@thekirkfield.co.uk</a></div></div><div class="utilities" style="margin-top:10px"><button class="minor dark" onclick="saveContact()">Save Contact</button><button class="minor" onclick="shareCard()">Share Card</button></div></section>
 </section><footer class="footer">Powered by <strong>High Style Cards</strong></footer></main>
+
+<div class="sheet" id="allergySheet">
+  <div class="sheetcard">
+    <h3>Your allergen profile</h3>
+    <p>Select any of the 14 regulated UK allergens you need to avoid. Your choices stay on this phone.</p>
+    <div class="allergen-grid" id="allergenGrid"></div>
+    <p style="font-size:11px;line-height:1.45;color:#6d6962">The menu does not yet contain a verified dish-by-dish allergen matrix, so this card will not label a dish “safe” until The Kirkfield provides verified allergen data.</p>
+    <div class="sheet-actions">
+      <button type="button" onclick="clearAllergens()">Clear</button>
+      <button class="dark" type="button" onclick="saveAllergens()">Save Profile</button>
+    </div>
+    <div class="sheet-actions">
+      <a href="https://thekirkfield.co.uk/wp-content/uploads/2026/08/New-Summer-Menu-2026.pdf" target="_blank" rel="noopener">Open Menu</a>
+      <button type="button" onclick="closeAllergySheet()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet" id="staffSheet">
+  <div class="sheetcard">
+    <div class="staff-card">
+      <div class="label">Please tell a member of staff</div>
+      <h3>I have an allergy to:</h3>
+      <p id="staffAllergenList">No allergens selected.</p>
+      <div class="staff-alert">Please check the current recipe, preparation method and cross-contact risk before I order.</div>
+    </div>
+    <div class="sheet-actions">
+      <button class="dark" type="button" onclick="closeStaffSheet()">Done</button>
+      <a href="tel:+441925222058">Call Venue</a>
+    </div>
+  </div>
+</div>
 <div class="sheet" id="sheet"><div class="sheetcard"><h3>Add The Kirkfield to your phone</h3><p>Keep bookings, menus and the weekly lineup one tap away.</p><div class="steps" id="steps"></div><button class="close" onclick="closeSheet()">Got it</button></div></div><div class="toast" id="toast">Done</div>
 <script>
+
+const KIRKFIELD_ALLERGENS=[
+  ['celery','Celery'],
+  ['gluten','Cereals containing gluten'],
+  ['crustaceans','Crustaceans'],
+  ['eggs','Eggs'],
+  ['fish','Fish'],
+  ['lupin','Lupin'],
+  ['milk','Milk'],
+  ['molluscs','Molluscs'],
+  ['mustard','Mustard'],
+  ['peanuts','Peanuts'],
+  ['sesame','Sesame'],
+  ['soybeans','Soybeans'],
+  ['sulphites','Sulphur dioxide & sulphites'],
+  ['tree-nuts','Tree nuts']
+];
+let workingAllergens=[];
+function savedAllergens(){try{return JSON.parse(localStorage.getItem('kirkfield-allergens')||'[]')}catch(e){return[]}}
+function allergenLabel(id){const row=KIRKFIELD_ALLERGENS.find(x=>x[0]===id);return row?row[1]:id}
+function renderAllergySummary(){
+  const saved=savedAllergens();
+  const el=document.getElementById('allergySummary');
+  if(!el)return;
+  el.textContent=saved.length?'Saved on this phone: '+saved.map(allergenLabel).join(', ')+'.':'No allergens saved on this phone.';
+}
+function renderAllergenGrid(){
+  const grid=document.getElementById('allergenGrid'); if(!grid)return;
+  grid.innerHTML=KIRKFIELD_ALLERGENS.map(([id,label])=>'<button type="button" class="allergen-chip '+(workingAllergens.includes(id)?'active':'')+'" onclick="toggleAllergen(\''+id+'\')"><span>'+label+'</span></button>').join('');
+}
+function openAllergySheet(){workingAllergens=[...savedAllergens()];renderAllergenGrid();document.getElementById('allergySheet').classList.add('show')}
+function closeAllergySheet(){document.getElementById('allergySheet').classList.remove('show')}
+function toggleAllergen(id){workingAllergens=workingAllergens.includes(id)?workingAllergens.filter(x=>x!==id):[...workingAllergens,id];renderAllergenGrid()}
+function clearAllergens(){workingAllergens=[];renderAllergenGrid()}
+function saveAllergens(){localStorage.setItem('kirkfield-allergens',JSON.stringify(workingAllergens));renderAllergySummary();closeAllergySheet();toast(workingAllergens.length?'Allergen profile saved':'Allergen profile cleared')}
+function showStaffCard(){
+  const saved=savedAllergens();
+  if(!saved.length){openAllergySheet();toast('Choose your allergens first');return}
+  document.getElementById('staffAllergenList').textContent=saved.map(allergenLabel).join(', ');
+  document.getElementById('staffSheet').classList.add('show');
+}
+function closeStaffSheet(){document.getElementById('staffSheet').classList.remove('show')}
 var deferredPrompt=null;function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(function(){t.classList.remove('show')},1800)}function standalone(){return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}function isiOS(){return /iphone|ipad|ipod/i.test(navigator.userAgent)}
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e});
 async function install(){if(standalone()){toast('Already added to your phone');return}if(deferredPrompt){deferredPrompt.prompt();try{await deferredPrompt.userChoice}catch(e){}deferredPrompt=null;return}var s=document.getElementById('steps');if(isiOS())s.innerHTML='<div class="step">1. Open this card in Safari.</div><div class="step">2. Tap the Share button.</div><div class="step">3. Choose <strong>Add to Home Screen</strong>.</div>';else s.innerHTML='<div class="step">1. Open your browser menu.</div><div class="step">2. Choose <strong>Install app</strong> or <strong>Add to Home Screen</strong>.</div>';document.getElementById('sheet').classList.add('show')}
@@ -54,5 +161,5 @@ function closeSheet(){document.getElementById('sheet').classList.remove('show')}
 function enableAlerts(){var u=new URL('./kirkfield-alerts.ics',location.href).href;localStorage.setItem('kirkfield-alerts','started');document.getElementById('status').classList.add('on');document.getElementById('statusText').textContent='Calendar opened — tap Subscribe or Add All';if(isiOS()){location.href=u.replace(/^https?:/,'webcal:');setTimeout(function(){toast('In Calendar, tap Subscribe')},500)}else{location.href=u;setTimeout(function(){toast('Open the calendar file and add all')},500)}}
 function saveContact(){var v=['BEGIN:VCARD','VERSION:3.0','FN:The Kirkfield','ORG:The Kirkfield','TEL;TYPE=WORK,VOICE:+441925222058','EMAIL;TYPE=WORK:enquiries@thekirkfield.co.uk','ADR;TYPE=WORK:;;2-4 Church Street;Newton-le-Willows;;WA12 9SU;United Kingdom','URL:https://thekirkfield.co.uk/','END:VCARD'].join('\r\n');var b=new Blob([v],{type:'text/vcard'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='The-Kirkfield.vcf';a.click();setTimeout(function(){URL.revokeObjectURL(u)},1000)}
 async function shareCard(){var d={title:'The Kirkfield',text:'The Kirkfield — bookings, menus and weekly nights.',url:location.href};try{if(navigator.share)await navigator.share(d);else{await navigator.clipboard.writeText(location.href);toast('Link copied')}}catch(e){}}
-document.getElementById('installBtn').onclick=install;document.getElementById('alertBtn').onclick=enableAlerts;if(localStorage.getItem('kirkfield-alerts')==='started'){document.getElementById('status').classList.add('on');document.getElementById('statusText').textContent='Kirkfield calendar setup started'}if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(function(){});
+renderAllergySummary();document.getElementById('installBtn').onclick=install;document.getElementById('alertBtn').onclick=enableAlerts;if(localStorage.getItem('kirkfield-alerts')==='started'){document.getElementById('status').classList.add('on');document.getElementById('statusText').textContent='Kirkfield calendar setup started'}if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(function(){});
 </script></body></html>
