@@ -63,6 +63,50 @@
   .reveal{opacity:1!important;transform:none!important}
 }
 
+
+/* American diner + family arcade identity */
+:root{--arcade-yellow:#ffd447;--arcade-blue:#27c7ff;--arcade-cream:#fff3d7}
+.arcade-wall{position:relative;overflow:hidden;min-height:430px;padding:72px clamp(20px,7vw,100px);background:linear-gradient(180deg,#171717,#0d0d0e);border-top:7px solid var(--red);border-bottom:7px solid var(--red)}
+.arcade-wall:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:26px 26px;opacity:.45}
+.arcade-wall-copy{position:relative;z-index:2;max-width:650px}
+.arcade-wall h2{font-family:"Bebas Neue",Impact,sans-serif;font-size:clamp(62px,8vw,118px);line-height:.82;margin:8px 0 18px}
+.arcade-wall h2 span{color:var(--red)}
+.arcade-wall-copy p{color:#d8d2c8;font-size:18px;line-height:1.65;max-width:580px}
+.sticker-cloud{position:absolute;z-index:3;right:clamp(15px,6vw,95px);top:50%;width:min(43vw,560px);height:340px;transform:translateY(-50%)}
+.sticker{position:absolute;display:flex;align-items:center;justify-content:center;min-width:105px;min-height:58px;padding:12px 18px;border:5px solid #fff;border-radius:18px;font-family:"Bebas Neue",Impact,sans-serif;font-size:28px;letter-spacing:.04em;text-align:center;text-transform:uppercase;box-shadow:7px 9px 0 rgba(0,0,0,.38);transform:rotate(var(--r));animation:stickerFloat var(--d) ease-in-out infinite alternate}
+.sticker.round{border-radius:999px;min-width:96px;min-height:96px}
+.sticker.ticket{border-radius:7px;background:var(--arcade-cream);color:#111;border-color:#111;box-shadow:7px 7px 0 var(--red)}
+.sticker.s1{left:8%;top:8%;--r:-9deg;--d:4.6s;background:var(--red);color:#fff}
+.sticker.s2{left:43%;top:4%;--r:7deg;--d:5.2s;background:var(--arcade-yellow);color:#111;border-color:#111}
+.sticker.s3{right:1%;top:31%;--r:-5deg;--d:5.8s;background:var(--arcade-blue);color:#07131a}
+.sticker.s4{left:19%;top:42%;--r:5deg;--d:4.9s;background:#fff;color:#111;border-color:var(--red)}
+.sticker.s5{left:0;bottom:3%;--r:7deg;--d:6.3s;background:var(--arcade-yellow);color:#111;border-color:#111}
+.sticker.s6{left:51%;bottom:2%;--r:-8deg;--d:5.5s;background:var(--red);color:#fff}
+.sticker.s7{right:2%;bottom:3%;--r:9deg;--d:5.1s;background:#fff;color:#111;border-color:#111}
+.pixel-star{position:absolute;font-size:54px;color:var(--arcade-yellow);text-shadow:4px 4px 0 #111;animation:pixelTwinkle 2.8s ease-in-out infinite}
+.pixel-star.p1{left:42%;top:47%}.pixel-star.p2{right:28%;bottom:26%;font-size:38px;color:var(--arcade-blue);animation-delay:.8s}
+.hero-sticker{position:absolute;z-index:3;right:clamp(22px,4vw,68px);top:19%;padding:10px 16px;background:var(--arcade-yellow);color:#111;border:4px solid #111;border-radius:8px;box-shadow:5px 5px 0 #fff;font-family:"Bebas Neue",Impact,sans-serif;font-size:22px;letter-spacing:.06em;transform:rotate(7deg);animation:heroSticker 4.7s ease-in-out infinite}
+.dish small{display:inline-flex;align-self:flex-start;background:rgba(255,255,255,.08);border:1px solid currentColor;padding:6px 9px;border-radius:5px;transform:rotate(-1deg)}
+.dish:nth-child(even) small{transform:rotate(1deg)}
+.family .arcade:before{content:"FREE PLAY";position:absolute;top:-18px;left:50%;transform:translateX(-50%) rotate(-3deg);background:var(--arcade-yellow);color:#111;border:4px solid #111;padding:7px 16px;border-radius:7px;font-family:"Bebas Neue";font-size:22px;letter-spacing:.08em;box-shadow:4px 5px 0 #fff}
+@keyframes stickerFloat{0%{transform:translateY(0) rotate(var(--r))}100%{transform:translateY(-9px) rotate(calc(var(--r) + 2deg))}}
+@keyframes pixelTwinkle{0%,100%{transform:scale(1) rotate(0);opacity:.78}50%{transform:scale(1.18) rotate(12deg);opacity:1}}
+@keyframes heroSticker{0%,100%{transform:rotate(7deg) translateY(0)}50%{transform:rotate(4deg) translateY(-7px)}}
+@media(max-width:900px){
+  .arcade-wall{padding-bottom:420px}
+  .sticker-cloud{top:auto;bottom:36px;left:50%;right:auto;transform:translateX(-50%);width:min(92vw,570px)}
+  .hero-sticker{display:none}
+}
+@media(max-width:580px){
+  .arcade-wall{padding:58px 18px 365px}
+  .arcade-wall h2{font-size:66px}
+  .arcade-wall-copy p{font-size:16px}
+  .sticker-cloud{height:310px;width:94vw;bottom:24px}
+  .sticker{font-size:23px;min-width:88px;min-height:52px;padding:10px 13px;border-width:4px}
+  .sticker.round{min-width:80px;min-height:80px}
+  .sticker.s3{right:3%;top:32%}.sticker.s7{right:2%;bottom:6%}
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Shakey J's Family Dining","telephone":"+44 1925 270113","address":{"@type":"PostalAddress","streetAddress":"70 High Street","addressLocality":"Newton-le-Willows","postalCode":"WA12 9SH","addressCountry":"GB"},"servesCuisine":["American","British","Breakfast","Burgers","Desserts"],"sameAs":["https://shakeyjs.co.uk/","https://www.instagram.com/shakeyjss/"]}</script>
 </head>
@@ -75,14 +119,34 @@
 </header>
 <main id="top">
 <section class="hero">
-<div class="hero-orbit"></div><img class="hero-logo" src="https://shakeyjs.co.uk/wp-content/uploads/2022/12/shakeyjslogo.png" alt="">
+<div class="hero-orbit"></div><div class="hero-sticker">★ FAMILY DINER ★</div><img class="hero-logo" src="https://shakeyjs.co.uk/wp-content/uploads/2022/12/shakeyjslogo.png" alt="">
 <div class="hero-copy reveal"><div class="eyebrow">70 High Street · Newton-le-Willows</div><h1>BIG BREAKFAST.<br><em>BIG BURGERS.</em><br>PROPER SHAKES.</h1><p>Family-friendly diner food, cooked to order. Breakfasts, stacked burgers, sweet treats and loaded shakes right on Newton-le-Willows High Street.</p><div class="actions"><a class="btn" href="#menu">View menu</a><a class="btn ghost" href="tel:+441925270113">Call 01925 270113</a></div></div>
 </section>
 <div class="strip"><span>BREAKFAST</span><b>★</b><span>BURGERS</span><b>★</b><span>DESSERTS</span><b>★</b><span>SHAKES</span><b>★</b><span>FAMILY DINING</span></div>
 <section class="section cream">
-<div class="section-head reveal"><div><div class="eyebrow" style="color:#b21319">SHAKEY J'S FAMILY DINING</div><h2 class="section-title">DINER FOOD.<br><i>DONE PROPERLY.</i></h2></div><p>Bright, relaxed and built for families, catch-ups and serious comfort food. Shakey J's mixes classic diner energy with generous portions and an easy-going High Street atmosphere.</p></div>
+<div class="section-head reveal"><div><div class="eyebrow" style="color:#b21319">SHAKEY J'S FAMILY DINING</div><h2 class="section-title">DINER FOOD.<br><i>DONE PROPERLY.</i></h2></div><p>An American-diner feel with a family twist: bold red-and-black styling, playful wall art, arcade energy and generous comfort food made for grown-ups and kids alike.</p></div>
 <div class="stats reveal"><div class="stat"><strong>4.7 ★</strong><span>Customer rating</span></div><div class="stat"><strong>7 DAYS</strong><span>Open every week</span></div><div class="stat"><strong>70 HIGH ST</strong><span>Newton-le-Willows · WA12 9SH</span></div></div>
 </section>
+
+<section class="arcade-wall" aria-label="Shakey J's arcade diner atmosphere">
+  <div class="arcade-wall-copy reveal">
+    <div class="eyebrow">AMERICAN DINER · FAMILY ARCADE</div>
+    <h2>EAT. PLAY.<br><span>MAKE A MESS.</span></h2>
+    <p>Big diner food with a playful family twist — checkers, arcade energy, wall-art attitude and plenty to keep little diners entertained.</p>
+  </div>
+  <div class="sticker-cloud" aria-hidden="true">
+    <span class="sticker s1">Game On</span>
+    <span class="sticker round s2">Free<br>Play</span>
+    <span class="sticker s3">Level Up!</span>
+    <span class="sticker ticket s4">SHAKEY J'S<br>ADMIT ONE</span>
+    <span class="sticker s5">Big Burgers</span>
+    <span class="sticker s6">Shake Time</span>
+    <span class="sticker round s7">★ PLAY ★</span>
+    <span class="pixel-star p1">★</span>
+    <span class="pixel-star p2">✦</span>
+  </div>
+</section>
+
 <section class="section cream" id="menu">
 <div class="section-head reveal"><div><div class="eyebrow" style="color:#b21319">CUSTOMER FAVOURITES</div><h2 class="section-title">WHAT ARE YOU<br><i>HAVING?</i></h2></div><p>A snapshot of the food Shakey J's is known for — from big breakfasts and stacked burgers to shakes and sweet treats.</p></div>
 <div class="menu-grid">
@@ -94,7 +158,7 @@
 <article class="dish reveal" data-icon="🍪"><small>Dessert</small><h3>Hot Cookie Dough</h3><p>Warm, rich and an easy choice when you still have room.</p></article>
 </div>
 </section>
-<section class="family" id="family"><div class="family-inner"><div class="family-copy reveal"><div class="eyebrow" style="color:white">MORE THAN A QUICK BITE</div><h2>FAMILY DINING<br>WITHOUT THE FUSS.</h2><p>Shakey J's is set up for relaxed family visits, with kid-friendly touches, arcade-style entertainment and a menu that works from breakfast through to burgers and dessert.</p><div class="pills"><span>Family friendly</span><span>Vegetarian options</span><span>Wi-Fi</span><span>Takeaway</span><span>Delivery</span></div></div><div class="arcade reveal"><strong>PLAY<br><span>★ EAT ★ REPEAT ★</span></strong></div></div></section>
+<section class="family" id="family"><div class="family-inner"><div class="family-copy reveal"><div class="eyebrow" style="color:white">MORE THAN A QUICK BITE</div><h2>FAMILY DINING<br>WITHOUT THE FUSS.</h2><p>Shakey J's is set up for relaxed family visits, with free arcade-style games, playful wall art and toys for younger diners alongside a menu that runs from breakfast through to burgers and dessert.</p><div class="pills"><span>Family friendly</span><span>Vegetarian options</span><span>Wi-Fi</span><span>Takeaway</span><span>Delivery</span></div></div><div class="arcade reveal"><strong>PLAY<br><span>★ EAT ★ REPEAT ★</span></strong></div></div></section>
 <section class="section"><div class="section-head reveal"><div><div class="eyebrow">WHY PEOPLE COME BACK</div><h2 class="section-title">GOOD FOOD.<br><i>GOOD VIBES.</i></h2></div><p>Customer feedback consistently highlights the breakfasts, friendly service, burgers, value and relaxed atmosphere.</p></div><div class="reviews"><article class="review reveal"><div class="stars">★★★★★</div><h3>Big breakfasts</h3><p>Cooked breakfasts and generous portions are among the most frequently praised parts of the menu.</p></article><article class="review reveal"><div class="stars">★★★★★</div><h3>Proper diner favourites</h3><p>Burgers, fries, sweet treats and milkshakes give the place its classic diner feel.</p></article><article class="review reveal"><div class="stars">★★★★★</div><h3>Family-friendly atmosphere</h3><p>Friendly staff, good value and a relaxed setup make it easy for families and groups.</p></article></div></section>
 <section class="section visit" id="visit"><div class="visit-card reveal"><div class="visit-main"><div class="eyebrow" style="color:white">COME HUNGRY</div><h2>FIND US ON<br>HIGH STREET.</h2><p class="address">70 High Street<br>Newton-le-Willows<br>WA12 9SH</p><div class="actions"><a class="btn light" href="https://www.google.com/maps/search/?api=1&query=Shakey+J%27s+Family+Dining+70+High+Street+Newton-le-Willows+WA12+9SH" target="_blank" rel="noreferrer">Get directions</a><a class="btn ghost" href="tel:+441925270113">Call to book</a></div></div><div class="hours"><h3>Opening hours</h3><div class="row"><span>Monday</span><strong>09:00 — 14:00</strong></div><div class="row"><span>Tuesday</span><strong>09:00 — 14:00</strong></div><div class="row"><span>Wednesday</span><strong>09:00 — 20:00</strong></div><div class="row"><span>Thursday</span><strong>09:00 — 20:00</strong></div><div class="row"><span>Friday</span><strong>09:00 — 20:00</strong></div><div class="row"><span>Saturday</span><strong>09:00 — 20:00</strong></div><div class="row"><span>Sunday</span><strong>09:00 — 17:00</strong></div><p style="color:#807b75;font-size:12px;line-height:1.5">Opening hours can change on holidays. Call ahead if you're travelling specially.</p></div></div></section>
 </main>
