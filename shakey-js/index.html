@@ -75,12 +75,12 @@
 .chase-track{position:relative;height:112px;border:4px solid #111;background:#0d0d0e;overflow:hidden;box-shadow:10px 10px 0 var(--red)}
 .chase-track:before{content:"";position:absolute;left:0;right:0;top:50%;height:12px;transform:translateY(-50%);background-image:radial-gradient(circle,#ffe26b 0 32%,transparent 36%);background-size:34px 12px;background-repeat:repeat-x;opacity:.9}
 .burger-run{position:absolute;top:50%;left:-100px;z-index:4;font-size:52px;line-height:1;transform:translateY(-50%);filter:drop-shadow(0 5px 10px rgba(0,0,0,.45));animation:burgerAcross 10.5s linear infinite}
-.pacman-run{position:absolute;top:50%;left:-210px;z-index:3;width:58px;height:58px;transform:translateY(-50%);border-radius:50%;background:#ffd447;filter:drop-shadow(0 5px 10px rgba(0,0,0,.45));animation:pacAcross 10.5s linear infinite}
-.pacman-run:before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 18deg,transparent 0 94deg,#ffd447 94deg 360deg);animation:pacChomp .24s steps(2,end) infinite}
-.pacman-run:after{content:"";position:absolute;right:12px;top:14px;width:7px;height:7px;border-radius:50%;background:#111;z-index:2}
+.pacman-run{position:absolute;top:50%;left:-210px;z-index:3;width:58px;height:58px;transform:translateY(-50%);border-radius:50%;background:#ffd447;filter:drop-shadow(0 5px 10px rgba(0,0,0,.45));animation:pacAcross 10.5s linear infinite;overflow:visible}
+.pacman-run:before{content:"";position:absolute;right:-2px;top:50%;width:34px;height:44px;background:#0d0d0e;clip-path:polygon(0 50%,100% 0,100% 100%);transform:translateY(-50%) scaleY(1);transform-origin:left center;animation:pacMouth .32s ease-in-out infinite}
+.pacman-run:after{content:"";position:absolute;right:13px;top:12px;width:7px;height:7px;border-radius:50%;background:#111;z-index:4}
 @keyframes burgerAcross{from{left:-100px}to{left:calc(100% + 100px)}}
 @keyframes pacAcross{from{left:-210px}to{left:calc(100% - 10px)}}
-@keyframes pacChomp{0%,100%{background:conic-gradient(from 18deg,transparent 0 94deg,#ffd447 94deg 360deg)}50%{background:conic-gradient(from 4deg,transparent 0 30deg,#ffd447 30deg 360deg)}}
+@keyframes pacMouth{0%,100%{transform:translateY(-50%) scaleY(1)}50%{transform:translateY(-50%) scaleY(.18)}}
 @media(max-width:580px){
   .pac-chase{padding:54px 18px 62px}
   .pac-copy h2{font-size:62px}
@@ -89,7 +89,7 @@
   .burger-run{font-size:42px}
   .pacman-run{width:48px;height:48px}
 }
-@media(prefers-reduced-motion:reduce){.burger-run,.pacman-run,.pacman-run:before{animation:none}.burger-run{left:68%}.pacman-run{left:46%}}
+@media(prefers-reduced-motion:reduce){.burger-run,.pacman-run{animation:none}.burger-run{left:68%}.pacman-run{left:46%}.pacman-run:before{animation:none;transform:translateY(-50%) scaleY(1)}}
 
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Shakey J's Family Dining","telephone":"+44 1925 270113","address":{"@type":"PostalAddress","streetAddress":"70 High Street","addressLocality":"Newton-le-Willows","postalCode":"WA12 9SH","addressCountry":"GB"},"servesCuisine":["American","British","Breakfast","Burgers","Desserts"],"sameAs":["https://shakeyjs.co.uk/","https://www.instagram.com/shakeyjss/"]}</script>
