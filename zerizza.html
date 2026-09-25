@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#11100f">
+<meta name="description" content="Zerizza — Peri Chicken & Pizzas in Newton-le-Willows. Order, view the menu, call and get directions.">
+<title>Zerizza | Digital Business Card</title>
+<style>
+:root{
+  --bg:#0c0c0b;--panel:#151412;--panel2:#1d1a16;--gold:#e5aa12;--gold2:#ffc53d;
+  --red:#9f1730;--white:#fffaf0;--muted:#bbb1a3;--line:rgba(229,170,18,.24);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;color:var(--white);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 85% 0%,rgba(229,170,18,.12),transparent 28%),
+    repeating-linear-gradient(118deg,rgba(255,255,255,.015) 0 1px,transparent 1px 5px),
+    var(--bg);
+}
+.page{width:min(100%,520px);margin:0 auto;padding:20px 15px 38px}
+.hero{
+  position:relative;overflow:hidden;border:1px solid var(--line);border-radius:30px;
+  padding:29px 22px 22px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+  box-shadow:0 25px 70px rgba(0,0,0,.42);
+}
+.hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-110px;top:-100px;
+  background:radial-gradient(circle,rgba(229,170,18,.18),transparent 67%);pointer-events:none}
+.logo{width:min(100%,330px);height:auto;display:block;margin:6px auto 28px;position:relative;z-index:2}
+.eyebrow{text-align:center;color:var(--gold);font-size:11px;letter-spacing:.16em;font-weight:900;text-transform:uppercase}
+h1{font-family:Georgia,"Times New Roman",serif;text-align:center;font-size:31px;line-height:1.08;margin:10px 0 8px}
+.subtitle{text-align:center;color:var(--muted);font-size:14px;line-height:1.55;margin:0 auto 23px;max-width:370px}
+.primary{
+  display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:17px 16px;
+  border-radius:17px;text-decoration:none;font-weight:900;color:#13100a;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  box-shadow:0 12px 28px rgba(229,170,18,.17);transition:.18s ease
+}
+.primary:active,.btn:active{transform:scale(.985)}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:11px}
+.mini{
+  text-decoration:none;color:var(--white);min-height:82px;border:1px solid rgba(255,255,255,.08);
+  border-radius:17px;background:rgba(255,255,255,.025);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;font-size:11px;font-weight:800;text-align:center
+}
+.icon{font-size:20px;color:var(--gold)}
+.offer{margin:14px 0;background:linear-gradient(135deg,#7d1025,var(--red));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:17px 18px}
+.offer small{font-size:10px;letter-spacing:.15em;font-weight:900;color:#ffd4dd;text-transform:uppercase}
+.offer strong{display:block;margin-top:4px;color:var(--gold2);font-family:Georgia,serif;font-size:25px}
+.offer p{margin:5px 0 0;color:#fff;font-size:12px;line-height:1.45}
+.section-title{font-family:Georgia,serif;font-size:21px;margin:21px 3px 11px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.btn{
+  min-height:102px;text-decoration:none;color:var(--white);border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;background:var(--panel);padding:15px;display:flex;flex-direction:column;
+  justify-content:space-between;transition:.18s ease
+}
+.btn:hover{border-color:var(--line);transform:translateY(-1px)}
+.btn b{font-size:14px}.btn span{color:var(--muted);font-size:11px;line-height:1.35}
+.btn .round{width:36px;height:36px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;color:var(--gold);font-size:17px}
+.wide{grid-column:1/-1;min-height:82px;flex-direction:row;align-items:center;justify-content:flex-start;gap:13px}
+.wide .copy{display:flex;flex-direction:column;gap:4px}
+.details{margin-top:14px;border:1px solid rgba(255,255,255,.08);border-radius:22px;background:var(--panel);padding:15px 17px}
+.row{display:flex;justify-content:space-between;gap:15px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.065);font-size:12px}
+.row:last-child{border-bottom:0}.row span{color:var(--muted)}.row b{text-align:right}
+.footer{text-align:center;color:#716b63;font-size:10px;line-height:1.55;padding:23px 8px 0}
+.badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:11px;font-size:10px;color:#9b9287}
+.dot{width:6px;height:6px;border-radius:50%;background:#59cb72;box-shadow:0 0 0 5px rgba(89,203,114,.09)}
+@media(max-width:370px){.quick{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.wide{grid-column:auto}h1{font-size:28px}}
+.logo-lockup{width:min(100%,360px);margin:4px auto 25px}.logo-lockup svg{display:block;width:100%;height:auto}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="hero">
+    <div class="badge"><span class="dot"></span> DIGITAL BUSINESS CARD</div>
+    <div class="logo-lockup" aria-label="Zerizza">
+<svg viewBox="0 0 760 205" role="img" aria-label="Zerizza Peri Chicken & Pizzas" xmlns="http://www.w3.org/2000/svg">
+<text x="380" y="116" text-anchor="middle" fill="#e5aa12" font-size="112" font-weight="900" font-family="Georgia, Times New Roman, serif" font-style="italic" letter-spacing="-5">Zerizza</text>
+<text x="380" y="174" text-anchor="middle" fill="#fffaf0" font-size="26" font-family="Arial, Helvetica, sans-serif" letter-spacing="9">PERI CHICKEN &amp; PIZZAS</text>
+</svg></div>
+    <div class="eyebrow">Peri Chicken &amp; Pizzas</div>
+    <h1>Zerizza, Newton-le-Willows</h1>
+    <p class="subtitle">Fast, easy access to ordering, the menu, contact details and directions — all from one tap.</p>
+
+    <a class="primary" href="https://www.zerizza.uk/app/" target="_blank" rel="noopener">🍴 Order Takeaway</a>
+
+    <div class="quick">
+      <a class="mini" href="tel:+441925270224"><div class="icon">☎</div>Call</a>
+      <a class="mini" href="./zerizza.vcf" download><div class="icon">＋</div>Save Contact</a>
+      <a class="mini" href="https://maps.app.goo.gl/AQv2FWKFrkhKYARFA" target="_blank" rel="noopener"><div class="icon">⌖</div>Directions</a>
+    </div>
+  </section>
+
+  <section class="offer">
+    <small>Wacky Weekdays</small>
+    <strong>20% off Tue–Thu</strong>
+    <p>Current Zerizza weekday promotion. Excludes deals and boxes.</p>
+  </section>
+
+  <h2 class="section-title">Zerizza in one tap</h2>
+  <section class="actions">
+    <a class="btn" href="https://zerizza.uk/wp-content/uploads/2025/10/A4-takeaway-menu-WEB.pdf" target="_blank" rel="noopener">
+      <div class="round">≡</div><div><b>View Menu</b><br><span>Browse the takeaway menu</span></div>
+    </a>
+    <a class="btn" href="https://www.zerizza.uk/app/" target="_blank" rel="noopener">
+      <div class="round">↗</div><div><b>Order Online</b><br><span>Start a takeaway order</span></div>
+    </a>
+    <a class="btn" href="tel:+441925270224">
+      <div class="round">☎</div><div><b>01925 270 224</b><br><span>Call Zerizza</span></div>
+    </a>
+    <a class="btn" href="https://maps.app.goo.gl/AQv2FWKFrkhKYARFA" target="_blank" rel="noopener">
+      <div class="round">⌖</div><div><b>Find Us</b><br><span>55 High St, Newton-le-Willows</span></div>
+    </a>
+    <a class="btn wide" href="https://zerizza.uk/" target="_blank" rel="noopener">
+      <div class="round">Z</div><div class="copy"><b>Visit zerizza.uk</b><span>Website, gallery, information and offers</span></div>
+    </a>
+    <a class="btn wide" href="https://www.google.com/maps/search/?api=1&query=Zerizza%2C%2055%20High%20St%2C%20Newton-le-Willows%20WA12%209SL" target="_blank" rel="noopener">
+      <div class="round">★</div><div class="copy"><b>Google</b><span>View Zerizza on Google or leave feedback</span></div>
+    </a>
+  </section>
+
+  <h2 class="section-title">Opening hours</h2>
+  <section class="details">
+    <div class="row"><span>Sunday</span><b>4:30pm – 10:00pm</b></div>
+    <div class="row"><span>Monday</span><b>Closed</b></div>
+    <div class="row"><span>Tuesday – Thursday</span><b>5:00pm – 10:00pm</b></div>
+    <div class="row"><span>Friday &amp; Saturday</span><b>5:00pm – 1:00am</b></div>
+    <div class="row"><span>Delivery</span><b>Within 4 miles</b></div>
+  </section>
+
+  <div class="footer">Zerizza • 55 High St, Newton-le-Willows WA12 9SL<br>Digital business card • NFC ready</div>
+</main>
+</body>
+</html>
