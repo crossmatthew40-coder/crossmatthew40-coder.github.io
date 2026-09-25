@@ -2,8 +2,9 @@ BEGIN:VCARD
 VERSION:3.0
 FN:Zerizza
 ORG:Zerizza
+TITLE:Peri Chicken & Pizzas
 TEL;TYPE=WORK,VOICE:+441925270224
 ADR;TYPE=WORK:;;55 High St;Newton-le-Willows;;WA12 9SL;United Kingdom
 URL:https://zerizza.uk/
-NOTE:Peri Chicken & Pizzas
+NOTE:Peri Chicken & Pizzas takeaway
 END:VCARD
