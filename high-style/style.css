@@ -111,3 +111,17 @@ footer{border-top:1px solid var(--line);padding:55px 0 28px}
 }
 /* High Style logo motif */
 .section-head>div:before{content:"";display:block;width:38px;height:15px;background:url("bars.svg") center/contain no-repeat;margin-bottom:16px}.footer-logo{object-fit:contain;border-radius:0}.hero-logo img,.brand-panel img,.footer-logo{background:#000}
+
+
+/* Selected clients */
+.clients-section{overflow:hidden}
+.client-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.client-logo-card{min-height:190px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:34px;background:#050505;transition:background .25s ease,transform .25s ease}
+.client-logo-card:hover{background:#0a0a0a}
+.client-logo-card img{display:block;max-width:78%;max-height:96px;width:auto;height:auto;object-fit:contain;filter:grayscale(1) brightness(1.2);mix-blend-mode:screen}
+.client-logo-card.text-mark{flex-direction:column;gap:2px;text-align:center;color:#f2f2f2}
+.gwr-mark span{font-size:21px;font-weight:600;letter-spacing:.11em}
+.gwr-mark small{font-size:9px;letter-spacing:.24em;color:#9b9b9b}
+.tenpin-mark span{font-size:34px;font-weight:400;letter-spacing:-.055em;text-transform:lowercase}
+@media(max-width:900px){.client-grid{grid-template-columns:repeat(2,1fr)}.client-logo-card{min-height:150px}}
+@media(max-width:520px){.client-grid{grid-template-columns:1fr 1fr}.client-logo-card{min-height:125px;padding:22px}.client-logo-card img{max-width:88%;max-height:72px}.gwr-mark span{font-size:15px}.gwr-mark small{font-size:7px}.tenpin-mark span{font-size:28px}}
